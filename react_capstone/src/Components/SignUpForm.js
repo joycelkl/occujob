@@ -10,9 +10,11 @@ const SignUp = (props) => {
   };
 
   return (
-    <div>
+    <div className="container">
+      <div class="row ">
+    <div className="card col align-self-center">
       <label>
-        Username:
+        Email:
         <input
           onChange={(e) => setEmail(e.currentTarget.value)}
           type="text"
@@ -31,7 +33,10 @@ const SignUp = (props) => {
       <br />
       <button onClick={SignUp}>SignUp</button>
       <br></br>
-      <a href="/login">Log In</a>
+      <a href="/applicantLogin">Log In</a>
+    </div>
+    <div className="col align-self-center"> Free Lancer testing para<br></br>owuhgwoghwopegb<br></br>wiugfw9peifhoqoe</div>
+    </div>
     </div>
   );
 };
