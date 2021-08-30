@@ -2,7 +2,9 @@ import React from 'react';
 
 const applicantLogin = () => {
 return(
-    <div>Applicant Login</div>
+    <div>
+    <a href="/applicantSignup">SignUp</a>
+    </div>
 )
 };
 
