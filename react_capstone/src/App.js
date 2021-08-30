@@ -8,7 +8,7 @@ import './App.css';
 
 function App() {
   return (
-    <div className="container">
+    
       <Router>
         <Navbar />
         <Switch>
@@ -17,7 +17,7 @@ function App() {
           <Route path="/applicantLogin" component={applicantLogin} />
         </Switch>
       </Router>
-    </div>
+    
   );
 }
 
