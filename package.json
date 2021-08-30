@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "date-fns": "^2.23.0"
-  }
-}
