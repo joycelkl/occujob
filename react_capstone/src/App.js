@@ -8,6 +8,7 @@ import applicantLogin from './Pages/applicantLogin';
 import employerLogin from './Pages/employerLogin';
 import SignUpForm from './Components/SignUpForm';
 import Login from './Components/LoginForm';
+import applicantProfile from './Pages/applicantProfile';
  
 const rootReducer = (state) => {
   return {
@@ -33,7 +34,7 @@ function App() {
           <Route path="/applicantLogin" component={applicantLogin,Login} />
           <Route path="/employerSignup" component={SignUpForm} />
           <Route path="/applicantSignup" component={SignUpForm} />
-
+          <Route path="/applicantProfile" component={applicantProfile} />
         </Switch>
       </Router>
     </div>
