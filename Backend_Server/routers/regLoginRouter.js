@@ -2,7 +2,7 @@ const express = require("express");
 
 const hashFunction = require("../Auth/hashFunction");
 
-require('dotenv').config
+require('dotenv').config();
 const development = require("../knexfile").development;
 const knex = require("knex")(development);
 
@@ -20,10 +20,12 @@ class RegLoginRouter {
             router.post("/register/employer", async(req, res) => {
                 const { name, email, password } = req.body
 
+                console.log('employer register')
+
                 try {
                     // get the user
                     let users = await knex('employer').where({
-                        er_email: email,
+                        er_email: email
                     });
 
                     // if there is a user
@@ -57,7 +59,7 @@ class RegLoginRouter {
                         id: er_id,
                         name: er_name
                     }
-                    let token = await JWT.sign(payload, erConfig.jwtSecret, { expiresIn: '1d' })
+                    let token = await JWT.sign(payload, erConfig, { expiresIn: '1d' })
 
                     // pass back the user token
                     return res.json({ token });
@@ -75,7 +77,7 @@ class RegLoginRouter {
                 try {
                     // get the user
                     let users = await knex('employee').where({
-                        ee_email: email,
+                        ee_email: email
                     });
                     // if there is a user
                     if (users.length > 0) {
@@ -105,7 +107,7 @@ class RegLoginRouter {
                         id: ee_id,
                         name: ee_name
                     }
-                    let token = await JWT.sign(payload, eeConfig.jwtSecret, { expiresIn: '1d' })
+                    let token = await JWT.sign(payload, eeConfig, { expiresIn: '1d' })
 
                     // pass back the user token
                     return res.json({ token });
@@ -139,7 +141,7 @@ class RegLoginRouter {
 
                     // check their password
                     // this is a verify function
-                    let result = await hashFunction.checkPassword(password, user.password);
+                    let result = await hashFunction.checkPassword(password, user.er_password);
                     console.log("Does the check password function work here?", result);
 
                     // if you get something back, return the user
@@ -151,7 +153,7 @@ class RegLoginRouter {
                             id: er_id,
                             name: er_name
                         }
-                        let token = await JWT.sign(payload, erConfig.jwtSecret, { expiresIn: '1d' })
+                        let token = await JWT.sign(payload, erConfig, { expiresIn: '1d' })
 
                         return res.json({ token });
                     } else {
@@ -187,7 +189,7 @@ class RegLoginRouter {
 
                     // check their password
                     // this is a verify function
-                    let result = await hashFunction.checkPassword(password, user.password);
+                    let result = await hashFunction.checkPassword(password, user.ee_password);
                     console.log("Does the check password function work here?", result);
 
                     // if you get something back, return the user
@@ -199,7 +201,7 @@ class RegLoginRouter {
                             id: ee_id,
                             name: ee_name
                         }
-                        let token = await JWT.sign(payload, eeConfig.jwtSecret, { expiresIn: '1d' })
+                        let token = await JWT.sign(payload, eeConfig, { expiresIn: '1d' })
 
                         return res.json({ token });
                     } else {
@@ -212,8 +214,58 @@ class RegLoginRouter {
                 }
             });
 
+            router.post("/register/admin", async(req, res) => {
+                const { name, password } = req.body;
+
+                console.log('registering admin')
+
+                try {
+                    // get the user
+                    let users = await knex('admin').where({
+                        admin_name: name
+                    });
+                    // if there is a user
+                    if (users.length > 0) {
+                        // return false - user already exists
+                        return res.status(422).json({
+                            errors: [{
+                                msg: "User already exists"
+                            }]
+                        })
+                    }
+                    // otherwise, hash their password
+                    let hashedPassword = await hashFunction.hashPassword(password);
+                    // get the new user
+                    const newUser = {
+                        admin_name: name,
+                        admin_password: hashedPassword,
+                        type: "admin"
+                    };
+                    //insert the new user, get the user info
+                    let user = await knex('admin').insert(newUser).returning("*");
+                    console.log("New EE user in database: ", user);
+
+                    // generate that token to the user
+                    const { admin_id, admin_name } = user;
+                    const payload = {
+                        id: admin_id,
+                        name: admin_name
+                    }
+                    let token = await JWT.sign(payload, eeConfig, { expiresIn: '1d' })
+
+                    // pass back the user token
+                    return res.json({ token });
+                } catch (error) {
+                    console.error(error.message)
+                    throw new Error(error);
+                }
+
+            });
+
             router.post("/login/admin", async(req, res) => {
                 const { name, password } = req.body
+
+                console.log('admin login')
 
                 try {
                     //use knex to query the table where username = input UN
@@ -234,7 +286,7 @@ class RegLoginRouter {
 
                     // check their password
                     // this is a verify function
-                    let result = await hashFunction.checkPassword(password, user.password);
+                    let result = await hashFunction.checkPassword(password, user.admin_password);
 
 
                     // if you get something back, return the user
@@ -246,7 +298,7 @@ class RegLoginRouter {
                             id: admin_id,
                             name: admin_name
                         }
-                        let token = await JWT.sign(payload, adminConfig.jwtSecret, { expiresIn: '1d' })
+                        let token = await JWT.sign(payload, adminConfig, { expiresIn: '1d' })
 
                         return res.json({ token });
                     } else {
