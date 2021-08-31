@@ -28,6 +28,14 @@ rule.tz = 'Etc/GMT-8';
 //     jobServices.updateJobStatus();
 // })
 
+const RegLoginRouter = require('./routers/regLoginRouter')
+const regLoginRouter = new RegLoginRouter().router();
+app.use('/', regLoginRouter)
+
+const erAuth = require('./Auth/erAuth')(knex);
+app.use(erAuth.initialize());
+
+app.use('/employer', erAuth.authenticate())
 
 app.listen(8080, () => {
     console.log('port is listening to 8080')

@@ -9,13 +9,15 @@ const knex = require("knex")(development);
 const JWT = require('jsonwebtoken')
 const erConfig = process.env.ER_JWT_CONFIG
 const eeConfig = process.env.EE_JWT_CONFIG
+const adminConfig = process.env.ADMIN_JWT_CONFIG
 
-class PageRouter {
+
+class RegLoginRouter {
     constructor() {
         this.router = () => {
             const router = express.Router();
 
-            router.post("/employer/register", async(req, res) => {
+            router.post("/register/employer", async(req, res) => {
                 const { name, email, password } = req.body
 
                 try {
@@ -67,7 +69,7 @@ class PageRouter {
             });
 
 
-            router.post("/employee/register", async(req, res) => {
+            router.post("/register/employee", async(req, res) => {
                 const { name, email, password } = req.body;
 
                 try {
@@ -115,7 +117,7 @@ class PageRouter {
             });
 
 
-            router.post("/employer/login", async(req, res) => {
+            router.post("/login/employer", async(req, res) => {
                 const { email, password } = req.body
 
                 try {
@@ -163,7 +165,7 @@ class PageRouter {
 
             });
 
-            router.post("/employee/login", async(req, res) => {
+            router.post("/login/employee", async(req, res) => {
                 const { email, password } = req.body
 
                 try {
@@ -210,7 +212,7 @@ class PageRouter {
                 }
             });
 
-            router.post("/admin/login", async(req, res) => {
+            router.post("/login/admin", async(req, res) => {
                 const { name, password } = req.body
 
                 try {
@@ -244,7 +246,7 @@ class PageRouter {
                             id: admin_id,
                             name: admin_name
                         }
-                        let token = await JWT.sign(payload, erConfig.jwtSecret, { expiresIn: '1d' })
+                        let token = await JWT.sign(payload, adminConfig.jwtSecret, { expiresIn: '1d' })
 
                         return res.json({ token });
                     } else {
@@ -255,7 +257,6 @@ class PageRouter {
                     console.error(err.message)
                     throw new Error(err);
                 }
-
             });
 
 
@@ -264,4 +265,4 @@ class PageRouter {
     }
 }
 
-module.exports = PageRouter;
+module.exports = RegLoginRouter;
