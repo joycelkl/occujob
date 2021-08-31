@@ -20,14 +20,14 @@ const Navbar = () => {
     }
 
     return (
-        <nav>
-            <div className="logo">
+        <nav className="mainNav">
+            <div className="navLogo">
                 <font>HK</font>FREELANCER
             </div>
-            <div className="menu-icon" onClick={handleClick}>
+            <div className="navMenuIcon" onClick={handleClick}>
                 <FaBars />
             </div>
-            <ul className={clicked ? "menu-list" : "menu-list close"}>{menuList}</ul>
+            <ul className={clicked ? "navMenuList" : "navMenuList close"}>{menuList}</ul>
         </nav>
     );
 };

@@ -25,7 +25,7 @@ window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 function App() {
   return (
-    <div className="container">
+    
       <Router>
         <Navbar />
         <Switch>
@@ -37,7 +37,7 @@ function App() {
           <Route path="/applicantProfile" component={applicantProfile} />
         </Switch>
       </Router>
-    </div>
+    
   );
 }
 
