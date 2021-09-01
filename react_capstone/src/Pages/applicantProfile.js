@@ -7,10 +7,10 @@ return(
     <div className="row">
         <div className="col-6">
      <Label for="">FullName</Label><br></br>
-    <Label for="exampleEmail">ee_email</Label>
+    <Label for="Email">ee_email</Label>
     <FormGroup>
-        <Label for="">Phone Number</Label>
-        <Input type="number" name="phone" id="exampleEmail" placeholder="ee_phone"/>
+        <Label for="phone">Phone Number</Label>
+        <Input type="number" name="phone" id="phone" placeholder="ee_phone"/>
       </FormGroup>
     <FormGroup>
         <Label for="Text">Self-Introduction</Label>
@@ -32,11 +32,22 @@ return(
         <Label for="Availabilty">Availabilty</Label>
         <Input type="text" name="number" id="Availabilty" placeholder="Availabilty" />
       </FormGroup>
+      <FormGroup>
+        <Label for="preferworklocation">preferworklocation</Label>
+        <Input type="select" name="select" id="preferworklocation">
+          <option>Islands</option>
+          <option>Kwai Tsing</option>
+          <option>North</option>
+          <option>Sai Kung</option>
+          <option>Sha Tin</option>
+        </Input>
+      </FormGroup>
       </div>
       <div className="col-4">
           <div className="card">img place holder</div>
       </div>
       </div>
+      <Button>Update</Button>
     </div>
     
 )

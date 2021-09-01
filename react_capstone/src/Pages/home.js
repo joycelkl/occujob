@@ -21,7 +21,7 @@ return(
                     <Badge className="job-list-badge2" variant="secondary">Central</Badge>
                     
                 </div>
-            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" />
+            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test"/>
             </div>
         </Card.Body>
     </Card>
@@ -40,7 +40,7 @@ return(
                     <Badge className="job-list-badge2" variant="secondary">Central</Badge>
                     
                 </div>
-            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" />
+            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test"/>
             </div>
         </Card.Body>
     </Card>
@@ -59,7 +59,7 @@ return(
                     <Badge className="job-list-badge2" variant="secondary">Central</Badge>
                     
                 </div>
-            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" />
+            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test"/>
             </div>
         </Card.Body>
     </Card>
@@ -78,7 +78,7 @@ return(
                     <Badge className="job-list-badge2" variant="secondary">Central</Badge>
                     
                 </div>
-            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" />
+            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test"/>
             </div>
         </Card.Body>
     </Card>
@@ -97,7 +97,7 @@ return(
                     <Badge className="job-list-badge2" variant="secondary">Central</Badge>
                     
                 </div>
-            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" />
+            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
             </div>
         </Card.Body>
     </Card>
