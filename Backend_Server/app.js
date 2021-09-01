@@ -39,9 +39,18 @@ const EmployerService = require('./services/employerServices');
 const employerService = new EmployerService(knex);
 const EmployerRouter = require('./routers/employerRouter');
 const employerRouter = new EmployerRouter(employerService, jobServices).router();
-const erAuth = require('./Auth/erAuth')(knex);
-app.use(erAuth.initialize());
-app.use('/employer', erAuth.authenticate(), employerRouter)
+
+const EmployeeService = require('./services/employeeServices');
+const employeeService = new EmployeeService(knex);
+const EmployeeRouter = require('./routers/employeeRouter')
+const employeeRouter = new EmployeeRouter(employeeService, jobServices).router();
+
+
+const auth = require('./Auth/auth')(knex);
+app.use(auth.initialize());
+
+app.use('/employer', auth.authenticate(), employerRouter)
+app.use('/employee', auth.authenticate(), employeeRouter)
 
 app.listen(8080, () => {
     console.log('port is listening to 8080')

@@ -7,9 +7,7 @@ const development = require("../knexfile").development;
 const knex = require("knex")(development);
 
 const JWT = require('jsonwebtoken')
-const erConfig = process.env.ER_JWT_CONFIG
-const eeConfig = process.env.EE_JWT_CONFIG
-const adminConfig = process.env.ADMIN_JWT_CONFIG
+const config = process.env.JWT_CONFIG
 
 
 class RegLoginRouter {
@@ -54,12 +52,13 @@ class RegLoginRouter {
                     console.log("New ER user in database: ", user);
 
                     // generate that token to the user
-                    const { er_id, er_name } = user;
+                    const { er_id, er_name, er_type } = user;
                     const payload = {
                         id: er_id,
-                        name: er_name
+                        name: er_name,
+                        type: er_type,
                     }
-                    let token = await JWT.sign(payload, erConfig, { expiresIn: '1d' })
+                    let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                     // pass back the user token
                     return res.json({ token });
@@ -102,12 +101,13 @@ class RegLoginRouter {
                     console.log("New EE user in database: ", user);
 
                     // generate that token to the user
-                    const { ee_id, ee_name } = user;
+                    const { ee_id, ee_name, ee_type } = user;
                     const payload = {
                         id: ee_id,
-                        name: ee_name
+                        name: ee_name,
+                        type: ee_type
                     }
-                    let token = await JWT.sign(payload, eeConfig, { expiresIn: '1d' })
+                    let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                     // pass back the user token
                     return res.json({ token });
@@ -148,12 +148,13 @@ class RegLoginRouter {
                     if (result) {
 
                         // generate that token to the user
-                        const { er_id, er_name } = user;
+                        const { er_id, er_name, er_type } = user;
                         const payload = {
                             id: er_id,
-                            name: er_name
+                            name: er_name,
+                            type: er_type,
                         }
-                        let token = await JWT.sign(payload, erConfig, { expiresIn: '1d' })
+                        let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                         return res.json({ token });
                     } else {
@@ -196,12 +197,13 @@ class RegLoginRouter {
                     if (result) {
 
                         // generate that token to the user
-                        const { ee_id, ee_name } = user;
+                        const { ee_id, ee_name, ee_type } = user;
                         const payload = {
                             id: ee_id,
-                            name: ee_name
+                            name: ee_name,
+                            type: ee_type
                         }
-                        let token = await JWT.sign(payload, eeConfig, { expiresIn: '1d' })
+                        let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                         return res.json({ token });
                     } else {
@@ -246,12 +248,13 @@ class RegLoginRouter {
                     console.log("New EE user in database: ", user);
 
                     // generate that token to the user
-                    const { admin_id, admin_name } = user;
+                    const { admin_id, admin_name, type } = user;
                     const payload = {
                         id: admin_id,
-                        name: admin_name
+                        name: admin_name,
+                        type: type
                     }
-                    let token = await JWT.sign(payload, eeConfig, { expiresIn: '1d' })
+                    let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                     // pass back the user token
                     return res.json({ token });
@@ -293,12 +296,13 @@ class RegLoginRouter {
                     if (result) {
 
                         // generate that token to the user
-                        const { admin_id, admin_name } = user;
+                        const { admin_id, admin_name, type } = user;
                         const payload = {
                             id: admin_id,
-                            name: admin_name
+                            name: admin_name,
+                            type: type
                         }
-                        let token = await JWT.sign(payload, adminConfig, { expiresIn: '1d' })
+                        let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                         return res.json({ token });
                     } else {

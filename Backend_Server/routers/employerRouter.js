@@ -8,7 +8,7 @@ class EmployerRouter {
     router = () => {
         const router = express.Router();
 
-        //tested with postman, work but hardcode userId
+        //tested with postman
         router.get('/profile', (req, res) => {
             console.log("GETTING EE PROFILE")
                 //load main page as company profile after logged in
@@ -23,7 +23,7 @@ class EmployerRouter {
                 });
         });
 
-        //tested with postman, work but hardcode userId
+        //tested with postman
         router.post('/profile', (req, res) => {
             //update profile itmes except img
             console.log('update profile in router', req.user.id)
@@ -37,10 +37,10 @@ class EmployerRouter {
 
         });
 
-        //tested with postman, work but hardcode userId
-        router.post('/profile/img/:id', (req, res) => {
+
+        router.post('/profile/img', (req, res) => {
             console.log("uploading img")
-            return this.employerServices.updateImg(req.params.id, req.files.img.data)
+            return this.employerServices.updateImg(req.user.id, req.files.img.data)
                 .then((id) => {
                     return;
                 })
@@ -51,7 +51,7 @@ class EmployerRouter {
 
         });
 
-        //tested with postman, work but hardcode userId
+
         router.get('/job/list', (req, res) => {
             //load all posted jobs
             return this.employerServices.listJobHistory(req.user.id)
@@ -63,13 +63,13 @@ class EmployerRouter {
                 });
         });
 
-        //route tested okay
+
         router.get('/job/posting', (req, res) => {
             //load job posting page
             return res.render('jobPostFrom', { layout: 'Employer' })
         })
 
-        //tested posting okay
+
         router.post('/job/posting', (req, res) => {
             //posting job with jobServices 
             console.log("expiry date", req.body)
@@ -83,7 +83,7 @@ class EmployerRouter {
                 });
         })
 
-        //tested no problem
+
         router.get('/job/:id', (req, res) => {
             //load individual job detail
             //load applied candidate table
@@ -118,7 +118,7 @@ class EmployerRouter {
                 });
         })
 
-        //route and service ok
+
         router.post('/job/:id', (req, res) => {
             //update individual job detail
             console.log('job updating no.', req.params.id)
@@ -135,8 +135,8 @@ class EmployerRouter {
                 });
         })
 
-        // to be tested out
-        router.post('/job/repost/:id', (req, res) => {
+
+        router.post('/job/repost/:er_id', (req, res) => {
             return this.employerServices.jobPosting(req.params.id,
                     req.body.jobTitle, req.body.jobCat,
                     req.body.reqExp, req.body.expectSalary,
@@ -149,7 +149,7 @@ class EmployerRouter {
                 });
         })
 
-        //tested no problem
+
         router.get('/job/candidate/:application_id', (req, res) => {
             //load applied candidate detail + application id for offer button
             return this.employerServices.candidateDetail(req.params.application_id)
@@ -164,7 +164,7 @@ class EmployerRouter {
                 });
         })
 
-        //tested no problem
+
         router.post('/job/candidate/offer/:application_id/:job_id', (req, res) => {
             //place offer to candidate by offer button
             console.log("req id", req.params.application_id)
