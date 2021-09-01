@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Col, Row,Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import JobDetail from "../Components/JobDetail";
 
-const applicantJobDetail = ()=>{
+const applicantOfferDetail = ()=>{
 return(
 <div>
  <JobDetail/>
- <Button>Message</Button>
- <Button>Apply</Button>
+ <Button>Accept</Button>
+ <Button>Reject</Button>
 </div>
   );
 }
 
-export default applicantJobDetail;
+export default applicantOfferDetail;

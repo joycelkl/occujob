@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 
 import Job from "../Components/Job";
 
-const applicantJobSearchResult = ()=>{
+const applicantOfferList = ()=>{
 return(
 <div>
-  <h1>Search Result</h1>
+  <h1>Offer List</h1>
   <ul>
     <Job/>
   </ul>
@@ -14,4 +14,7 @@ return(
 }
 
 
-export default applicantJobSearchResult;
+
+
+
+export default applicantOfferList;

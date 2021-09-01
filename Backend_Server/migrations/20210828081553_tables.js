@@ -15,6 +15,7 @@ exports.up = function(knex) {
                 er.binary("er_img_data");
                 er.string("er_phone");
                 er.text("er_industry");
+                er.text("er_location");
                 er.text("comp_description");
                 er.timestamps(false, true);
             });
@@ -32,6 +33,7 @@ exports.up = function(knex) {
                 table.integer("ee_phone");
                 table.decimal("expected_salary", 14, 2);
                 table.boolean("availability");
+                table.text('ee_location'); //to be confirmed
                 table.timestamps(false, true);
             });
         })
@@ -59,6 +61,7 @@ exports.up = function(knex) {
                 job.string("work_period").notNullable(); //I think here is memtioning how much time required / allowed for this job
                 job.date('expiry_date'); //for filter out the post over 2 weeks
                 job.boolean("status").notNullable();
+                job.text('job_location').notNullable();
                 job.timestamps(false, true);
             });
         })
