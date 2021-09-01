@@ -8,7 +8,7 @@ class EmployerRouter {
     router = () => {
         const router = express.Router();
 
-        //tested with postman
+        //tested ok
         router.get('/profile', (req, res) => {
             console.log("GETTING EE PROFILE")
                 //load main page as company profile after logged in
@@ -23,13 +23,14 @@ class EmployerRouter {
                 });
         });
 
-        //tested with postman
+        //tested ok
         router.post('/profile', (req, res) => {
             //update profile itmes except img
             console.log('update profile in router', req.user.id)
-            return this.employerServices.updateProfile(req.user.id, req.body.industry, req.body.compDescription, req.body.phone, req.body.location)
-                .then((updateProfile) => {
-                    return res.json(updateProfile)
+            const { industry, compDescription, phone, location } = req.body
+            return this.employerServices.updateProfile(req.user.id, industry, compDescription, phone, location)
+                .then((updatedProfile) => {
+                    return res.json(updatedProfile)
                 })
                 .catch((err) => {
                     res.status(500).json(err)
@@ -37,47 +38,56 @@ class EmployerRouter {
 
         });
 
-
+        //no tested yet will need to change the img save to cloud
+        //url should be text
         router.post('/profile/img', (req, res) => {
             console.log("uploading img")
             return this.employerServices.updateImg(req.user.id, req.files.img.data)
-                .then((id) => {
-                    return;
+                .then((updated) => {
+                    return res.json(updated)
                 })
-                .then(res.redirect('/employer/profile'))
                 .catch((err) => {
                     res.status(500).json(err)
                 });
 
         });
 
-
+        //tested ok
         router.get('/job/list', (req, res) => {
             //load all posted jobs
             return this.employerServices.listJobHistory(req.user.id)
-                .then((job) => {
-                    res.render('erListJobHistory', { job: job, layout: 'Employer' })
+                .then((jobList) => {
+                    res.json(jobList)
                 })
                 .catch((err) => {
                     res.status(500).json(err)
                 });
         });
 
-
-        router.get('/job/posting', (req, res) => {
-            //load job posting page
-            return res.render('jobPostFrom', { layout: 'Employer' })
-        })
+        // Provided by React
+        // router.get('/job/posting', (req, res) => {
+        //     //load job posting page
+        //     return res.render('jobPostFrom', { layout: 'Employer' })
+        // })
 
 
         router.post('/job/posting', (req, res) => {
             //posting job with jobServices 
             console.log("expiry date", req.body)
-            return this.employerServices.jobPosting(req.user.id,
-                    req.body.jobTitle, req.body.jobCat,
-                    req.body.reqExp, req.body.expectSalary,
-                    req.body.jobDescription, req.body.workPeriod)
-                .then(res.redirect('/employer/job/list'))
+            const {
+                jobTitle,
+                jobCat,
+                reqExp,
+                expectSalary,
+                jobDescription,
+                workPeriod,
+                location
+            } = req.body
+            return this.employerServices.jobPosting(req.user.id, jobTitle, jobCat, reqExp, expectSalary,
+                    jobDescription, workPeriod, location)
+                .then((job) => {
+                    return res.json(job)
+                })
                 .catch((err) => {
                     res.status(500).json(err)
                 });

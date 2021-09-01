@@ -48,18 +48,19 @@ class EmployerServices {
 
     }
 
-    updateImg(userId, imgData) {
+    //url should be text
+    updateImg(userId, er_imgData) {
         return this.knex('employer')
             .where({
-                id: userId
+                er_id: userId
             })
             .update({
-                img_data: imgData
+                er_img_data: imgData
             })
-            .returning('id')
-            .then((id) => {
+            .returning('*')
+            .then((updated) => {
                 console.log('img uploaded')
-                return id;
+                return updated;
             })
             .catch((err) => {
                 console.log(err)
@@ -76,10 +77,10 @@ class EmployerServices {
             })
             .orderBy('created_at', 'dsec')
             .then((jobList) => {
-                jobList.map(jobObj => {
-                    console.log("id in obj", jobObj.id)
-                    jobObj.id = encryptFunction.encryptString(jobObj.id)
-                })
+                // jobList.map(jobObj => {
+                //     console.log("id in obj", jobObj.id)
+                //     jobObj.id = encryptFunction.encryptString(jobObj.id)
+                // })
                 return jobList;
             })
             .catch((err) => {
@@ -87,24 +88,26 @@ class EmployerServices {
             });
     }
 
-    jobPosting(userId, jobTitle, jobCat, reqExp, expectSalary, jobDescription, workPeriod, status, expiryDate) {
+    jobPosting(userId, jobTitle, jobCat, reqExp, expectSalary, jobDescription, workPeriod, location) {
         let expiry = new Date(new Date().setDate(new Date().getDate() + 14));
         let formatted_date = expiry.getFullYear() + "-" + (expiry.getMonth() + 1) + "-" + expiry.getDate();
 
         return this.knex('job')
             .insert({
                 employer_id: userId,
-                jobTitle: jobTitle,
-                jobCat: jobCat,
-                reqExp: reqExp,
-                expectSalary: expectSalary,
-                jobDescription: jobDescription,
-                workPeriod: workPeriod,
+                job_title: jobTitle,
+                job_function: jobCat,
+                req_exp: reqExp,
+                expect_salary: expectSalary,
+                job_description: jobDescription,
+                work_period: workPeriod,
+                job_location: location,
                 status: true,
                 expiry_date: formatted_date,
             })
-            .then(() => {
-                return 'New job post saved';
+            .returning('*')
+            .then((job) => {
+                return job
             })
             .catch((err) => {
                 throw new Error(err)
