@@ -221,8 +221,9 @@ class EmployerServices {
             });
     }
 
-    //optional
+    //to be rewrited
     candidateFilter(value) {
+        //value = expectedSalary, jobFunction(industry)
         console.log('industry', value.industry);
         console.log('salary', value.csExpectedSalary)
         if ((value.csExpectedSalary == 'default' && value.industry == 'default') || (value.csExpectedSalary == 'default' && value.industry == undefined)) {
@@ -323,7 +324,7 @@ class EmployerServices {
     searchCandidateDetail(eeId) {
         // applicationId = encryptFunction.decryptString(applicationId)
         return this.knex('employee')
-            .where('id', eeId)
+            .where('ee_id', eeId)
             .then((canDetail) => {
                 console.log('canDetail', canDetail)
                 return canDetail;
