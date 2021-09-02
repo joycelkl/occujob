@@ -27,44 +27,67 @@ class EmployeeService {
         userIntro,
         userPhone,
         userExpectedSalary,
-        userIndustry
+        userIndustry,
+        userAvailability,
+        userLocation
     ) {
-        console.log('update ee info')
-        console.log('userInd', userIndustry)
+
+        // need to review the tags function here
+        // if (Array.isArray(userIndustry)) {
+        //     ind = userIndustry;
+        // } else if (userIndustry !== 'default' && userIndustry !== undefined) {
+        //     ind.push(userIndustry);
+        // }
+
         let ind = [];
+
         if (Array.isArray(userIndustry)) {
             ind = userIndustry;
-        } else if (userIndustry !== 'default' && userIndustry !== undefined) {
+        } else {
             ind.push(userIndustry);
         }
 
         if (ind.length == 0) {
             return this.knex("employee")
                 .where({
-                    id: userId
+                    ee_id: userId
                 })
                 .update({
-                    name: userName,
+                    ee_name: userName,
                     self_intro: userIntro,
-                    phone: userPhone,
-                    expectedSalary: userExpectedSalary,
+                    ee_phone: userPhone,
+                    expected_salary: userExpectedSalary,
+                    availability: userAvailability,
+                    ee_location: userLocation
+                })
+                .returning('*')
+                .then((updatedUser) => {
+                    return updatedUser
                 })
         } else {
             console.log('ind', ind)
             return this.knex("employee")
                 .where({
-                    id: userId
+                    ee_id: userId
                 })
                 .update({
-                    name: userName,
+                    ee_name: userName,
                     self_intro: userIntro,
-                    phone: userPhone,
-                    expectedSalary: userExpectedSalary,
-                    industry: ind
+                    ee_phone: userPhone,
+                    expected_salary: userExpectedSalary,
+                    ee_industry: ind,
+                    availability: userAvailability,
+                    ee_location: userLocation
+                })
+                .returning('*')
+                .then((updatedUser) => {
+                    return updatedUser
                 })
         }
     }
 
+
+    //to be rewrite to save to cloud
     updateImg(file, userId) {
         return this.knex("employee")
             .where({
@@ -81,6 +104,7 @@ class EmployeeService {
             })
     }
 
+    //to be rewrite the logic
     searchJob(value) {
         let searchList = {}
         for (let elements in value) {
@@ -105,15 +129,15 @@ class EmployeeService {
             })
     }
 
+
     listJob(userId) {
         // another datbase call to check for the company name
         console.log("user", userId)
         return this.knex('employee')
-            .select({ appId: 'application.id' }, 'application.*', 'employee.*', 'employer.*', 'job.*')
-            .join('application', 'employee.id', '=', 'application.employee_id')
-            .join('job', 'application.job_id', '=', 'job.id')
-            .join('employer', 'job.employer_id', '=', 'employer.id')
-            .where('employee.id', userId)
+            .join('application', 'employee.ee_id', '=', 'application.employee_id')
+            .join('job', 'application.job_id', '=', 'job.job_id')
+            .join('employer', 'job.employer_id', '=', 'employer.er_id')
+            .where('employee.ee_id', userId)
             .then((job) => {
                 return job;
             })
@@ -138,10 +162,12 @@ class EmployeeService {
                             job_id: jobId,
                             employee_id: userId,
                         })
-                        .then(() => {
-                            return 'job applied';
+                        .returning('*')
+                        .then((apply) => {
+                            return apply;
                         })
                         .catch((err) => {
+                            console.error(err)
                             throw new Error(err);
                         });
                 } else {
@@ -153,18 +179,17 @@ class EmployeeService {
 
     jobDetailOffer(applicationId, userId) {
         return this.knex('application')
-            .select({ appId: 'application.id' }, 'application.*', 'job.*', 'employer.*')
-            .join('job', "application.job_id", "=", "job.id")
-            .join("employer", "job.employer_id", "=", "employer.id")
-            .where('application.id', applicationId)
+            .join('job', "application.job_id", "=", "job.job_id")
+            .join("employer", "job.employer_id", "=", "employer.er_id")
+            .where('application.application_id', applicationId)
             .where('application.employee_id', userId)
             .then((jobDetail) => {
                 console.log("jobDetail in service", jobDetail)
-                let checkreply = false;
-                if (jobDetail[0].reply !== null) {
-                    checkreply = true;
-                    jobDetail[0].checkreply = checkreply;
-                }
+                    // let checkreply = false;
+                    // if (jobDetail[0].reply !== null) {
+                    //     checkreply = true;
+                    // }
+                    // jobDetail[0].checkreply = checkreply;
                 return jobDetail;
             })
             .catch((err) => {
@@ -176,14 +201,14 @@ class EmployeeService {
     acceptOffer(id) {
         return this.knex("application")
             .where({
-                id: id,
+                application_id: id,
             })
             .update({
                 reply: true,
             })
-            .then(() => {
-                console.log('accept data', data)
-                return "offer accepted";
+            .returning('*')
+            .then((accept) => {
+                return accept;
             })
             .catch((err) => {
                 throw new Error(err);
@@ -193,16 +218,17 @@ class EmployeeService {
     declineOffer(id) {
         return this.knex("application")
             .where({
-                id: id,
+                application_id: id,
             })
             .update({
                 reply: false,
             })
-            .then((data) => {
-                console.log('declinedata', data)
-                return "offer rejected";
+            .returning('*')
+            .then((decline) => {
+                return decline;
             })
             .catch((err) => {
+                console.error(err)
                 throw new Error(err);
             });
     }

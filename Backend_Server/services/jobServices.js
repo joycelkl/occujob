@@ -9,14 +9,13 @@ class JobServices {
     viewindividualjob(jobId) {
         return this.knex('employer')
             .select('*')
-            .join("job", "employer.id", "=", "job.employer_id")
-            .where("job.id", jobId)
+            .join("job", "employer.er_id", "=", "job.employer_id")
+            .where("job.job_id", jobId)
             .then((jobDetail) => {
-                console.log('job svc', jobDetail)
-
                 return jobDetail
             })
             .catch((err) => {
+                console.error(err)
                 throw new Error(err)
             });
 

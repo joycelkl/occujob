@@ -8,7 +8,7 @@ class EmployeeRouter {
     router = () => {
         const router = express.Router();
 
-        //tested no problem
+        //tested okay
         router.get('/profile', (req, res) => {
             return this.employeeService
                 .listUserInfo(req.user.id)
@@ -21,36 +21,24 @@ class EmployeeRouter {
                 })
         })
 
-        //tested work
+        //tested ok
         router.post('/profile', (req, res) => {
-            console.log('req.body', req.body)
-                //should take the form job and 
+            //should take the form job and 
+            const { name, intro, phone, expectedSalary, industry, availability, location } = req.body
             return this.employeeService
                 .updateProfile(
                     req.user.id,
-                    req.body.name,
-                    req.body.intro,
-                    req.body.phone,
-                    req.body.expectedSalary,
-                    req.body.industry)
-                .then(() => {
-                    return this.employeeService
-                        .listUserInfo(req.user.id)
-                        .then((job) => {
-                            res.render('eeprofile', {
-                                job: job,
-                                layout: 'JobSeeker'
-                            })
-                        })
+                    name, intro, phone, expectedSalary, industry, availability, location)
+                .then((updatedUser) => {
+                    res.json(updatedUser)
                 })
-                .then(console.log(req.user))
                 .catch((err) => {
                     console.log(err)
                     res.status(500).json(err)
                 })
         })
 
-        //tested no problem
+        //to be rewrite to save to cloud
         router.post('/profile/img', (req, res) => {
             //should send a req to employeeService.updateImg()
             return this.employeeService
@@ -70,13 +58,13 @@ class EmployeeRouter {
                 })
         })
 
-        //tested no problem
-        router.get('/search', (req, res) => {
-            //search engine/method research 
-            res.render('searchJob', { layout: 'JobSeeker' })
-        })
+        //Frontend will handle this route
+        // router.get('/search', (req, res) => {
+        //     //search engine/method research 
+        //     res.render('searchJob', { layout: 'JobSeeker' })
+        // })
 
-        //tested work
+        //to be rewrite the logic
         router.post('/search/result', (req, res) => {
             //list all job match search param
             console.log('posting to searchresult')
@@ -90,21 +78,18 @@ class EmployeeRouter {
                     })
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.error(err)
                     res.status(500).json(err)
                 })
         })
 
-        //tested work
-        router.get('/search/result/:id', (req, res) => {
+        //tested
+        router.get('/search/result/:job_id', (req, res) => {
             //list job:id details
             return this.jobServices
-                .viewindividualjob(req.params.id)
+                .viewindividualjob(req.params.job_id)
                 .then((job) => {
-                    res.render('jobDetails', {
-                        job: job,
-                        layout: 'JobSeeker'
-                    })
+                    res.json(job)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -112,46 +97,41 @@ class EmployeeRouter {
                 })
         })
 
-        //tested work 
+        //tested ok
         router.post('/search/result/:id', (req, res) => {
             //apply btn
             return this.employeeService
                 .apply(req.params.id, req.user.id)
-                .then(res.redirect('/employee/search'))
+                .then((apply) => {
+                    res.json(apply)
+                })
                 .catch((err) => {
-                    console.log(err)
+                    console.error(err)
                     res.status(500).json(err)
                 })
         })
 
-        //tested okay
+        //tested
         router.get('/offer', (req, res) => {
             //list all offer from offer table where id = user
             return this.employeeService
                 .listJob(req.user.id)
-                .then((job) => {
-                    console.log(job)
-                    res.render('offer', {
-                        job: job,
-                        layout: 'JobSeeker'
-                    })
+                .then((jobs) => {
+                    res.json(jobs)
                 })
                 .catch((err) => {
+                    console.error(err)
                     res.status(500).json(err)
                 })
         })
 
-        //tested okay
-        router.get('/offer/:id', (req, res) => {
-            //list job:id details via application id 
+        //tested
+        router.get('/offer/:application_id', (req, res) => {
+            //list job details via application id 
             return this.employeeService
-                .jobDetailOffer(req.params.id, req.user.id)
+                .jobDetailOffer(req.params.application_id, req.user.id)
                 .then((jobDetail) => {
-                    console.log('job dets in route', jobDetail)
-                    res.render('offerDetail', {
-                        jobDetail: jobDetail,
-                        layout: 'JobSeeker'
-                    })
+                    res.json(jobDetail)
                 })
                 .catch((err) => {
                     res.status(500).json(err)
@@ -159,23 +139,28 @@ class EmployeeRouter {
 
         })
 
-        //tested okay
-        router.post('/offer/accept/:id', (req, res) => {
+        //tested
+        router.post('/offer/accept/:application_id', (req, res) => {
             console.log('running accept')
             return this.employeeService
-                .acceptOffer(req.params.id)
-                .then(res.redirect('/employee/offer'))
+                .acceptOffer(req.params.application_id)
+                .then((accept) => {
+                    return res.json(accept)
+                })
                 .catch((err) => {
                     res.status(500).json(err)
                 })
         })
 
-        //tested okay
-        router.post('/offer/decline/:id', (req, res) => {
+        //tested
+        router.post('/offer/decline/:application_id', (req, res) => {
             return this.employeeService
-                .declineOffer(req.params.id)
-                .then(res.redirect('/employee/offer'))
+                .declineOffer(req.params.application_id)
+                .then((decline) => {
+                    return res.json(decline)
+                })
                 .catch((err) => {
+                    console.error(err)
                     res.status(500).json(err)
                 })
         })
