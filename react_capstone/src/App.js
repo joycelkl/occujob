@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './Pages/home';
-import Navbar from "./components/Navbar/navbarLogin";
+import Navbar from "./Components/Navbar/navbarLogin";
 import './App.css';
 import { createStore } from "redux";
 import applicantLogin from './Pages/applicantLogin';
 import employerLogin from './Pages/employerLogin';
-import SignUpForm from './components/SignUpForm';
-import Login from './components/LoginForm';
+import SignUpForm from './Components/SignUpForm';
+import Login from './Components/LoginForm';
 import applicantProfile from './Pages/applicantProfile';
  
 const rootReducer = (state) => {
