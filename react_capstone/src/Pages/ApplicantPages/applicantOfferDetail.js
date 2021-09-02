@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row,Button, Form, FormGroup, Label, Input} from 'reactstrap';
-import JobDetail from "../Components/JobDetail";
+import JobDetail from "../../Components/JobDetail";
 
 const applicantOfferDetail = ()=>{
 return(
