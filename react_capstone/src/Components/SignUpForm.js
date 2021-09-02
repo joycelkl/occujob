@@ -4,16 +4,22 @@ import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 const SignUp = (props) => {
  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setusername] = useState("");
 
 
   const SignUp = () => {
-   console.log("running "+email+" "+password);
+   console.log("running "+email+" "+password+username);
   };
 
   return (
     <div className="container">
     <div class="row">
   <Form className="col">
+  <FormGroup>
+      <Label for="username">Your Name</Label>
+      <Input type="text" name="username" id="username" placeholder="username" onChange={(e) => setusername(e.currentTarget.value)}
+        value={username}/>
+  </FormGroup>
   <FormGroup>
       <Label for="exampleEmail">Email</Label>
       <Input type="email" name="email" id="exampleEmail" placeholder="Email" onChange={(e) => setEmail(e.currentTarget.value)}
