@@ -23,7 +23,6 @@ const Login = (props) => {
           value={password}/>
       </FormGroup>
       <Button onClick={login}>Login</Button>
-      <a href="/employerSignup">SignUp</a>
     </Form>
     <div className="col align-self-center"> Free Lancer testing para</div>
     </div>
