@@ -3,7 +3,7 @@ import { Card, Badge } from 'react-bootstrap';
 
 
 
-const home = () => {
+const EmployerHomePage = () => {
     return (
         <div className="jobCard">
             <Card className='my-4'>
@@ -105,4 +105,4 @@ const home = () => {
     )
 };
 
-export default home;
+export default EmployerHomePage;

@@ -48,18 +48,19 @@ class EmployerServices {
 
     }
 
-    updateImg(userId, imgData) {
+    //url should be text
+    updateImg(userId, er_imgData) {
         return this.knex('employer')
             .where({
-                id: userId
+                er_id: userId
             })
             .update({
-                img_data: imgData
+                er_img_data: imgData
             })
-            .returning('id')
-            .then((id) => {
+            .returning('*')
+            .then((updated) => {
                 console.log('img uploaded')
-                return id;
+                return updated;
             })
             .catch((err) => {
                 console.log(err)
@@ -76,10 +77,10 @@ class EmployerServices {
             })
             .orderBy('created_at', 'dsec')
             .then((jobList) => {
-                jobList.map(jobObj => {
-                    console.log("id in obj", jobObj.id)
-                    jobObj.id = encryptFunction.encryptString(jobObj.id)
-                })
+                // jobList.map(jobObj => {
+                //     console.log("id in obj", jobObj.id)
+                //     jobObj.id = encryptFunction.encryptString(jobObj.id)
+                // })
                 return jobList;
             })
             .catch((err) => {
@@ -87,24 +88,27 @@ class EmployerServices {
             });
     }
 
-    jobPosting(userId, jobTitle, jobCat, reqExp, expectSalary, jobDescription, workPeriod, status, expiryDate) {
+    jobPosting(userId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, location) {
+
         let expiry = new Date(new Date().setDate(new Date().getDate() + 14));
         let formatted_date = expiry.getFullYear() + "-" + (expiry.getMonth() + 1) + "-" + expiry.getDate();
 
         return this.knex('job')
             .insert({
                 employer_id: userId,
-                jobTitle: jobTitle,
-                jobCat: jobCat,
-                reqExp: reqExp,
-                expectSalary: expectSalary,
-                jobDescription: jobDescription,
-                workPeriod: workPeriod,
-                status: true,
+                job_title: jobTitle,
+                job_function: jobFunction,
+                req_exp: reqExp,
+                expect_salary: expectSalary,
+                job_description: jobDescription,
+                work_period: workPeriod,
                 expiry_date: formatted_date,
+                status: true,
+                job_location: location,
             })
-            .then(() => {
-                return 'New job post saved';
+            .returning('*')
+            .then((job) => {
+                return job
             })
             .catch((err) => {
                 throw new Error(err)
@@ -114,33 +118,31 @@ class EmployerServices {
     jobDetail(jobId) {
         console.log('jobId', jobId)
             //calling individual job detail and application list of the job
-        jobId = encryptFunction.decryptString(jobId);
+            // jobId = encryptFunction.decryptString(jobId);
         return this.knex('application')
             .where('job_id', jobId)
             .then((result) => {
                 if (result.length == 0) {
                     return this.knex('job')
-                        .select({ job_id: 'job.id' }, 'job.*')
-                        .where('job.id', jobId)
-                        .then((jobList_applyDetail) => {
-                            return jobList_applyDetail;
+                        .where('job_id', jobId)
+                        .then((jobDetail) => {
+                            return jobDetail;
                         })
                         .catch((err) => {
                             throw new Error(err)
                         });
                 } else {
                     return this.knex('job')
-                        .select('job.*', 'application.*', 'employee.*', { appId: 'application.id' }, { appCreated: 'application.created_at' })
-                        .join('application', 'application.job_id', '=', 'job.id')
-                        .join('employee', 'employee.id', '=', 'application.employee_id')
-                        .where('job.id', jobId)
+                        .join('application', 'application.job_id', '=', 'job.job_id')
+                        .join('employee', 'employee.ee_id', '=', 'application.employee_id')
+                        .where('job.job_id', jobId)
                         .then((jobList_applyDetail) => {
                             console.log('jobList_applyDetail', jobList_applyDetail)
 
-                            jobList_applyDetail.map(jobAppObj => {
-                                console.log("id in obj", jobAppObj.appId)
-                                jobAppObj.appId = encryptFunction.encryptString(jobAppObj.appId)
-                            })
+                            // jobList_applyDetail.map(jobAppObj => {
+                            //     console.log("id in obj", jobAppObj.appId)
+                            //     jobAppObj.appId = encryptFunction.encryptString(jobAppObj.appId)
+                            // })
 
                             return jobList_applyDetail;
                         })
@@ -151,26 +153,27 @@ class EmployerServices {
             })
     }
 
-    jobUpdating(jobId, jobTitle, jobCat, reqExp, expectSalary, jobDescription, workPeriod, status) {
+    jobUpdating(jobId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location) {
         console.log('job updating', jobId)
 
         return this.knex('job')
             .where({
-                id: jobId
+                job_id: jobId
             })
             .update({
-                jobTitle: jobTitle,
-                jobCat: jobCat,
-                reqExp: reqExp,
-                expectSalary: expectSalary,
-                jobDescription: jobDescription,
-                workPeriod: workPeriod,
+                job_title: jobTitle,
+                job_function: jobFunction,
+                req_exp: reqExp,
+                expect_salary: expectSalary,
+                job_description: jobDescription,
+                work_period: workPeriod,
                 status: status,
+                job_location: location
             })
-            .returning('id')
-            .then((id) => {
-                id = encryptFunction.encryptString(id)
-                return id;
+            .returning('*')
+            .then((updatedJob) => {
+                // id = encryptFunction.encryptString(id)
+                return updatedJob;
             })
             .catch((err) => {
                 throw new Error(err)
@@ -178,20 +181,20 @@ class EmployerServices {
     }
 
     candidateDetail(applicationId) {
-        applicationId = encryptFunction.decryptString(applicationId)
-        console.log('application id', applicationId)
+        // applicationId = encryptFunction.decryptString(applicationId)
+        // console.log('application id', applicationId)
         return this.knex('application')
-            .select({ appId: 'application.id' }, 'application.*', 'employee.*')
-            .join('employee', 'employee.id', '=', 'application.employee_id')
-            .where('application.id', applicationId)
+            // .select({ appId: 'application.id' }, 'application.*', 'employee.*')
+            .join('employee', 'employee.ee_id', '=', 'application.employee_id')
+            .where('application.application_id', applicationId)
             .then((canDetail_appId) => {
                 console.log('canDetail_appId', canDetail_appId)
-                if (canDetail_appId[0].img_data) {
-                    let base = Buffer.from(canDetail_appId[0].img_data);
-                    let conversion = base.toString('base64');
-                    canDetail_appId[0].image = conversion;
-                }
-                canDetail_appId[0].job_id = encryptFunction.encryptString(canDetail_appId[0].job_id)
+                    // if (canDetail_appId[0].img_data) {
+                    //     let base = Buffer.from(canDetail_appId[0].img_data);
+                    //     let conversion = base.toString('base64');
+                    //     canDetail_appId[0].image = conversion;
+                    // }
+                    // canDetail_appId[0].job_id = encryptFunction.encryptString(canDetail_appId[0].job_id)
 
                 return canDetail_appId;
             })
@@ -203,21 +206,24 @@ class EmployerServices {
     offering(applicationId) {
         return this.knex('application')
             .where({
-                id: applicationId
+                application_id: applicationId
             })
             .update({
                 offer: true
             })
-            .then(() => {
-                return 'offer turned true';
+            .returning('*')
+            .then((offer) => {
+                return offer;
             })
             .catch((err) => {
+                console.error(err)
                 throw new Error(err)
             });
     }
 
-    //optional
+    //to be rewrited
     candidateFilter(value) {
+        //value = expectedSalary, jobFunction(industry)
         console.log('industry', value.industry);
         console.log('salary', value.csExpectedSalary)
         if ((value.csExpectedSalary == 'default' && value.industry == 'default') || (value.csExpectedSalary == 'default' && value.industry == undefined)) {
@@ -318,7 +324,7 @@ class EmployerServices {
     searchCandidateDetail(eeId) {
         // applicationId = encryptFunction.decryptString(applicationId)
         return this.knex('employee')
-            .where('id', eeId)
+            .where('ee_id', eeId)
             .then((canDetail) => {
                 console.log('canDetail', canDetail)
                 return canDetail;
