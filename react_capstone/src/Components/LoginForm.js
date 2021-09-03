@@ -22,7 +22,6 @@ const Login = (props) => {
       </FormGroup>
       <Button type='submit'>Login</Button>
     </Form>
-    <div className="col align-self-center"> Free Lancer testing para</div>
     </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
 import Login from '../../Components/LoginForm'
+import Navbar from '../../../src/Components/Navbar/navbarLogin';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
-import Navbar from '../../../src/Components/Navbar/navbarLogin';
 
 
 const EmployerLogin = () => {
@@ -32,8 +32,7 @@ const EmployerLogin = () => {
             alert('Please input valid Email')
         }
 
-        loginERuserThunkAction();
-
+        loginERuserThunkAction(email, password);
 
     }
 
@@ -41,10 +40,17 @@ const EmployerLogin = () => {
 return(
     <div>
     <Navbar />
-    <div>
+    <div className="container d-flex">
+    <div className="container">
+    <h1>Company Login Page</h1>
     <Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password}/>
     <a href="/employerSignup">SignUp</a>
     </div>
+        <div className="container">
+            <h3> Free Lancer testing para</h3>
+        </div>
+    </div>
+  
 </div>
 )
 };

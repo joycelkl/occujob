@@ -1,11 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './Pages/home';
-import Navbar from "./Components/Navbar/navbarLogin";
 import './App.css';
 import ApplicantLogin from './Pages/ApplicantPages/applicantLogin';
 import EmployerLogin from './Pages/EmployerPages/employerLogin';
-import SignUpForm from './Components/SignUpForm';
 import ApplicantProfile from './Pages/ApplicantPages/applicantProfile';
 import ApplicantJobSearch from './Pages/ApplicantPages/applicantJobSearch';
 import ApplicantJobSearchResult from './Pages/ApplicantPages/applicantJobSearchResult';
