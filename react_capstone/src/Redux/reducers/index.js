@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-// import linksReducer from './linksReducer' (example)
+import authReducer from './authReducer'
+
 
 const reducers = combineReducers({
-    // link: linksReducer (example)
+    auth: authReducer
 })
 
 export default reducers
