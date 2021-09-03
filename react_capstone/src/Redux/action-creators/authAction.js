@@ -30,3 +30,26 @@ export const logoutNowAction = () => {
         })
     }
 }
+
+
+
+//ER User Login Thunk
+export const loginERuserThunk = (email, password) => async(dispatch) => {
+    try {
+        await axios.post(`${process.env.REACT_APP_BASE_URL}/login/employer`, {
+            email: email,
+            password: password
+        }).then((res) => {
+            console.log("res in loginERthunk", res)
+            if (res.data == null || !res.data.token) {
+                dispatch(loginFailureAction('Invalid Credential'))
+            } else {
+                console.log("ER User login success")
+                localStorage.setItem("token", res.data.token);
+                dispatch(loginSuccessAction())
+            }
+        })
+    } catch (err) {
+        console.error("Error in ER Login", err)
+    }
+}
