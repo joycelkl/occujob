@@ -1,13 +1,12 @@
 import React from 'react';
 import { Card, Badge } from 'react-bootstrap';
-import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
+import ApplicantNavbar from '../../Components/Navbar/navbarApplicant';
 
 
-
-const EmployerHomePage = () => {
+const ApplicantHomePage = () => {
     return (
         <div>
-            <EmployerNavbar />
+            <ApplicantNavbar />
         <div className="jobCard">
             <Card className='my-4'>
                 <Card.Body>
@@ -109,4 +108,4 @@ const EmployerHomePage = () => {
     )
 };
 
-export default EmployerHomePage;
+export default ApplicantHomePage;
