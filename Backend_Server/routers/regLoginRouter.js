@@ -159,8 +159,7 @@ class RegLoginRouter {
                         return res.json({ token });
                     } else {
                         // otherwise return status as 401 = Unauthorized Error
-                        return res.status(401);
-                        // return res.status(401).json("Invalid Credential"); //previous setting, keep it first
+                        return res.status(401).json("Invalid Credential");
                     }
                 } catch (err) {
                     console.error(err.message)
@@ -209,8 +208,7 @@ class RegLoginRouter {
                         return res.json({ token });
                     } else {
                         // otherwise return status as 401 = Unauthorized Error
-                        return res.status(401);
-                        // return res.status(401).json("Invalid Credential"); //previous setting, keep if first
+                        return res.status(401).json("Invalid Credential");
                     }
                 } catch (err) {
                     console.error(err.message)

@@ -1,12 +1,21 @@
 import React from 'react';
 import { Card, Badge } from 'react-bootstrap';
 import ApplicantNavbar from '../../Components/Navbar/navbarApplicant';
-
+import "../homePage.css"
 
 const ApplicantHomePage = () => {
     return (
         <div>
             <ApplicantNavbar />
+            <section className="header">
+
+
+                <div className="text-box" id="home">
+                    <h1>HKFreelancer</h1>
+                    <p>Welcome User</p>
+                    <a href="/applicantJobSearch" className="Homebtn">Search Jobs</a>
+                </div>
+            </section>
         <div className="jobCard">
             <Card className='my-4'>
                 <Card.Body>

@@ -1,11 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './Pages/home';
-import Navbar from "./Components/Navbar/navbarLogin";
 import './App.css';
 import ApplicantLogin from './Pages/ApplicantPages/applicantLogin';
 import EmployerLogin from './Pages/EmployerPages/employerLogin';
-import SignUpForm from './Components/SignUpForm';
 import ApplicantProfile from './Pages/ApplicantPages/applicantProfile';
 import ApplicantJobSearch from './Pages/ApplicantPages/applicantJobSearch';
 import ApplicantJobSearchResult from './Pages/ApplicantPages/applicantJobSearchResult';
@@ -22,8 +20,8 @@ import EmployerApplicantProfile from './Pages/EmployerPages/employerApplicantPro
 import EmployerApplicantSearch from './Pages/EmployerPages/employerApplicantSearch';
 import EmployerApplicantSearchList from './Pages/EmployerPages/employerApplicantSearchList';
 import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearchApplicantProfile';
-
-
+import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
+import EmployerSignUp from './Pages/EmployerPages/employerSignup';
 
 function App() {
   return (
@@ -33,7 +31,7 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/employerLogin" component={EmployerLogin} />
         <Route path="/applicantLogin" component={ApplicantLogin} />
-        <Route path="/employerSignup" component={SignUpForm} />
+        <Route path="/employerSignup" component={EmployerSignUp} />
         <Route path="/employerHomePage" component={EmployerHomePage} />
         <Route path="/employerProfilePage" component={EmployerProfilePage} />
         <Route path="/employerCreateJobPage" component={EmployerCreateJobPage} />
@@ -43,7 +41,7 @@ function App() {
         <Route path="/employerApplicantSearch" component={EmployerApplicantSearch} />
         <Route path="/employerApplicantSearchList" component={EmployerApplicantSearchList} />
         <Route path="/employerSearchApplicantProfile" component={EmployerSearchApplicantProfile} />
-        <Route path="/applicantSignup" component={SignUpForm} />
+        <Route path="/applicantSignup" component={ApplicantSignUp} />
         <Route path="/applicantProfile" component={ApplicantProfile} />
         <Route path="/applicantJobSearch" component={ApplicantJobSearch} />
         <Route path="/applicantJobSearchResult" component={ApplicantJobSearchResult} />
