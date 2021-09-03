@@ -10,6 +10,7 @@ const EmployerLogin = () => {
         <div>
             <Navbar />
             <div>
+                <h1>Employer Login Page</h1>
                 <Login />
                 <a href="/employerSignup">SignUp</a>
             </div>

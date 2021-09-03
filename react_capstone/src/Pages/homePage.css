@@ -1,0 +1,73 @@
+.header {
+    min-height: 500px;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Images/BannerWallpaper.jpg);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.text-box {
+    width: 90%;
+    color: White;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .text-box h1 {
+    font-size: 70px;
+    animation: fadeIn;
+    animation-duration: 2s;
+    
+  }
+  
+  .text-box p {
+    margin: 10px 0 40px;
+    font-size: 20px;
+    color: White;
+  }
+  
+  .Homebtn {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    padding: 12px 34px;
+    font-size: 18px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .Homebtn:hover {
+    border: 1px solid black;
+    background: rgb(59, 105, 121);
+    transition: 1s;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .Homebtn2 {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    padding: 12px 34px;
+    font-size: 18px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+  
+  .Homebtn2:hover {
+    border: 1px solid black;
+    background: rgb(59, 105, 121);
+    transition: 1s;
+    text-decoration: none;
+    color: white;
+  }
+  
