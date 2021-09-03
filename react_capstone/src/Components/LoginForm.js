@@ -9,7 +9,7 @@ const Login = (props) => {
   return (
     <div className="container">
       <div className="row">
-    <Form className="col">
+    <Form className="form-group" onSubmit={(e)=>handleLogin(e)}>
     <FormGroup>
         <Label for="exampleEmail">Email</Label>
         <Input type="email" name="email" id="exampleEmail" placeholder="Email" onChange={(e) => onEmailChange(e.currentTarget.value)}
@@ -20,7 +20,7 @@ const Login = (props) => {
         <Input type="password" name="password" id="examplePassword" placeholder="Password" onChange={(e) => onPasswordChange(e.currentTarget.value)}
           value={password}/>
       </FormGroup>
-      <Button type='submit' onSubmit={handleLogin}>Login</Button>
+      <Button type='submit'>Login</Button>
     </Form>
     <div className="col align-self-center"> Free Lancer testing para</div>
     </div>

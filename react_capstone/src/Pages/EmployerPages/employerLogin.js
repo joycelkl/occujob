@@ -16,7 +16,7 @@ const EmployerLogin = () => {
     const {loginERuserThunkAction} = bindActionCreators(actionCreators, dispatch)
 
     function handleLogin (e) {
-
+        e.preventDefault();
         console.log('email & password',email, password)
         console.log('function', loginERuserThunkAction)
     }
@@ -24,7 +24,7 @@ const EmployerLogin = () => {
 
 return(
     <div>
-    <Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={handleLogin()} email={email} password={password}/>
+    <Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password}/>
     <a href="/employerSignup">SignUp</a>
     </div>
 )
