@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row,Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 
 const EmployerApplicantSearch = ()=>{
 return(
+  <div>
+    <EmployerNavbar />
 <Form>
     <div className="mb-3">
       <Row form>
@@ -36,6 +39,7 @@ return(
       <Button>Search</Button>
       </div>
 </Form>
+</div>
   );
 }
 

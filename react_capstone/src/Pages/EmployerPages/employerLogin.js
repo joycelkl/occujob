@@ -1,17 +1,20 @@
 import React from 'react';
 import Login from '../../Components/LoginForm'
+import Navbar from '../../Components/Navbar/navbarLogin';
 
 
+const EmployerLogin = () => {
 
-const employerLogin = () => {
 
-
-return(
-    <div>
-    <Login/>
-    <a href="/employerSignup">SignUp</a>
-    </div>
-)
+    return (
+        <div>
+            <Navbar />
+            <div>
+                <Login />
+                <a href="/employerSignup">SignUp</a>
+            </div>
+        </div>
+    )
 };
 
-export default employerLogin;
+export default EmployerLogin;

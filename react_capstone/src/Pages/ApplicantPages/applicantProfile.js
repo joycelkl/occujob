@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 
-const applicantProfile = () => {
+const ApplicantProfile = () => {
 return(
     <div>
+      <ApplicantNavbar />
     <div className="row">
         <div className="col-6">
      <Label for="">FullName</Label><br></br>
@@ -53,4 +55,4 @@ return(
 )
 };
 
-export default applicantProfile;
+export default ApplicantProfile;
