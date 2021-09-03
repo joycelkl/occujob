@@ -6,6 +6,7 @@ return(
     <div>
         <Navbar />
     <div>
+        <h1>Applicant Login Page</h1>
         <Login/>
     <a href="/applicantSignup">SignUp</a>
     </div>
