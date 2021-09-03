@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Badge } from 'react-bootstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
+import "../homePage.css"
 
 
 
@@ -8,6 +9,15 @@ const EmployerHomePage = () => {
     return (
         <div>
             <EmployerNavbar />
+            <section className="header">
+
+
+                <div className="text-box" id="home">
+                    <h1>HKFreelancer</h1>
+                    <p>Welcome User</p>
+                    <a href="/employerCreateJobPage" className="Homebtn">Post A Job</a>
+                </div>
+            </section>
         <div className="jobCard">
             <Card className='my-4'>
                 <Card.Body>

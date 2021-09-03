@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
+import Navbar from '../../../src/Components/Navbar/navbarLogin';
 
 
 const EmployerLogin = () => {
@@ -24,9 +25,12 @@ const EmployerLogin = () => {
 
 return(
     <div>
-    <Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password}/>
-    <a href="/employerSignup">SignUp</a>
-    </div>
+    <Navbar />
+    <div>
+<Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password}/>
+<a href="/employerSignup">SignUp</a>
+</div>
+</div>
 )
 };
 
