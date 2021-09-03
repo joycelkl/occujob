@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText, Table } from 'reactstrap';
+import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 
 const EmployerEditPost = () => {
     return (
         <div>
+            <EmployerNavbar />
             <div className="row">
                 <div className="col-6">
                     <FormGroup>
