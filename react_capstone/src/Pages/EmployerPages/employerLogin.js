@@ -16,10 +16,25 @@ const EmployerLogin = () => {
 
     const {loginERuserThunkAction} = bindActionCreators(actionCreators, dispatch)
 
+    function validEmail(email) {
+        // eslint-disable-next-line no-useless-escape
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    }
+
     function handleLogin (e) {
         e.preventDefault();
-        console.log('email & password',email, password)
-        console.log('function', loginERuserThunkAction)
+        if (!email || !password ) {
+            alert('Please input login Email & Password')
+            return;
+        }
+
+        if(!validEmail(email)) {
+            alert('Please input valid Email')
+        }
+
+        loginERuserThunkAction();
+
+
     }
 
 
@@ -27,9 +42,9 @@ return(
     <div>
     <Navbar />
     <div>
-<Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password}/>
-<a href="/employerSignup">SignUp</a>
-</div>
+    <Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password}/>
+    <a href="/employerSignup">SignUp</a>
+    </div>
 </div>
 )
 };
