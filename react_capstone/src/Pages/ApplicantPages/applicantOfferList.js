@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-
+import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import Job from "../../Components/Job";
 
-const applicantOfferList = ()=>{
+const ApplicantOfferList = ()=>{
 return(
 <div>
+<ApplicantNavbar />
   <h1>Offer List</h1>
   <ul>
     <Job/>
@@ -17,4 +18,4 @@ return(
 
 
 
-export default applicantOfferList;
+export default ApplicantOfferList;

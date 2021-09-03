@@ -15,7 +15,8 @@ const EmployerLogin = () => {
 
     const {loginERuserThunkAction} = bindActionCreators(actionCreators, dispatch)
 
-    function handleLogin () {
+    function handleLogin (e) {
+
         console.log('email & password',email, password)
         console.log('function', loginERuserThunkAction)
     }
