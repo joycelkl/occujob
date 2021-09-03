@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
 const Login = (props) => {
- const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const login = () => {
-   console.log("running "+email+" "+password);
-  };
+ 
+  const {onEmailChange, onPasswordChange, handleLogin, email, password} = props
+
 
   return (
     <div className="container">
-      <div class="row">
+      <div className="row">
     <Form className="col">
     <FormGroup>
         <Label for="exampleEmail">Email</Label>
-        <Input type="email" name="email" id="exampleEmail" placeholder="Email" onChange={(e) => setEmail(e.currentTarget.value)}
+        <Input type="email" name="email" id="exampleEmail" placeholder="Email" onChange={(e) => onEmailChange(e.currentTarget.value)}
           value={email}/>
       </FormGroup>
       <FormGroup>
         <Label for="examplePassword">Password</Label>
-        <Input type="password" name="password" id="examplePassword" placeholder="Password" onChange={(e) => setPassword(e.currentTarget.value)}
+        <Input type="password" name="password" id="examplePassword" placeholder="Password" onChange={(e) => onPasswordChange(e.currentTarget.value)}
           value={password}/>
       </FormGroup>
-      <Button onClick={login}>Login</Button>
+      <Button type='submit' onSubmit={handleLogin}>Login</Button>
     </Form>
     <div className="col align-self-center"> Free Lancer testing para</div>
     </div>

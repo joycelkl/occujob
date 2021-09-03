@@ -4,7 +4,7 @@ import Home from './Pages/home';
 import Navbar from "./Components/Navbar/navbarLogin";
 import './App.css';
 import applicantLogin from './Pages/ApplicantPages/applicantLogin';
-import employerLogin from './Pages/EmployerPages/employerLogin';
+import EmployerLogin from './Pages/EmployerPages/employerLogin';
 import SignUpForm from './Components/SignUpForm';
 import applicantProfile from './Pages/ApplicantPages/applicantProfile';
 import applicantJobSearch from './Pages/ApplicantPages/applicantJobSearch';
@@ -31,7 +31,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/employerLogin" component={employerLogin} />
+        <Route path="/employerLogin" component={EmployerLogin} />
         <Route path="/applicantLogin" component={applicantLogin} />
         <Route path="/employerSignup" component={SignUpForm} />
         <Route path="/employerHomePage" component={EmployerHomePage} />

@@ -34,7 +34,7 @@ export const logoutNowAction = () => {
 
 
 //ER User Login Thunk
-export const loginERuserThunk = (email, password) => async(dispatch) => {
+export const loginERuserThunkAction = (email, password) => async(dispatch) => {
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/login/employer`, {
             email: email,
