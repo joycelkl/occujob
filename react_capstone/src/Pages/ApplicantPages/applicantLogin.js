@@ -1,12 +1,16 @@
 import React from 'react';
 import Login from '../../Components/LoginForm'
-const applicantLogin = () => {
+import Navbar from '../../Components/Navbar/navbarLogin';
+const ApplicantLogin = () => {
 return(
+    <div>
+        <Navbar />
     <div>
         <Login/>
     <a href="/applicantSignup">SignUp</a>
     </div>
+    </div>
 )
 };
 
-export default applicantLogin;
+export default ApplicantLogin;
