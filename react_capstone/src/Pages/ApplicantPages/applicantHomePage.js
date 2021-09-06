@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, Badge } from 'react-bootstrap';
 import ApplicantNavbar from '../../Components/Navbar/navbarApplicant';
 import "../homePage.css"
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
+import ApplicantHomeCard from '../../Components/Applicants/ApplicantHomeJobCard';
+import { FaTruckLoading } from 'react-icons/fa';
 
 const ApplicantHomePage = () => {
+    const applicantJobState = useSelector((state) => {
+        { console.log("Applicant Job:", state.applicantJob) }
+        return state.applicantJob
+    })
+    const dispatch = useDispatch();
+
+    const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch)
+
+    useEffect(() => {
+        loadApplicantJobThunkAction();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    console.log('Applicant', applicantJobState)
     return (
         <div>
             <ApplicantNavbar />
@@ -16,102 +35,13 @@ const ApplicantHomePage = () => {
                     <a href="/applicantJobSearch" className="Homebtn">Search Jobs</a>
                 </div>
             </section>
-        <div className="jobCard">
-            <Card className='my-4'>
-                <Card.Body>
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            <Card.Title>
-                                Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                            </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
-                                08/30/2021
-                            </Card.Subtitle>
-
-                            <Badge className="job-list-badge" variant="secondary">Full Time</Badge>
-                            <Badge className="job-list-badge2" variant="secondary">Central</Badge>
-
-                        </div>
-                        <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                    </div>
-                </Card.Body>
-            </Card>
-            <Card className='my-4'>
-                <Card.Body>
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            <Card.Title>
-                                Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                            </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
-                                08/30/2021
-                            </Card.Subtitle>
-
-                            <Badge className="job-list-badge" variant="secondary">Full Time</Badge>
-                            <Badge className="job-list-badge2" variant="secondary">Central</Badge>
-
-                        </div>
-                        <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                    </div>
-                </Card.Body>
-            </Card>
-            <Card className='my-4'>
-                <Card.Body>
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            <Card.Title>
-                                Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                            </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
-                                08/30/2021
-                            </Card.Subtitle>
-
-                            <Badge className="job-list-badge" variant="secondary">Full Time</Badge>
-                            <Badge className="job-list-badge2" variant="secondary">Central</Badge>
-
-                        </div>
-                        <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                    </div>
-                </Card.Body>
-            </Card>
-            <Card className='my-4'>
-                <Card.Body>
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            <Card.Title>
-                                Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                            </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
-                                08/30/2021
-                            </Card.Subtitle>
-
-                            <Badge className="job-list-badge" variant="secondary">Full Time</Badge>
-                            <Badge className="job-list-badge2" variant="secondary">Central</Badge>
-
-                        </div>
-                        <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                    </div>
-                </Card.Body>
-            </Card>
-            <Card className='my-4'>
-                <Card.Body>
-                    <div className="d-flex justify-content-between">
-                        <div>
-                            <Card.Title>
-                                Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                            </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
-                                08/30/2021
-                            </Card.Subtitle>
-
-                            <Badge className="job-list-badge" variant="secondary">Full Time</Badge>
-                            <Badge className="job-list-badge2" variant="secondary">Central</Badge>
-
-                        </div>
-                        <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                    </div>
-                </Card.Body>
-            </Card>
+            <div className="jobCard">
+                {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
+                    <ApplicantHomeCard
+                        key={index}
+                        applicantJob={applicantJob}
+                    />
+                )) : "loading..."}
             </div>
         </div>
     )
