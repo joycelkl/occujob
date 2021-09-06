@@ -57,7 +57,7 @@ class RegLoginRouter {
                     let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                     // pass back the user token
-                    return res.json({ token });
+                    return res.json(token);
 
                 } catch (error) {
                     console.error(error.message)
@@ -102,7 +102,7 @@ class RegLoginRouter {
                     let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                     // pass back the user token
-                    return res.json({ token });
+                    return res.json(token);
                 } catch (error) {
                     console.error(error.message)
                     throw new Error(error);
@@ -148,7 +148,7 @@ class RegLoginRouter {
                         }
                         let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
-                        return res.json({ token });
+                        return res.json(token);
                     } else {
                         // otherwise return status as 401 = Unauthorized Error
                         return res.status(401).json("Invalid Credential");
@@ -197,7 +197,7 @@ class RegLoginRouter {
                         }
                         let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
-                        return res.json({ token });
+                        return res.json(token);
                     } else {
                         // otherwise return status as 401 = Unauthorized Error
                         return res.status(401).json("Invalid Credential");
@@ -245,7 +245,7 @@ class RegLoginRouter {
                     let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
                     // pass back the user token
-                    return res.json({ token });
+                    return res.json(token);
                 } catch (error) {
                     console.error(error.message)
                     throw new Error(error);
@@ -292,7 +292,7 @@ class RegLoginRouter {
                         }
                         let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
-                        return res.json({ token });
+                        return res.json(token);
                     } else {
                         // otherwise, give them a message - incorrect credentials
                         return res.status(401).json("Invalid Credential");

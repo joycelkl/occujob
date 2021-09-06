@@ -10,7 +10,9 @@ import { FaTruckLoading } from 'react-icons/fa';
 
 
 const EmployerHomePage = () => {
-    const employerJobState = useSelector((state) => state.employerJob)
+    const employerJobState = useSelector((state) => {
+        {console.log("Employer Job:", state.employerJob)}
+        return state.employerJob})
     const dispatch = useDispatch();
 
     const { loadEmployerJobThunkAction } = bindActionCreators(actionCreators, dispatch)
@@ -21,6 +23,8 @@ const EmployerHomePage = () => {
     }, [])
 
     console.log('employer Job', employerJobState)
+
+    console.log('token', localStorage.getItem("token"))
     return (
         <div>
             <EmployerNavbar />
@@ -34,6 +38,7 @@ const EmployerHomePage = () => {
                 </div>
             </section>
         <div className="jobCard">
+            
         {employerJobState.length > 0 ? employerJobState.map((employerJob, index) => (
                     <EmployerHomeCard
                         key={index}
