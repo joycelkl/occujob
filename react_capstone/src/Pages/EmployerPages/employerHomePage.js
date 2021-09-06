@@ -6,6 +6,8 @@ import "../homePage.css"
 
 
 const EmployerHomePage = () => {
+
+    console.log('token', localStorage.getItem("token"))
     return (
         <div>
             <EmployerNavbar />
