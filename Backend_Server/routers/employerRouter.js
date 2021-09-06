@@ -12,7 +12,7 @@ class EmployerRouter {
         router.get('/profile', (req, res) => {
             console.log("GETTING EE PROFILE")
                 //load main page as company profile after logged in
-
+            console.log('req.user', req.user)
             return this.employerServices.loadProfile(req.user.id)
                 .then((profile) => {
                     return res.json(profile)

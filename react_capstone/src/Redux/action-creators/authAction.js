@@ -42,7 +42,7 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
             password: password
         }).then(res => {
             console.log("ER User login success")
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("token", res.data);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
             console.log("err res", err.response)
@@ -62,7 +62,7 @@ export const loginEEuserThunkAction = (email, password) => async(dispatch) => {
             password: password
         }).then(res => {
             console.log("EE User login success")
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("token", res.data);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
             console.log("err res", err.response)
@@ -83,7 +83,7 @@ export const registerERuserThunkAction = (name, email, password) => async(dispat
             password: password
         }).then(res => {
             console.log("ER User login success")
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("token", res.data);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
             console.log("err res", err.response)
@@ -104,7 +104,7 @@ export const registerEEuserThunkAction = (name, email, password) => async(dispat
             password: password
         }).then(res => {
             console.log("ER User login success")
-            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("token", res.data);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
             console.log("err res", err.response)
