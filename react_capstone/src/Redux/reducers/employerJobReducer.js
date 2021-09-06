@@ -1,4 +1,4 @@
-import { LOAD_EMPLOYER_JOB_SUCCESS_ACTION, LOAD_EMPLOYER_JOB_FAIL_ACTION } from '../action-creators/employerJobAction';
+import { LOAD_EMPLOYER_JOB_SUCCESS_ACTION, LOAD_EMPLOYER_JOB_FAIL_ACTION } from '../action-creators';
 
 const initialState = {
     employerJob: []

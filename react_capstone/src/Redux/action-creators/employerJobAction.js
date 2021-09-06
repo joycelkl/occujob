@@ -1,4 +1,4 @@
-import axios from 'axios';
+import authAxios from '../authAxios'
 
 export const LOAD_EMPLOYER_JOB_SUCCESS_ACTION = 'LOAD_EMPLOYER_JOB_SUCCESS';
 
@@ -25,7 +25,7 @@ export const loadEmployerJobFailAction = () => {
 export const loadEmployerJobThunkAction = () => async (dispatch) => {
     console.log("employer Job Load")
     try {
-        await axios.get(`${process.env.REACT_APP_BASE_URL}/employer/home`).then(res => {
+        await authAxios.get('/employer/home').then(res => {
             dispatch(loadEmployerJobSuccessAction(res.data))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
