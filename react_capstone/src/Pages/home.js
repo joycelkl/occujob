@@ -8,7 +8,7 @@ import { actionCreators } from '../Redux';
 
 
 const Home = () => {
-
+    
     const publicJobState = useSelector((state)=>state.publicJob)
     const dispatch = useDispatch();
 
