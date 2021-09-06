@@ -1,10 +1,10 @@
 import React from "react";
 import { Card } from 'react-bootstrap';
 
-const HomeCard = ()=>{
+const HomeCard = (props)=>{
 
-    const {homeJobCard} = props;
-    const {job_title, er_name, created_at} = homeJobCard;
+    const {publicJob} = props;
+    const {job_title, er_name, created_at, er_img_data} = publicJob;
 
     return(
     <Card className='my-4'>
@@ -19,7 +19,7 @@ const HomeCard = ()=>{
                 </Card.Subtitle>
                 
             </div>
-        <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test"/>
+        {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test"/>:<p></p>}
         </div>
     </Card.Body>
 </Card>)
