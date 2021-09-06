@@ -7,7 +7,7 @@ import employerProfileReducer from './employerProfileReducer'
 const reducers = combineReducers({
     auth: authReducer,
     publicJob: publicJobReducer,
-    EEProfile: EEProfileReducer
+    EEProfile: EEProfileReducer,
     erProfile: employerProfileReducer,
 
 })
