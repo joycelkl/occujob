@@ -7,7 +7,7 @@ import { actionCreators } from '../../Redux';
 
 const EmployerProfilePage = () => {
 
-  const erProfileState = useSelector((state)=>state.erProfile)
+  const erProfileState = useSelector((state)=> state.erProfile);
   const dispatch = useDispatch();
 
   const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)

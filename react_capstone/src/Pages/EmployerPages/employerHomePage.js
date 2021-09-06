@@ -24,7 +24,7 @@ const EmployerHomePage = () => {
 
     console.log('employer Job', employerJobState)
 
-    console.log('token', localStorage.getItem("token"))
+    
     return (
         <div>
             <EmployerNavbar />
