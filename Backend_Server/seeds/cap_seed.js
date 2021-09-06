@@ -23,9 +23,9 @@ exports.seed = function(knex) {
               ])
           }).then(() => {
               return knex('job').insert([
-                  { employer_id:1, job_title: 'Designer', job_function: 'Media & Advertising', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', status: true, job_location:'tst' },
-                   { employer_id:2, job_title: 'Freelance HR & Administrative Officer', job_function: 'HR & Admin', req_exp: 1, expect_salary: 15000, job_description: 'handling mainly HR and Admin duties of our HK, SH and TW offices', work_period: 'work no more than 17 hours a week (on weekdays and office hours) ', status: true, job_location:'tst'},
-                   { employer_id:3, job_title: 'Freelance Photographer', job_function: 'Photography / Video', req_exp: 2, expect_salary: 15000, job_description: 'ensure the regular production output', work_period: 'one week', status: true, job_location:'tst'},
+                  { employer_id:1, job_title: 'Designer', job_function: 'Media & Advertising', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', status: true, job_location:'tst', job_type: 'Part Time' },
+                   { employer_id:2, job_title: 'Freelance HR & Administrative Officer', job_function: 'HR & Admin', req_exp: 1, expect_salary: 15000, job_description: 'handling mainly HR and Admin duties of our HK, SH and TW offices', work_period: 'work no more than 17 hours a week (on weekdays and office hours) ', status: true, job_location:'tst', job_type: 'Freelance'},
+                   { employer_id:3, job_title: 'Freelance Photographer', job_function: 'Photography / Video', req_exp: 2, expect_salary: 15000, job_description: 'ensure the regular production output', work_period: 'one week', status: true, job_location:'tst', job_type: 'Part Time'},
               ])
           })
           .then(() => {
