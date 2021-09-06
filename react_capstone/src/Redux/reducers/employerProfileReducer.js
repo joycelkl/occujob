@@ -2,7 +2,7 @@ import { LOAD_ER_PROFILE_SUCCESS_ACTION, LOAD_ER_PROFILE_FAIL_ACTION } from '../
 
 
 const initialState = {
-    ErProfile: []
+    ErProfile: null
 };
 
 const reducer = (state = initialState, action) => {

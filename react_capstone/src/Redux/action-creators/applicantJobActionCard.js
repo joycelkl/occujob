@@ -22,10 +22,11 @@ export const loadApplicantJobFailAction = () => {
 }
 
 //Load Job for APPLICANT home page
-export const loadApplicantJobThunkAction = () => async (dispatch) => {
+export const loadApplicantJobThunkAction = () => async(dispatch) => {
     console.log("applicant Job Load")
     try {
-        await authAxios.get('/employee/home').then(res => {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.get('/employee/home').then(res => {
             console.log("RES DATA", res.data)
             dispatch(loadApplicantJobSuccessAction(res.data))
         }).catch(err => {
