@@ -39,7 +39,7 @@ const EmployerApplicantSearch = () => {
               </FormGroup>
             </Col>
           </Row>
-          <a href="/employerApplicantSearchList" className="search-Homebtn">Post A Job</a>
+          <a href="/employerApplicantSearchList" className="search-Homebtn">Search</a>
         </div>
       </Form>
       </Container>
