@@ -30,6 +30,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                 </div>
+                
                 <div className="col-4">
                     <div className="card">Profile Picture</div>
                 </div>
