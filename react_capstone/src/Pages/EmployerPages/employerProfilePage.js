@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, FormGroup, Label, Input} from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import {useDispatch, useSelector} from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,7 +18,7 @@ const EmployerProfilePage = () => {
   }, [])
 
   // tested work, Zach please map the data to display in home page
-  console.log('public Job', erProfileState)
+  console.log('erProfile', erProfileState)
 
   return (
     <div>
