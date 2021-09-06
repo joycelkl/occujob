@@ -13,8 +13,8 @@ const ApplicantProfile = () => {
     loadEEProfileThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
-
-const {ee_name,ee_email,ee_industry,ee_location,self_intro,ee_phone,expected_salary,availability}=EEProfileState;
+setTimeout(function assign()
+{const {ee_name,ee_email,ee_industry,ee_location,self_intro,ee_phone,expected_salary,availability}=EEProfileState[0]}, 3000);
 
 console.log(EEProfileState)
 return(
