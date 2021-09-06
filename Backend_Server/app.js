@@ -34,6 +34,9 @@ app.use('/', regLoginRouter)
 
 const JobServices = require('./services/jobServices');
 const jobServices = new JobServices(knex);
+const PublicRouter = require('./routers/publicRouter');
+const publicRouter = new PublicRouter(jobServices).router();
+app.use('/public', publicRouter)
 
 const EmployerService = require('./services/employerServices');
 const employerService = new EmployerService(knex);
@@ -44,6 +47,7 @@ const EmployeeService = require('./services/employeeServices');
 const employeeService = new EmployeeService(knex);
 const EmployeeRouter = require('./routers/employeeRouter')
 const employeeRouter = new EmployeeRouter(employeeService, jobServices).router();
+
 
 
 const auth = require('./Auth/auth')(knex);

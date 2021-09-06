@@ -12,7 +12,7 @@ exports.up = function(knex) {
                 er.string("er_email").notNullable();
                 er.string("er_password").notNullable();
                 er.string("er_type").notNullable();
-                er.binary("er_img_data"); //will change to text later for url
+                er.text("er_img_data"); //will change to text later for url
                 er.string("er_phone");
                 er.text("er_industry");
                 er.text("er_location");
@@ -27,13 +27,14 @@ exports.up = function(knex) {
                 table.string("ee_email").unique();
                 table.string("ee_password").notNullable();
                 table.string("ee_type").notNullable();
-                table.binary("ee_img_data"); //will change to text later for url
+                table.text("ee_img_data"); //will change to text later for url
                 table.specificType("ee_industry", 'text ARRAY');
                 table.text("self_intro");
                 table.integer("ee_phone");
                 table.decimal("expected_salary", 14, 2);
                 table.boolean("availability");
                 table.text('ee_location'); //to be confirmed
+                table.text('ee_exp'); //check query for search
                 table.timestamps(false, true);
             });
         })
@@ -42,8 +43,8 @@ exports.up = function(knex) {
                 product.increments('portfolio_id').primary();
                 product.integer('employee_id').unsigned().notNullable();
                 product.foreign('employee_id').references('employee.ee_id');
-                product.binary('data').notNullable();
-                product.date('completed_date');
+                product.binary('data').notNullable(); //need to change to url
+                product.date('completed_date'); //no need??
                 product.text('portfolio_description');
                 product.timestamps(false, true);
             });
@@ -55,6 +56,7 @@ exports.up = function(knex) {
                 job.foreign("employer_id").references("employer.er_id");
                 job.string("job_title").notNullable();
                 job.string("job_function").notNullable();
+                job.string('job_type').notNullable(); //PT or Freelance
                 job.string("req_exp").notNullable();
                 job.decimal("expect_salary", 14, 2).notNullable();
                 job.text("job_description").notNullable();
