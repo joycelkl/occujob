@@ -7,7 +7,7 @@ import { actionCreators } from '../../Redux';
 
 const EmployerProfilePage = () => {
 
-  const erProfileState = useSelector((state)=> {console.log("ERPRO", state.erProfile);return state.erProfile})
+  const erProfileState = useSelector((state)=> state.erProfile);
   const dispatch = useDispatch();
 
   const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)
@@ -18,7 +18,7 @@ const EmployerProfilePage = () => {
   }, [])
 
   // tested work, Zach please map the data to display in home page
-  console.log('erProfile', erProfileState && erProfileState)
+  console.log('erProfile', erProfileState)
 
   return (
     <div>
