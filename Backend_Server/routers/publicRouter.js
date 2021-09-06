@@ -1,6 +1,6 @@
 const express = require('express')
 
-class JobRouter {
+class PublicRouter {
     constructor(jobSerivces) {
         this.jobSerivces = jobSerivces;
     }
@@ -26,4 +26,4 @@ class JobRouter {
     }
 }
 
-module.exports = JobRouter;
+module.exports = PublicRouter;
