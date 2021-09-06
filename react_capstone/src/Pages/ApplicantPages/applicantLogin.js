@@ -1,11 +1,11 @@
 import React from 'react';
 import Login from '../../Components/LoginForm'
 import Navbar from '../../Components/Navbar/navbarLogin';
-import {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
-
+import { useHistory } from 'react-router';
 
 
 const ApplicantLogin = () => {
@@ -13,9 +13,20 @@ const ApplicantLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const authState = useSelector((state)=>state.auth);
+    const {isAuthenticated, error} = authState
+    const history = useHistory();
+
     const dispatch = useDispatch();
 
     const {loginEEuserThunkAction} = bindActionCreators(actionCreators, dispatch)
+
+    useEffect(()=>{
+        if (isAuthenticated) {
+            history.push('/applicantHomePage')
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated]);
 
     function validEmail(email) {
         // eslint-disable-next-line no-useless-escape
@@ -44,7 +55,8 @@ return(
         <div className="container d-flex">
         <div className="container">
         <h1>Applicant Login Page</h1>
-        <Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password}/>
+        <Login onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password} />
+        {error && alert(error)}
         <a href="/applicantSignup">SignUp</a>
         </div>
             <div className="container">

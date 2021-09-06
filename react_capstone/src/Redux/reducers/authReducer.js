@@ -2,16 +2,20 @@ import { REG_LOGIN_SUCCESS_ACTION, REG_LOGIN_FAILURE_ACTION, LOGOUT_NOW_ACTION }
 
 const initialState = {
     isAuthenticated: false || localStorage.getItem("token") != null,
+    error: null,
 };
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case REG_LOGIN_SUCCESS_ACTION:
-            return { isAuthenticated: true };
+            return {...initialState, isAuthenticated: true };
         case REG_LOGIN_FAILURE_ACTION:
-            return { state };
+            return {
+                isAuthenticated: false,
+                error: action.message
+            };
         case LOGOUT_NOW_ACTION:
-            return { isAuthenticated: false };
+            return {...initialState, isAuthenticated: false };
         default:
             return state;
     }
