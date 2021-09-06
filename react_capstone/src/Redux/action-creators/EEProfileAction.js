@@ -1,4 +1,5 @@
-import axios from 'axios';
+import authAxios from '../../Redux/authAxios'
+
 export const LOAD_EE_PROFILE_SUCCESS_ACTION = 'LOAD_EE_PROFILE_SUCCESS';
 
 export const loadEEProfileSuccessAction = (profile) => {
@@ -24,7 +25,7 @@ export const loadEEProfileFailAction = () => {
 export const loadEEProfileThunkAction = () => async(dispatch) => {
     console.log("public Profile Loaded")
     try {
-        await axios.get(`${process.env.REACT_APP_BASE_URL}/profile`).then(res => {
+        await authAxios.get('/employee/profile').then(res => {
             dispatch(loadEEProfileSuccessAction(res.data))
         }).catch(err => {
             console.log("EE Profile load err res", err.response)

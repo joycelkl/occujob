@@ -13,17 +13,17 @@ const ApplicantProfile = () => {
     loadEEProfileThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
-console.log('EEProfile', EEProfileState)
+console.log('EEProfile', EEProfileState[0].ee_email)
 return(
     <div>
       <ApplicantNavbar />
     <div className="row">
         <div className="col-6">
-     <Label for="">FullName</Label><br></br>
-    <Label for="Email">ee_email</Label>
+     <Label for="">{EEProfileState[0].ee_name}</Label><br></br>
+    <Label for="Email">{EEProfileState[0].ee_email}</Label>
     <FormGroup>
         <Label for="phone">Phone Number</Label>
-        <Input type="number" name="phone" id="phone" placeholder="ee_phone"/>
+        <Input type="number" name="phone" id="phone" placeholder={EEProfileState[0].ee_phone}/>
       </FormGroup>
     <FormGroup>
         <Label for="Text">Self-Introduction</Label>
