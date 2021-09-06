@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, {useEffect} from "react";
+import { Button, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
+import { useDispatch,useSelector} from "react-redux";
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
 
 const ApplicantProfile = () => {
+  const EEProfileState = useSelector((state)=>state.EEProfile);
+  const dispatch = useDispatch();
+  const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch)
+  useEffect(()=>{
+    loadEEProfileThunkAction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+console.log('EEProfile', EEProfileState)
 return(
     <div>
       <ApplicantNavbar />
