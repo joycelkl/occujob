@@ -20,19 +20,15 @@ const EmployerProfilePage = () => {
   }, [])
 
   // tested work, Zach please map the data to display in home page
-  console.log('erProfile', erProfileState[0])
-  
 
-  // const {er_id, er_email, er_img_data, er_industry, er_location, er_name, er_phone, comp_description} = erProfileState[0];
-
-  // console.log('data',er_id, er_email, er_img_data, er_industry, er_location, er_name, er_phone, comp_description)
+  const {er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone} = erProfileState[0] || {}
 
 
-  const [industry, setIndustry] = useState('');
-  const [location, setLocation] = useState('');
-  const [phone, setPhone] = useState('');
-  const [compDescription, setCompDescription] = useState('')
-  const [image, setImage] = useState('')
+  const [industry, setIndustry] = useState(er_industry || '');
+  const [location, setLocation] = useState(er_location || '');
+  const [phone, setPhone] = useState(er_phone ||'');
+  const [compDescription, setCompDescription] = useState(comp_description || '')
+  const [image, setImage] = useState(er_img_data || '')
 
   //****************DONOT CHANGE THE SETTING HERE*****************************/
     // S3 setup
@@ -47,7 +43,7 @@ const EmployerProfilePage = () => {
   const ReactSaveImg = new S3(config);
 
   //the file name should be the user ID and will change later
-  // const newFileName = `${er_id}.jpg`
+  const newFileName = `${er_id}.jpg`
 
   //***************************************************** */
 
@@ -55,7 +51,7 @@ const EmployerProfilePage = () => {
   function upload (e) {
     console.log("data",e.target.files[0])
     ReactSaveImg
-    .uploadFile(e.target.files[0], 'newFileName')
+    .uploadFile(e.target.files[0], newFileName)
     .then((data) => {
         console.log(data)
         setImage(data.location)})
@@ -71,11 +67,11 @@ const EmployerProfilePage = () => {
         <FormGroup>
           <FormGroup>
           <Label for="companyName">Company Name</Label><br></br>
-          <Input type="text" name="companyName" id="companyName" value={'er_name'} disabled/>
+          <Input type="text" name="companyName" id="companyName" value={er_name} disabled/>
           </FormGroup>
           <FormGroup>
           <Label for="email">Email</Label>
-          <Input type="text" name="email" id="email" value={'er_email'} disabled/>
+          <Input type="text" name="email" id="email" value={er_email} disabled/>
           </FormGroup>
           <FormGroup>
             <Label for="phone">Phone Number</Label>

@@ -25,8 +25,8 @@ export const loadErProfileFailAction = () => {
 export const loadErProfileThunkAction = () => async(dispatch) => {
     console.log("ER Profile Load")
     try {
-        const authAxiosinfo = await authAxios();
-        await authAxiosinfo.get('/employer/profile').then(res => {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.get('/employer/profile').then(res => {
             dispatch(loadErProfileSuccessAction(res.data))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
