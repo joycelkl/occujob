@@ -1,7 +1,5 @@
 import authAxios from '../authAxios'
 
-
-
 export const LOAD_ER_PROFILE_SUCCESS_ACTION = 'LOAD_ER_PROFILE_SUCCESS';
 
 export const loadErProfileSuccessAction = (profile) => {
