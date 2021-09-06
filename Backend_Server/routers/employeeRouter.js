@@ -164,6 +164,20 @@ class EmployeeRouter {
                     res.status(500).json(err)
                 })
         })
+
+        router.get('/home', (req, res) => {
+            //list job details via application id 
+            return this.employeeService
+                .homeJobList()
+                .then((jobDetail) => {
+                    res.json(jobDetail)
+                })
+                .catch((err) => {
+                    res.status(500).json(err)
+                })
+
+        })
+
         return router;
     }
 

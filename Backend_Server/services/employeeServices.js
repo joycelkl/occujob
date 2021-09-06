@@ -232,6 +232,22 @@ class EmployeeService {
                 throw new Error(err);
             });
     }
+
+    homeJobList() {
+
+        return this.knex('job')
+            .join('employer', 'employer.er_id', '=', 'job.employer_id')
+            // .where('job.expiry_date', '>', new Date())
+            .select('job.job_title', 'employer.er_name', 'job.job_location', 'job.created_at', 'employer.er_img_data', 'job.job_id', 'job.job_type')
+            .then((jobDetail) => {
+                console.log('public', jobDetail)
+                return jobDetail
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            });
+    }
 }
 
 module.exports = EmployeeService;

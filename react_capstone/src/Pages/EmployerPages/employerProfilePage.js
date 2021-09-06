@@ -1,8 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, { useEffect } from "react";
+import { Button, FormGroup, Label, Input, FormText } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
+import {useDispatch, useSelector} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
 
 const EmployerProfilePage = () => {
+
+  const erProfileState = useSelector((state)=>state.erProfile)
+  const dispatch = useDispatch();
+
+  const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)
+
+  useEffect(()=>{
+    loadErProfileThunkAction();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // tested work, Zach please map the data to display in home page
+  console.log('public Job', erProfileState)
+
   return (
     <div>
       <EmployerNavbar />
