@@ -1,5 +1,4 @@
 import React from "react";
-import { Card, Badge } from 'react-bootstrap';
 //from Arthur to make a Job detail for click into each job n offer Detail
 const JobDetail= ()=>{
 return(
