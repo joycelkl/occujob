@@ -1,27 +1,25 @@
-export const EmployerMenuList = [
-    {
-       title: "Home",
-       url:"/employerHomePage"
+export const EmployerMenuList = [{
+        title: "Home",
+        url: "/employerHomePage"
     },
     {
-       title: "Search",
-       url:"/employerApplicantSearch"
+        title: "Search",
+        url: "/employerApplicantSearch"
     },
     {
-       title: "Create Job",
-       url:"/employerCreateJobPage"
+        title: "Create Job",
+        url: "/employerCreateJobPage"
     },
     {
-       title: "Job Records",
-       url:"/employerJobRecordsList"
+        title: "Job Records",
+        url: "/employerJobRecordsList"
     },
     {
-       title: "Profile",
-       url:"/employerProfilePage"
+        title: "Profile",
+        url: "/employerProfilePage"
     },
-    {
-       title: "Logout",
-       url:"/"
-    },
-
-]; 
+    //  {
+    //      title: "Logout",
+    //      url: "/",
+    //  },
+];

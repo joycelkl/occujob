@@ -25,6 +25,7 @@ export const LOGOUT_NOW_ACTION = "LOGOUT_NOW"
 
 export const logoutNowAction = () => {
     return (dispatch) => {
+        localStorage.clear('token');
         dispatch({
             type: LOGOUT_NOW_ACTION
         })
@@ -32,22 +33,20 @@ export const logoutNowAction = () => {
 }
 
 
-
 //ER User Login Thunk
 export const loginERuserThunkAction = (email, password) => async(dispatch) => {
+    console.log("ER login running")
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/login/employer`, {
             email: email,
             password: password
-        }).then((res) => {
-            console.log("res in loginERthunk", res)
-            if (res.data == null || !res.data.token) {
-                dispatch(regLoginFailureAction("Invalid Credential"))
-            } else {
-                console.log("ER User login success")
-                localStorage.setItem("token", res.data.token);
-                dispatch(regLoginSuccessAction())
-            }
+        }).then(res => {
+            console.log("ER User login success")
+            localStorage.setItem("token", res.data.token);
+            dispatch(regLoginSuccessAction())
+        }).catch(err => {
+            console.log("err res", err.response)
+            dispatch(regLoginFailureAction(err.response.data))
         })
     } catch (err) {
         console.error("Error in ER Login", err)
@@ -56,43 +55,39 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
 
 //Applicant User Login Thunk
 export const loginEEuserThunkAction = (email, password) => async(dispatch) => {
+    console.log("Application Login running")
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/login/employee`, {
             email: email,
             password: password
-        }).then((res) => {
-            console.log("res in loginEEthunk", res)
-            if (res.data == null || !res.data.token) {
-                dispatch(regLoginFailureAction("Invalid Credential"))
-                return false
-            } else {
-                console.log("EE User login success")
-                localStorage.setItem("token", res.data.token);
-                dispatch(regLoginSuccessAction())
-                return true
-            }
+        }).then(res => {
+            console.log("EE User login success")
+            localStorage.setItem("token", res.data.token);
+            dispatch(regLoginSuccessAction())
+        }).catch(err => {
+            console.log("err res", err.response)
+            dispatch(regLoginFailureAction(err.response.data))
         })
     } catch (err) {
-        console.error("Error in ER Login", err)
+        console.error("Error in EE Login", err)
     }
 }
 
 //ER User Register Thunk
 export const registerERuserThunkAction = (name, email, password) => async(dispatch) => {
+    console.log('register ER running')
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/register/employer`, {
             name: name,
             email: email,
             password: password
-        }).then((res) => {
-            console.log("res in registerERthunk", res)
-            if (res.data == null || !res.data.token) {
-                dispatch(regLoginFailureAction("Invalid Credential"))
-            } else {
-                console.log("ER User register success")
-                localStorage.setItem("token", res.data.token);
-                dispatch(regLoginSuccessAction())
-            }
+        }).then(res => {
+            console.log("ER User login success")
+            localStorage.setItem("token", res.data.token);
+            dispatch(regLoginSuccessAction())
+        }).catch(err => {
+            console.log("err res", err.response)
+            dispatch(regLoginFailureAction(err.response.data))
         })
     } catch (err) {
         console.error("Error in ER Register", err)
@@ -101,20 +96,19 @@ export const registerERuserThunkAction = (name, email, password) => async(dispat
 
 //Applicant User Register Thunk
 export const registerEEuserThunkAction = (name, email, password) => async(dispatch) => {
+    console.log('Application register running')
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/register/employee`, {
             name: name,
             email: email,
             password: password
-        }).then((res) => {
-            console.log("res in registerEEthunk", res)
-            if (res.data == null || !res.data.token) {
-                dispatch(regLoginFailureAction("Invalid Credential"))
-            } else {
-                console.log("EE User register success")
-                localStorage.setItem("token", res.data.token);
-                dispatch(regLoginSuccessAction())
-            }
+        }).then(res => {
+            console.log("ER User login success")
+            localStorage.setItem("token", res.data.token);
+            dispatch(regLoginSuccessAction())
+        }).catch(err => {
+            console.log("err res", err.response)
+            dispatch(regLoginFailureAction(err.response.data))
         })
     } catch (err) {
         console.error("Error in EE Register", err)

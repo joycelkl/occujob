@@ -29,11 +29,7 @@ class RegLoginRouter {
                     // if there is a user
                     if (users.length > 0) {
                         // return false - user already exists
-                        return res.status(422).json({
-                            errors: [{
-                                msg: "User already exists"
-                            }]
-                        })
+                        return res.status(422).json("User already exists")
                     }
 
                     // otherwise, hash their password
@@ -81,11 +77,7 @@ class RegLoginRouter {
                     // if there is a user
                     if (users.length > 0) {
                         // return false - user already exists
-                        return res.status(422).json({
-                            errors: [{
-                                msg: "User already exists"
-                            }]
-                        })
+                        return res.status(422).json("User already exists")
                     }
                     // otherwise, hash their password
                     let hashedPassword = await hashFunction.hashPassword(password);
@@ -229,11 +221,7 @@ class RegLoginRouter {
                     // if there is a user
                     if (users.length > 0) {
                         // return false - user already exists
-                        return res.status(422).json({
-                            errors: [{
-                                msg: "User already exists"
-                            }]
-                        })
+                        return res.status(422).json("User already exists")
                     }
                     // otherwise, hash their password
                     let hashedPassword = await hashFunction.hashPassword(password);

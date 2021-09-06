@@ -20,7 +20,9 @@ const Login = (props) => {
         <Input type="password" name="password" id="examplePassword" placeholder="Password" onChange={(e) => onPasswordChange(e.currentTarget.value)}
           value={password}/>
       </FormGroup>
+      
       <Button type='submit'>Login</Button>
+      
     </Form>
     </div>
     </div>

@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../Components/Navbar/navbarLogin";
 import Signup from '../../Components/SignUpForm';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
+import { useHistory } from 'react-router';
 
 const ApplicantSignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("")
 
+  const authState = useSelector((state)=>state.auth);
+    const {isAuthenticated, error} = authState
+    const history = useHistory();
+
   const dispatch = useDispatch();
 
   const {registerEEuserThunkAction} = bindActionCreators(actionCreators, dispatch)
+
+  useEffect(()=>{
+    if (isAuthenticated) {
+        history.push('/applicantHomePage')
+    }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [isAuthenticated]);
 
   function validEmail(email) {
     // eslint-disable-next-line no-useless-escape
@@ -41,6 +53,7 @@ const ApplicantSignUp = (props) => {
       <div className="container">
       <h1>Applicant SignUp Page</h1>
       <Signup onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleRegister={(e)=>handleRegister(e)} email={email} password={password} onNameChange={(v)=>setName(v)} name={name} type="Applicant"/>
+      {error && alert(error)}
       </div>
         <div className="container">
             <h3> Free Lancer testing para</h3>
