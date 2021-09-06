@@ -38,16 +38,21 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
     console.log("ER login running")
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/login/employer`, {
-            email: email,
-            password: password
-        }).then(res => {
-            console.log("ER User login success")
-            localStorage.setItem("token", res.data);
-            dispatch(regLoginSuccessAction())
-        }).catch(err => {
-            console.log("err res", err.response)
-            dispatch(regLoginFailureAction(err.response.data))
-        })
+                email: email,
+                password: password
+            }).then(res => {
+                console.log("ER User login success")
+                localStorage.setItem("token", res.data)
+
+            })
+            .then(() => {
+                dispatch(regLoginSuccessAction())
+            })
+            .catch(err => {
+                console.log("err res", err.response)
+
+                dispatch(regLoginFailureAction(err.response.data))
+            })
     } catch (err) {
         console.error("Error in ER Login", err)
     }
