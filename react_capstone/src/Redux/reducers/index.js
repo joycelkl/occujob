@@ -5,7 +5,8 @@ import publicJobReducer from './publicJobReducer'
 
 const reducers = combineReducers({
     auth: authReducer,
-    publicJob: publicJobReducer
+    publicJob: publicJobReducer,
+
 })
 
 export default reducers
