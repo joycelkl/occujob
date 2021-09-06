@@ -26,6 +26,7 @@ export const loadEmployerJobThunkAction = () => async (dispatch) => {
     console.log("employer Job Load")
     try {
         await authAxios.get('/employer/home').then(res => {
+            console.log("RES DATA", res.data)
             dispatch(loadEmployerJobSuccessAction(res.data))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
