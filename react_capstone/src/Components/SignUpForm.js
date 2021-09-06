@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-
 const SignUp = (props) => {
 
   const {onEmailChange, onPasswordChange, handleRegister, email, password, name, onNameChange, type} = props
@@ -27,7 +26,6 @@ const SignUp = (props) => {
                 value={password} />
             </FormGroup>
             <Button type='submit'>SignUp</Button>
-            <a href="/employerlogin">login</a>
           </Form>
         </div>
       </div>

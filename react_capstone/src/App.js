@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Home from './Pages/home';
 import './App.css';
 import ApplicantLogin from './Pages/ApplicantPages/applicantLogin';
@@ -23,36 +24,64 @@ import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearch
 import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
 import EmployerSignUp from './Pages/EmployerPages/employerSignup';
 
+
+
+const PrivateRoute = ({component, ...rest}) =>{
+  const {isAuthenticated} = useSelector((state) => state.auth)
+  const Component = component;
+  if (Component != null) {
+    return (
+      <Route
+      {...rest}
+      render={(props)=>
+        isAuthenticated ? (
+      <Component {...props} />
+        ) : ( 
+          <Redirect to={{
+            pathname: "/",
+            state: {from: props.location},
+          }}
+          />
+        )
+      }
+    />
+    );
+  } else {
+    return null;
+  }
+}
+
+
 function App() {
-  return (
+    return (
 
-    <Router>
-     
-        <Route path="/" exact component={Home} />
-        <Route path="/employerLogin" component={EmployerLogin} />
-        <Route path="/applicantLogin" component={ApplicantLogin} />
-        <Route path="/employerSignup" component={EmployerSignUp} />
-        <Route path="/employerHomePage" component={EmployerHomePage} />
-        <Route path="/employerProfilePage" component={EmployerProfilePage} />
-        <Route path="/employerCreateJobPage" component={EmployerCreateJobPage} />
-        <Route path="/employerJobRecordsList" component={EmployerJobRecordsList} />
-        <Route path="/employerApplicantProfile" component={EmployerApplicantProfile} />
-        <Route path="/employerEditPost" component={EmployerEditPost} />
-        <Route path="/employerApplicantSearch" component={EmployerApplicantSearch} />
-        <Route path="/employerApplicantSearchList" component={EmployerApplicantSearchList} />
-        <Route path="/employerSearchApplicantProfile" component={EmployerSearchApplicantProfile} />
-        <Route path="/applicantSignup" component={ApplicantSignUp} />
-        <Route path="/applicantProfile" component={ApplicantProfile} />
-        <Route path="/applicantJobSearch" component={ApplicantJobSearch} />
-        <Route path="/applicantJobSearchResult" component={ApplicantJobSearchResult} />
-        <Route path="/applicantJobDetail" component={ApplicantJobDetail} />
-        <Route path="/applicantOfferList" component={ApplicantOfferList} />
-        <Route path="/applicantOfferDetail" component={ApplicantOfferDetail} />
-        <Route path="/applicantHomePage" component={ApplicantHomePage} />
-     
-    </Router>
+        <Router >
+        <Switch>
+        <Route path = "/" exact component = { Home }/> 
+        <Route path = "/employerLogin" component = { EmployerLogin } /> 
+        <Route path = "/applicantLogin" component = { ApplicantLogin } /> 
+        <Route path = "/employerSignup" component = { EmployerSignUp } /> 
+        <Route path = "/applicantSignup" component = { ApplicantSignUp } /> 
+        <PrivateRoute path = "/employerHomePage" component = { EmployerHomePage } /> 
+        <PrivateRoute path = "/employerProfilePage" component = { EmployerProfilePage } /> 
+        <PrivateRoute path = "/employerCreateJobPage"  component = { EmployerCreateJobPage }/> 
+        <PrivateRoute path = "/employerJobRecordsList" component = { EmployerJobRecordsList }/> 
+        <PrivateRoute path = "/employerApplicantProfile" component = { EmployerApplicantProfile }/> 
+        <PrivateRoute path = "/employerEditPost" component = { EmployerEditPost }/> 
+        <PrivateRoute path = "/employerApplicantSearch" component = { EmployerApplicantSearch } /> 
+        <PrivateRoute path = "/employerApplicantSearchList" component = { EmployerApplicantSearchList }/> 
+        <PrivateRoute path = "/employerSearchApplicantProfile" component = { EmployerSearchApplicantProfile }/> 
+        <PrivateRoute path = "/applicantProfile" component = { ApplicantProfile }/> 
+        <PrivateRoute path = "/applicantJobSearch" component = { ApplicantJobSearch }/> 
+        <PrivateRoute path = "/applicantJobSearchResult" component = { ApplicantJobSearchResult }/> 
+        <PrivateRoute path = "/applicantJobDetail" component = { ApplicantJobDetail } /> 
+        <PrivateRoute path = "/applicantOfferList" component = { ApplicantOfferList } /> 
+        <PrivateRoute path = "/applicantOfferDetail" component = { ApplicantOfferDetail }/> 
+        <PrivateRoute path = "/applicantHomePage" component = { ApplicantHomePage } />
+        </Switch>
+        </ Router>
 
-  );
+    );
 }
 
 export default App;

@@ -16,9 +16,9 @@ export const ApplicantMenuList = [
        url:"/applicantProfile"
     },
    
-    {
-       title: "Logout",
-       url:"/"
-    },
+   //  {
+   //     title: "Logout",
+   //     url:"/"
+   //  },
 
 ]; 
