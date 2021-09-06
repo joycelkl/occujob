@@ -1,8 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Card, Badge } from 'react-bootstrap';
 import Navbar from '../Components/Navbar/navbarLogin';
 import "./homePage.css";
-const home = () => {
+import {useDispatch, useSelector} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../Redux';
+
+
+const Home = () => {
+
+    const publicJobState = useSelector((state)=>state.publicJob)
+    const dispatch = useDispatch();
+
+    const {loadPublicJobThunkAction} = bindActionCreators(actionCreators, dispatch)
+
+    useEffect(()=>{
+        loadPublicJobThunkAction();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    // tested work, Zach please map the data to display in home page
+    console.log('public Job', publicJobState)
+
+
     return (
         <div>
             <Navbar />
@@ -118,4 +138,4 @@ const home = () => {
     )
 };
 
-export default home;
+export default Home;
