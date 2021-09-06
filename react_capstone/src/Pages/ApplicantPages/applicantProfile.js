@@ -8,26 +8,30 @@ import { actionCreators } from '../../Redux';
 const ApplicantProfile = () => {
   const EEProfileState = useSelector((state)=>state.EEProfile);
   const dispatch = useDispatch();
-  const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch)
+  const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
   useEffect(()=>{
     loadEEProfileThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
-console.log('EEProfile', EEProfileState[0].ee_email)
+
+const {ee_name,ee_email,ee_industry,ee_location,self_intro,ee_phone,expected_salary,availability}=EEProfileState;
+
+console.log(EEProfileState)
 return(
     <div>
       <ApplicantNavbar />
     <div className="row">
         <div className="col-6">
-     <Label for="">{EEProfileState[0].ee_name}</Label><br></br>
-    <Label for="Email">{EEProfileState[0].ee_email}</Label>
+     <Label for="Name">{ee_name}</Label><br></br>
+     <Label for="phone">Email </Label><br></br>
+     <Label for="Email">{ee_email}</Label>
     <FormGroup>
         <Label for="phone">Phone Number</Label>
-        <Input type="number" name="phone" id="phone" placeholder={EEProfileState[0].ee_phone}/>
+        <Input type="number" name="phone" id="phone" placeholder={ee_phone}/>
       </FormGroup>
     <FormGroup>
         <Label for="Text">Self-Introduction</Label>
-        <Input type="textarea" name="text" id="intro" placeholder="intro" />
+      <Input type="textarea" name="text" id="intro" placeholder={self_intro} />
       </FormGroup>
       <FormGroup>
         <Label for="Skill">Skills</Label>
@@ -35,19 +39,20 @@ return(
       </FormGroup>
       <FormGroup>
         <Label for="JobFunction">JobFunction</Label>
-        <Input type="textarea" name="text" id="JobFunction" placeholder="ee_industry" />
+     <Input type="textarea" name="text" id="JobFunction" placeholder={ee_industry} />
       </FormGroup>
       <FormGroup>
         <Label for="Expected Salary">Expected Salary</Label>
-        <Input type="number" name="number" id="Expected Salary" placeholder="Expected Salary" />
+      <Input type="number" name="number" id="Expected Salary" placeholder={expected_salary} />
       </FormGroup>
       <FormGroup>
         <Label for="Availabilty">Availabilty</Label>
-        <Input type="text" name="number" id="Availabilty" placeholder="Availabilty" />
+        <Input type="text" name="number" id="Availabilty" placeholder={availability} />
       </FormGroup>
       <FormGroup>
         <Label for="preferworklocation">preferworklocation</Label>
-        <Input type="select" name="select" id="preferworklocation">
+        <Input type="select" name="select" id="preferworklocation" >
+        <option>{ee_location}</option>
           <option>Islands</option>
           <option>Kwai Tsing</option>
           <option>North</option>
@@ -61,6 +66,7 @@ return(
       </div>
       </div>
       <Button>Update</Button>
+
     </div>
     
 )
