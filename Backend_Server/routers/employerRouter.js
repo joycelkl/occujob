@@ -27,8 +27,8 @@ class EmployerRouter {
         router.post('/profile', (req, res) => {
             //update profile itmes except img
             console.log('update profile in router', req.user.id)
-            const { industry, compDescription, phone, location } = req.body
-            return this.employerServices.updateProfile(req.user.id, industry, compDescription, phone, location)
+            const { industry, compDescription, phone, location, image } = req.body
+            return this.employerServices.updateProfile(req.user.id, industry, compDescription, phone, location, image)
                 .then((updatedProfile) => {
                     return res.json(updatedProfile)
                 })
