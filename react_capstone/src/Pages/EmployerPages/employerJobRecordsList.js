@@ -25,7 +25,7 @@ const EmployerJobRecordsList = () => {
         <div>
             <EmployerNavbar />
             <div className="jobCard">
-                {employerJobState.map(job => <EmployerJobRecordCard key={job.job_id} job={job}/>)}
+                {employerJobState.length>0?employerJobState.map(job => <EmployerJobRecordCard key={job.job_id} job={job}/>):<p>Loading...</p>}
             </div>
         </div>
     )
