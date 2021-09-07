@@ -25,7 +25,7 @@ const EmployerProfilePage = () => {
 
   // tested work, Zach please map the data to display in home page
   
-  const {er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone} = erProfileState
+  const {er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone} = erProfileState[0]
 
   
 
