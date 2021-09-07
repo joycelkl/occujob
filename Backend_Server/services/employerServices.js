@@ -25,7 +25,7 @@ class EmployerServices {
             });
     }
 
-    updateProfile(userId, industry, compDescription, phone, location) {
+    updateProfile(userId, industry, compDescription, phone, location, image) {
         console.log('erService update profile')
         return this.knex('employer')
             .where({
@@ -35,11 +35,12 @@ class EmployerServices {
                 er_industry: industry,
                 comp_description: compDescription,
                 er_location: location,
-                er_phone: phone
+                er_phone: phone,
+                er_img_data: image
             })
             .returning('*')
-            .then((updateProfile) => {
-                return updateProfile;
+            .then((updatedProfile) => {
+                return updatedProfile;
             })
             .catch((err) => {
                 console.err

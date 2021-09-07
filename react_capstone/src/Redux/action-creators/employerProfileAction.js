@@ -27,6 +27,30 @@ export const loadErProfileThunkAction = () => async(dispatch) => {
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employer/profile').then(res => {
+            dispatch(loadErProfileSuccessAction(res.data[0]))
+        }).catch(err => {
+            console.log("pubulic job load err res", err.response)
+            dispatch(loadErProfileFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
+export const UPDATE_ER_PROFILE_ACTION = 'UPDATE_ER_PROFILE';
+
+export const updateErProfileAction = (industry, compDescription, phone, location, image) => async(dispatch) => {
+    console.log("ER Profile update")
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.post('/employer/profile', {
+            industry: industry,
+            compDescription: compDescription,
+            phone: phone,
+            location: location,
+            image: image
+        }).then(res => {
             dispatch(loadErProfileSuccessAction(res.data))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
