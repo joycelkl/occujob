@@ -27,7 +27,7 @@ console.log('Offer', EEOfferState)
 return(
 <div>
 <ApplicantNavbar />
-  <h1>Offer List</h1>
+  <h1>Application Record</h1>
   <div className="jobCard">
                 {EEOfferState.length > 0 ? EEOfferState.map((EEOffer, index) => (
                     <ApplicantOfferCard
