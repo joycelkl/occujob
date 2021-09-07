@@ -1,8 +1,17 @@
-import React from "react";
+import React , { useState } from "react";
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 
-const ApplicantJobSearch = () => {
+const ApplicantJobSearch = (props) => {
+  const [search, setSearch] = useState("");
+  const onSearchChange = (e) => {
+    console.log(newSearch)
+    const newSearch = e.currentTarget.value;
+    setSearch(newSearch);
+    if (newSearch === "") {
+      props.onSearchChange("");
+    }
+  };
   return (
     <Form>
       <div>
@@ -12,7 +21,7 @@ const ApplicantJobSearch = () => {
             <Col md={6}>
               <FormGroup>
                 <Label for="JobTitle">Job Title/Company</Label>
-                <Input type="text" name="JobTitle" id="JobTitle" placeholder="Job Title/Company" />
+                <Input type="text" name="JobTitle" id="JobTitle" value={search} placeholder="Job Title/Company" />
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -26,25 +35,22 @@ const ApplicantJobSearch = () => {
             <Col md={6}>
               <FormGroup>
                 <Label for="Job Function">Job Function</Label>
-                <Input type="text" name="Job Function" id="Job Function" placeholder="Job Function" />
+                <Input type="text" name="Job Function" id="JobFunction" placeholder="Job Function" />
               </FormGroup>
             </Col>
             <Col md={6}>
               <FormGroup>
-                <Label for="Working Location">Job Function</Label>
-                <Input type="text" name="Working Location" id="Working Location" placeholder="Working Location" />
+                <Label for="Working Location">Working Lication</Label>
+                <Input type="text" name="Working Location" id="WorkingLocation" placeholder="Working Location" />
               </FormGroup>
             </Col>
           </Row>
-          <Button>Search</Button>
+          <Button onClick={() => props.onSearchChange(search)}>
+         Search</Button>
         </div>
       </div>
     </Form>
   );
 }
-
-
-
-
 
 export default ApplicantJobSearch;
