@@ -45,7 +45,7 @@ const ApplicantJobSearch = (props) => {
               </FormGroup>
             </Col>
           </Row>
-          <Button onClick={() => props.onSearchChange(search)}>
+          <Button onClick={() => props.onSearchChange()}>
          Search</Button>
         </div>
       </div>
