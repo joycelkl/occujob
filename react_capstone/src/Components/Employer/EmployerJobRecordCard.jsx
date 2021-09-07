@@ -3,7 +3,9 @@ import { Card, Badge } from 'react-bootstrap';
 
 const EmployerJobRecordCard = (props) => {
 
-    const {job_title, created_at, expiry_date, status , job_id } = props.job
+    const {job_title, created_at, expiry_date, status , job_id, er_img_data} = props.job
+
+    console.log("props:", props.job)
 
 
     function handleOnclick () {
@@ -29,7 +31,7 @@ const EmployerJobRecordCard = (props) => {
                                 <Badge className="job-list-badge" variant="secondary">{status? 'Active' : 'Inactive'}</Badge>
 
                             </div>
-                            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
+                            <img  src={er_img_data} alt="no image"/>
                         </div>
                     </Card.Body>
                 </Card>

@@ -8,7 +8,7 @@ export const ApplicantMenuList = [
        url:"/applicantJobSearch"
     },
     {
-       title: "Offers",
+       title: "Records",
        url:"/applicantOfferList"
     },
     {
