@@ -29,7 +29,8 @@ class EmployeeService {
         userExpectedSalary,
         userIndustry,
         userAvailability,
-        userLocation
+        userLocation,
+        userImage
     ) {
 
         // need to review the tags function here
@@ -58,7 +59,8 @@ class EmployeeService {
                     ee_phone: userPhone,
                     expected_salary: userExpectedSalary,
                     availability: userAvailability,
-                    ee_location: userLocation
+                    ee_location: userLocation,
+                    ee_img_data: userImage
                 })
                 .returning('*')
                 .then((updatedUser) => {
@@ -77,7 +79,8 @@ class EmployeeService {
                     expected_salary: userExpectedSalary,
                     ee_industry: ind,
                     availability: userAvailability,
-                    ee_location: userLocation
+                    ee_location: userLocation,
+                    ee_img_data: userImage
                 })
                 .returning('*')
                 .then((updatedUser) => {
