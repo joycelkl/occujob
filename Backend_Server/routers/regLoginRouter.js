@@ -44,8 +44,9 @@ class RegLoginRouter {
                     };
 
                     //insert the new user, get the user info
-                    let user = await knex('employer').insert(newUser).returning("*");
-                    console.log("New ER user in database: ", user);
+                    let user1 = await knex('employer').insert(newUser).returning("*");
+                    console.log("New ER user in database: ", user1);
+                    let user = user1[0]
 
                     // generate that token to the user
                     const { er_id, er_name, er_type } = user;
@@ -55,6 +56,8 @@ class RegLoginRouter {
                         type: er_type,
                     }
                     let token = await JWT.sign(payload, config, { expiresIn: '1d' })
+
+                    console.log(token)
 
                     // pass back the user token
                     return res.json(token);
@@ -89,8 +92,9 @@ class RegLoginRouter {
                         ee_type: "ee"
                     };
                     //insert the new user, get the user info
-                    let user = await knex('employee').insert(newUser).returning("*");
+                    let user1 = await knex('employee').insert(newUser).returning("*");
                     console.log("New EE user in database: ", user);
+                    let user = user1[0]
 
                     // generate that token to the user
                     const { ee_id, ee_name, ee_type } = user;
