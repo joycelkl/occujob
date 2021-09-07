@@ -21,7 +21,7 @@ export const loadIndJobFailAction = () => {
     }
 }
 
-//Load Indvidual Job Detail
+//Load Indvidual Job Detail in ER
 export const loadIndJobThunkAction = (jobId) => async(dispatch) => {
     console.log("Indvidual Job Load")
     try {
