@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React from "react";
+import { useSelector } from 'react-redux';
+import { Button, FormGroup, Label,} from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 
 const EmployerApplicantProfile = () => {
+
+    
+    const indJobState = useSelector((state) => state.individualJob)
+
+    console.log("individual job", indJobState)
+
     return (
         <div>
             <EmployerNavbar />
             <div className="row">
                 <div className="col-6">
-                    <Label for="">FullName</Label><br></br>
+                    <Label for="">Applicant's Name</Label><br></br>
+                    
                     <Label for="Email">ee_email</Label>
                     
                     <FormGroup>
