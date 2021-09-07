@@ -16,7 +16,7 @@ const EmployerCreateJobPage = () => {
     function handleOnSubmit (e) {
         e.preventDefault();
         console.log('submitting')
-
+        
     }
 
     function handleReset () {
@@ -78,7 +78,7 @@ const EmployerCreateJobPage = () => {
                         </Input>
                     </FormGroup>
                     <Button className="m-2" type="submit">Post</Button>
-                    <Button className="m-2" type="submit" onClick={()=>handleReset()}>Reset</Button>
+                    <Button className="m-2" onClick={()=>handleReset()}>Reset</Button>
                     </Form>
                 </div>
 
