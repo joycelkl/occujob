@@ -1,13 +1,25 @@
 import React from 'react'
 import { Card, Badge } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
+import { useHistory } from 'react-router';
 
 const EmployerJobRecordCard = (props) => {
+
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const { loadIndJobThunkAction } = bindActionCreators(actionCreators, dispatch)
+
 
     const {job_title, created_at, expiry_date, status , job_id } = props.job
 
 
     function handleOnclick () {
         console.log('clicked', job_id)
+        loadIndJobThunkAction(job_id).then(()=>{
+            history.push('/employerApplicantProfile')
+        })
     }
 
     return (
