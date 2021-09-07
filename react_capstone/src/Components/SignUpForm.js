@@ -7,9 +7,9 @@ const SignUp = (props) => {
 
   return (
     <div>
-      <div className="container">
+      <div className="container-fluid">
         <div class="row">
-          <Form className="form-group" onSubmit={(e)=>handleRegister(e)}>
+          <Form className="form-group" onSubmit={(e)=>handleRegister(e)} style={{ width: "100%", padding:"0", marginTop:"20px" }}>
           <FormGroup>
               <Label for="name">{type} Name</Label>
               <Input type="text" name="name" id="name" placeholder="Name" onChange={(e) => onNameChange(e.currentTarget.value)}
@@ -25,7 +25,10 @@ const SignUp = (props) => {
               <Input type="password" name="password" id="examplePassword" placeholder="Password" onChange={(e) => onPasswordChange(e.currentTarget.value)}
                 value={password} />
             </FormGroup>
+            <div className="signupButtons" style={{float: "right", marginTop:"40px"}}>
+
             <Button type='submit'>SignUp</Button>
+            </div>
           </Form>
         </div>
       </div>

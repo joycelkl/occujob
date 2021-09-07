@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import { FaBars } from 'react-icons/fa'
 import { LoginMenuList } from "./MenuList"
+import logo from '../../Images/logo.png';
 
 const Navbar = () => {
     const [clicked, setClicked] = useState(false);
@@ -21,8 +22,10 @@ const Navbar = () => {
 
     return (
         <nav className="mainNav">
-            <div className="navLogo">
-                <font>HK</font>FREELANCER
+            <div className="logo">
+            <a href="/">
+            <img src={logo} width="240" height="100" />
+            </a>
             </div>
             <div className="navMenuIcon" onClick={handleClick}>
                 <FaBars />
