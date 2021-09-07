@@ -59,7 +59,7 @@ const EmployerLogin = () => {
                 <div className="container-fluid d-flex">
                     <div className="container" style={{ border: "1px solid black", padding: "80px", backgroundColor: "rgb(59, 105, 121)", marginTop: "150px", marginLeft: "100px", marginRight: "100px", borderRadius: "25px", color: "white" }}>
                         <h1 >Employer Login Page</h1>
-                        <Login link="/employerSignup" onEmailChange={(v) => setEmail(v)} onPasswordChange={(v) => setPassword(v)} s={(e) => handleLogin(e)} email={email} password={password} />
+                        <Login link="/employerSignup" onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password} />
                         {error && alert(error)}
 
 
