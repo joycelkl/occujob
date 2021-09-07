@@ -40,17 +40,17 @@ class EmployerRouter {
 
         //no tested yet will need to change the img save to cloud
         //url should be text
-        router.post('/profile/img', (req, res) => {
-            console.log("uploading img")
-            return this.employerServices.updateImg(req.user.id, req.files.img.data)
-                .then((updated) => {
-                    return res.json(updated)
-                })
-                .catch((err) => {
-                    res.status(500).json(err)
-                });
+        // router.post('/profile/img', (req, res) => {
+        //     console.log("uploading img")
+        //     return this.employerServices.updateImg(req.user.id, req.files.img.data)
+        //         .then((updated) => {
+        //             return res.json(updated)
+        //         })
+        //         .catch((err) => {
+        //             res.status(500).json(err)
+        //         });
 
-        });
+        // });
 
         //tested ok
         router.get('/job/list', (req, res) => {
@@ -75,16 +75,17 @@ class EmployerRouter {
             //posting job with jobServices 
             const {
                 jobTitle,
-                jobFunction,
+                jobDescription,
                 reqExp,
                 expectSalary,
-                jobDescription,
+                jobType,
+                jobFunction,
                 workPeriod,
                 location
             } = req.body
 
             return this.employerServices.jobPosting(req.user.id, jobTitle, jobFunction, reqExp, expectSalary,
-                    jobDescription, workPeriod, location)
+                    jobDescription, workPeriod, location, jobType)
                 .then((job) => {
                     return res.json(job)
                 })

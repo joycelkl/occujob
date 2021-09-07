@@ -49,27 +49,27 @@ class EmployerServices {
 
     }
 
-    //url should be text
-    updateImg(userId, er_imgData) {
-        return this.knex('employer')
-            .where({
-                er_id: userId
-            })
-            .update({
-                er_img_data: imgData
-            })
-            .returning('*')
-            .then((updated) => {
-                console.log('img uploaded')
-                return updated;
-            })
-            .catch((err) => {
-                console.log(err)
-                throw new Error(err)
-            });
+    // //url should be text
+    // updateImg(userId, er_imgData) {
+    //     return this.knex('employer')
+    //         .where({
+    //             er_id: userId
+    //         })
+    //         .update({
+    //             er_img_data: imgData
+    //         })
+    //         .returning('*')
+    //         .then((updated) => {
+    //             console.log('img uploaded')
+    //             return updated;
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //             throw new Error(err)
+    //         });
 
 
-    }
+    // }
 
     listJobHistory(userId) {
         return this.knex('job')
@@ -89,7 +89,7 @@ class EmployerServices {
             });
     }
 
-    jobPosting(userId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, location) {
+    jobPosting(userId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, location, jobType) {
 
         let expiry = new Date(new Date().setDate(new Date().getDate() + 14));
         let formatted_date = expiry.getFullYear() + "-" + (expiry.getMonth() + 1) + "-" + expiry.getDate();
@@ -106,6 +106,7 @@ class EmployerServices {
                 expiry_date: formatted_date,
                 status: true,
                 job_location: location,
+                job_type: jobType,
             })
             .returning('*')
             .then((job) => {
