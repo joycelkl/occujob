@@ -1,5 +1,6 @@
 import authAxios from '../authAxios'
 
+//for home page
 export const LOAD_EMPLOYER_JOB_SUCCESS_ACTION = 'LOAD_EMPLOYER_JOB_SUCCESS';
 
 export const loadEmployerJobSuccessAction = (job) => {
@@ -28,6 +29,25 @@ export const loadEmployerJobThunkAction = () => async(dispatch) => {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employer/home').then(res => {
             console.log("RES DATA", res.data)
+            dispatch(loadEmployerJobSuccessAction(res.data))
+        }).catch(err => {
+            console.log("pubulic job load err res", err.response)
+            dispatch(loadEmployerJobFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
+
+
+
+export const erJobRecordAction = () => async(dispatch) => {
+    console.log("ER Job Posting")
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.get('/employer/job/list').then(res => {
             dispatch(loadEmployerJobSuccessAction(res.data))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
