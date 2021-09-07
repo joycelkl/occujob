@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Button, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch,useSelector} from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -11,20 +11,21 @@ const ApplicantProfile = () => {
   const EEProfileState = useSelector((state)=>state.EEProfile);
   const dispatch = useDispatch();
   const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
+  const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
   useEffect(()=>{
     loadEEProfileThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
 
-const {ee_id,ee_name,ee_email,ee_industry,ee_location,self_intro,ee_phone,expected_salary,availability}=EEProfileState[0] || {}
+const {ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability}=EEProfileState[0] || {}
 
-const [industry, setIndustry] = useState(ee_industry || '');
-  const [location, setLocation] = useState(ee_location || '');
-  const [phone, setPhone] = useState(ee_phone ||'');
-  const [selfIntro, setSelfIntro] = useState(self_intro || '');
-  const [expectedSalary, setExpectedSalary] = useState(expected_salary || '');
-  const [availabe, setAvailability] = useState(availability || '');
-  const [image, setImage] = useState(ee_img_data || '')
+const [industry, setIndustry] = useState(ee_industry );
+  const [location, setLocation] = useState(ee_location);
+  const [phone, setPhone] = useState(ee_phone);
+  const [intro, setIntro] = useState(self_intro);
+  const [expectedSalary, setExpectedSalary] = useState(expected_salary);
+  const [availabe, setAvailabe] = useState(availability);
+  const [image, setImage] = useState(ee_img_data)
 console.log(EEProfileState)
 //****************DONOT CHANGE THE SETTING HERE*****************************/
     // S3 setup
@@ -53,12 +54,21 @@ console.log(EEProfileState)
         setImage(data.location)})
     .catch(err => console.error(err))
 }
+
+function handleOnSubmit (e) {
+  e.preventDefault();
+  console.log('update')
+
+  updateEEProfileAction(intro, phone, expectedSalary, industry, availabe, location, image)
+  alert("Updated Profile")
+}
 return(
     <div>
       <ApplicantNavbar />
-    <div className="row">
-        <div className="col-6">
-     <Label for="Name">{ee_name}</Label><br></br>
+    <div className="container d-flex">
+    <div className="col-6">
+    <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
+     <Label for="Name"><h1>{ee_name}</h1></Label><br></br>
      <Label for="phone">Email </Label><br></br>
      <Label for="Email">{ee_email}</Label>
     <FormGroup>
@@ -67,23 +77,23 @@ return(
       </FormGroup>
     <FormGroup>
         <Label for="Text">Self-Introduction</Label>
-      <Input type="textarea" name="text" id="intro" value={selfIntro} placeholder={self_intro} onChange={(e)=>setSelfIntro(e.target.value)}/>
+      <Input type="textarea" name="text" id="intro" value={intro} placeholder={self_intro} onChange={(e)=>setIntro(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="Skill">Skills</Label>
         <Input type="textarea" name="text" id="Skill" placeholder="Tags" />
       </FormGroup>
       <FormGroup>
-        <Label for="industry">Industry</Label>
+        <Label for="industry">Job Function</Label>
      <Input type="text" name="industry" id="industry" value={industry} placeholder={ee_industry} onChange={(e)=>setIndustry(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="Expected Salary">Expected Salary</Label>
-      <Input type="number" name="number" id="Expected Salary" placeholder={expected_salary} onChange={(e)=>setExpectedSalary(e.target.value)}/>
+      <Input type="number" name="number" id="Expected Salary" value={expectedSalary}placeholder={expected_salary} onChange={(e)=>setExpectedSalary(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="Availabilty">Availabilty</Label>
-        <Input type="text" name="number" id="Availabilty" placeholder={availability} onChange={(e)=>setExpectedSalary(e.target.value)}/>
+        <Input type="text" name="number" id="Availabilty" placeholder={availability} value={availabe} onChange={(e)=>setAvailabe(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="preferworklocation">preferworklocation</Label>
@@ -96,13 +106,13 @@ return(
           <option>Sha Tin</option>
         </Input>
       </FormGroup>
+      <Button type='submit'>Update</Button>
+      </Form>
       </div>
       <div className="col-4">
       <ProfileImage url={image} handleOnChange={(e)=>upload(e)}/>
       </div>
-      </div>
-      <Button type='submit'>Update</Button>
-
+    </div>
     </div>
     
 )
