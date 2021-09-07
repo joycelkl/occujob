@@ -1,21 +1,21 @@
 .mainNav{
     background:rgb(59, 105, 121);
-    padding: 20px;
+    /* padding: 20px; */
     display:flex;
     justify-content: space-between;
     color: #fff;
     z-index: 99;
 }
 
+.logo {
+    margin-left: 25px;
+    cursor: pointer;
+}
 .navMenuIcon {
     display: none;
 }
 
-.navLogo {
-    font-weight: 600;
-    font-size: 25px;
-    color: tomato;
-}
+
 
 .navLogo font {
     color: #fff;
@@ -27,6 +27,7 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    margin-top: 10px;
     
 }
 
@@ -36,6 +37,7 @@
     font-weight: 300;
     padding: 5px 10px;
     margin-left: 20px;
+    font-size: 18px;
 }
 
 .navMenuList li a:hover {

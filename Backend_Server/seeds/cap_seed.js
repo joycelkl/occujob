@@ -12,14 +12,14 @@ exports.seed = function(knex) {
       .then(function() {
           // Inserts seed entries
           return knex('employer').insert([
-              { er_name: 'ER_user1', er_email: 'eruser1@mail.com', er_password: '1234', er_type: "er", er_phone:'12345678'},
+              { er_name: 'ER_user1', er_email: 'eruser1@mail.com', er_password: '$2b$10$3mLApKxROB7Jk.7VLvNMlOJXLmlkt58fxPaXpuKO9LrhpI0aOvTlS', er_type: "er", er_phone:'12345678'},
               { er_name: 'ER_user2', er_email: 'eruser2@mail.com', er_password: '1234', er_type: "er" },
               { er_name: 'ER_user3', er_email: 'eruser3@mail.com', er_password: '1234', er_type: "er" }
           ]).then(() => {
               return knex('employee').insert([
-                  { ee_name: 'ee1', ee_email: 'ee1@ee.com', ee_password: '1234', ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000 },
-                  { ee_name: 'ee2', ee_email: 'ee2@ee.com', ee_password: '1234', ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 10000 },
-                  { ee_name: 'ee3', ee_email: 'ee3@ee.com', ee_password: '1234', ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 15000 }
+                  { ee_name: 'ee1', ee_email: 'ee1@ee.com', ee_password: '$2b$10$3mLApKxROB7Jk.7VLvNMlOJXLmlkt58fxPaXpuKO9LrhpI0aOvTlS', ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000 },
+                  { ee_name: 'ee2', ee_email: 'ee2@ee.com', ee_password: '$2b$10$3mLApKxROB7Jk.7VLvNMlOJXLmlkt58fxPaXpuKO9LrhpI0aOvTlS', ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 10000 },
+                  { ee_name: 'ee3', ee_email: 'ee3@ee.com', ee_password: '$2b$10$3mLApKxROB7Jk.7VLvNMlOJXLmlkt58fxPaXpuKO9LrhpI0aOvTlS', ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 15000 }
               ])
           }).then(() => {
               return knex('job').insert([
@@ -31,9 +31,10 @@ exports.seed = function(knex) {
           .then(() => {
               return knex('application').insert([
                   { job_id: 1, employee_id: 1, offer: true },
-                  { job_id: 2, employee_id: 2, offer: true },
+                  { job_id: 2, employee_id: 1, offer: true },
                   { job_id: 3, employee_id: 3 },
-                  { job_id: 2, employee_id: 1, offer: true,reply: true },
+                  { job_id: 2, employee_id: 2, offer: true,reply: true },
+                  { job_id: 3, employee_id: 1  },
               ])
           });
       });

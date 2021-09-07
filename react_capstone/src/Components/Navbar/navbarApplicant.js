@@ -4,6 +4,7 @@ import "./navbar.css";
 import { FaBars } from 'react-icons/fa'
 import { ApplicantMenuList } from './applicantMenuList';
 import Logout from './Logout'
+import logo from '../../Images/logo.png';
 
 const ApplicantNavbar = () => {
     const [clicked, setClicked] = useState(false);
@@ -22,8 +23,10 @@ const ApplicantNavbar = () => {
 
     return (
         <nav className="mainNav">
-            <div className="navLogo">
-                <font>HK</font>FREELANCER
+            <div className="logo">
+            <a href="/applicantHomePage">
+            <img src={logo} width="240" height="100" />
+            </a>
             </div>
             <div className="navMenuIcon" onClick={handleClick}>
                 <FaBars />
