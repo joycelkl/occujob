@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Col, Row,Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import React from "react";
+import {Button} from 'reactstrap';
 import JobDetail from "../../Components/JobDetail";
 import ApplicantNavbar
  from "../../Components/Navbar/navbarApplicant";
