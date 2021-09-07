@@ -41,8 +41,7 @@ const EmployerJobRecordCard = (props) => {
                                 <Badge className="job-list-badge" variant="secondary">{status? 'Active' : 'Inactive'}</Badge>
 
                             </div>
-                            <img  src={er_img_data} alt="no image"/>
-                        </div>
+                            {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test"/>:<p></p>}                        </div>
                     </Card.Body>
                 </Card>
         </div>
