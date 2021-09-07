@@ -24,8 +24,10 @@ const [industry, setIndustry] = useState(ee_industry );
   const [phone, setPhone] = useState(ee_phone);
   const [intro, setIntro] = useState(self_intro);
   const [expectedSalary, setExpectedSalary] = useState(expected_salary);
-  const [availabe, setAvailabe] = useState(availability);
+  const [available, setAvailable] = useState(availability);
   const [image, setImage] = useState(ee_img_data)
+
+  console.log('image', image)
 console.log(EEProfileState)
 //****************DONOT CHANGE THE SETTING HERE*****************************/
     // S3 setup
@@ -58,8 +60,8 @@ console.log(EEProfileState)
 function handleOnSubmit (e) {
   e.preventDefault();
   console.log('update')
-
-  updateEEProfileAction(intro, phone, expectedSalary, industry, availabe, location, image)
+  // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
+  updateEEProfileAction(intro, phone, expectedSalary, industry, available, location, image)
   alert("Updated Profile")
 }
 return(
@@ -73,11 +75,11 @@ return(
      <Label for="Email">{ee_email}</Label>
     <FormGroup>
         <Label for="phone">Phone Number</Label>
-        <Input type="number" name="phone" id="phone" value={phone} placeholder={ee_phone} onChange={(e)=>setPhone(e.target.value)}/>
+        <Input type="number" name="phone" id="phone" value={phone}  onChange={(e)=>setPhone(e.target.value)}/>
       </FormGroup>
     <FormGroup>
         <Label for="Text">Self-Introduction</Label>
-      <Input type="textarea" name="text" id="intro" value={intro} placeholder={self_intro} onChange={(e)=>setIntro(e.target.value)}/>
+      <Input type="textarea" name="text" id="intro" value={intro}  onChange={(e)=>setIntro(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="Skill">Skills</Label>
@@ -85,15 +87,15 @@ return(
       </FormGroup>
       <FormGroup>
         <Label for="industry">Job Function</Label>
-     <Input type="text" name="industry" id="industry" value={industry} placeholder={ee_industry} onChange={(e)=>setIndustry(e.target.value)}/>
+     <Input type="text" name="industry" id="industry" value={industry}  onChange={(e)=>setIndustry(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="Expected Salary">Expected Salary</Label>
-      <Input type="number" name="number" id="Expected Salary" value={expectedSalary}placeholder={expected_salary} onChange={(e)=>setExpectedSalary(e.target.value)}/>
+      <Input type="number" name="number" id="Expected Salary" value={expectedSalary}  onChange={(e)=>setExpectedSalary(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="Availabilty">Availabilty</Label>
-        <Input type="text" name="number" id="Availabilty" placeholder={availability} value={availabe} onChange={(e)=>setAvailabe(e.target.value)}/>
+        <Input type="text" name="number" id="Availabilty"  value={available} onChange={(e)=>setAvailable(e.target.value)}/>
       </FormGroup>
       <FormGroup>
         <Label for="preferworklocation">preferworklocation</Label>
