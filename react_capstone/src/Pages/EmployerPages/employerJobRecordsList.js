@@ -1,119 +1,31 @@
-import React from 'react';
-import { Card, Badge } from 'react-bootstrap';
+import React, { useEffect } from 'react';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
-
+import {useDispatch, useSelector} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
+import EmployerJobRecordCard from '../../Components/Employer/EmployerJobRecordCard';
 
 
 const EmployerJobRecordsList = () => {
+
+    const employerJobState = useSelector((state) => state.employerJob)
+    const dispatch = useDispatch();
+
+    const { erJobRecordAction } = bindActionCreators(actionCreators, dispatch)
+
+    useEffect(() => {
+        erJobRecordAction();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    console.log('employer Job', employerJobState)
+
+
     return (
         <div>
             <EmployerNavbar />
             <div className="jobCard">
-                <Card className='my-4'>
-                    <Card.Body>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <Card.Title>
-                                    Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                                </Card.Title>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (DOP)
-                                </Card.Subtitle>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (EXP)
-                                </Card.Subtitle>
-
-                                <Badge className="job-list-badge" variant="secondary">Active</Badge>
-
-                            </div>
-                            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className='my-4'>
-                    <Card.Body>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <Card.Title>
-                                    Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                                </Card.Title>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (DOP)
-                                </Card.Subtitle>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (EXP)
-                                </Card.Subtitle>
-
-                                <Badge className="job-list-badge" variant="secondary">Active</Badge>
-
-                            </div>
-                            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className='my-4'>
-                    <Card.Body>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <Card.Title>
-                                    Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                                </Card.Title>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (DOP)
-                                </Card.Subtitle>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (EXP)
-                                </Card.Subtitle>
-
-                                <Badge className="job-list-badge" variant="secondary">Active</Badge>
-
-                            </div>
-                            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className='my-4'>
-                    <Card.Body>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <Card.Title>
-                                    Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                                </Card.Title>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (DOP)
-                                </Card.Subtitle>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (EXP)
-                                </Card.Subtitle>
-
-                                <Badge className="job-list-badge" variant="secondary">Active</Badge>
-
-                            </div>
-                            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                        </div>
-                    </Card.Body>
-                </Card>
-                <Card className='my-4'>
-                    <Card.Body>
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <Card.Title>
-                                    Job Title - <span className="text-muted font-weight-light">Company Name</span>
-                                </Card.Title>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (DOP)
-                                </Card.Subtitle>
-                                <Card.Subtitle className="text-muted mb-2">
-                                    08/30/2021 (EXP)
-                                </Card.Subtitle>
-
-                                <Badge className="job-list-badge" variant="secondary">Active</Badge>
-
-                            </div>
-                            <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test" />
-                        </div>
-                    </Card.Body>
-                </Card>
+                {employerJobState.map(job => <EmployerJobRecordCard key={job.job_id} job={job}/>)}
             </div>
         </div>
     )

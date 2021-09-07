@@ -38,25 +38,25 @@ class EmployeeRouter {
                 })
         })
 
-        //to be rewrite to save to cloud
-        router.post('/profile/img', (req, res) => {
-            //should send a req to employeeService.updateImg()
-            return this.employeeService
-                .updateImg(req.files.img.data, req.user.id)
-                .then(() => {
-                    return this.employeeService
-                        .listUserInfo(req.user.id)
-                        .then((job) => {
-                            res.render('eeprofile', {
-                                job: job,
-                                layout: 'JobSeeker'
-                            })
-                        })
-                })
-                .catch((err) => {
-                    res.status(500).json(err)
-                })
-        })
+        // //to be rewrite to save to cloud
+        // router.post('/profile/img', (req, res) => {
+        //     //should send a req to employeeService.updateImg()
+        //     return this.employeeService
+        //         .updateImg(req.files.img.data, req.user.id)
+        //         .then(() => {
+        //             return this.employeeService
+        //                 .listUserInfo(req.user.id)
+        //                 .then((job) => {
+        //                     res.render('eeprofile', {
+        //                         job: job,
+        //                         layout: 'JobSeeker'
+        //                     })
+        //                 })
+        //         })
+        //         .catch((err) => {
+        //             res.status(500).json(err)
+        //         })
+        // })
 
         //Frontend will handle this route
         // router.get('/search', (req, res) => {

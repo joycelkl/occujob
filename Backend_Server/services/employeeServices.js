@@ -90,22 +90,22 @@ class EmployeeService {
     }
 
 
-    //to be rewrite to save to cloud
-    updateImg(file, userId) {
-        return this.knex("employee")
-            .where({
-                id: userId
-            })
-            .update({
-                img_data: file
-            })
-            .then(() => {
-                return 'Update saved';
-            })
-            .catch((err) => {
-                throw new Error(err)
-            })
-    }
+    // //to be rewrite to save to cloud
+    // updateImg(file, userId) {
+    //     return this.knex("employee")
+    //         .where({
+    //             id: userId
+    //         })
+    //         .update({
+    //             img_data: file
+    //         })
+    //         .then(() => {
+    //             return 'Update saved';
+    //         })
+    //         .catch((err) => {
+    //             throw new Error(err)
+    //         })
+    // }
 
     //to be rewrite the logic
     searchJob(value) {
