@@ -17,12 +17,12 @@ const EmployerJobRecordCard = (props) => {
     props.job;
   console.log("props", props.job);
 
-  function handleOnclick() {
-    console.log("clicked", job_id);
-    loadIndJobThunkAction(job_id).then(() => {
-      history.push("/employerApplicantProfile");
-    });
-  }
+  function handleOnclick () {
+    console.log('clicked', job_id)
+    loadIndJobThunkAction(job_id).then(()=>{
+        history.push('/employerEditPost')
+    })
+}
 
   return (
     <div>
@@ -60,5 +60,6 @@ const EmployerJobRecordCard = (props) => {
     </div>
   );
 };
+
 
 export default EmployerJobRecordCard;

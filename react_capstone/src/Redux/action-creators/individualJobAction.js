@@ -26,8 +26,8 @@ export const loadIndJobThunkAction = (jobId) => async(dispatch) => {
     console.log("Indvidual Job Load")
     try {
         const authAxiosConfig = await authAxios();
-        await authAxiosConfig.get(`/employer/profile/${jobId}`).then(res => {
-            dispatch(loadIndJobSuccessAction(res.data[0]))
+        await authAxiosConfig.get(`/employer/job/${jobId}`).then(res => {
+            dispatch(loadIndJobSuccessAction(res.data))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
             dispatch(loadIndJobFailAction())

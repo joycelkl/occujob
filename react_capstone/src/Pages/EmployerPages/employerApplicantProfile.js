@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React from "react";
+import { Button, FormGroup, Label} from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 
 const EmployerApplicantProfile = () => {
+
+    
+    
+
     return (
         <div>
             <EmployerNavbar />
-            <div className="row">
+            <div className="container">
                 <div className="col-6">
-                    <Label for="">FullName</Label><br></br>
+                    <Label for="applicantName">Applicant's Name</Label>
+                
                     <Label for="Email">ee_email</Label>
                     
                     <FormGroup>
