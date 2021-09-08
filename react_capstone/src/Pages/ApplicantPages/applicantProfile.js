@@ -10,12 +10,12 @@ import S3 from 'react-aws-s3';
 const ApplicantProfile = () => {
   const EEProfileState = useSelector((state)=>state.EEProfile);
   const dispatch = useDispatch();
-  const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
+  //const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
   const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
-  useEffect(()=>{
-    loadEEProfileThunkAction();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+//   useEffect(()=>{
+//     loadEEProfileThunkAction();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [])
 
 const {ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability}=EEProfileState[0] || {}
 

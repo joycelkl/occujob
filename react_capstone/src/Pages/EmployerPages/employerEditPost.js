@@ -9,6 +9,7 @@ const EmployerEditPost = () => {
     const indJobState = useSelector((state) => state.individualJob)
 
     console.log("individual job", indJobState)
+    console.log(Array)
 
     const {job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period  } = indJobState[0]
     
