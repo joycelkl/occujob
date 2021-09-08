@@ -7,7 +7,8 @@ const HomeCard = (props)=>{
     const {job_title, er_name, created_at, er_img_data} = publicJob;
 
     return(
-    <Card className='my-4'>
+        <div style={{display:"flex", justifyContent:"center"}}>
+    <Card className='my-4' style={{width:"70%"}}>
     <Card.Body>
         <div className="d-flex justify-content-between">
             <div>
@@ -22,6 +23,8 @@ const HomeCard = (props)=>{
         {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test"/>:<p></p>}
         </div>
     </Card.Body>
-</Card>)
+</Card>
+</div>
+)
 }
 export default HomeCard;

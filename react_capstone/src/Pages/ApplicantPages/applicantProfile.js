@@ -27,8 +27,7 @@ const [industry, setIndustry] = useState(ee_industry );
   const [available, setAvailable] = useState(availability);
   const [image, setImage] = useState(ee_img_data)
 
-  console.log('image', image)
-console.log(EEProfileState)
+console.log(industry,intro,expectedSalary)
 //****************DONOT CHANGE THE SETTING HERE*****************************/
     // S3 setup
     const config = {

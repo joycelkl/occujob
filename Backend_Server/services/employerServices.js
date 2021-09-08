@@ -73,9 +73,9 @@ class EmployerServices {
 
     listJobHistory(userId) {
         return this.knex('job')
-            .where({
-                employer_id: userId
-            })
+            .join('employer', 'employer.er_id', '=', 'job.employer_id')
+            .where('job.employer_id', userId)
+            .select("job.*", 'employer.er_img_data')
             .orderBy('created_at', 'dsec')
             .then((jobList) => {
                 // jobList.map(jobObj => {
@@ -108,9 +108,9 @@ class EmployerServices {
                 job_location: location,
                 job_type: jobType,
             })
-            .returning('*')
-            .then((job) => {
-                return job
+            // .returning('*')
+            .then(() => {
+                return 'done'
             })
             .catch((err) => {
                 throw new Error(err)

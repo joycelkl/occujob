@@ -59,7 +59,7 @@ const EmployerCreateJobPage = () => {
             location: location,
             jobType: jobType
         }).then(res => {
-           return alert(res.data)
+           return alert("updated")
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
         })
