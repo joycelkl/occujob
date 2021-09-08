@@ -1,4 +1,4 @@
-import { REG_LOGIN_SUCCESS_ACTION, REG_LOGIN_FAILURE_ACTION, LOGOUT_NOW_ACTION } from "../action-creators";
+import { REG_LOGIN_SUCCESS_ACTION, REG_LOGIN_FAILURE_ACTION, LOGOUT_NOW_ACTION, ERROR_VALUE_ACTION } from "../action-creators";
 
 const initialState = {
     isAuthenticated: false || localStorage.getItem("token") != null,
@@ -20,6 +20,11 @@ const authReducer = (state = initialState, action) => {
             };
         case LOGOUT_NOW_ACTION:
             return {...initialState, isAuthenticated: false, user: null };
+        case ERROR_VALUE_ACTION:
+            return {
+                ...initialState,
+                error: null
+            }
         default:
             return state;
     }
