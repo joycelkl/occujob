@@ -63,11 +63,11 @@ export const erJobRecordAction = () => async(dispatch) => {
 
 //Update Job for Employer Job Records Page
 
-export const erJobUpdate = (jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType) => async(dispatch) => {
+export const erJobUpdate = (job_id, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType) => async(dispatch) => {
     console.log("ER JOB UPDATE")
     try {
         const authAxiosConfig = await authAxios();
-        await authAxiosConfig.post('/employer/job/:job_id', {
+        await authAxiosConfig.post(`/employer/job/${job_id}`, {
             jobTitle: jobTitle,
             jobFunction: jobFunction,
             reqExp: reqExp,

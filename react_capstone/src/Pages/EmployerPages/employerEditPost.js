@@ -16,7 +16,9 @@ const EmployerEditPost = () => {
     const {erJobUpdate} = bindActionCreators(actionCreators, dispatch)
 
 
-    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period } = indJobState[0]
+    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period } = indJobState[0] || {}
+
+    console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period)
 
     const [salary, setSalary] = useState(expect_salary || '...Loading');
     const [jobTitle, setJobTitle] = useState(job_title || '...Loading');
@@ -33,8 +35,9 @@ const EmployerEditPost = () => {
         console.log('repost')
     }
 
-    function handleUpdate() {
-        erJobUpdate(jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType).then(()=>{
+    function handleUpdate(e) {
+        e.preventDefault();
+        erJobUpdate(job_id, jobTitle, jobFunction, reqExp, salary, jobDes, workPeriod, status, jobLocation, empType).then(()=>{
                 alert("updated")
             })
     }
@@ -108,7 +111,7 @@ const EmployerEditPost = () => {
                         </FormGroup>
                         <div className='row'>
                             <Button type='submit'>Save Changes</Button>
-                            <Button onClick={() => handleRepost()}>Repost</Button>
+                            <Button onClick={(e) => handleRepost(e)}>Repost</Button>
                         </div>
                     </Form>
                 </div>
