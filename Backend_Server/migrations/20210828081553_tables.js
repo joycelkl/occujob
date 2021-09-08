@@ -35,6 +35,7 @@ exports.up = function(knex) {
                 table.text("availability");
                 table.text('ee_location'); //to be confirmed
                 table.text('ee_exp'); //check query for search
+                table.specificType('ee_skill', 'text ARRAY'); //e.g. javascript
                 table.timestamps(false, true);
             });
         })

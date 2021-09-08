@@ -24,11 +24,11 @@ class EmployeeRouter {
         //tested ok
         router.post('/profile', (req, res) => {
             //should take the form job and 
-            const { name, intro, phone, expectedSalary, industry, availability, location, image } = req.body
+            const { name, intro, phone, expectedSalary, industry, availability, location, image, exp, skill } = req.body
             return this.employeeService
                 .updateProfile(
                     req.user.id,
-                    name, intro, phone, expectedSalary, industry, availability, location, image)
+                    name, intro, phone, expectedSalary, industry, availability, location, image, exp, skill)
                 .then((updatedUser) => {
                     res.json(updatedUser)
                 })
