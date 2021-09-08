@@ -1,25 +1,22 @@
 import React, { useEffect } from 'react';
-import { Card, Badge } from 'react-bootstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../homePage.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import EmployerHomeCard from '../../Components/Employer/EmployerHomeJobCard';
-import { FaTruckLoading } from 'react-icons/fa';
+
 
 
 const EmployerHomePage = () => {
-    const employerJobState = useSelector((state) => {
-        { console.log("Employer Job:", state.employerJob) }
-        return state.employerJob
-    })
+    const employerJobState = useSelector((state) => state.employerJob)
     const dispatch = useDispatch();
-
+    const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)
     const { loadEmployerJobThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     useEffect(() => {
-        loadEmployerJobThunkAction();
+        loadEmployerJobThunkAction();   
+        loadErProfileThunkAction();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

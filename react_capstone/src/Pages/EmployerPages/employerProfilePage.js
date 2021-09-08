@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, FormGroup, Label, Input, Form} from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,34 +9,42 @@ import S3 from 'react-aws-s3';
 
 const EmployerProfilePage = () => {
 
-  const erProfileState = useSelector((state) =>{console.log("ER", state.erProfile);
-  return state.erProfile});
-
-    
   const dispatch = useDispatch();
 
-  const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)
+  // const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)
   const {updateErProfileAction} = bindActionCreators(actionCreators, dispatch)
 
-  useEffect(()=>{
-    loadErProfileThunkAction();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // tested work, Zach please map the data to display in home page
-  
-  const {er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone} = erProfileState[0]
-
-  
+  const erProfileState = useSelector((state) =>{console.log("ER", state.erProfile);
+  return state.erProfile});
+  console.log("Profile", erProfileState)
+      
+    const {er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone} = erProfileState
 
   const [industry, setIndustry] = useState(er_industry);
   const [location, setLocation] = useState(er_location);
   const [phone, setPhone] = useState(er_phone);
   const [compDescription, setCompDescription] = useState(comp_description)
   const [image, setImage] = useState(er_img_data)
+  const [name, setName] = useState(er_name)  
+  const [email, setEmail] = useState(er_email)  
 
+  // useEffect(()=>{
+    
+  //   console.log('industry 1',er_industry)
+  //   loadErProfileThunkAction();
+  //   console.log('industry 2',er_industry)
+  //   setIndustry(er_industry)
+  //   console.log('industry 3',er_industry)
+  //   setLocation(er_location)
+  //   setPhone(er_phone)
+  //   setCompDescription(comp_description)
+  //   setImage(er_img_data)
+  //   setName(er_name)
+  //   setEmail(er_email)
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [er_img_data])
 
-
+ 
   //****************DONOT CHANGE THE SETTING HERE*****************************/
     // S3 setup
     const config = {
@@ -61,7 +69,9 @@ const EmployerProfilePage = () => {
     .uploadFile(e.target.files[0], newFileName)
     .then((data) => {
         console.log(data)
-        setImage(data.location)})
+        setImage("")
+        setImage(data.location)
+      })
     .catch(err => console.error(err))
 }
 
@@ -83,11 +93,11 @@ const EmployerProfilePage = () => {
         <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
           <FormGroup>
           <Label for="companyName">Company Name</Label><br></br>
-          <Input type="text" name="companyName" id="companyName" value={er_name} disabled/>
+          <Input type="text" name="companyName" id="companyName" value={name} onChange={(e)=>setName(e.target.value)} disabled/>
           </FormGroup>
           <FormGroup>
           <Label for="email">Email</Label>
-          <Input type="email" name="email" id="email" value={er_email} disabled/>
+          <Input type="email" name="email" id="email" value={email} onChange={(e)=>setEmail(e.target.value)} disabled/>
           </FormGroup>
           <FormGroup>
             <Label for="phone">Phone Number</Label>

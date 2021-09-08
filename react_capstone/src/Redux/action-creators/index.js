@@ -5,4 +5,4 @@ export * from './employerProfileAction'
 export * from './employerJobAction'
 export * from './applicantJobActionCard'
 export * from './EEOfferAction'
-
+export * from './individualJobAction'

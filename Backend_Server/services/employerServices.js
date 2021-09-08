@@ -135,6 +135,7 @@ class EmployerServices {
                         });
                 } else {
                     return this.knex('job')
+                        .select({ jobCreate: 'job.created_at' }, 'job.*', 'application.*', 'employee.*')
                         .join('application', 'application.job_id', '=', 'job.job_id')
                         .join('employee', 'employee.ee_id', '=', 'application.employee_id')
                         .where('job.job_id', jobId)
