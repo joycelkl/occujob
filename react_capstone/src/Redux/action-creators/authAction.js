@@ -32,6 +32,17 @@ export const logoutNowAction = () => {
     }
 }
 
+export const ERROR_VALUE_ACTION = "ERROR_VALUE"
+
+export const errorValueAction = () => {
+    return (dispatch) => {
+        dispatch({
+            type: ERROR_VALUE_ACTION,
+
+        })
+    }
+}
+
 
 //ER User Login Thunk
 export const loginERuserThunkAction = (email, password) => async(dispatch) => {
