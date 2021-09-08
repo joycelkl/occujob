@@ -43,6 +43,9 @@ export const loadEmployerJobThunkAction = () => async(dispatch) => {
 
 
 
+
+
+
 export const erJobRecordAction = () => async(dispatch) => {
     console.log("ER Job Posting")
     try {
@@ -52,6 +55,33 @@ export const erJobRecordAction = () => async(dispatch) => {
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
             dispatch(loadEmployerJobFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+//Update Job for Employer Job Records Page
+
+export const erJobUpdate = (job_id, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType) => async(dispatch) => {
+    console.log("ER JOB UPDATE")
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.post(`/employer/job/${job_id}`, {
+            jobTitle: jobTitle,
+            jobFunction: jobFunction,
+            reqExp: reqExp,
+            expectSalary: expectSalary,
+            jobDescription: jobDescription,
+            workPeriod: workPeriod,
+            status: status,
+            location: location,
+            empType: empType
+        }).then(res => {
+            dispatch(loadEmployerJobSuccessAction(res.data))
+        }).catch(err => {
+            console.log('update job err', err.response)
+            dispatch(loadEmployerJobFailAction)
         })
     } catch (err) {
         console.error(err)
