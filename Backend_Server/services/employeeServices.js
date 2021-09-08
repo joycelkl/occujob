@@ -30,7 +30,9 @@ class EmployeeService {
         userIndustry,
         userAvailability,
         userLocation,
-        userImage
+        userImage,
+        userExp,
+        userSkill,
     ) {
 
         // need to review the tags function here
@@ -60,7 +62,10 @@ class EmployeeService {
                     expected_salary: userExpectedSalary,
                     availability: userAvailability,
                     ee_location: userLocation,
-                    ee_img_data: userImage
+                    ee_img_data: userImage,
+                    ee_industry: userIndustry,
+                    ee_exp: userExp,
+                    ee_skill: userSkill
                 })
                 .returning('*')
                 .then((updatedUser) => {
@@ -80,7 +85,9 @@ class EmployeeService {
                     ee_industry: ind,
                     availability: userAvailability,
                     ee_location: userLocation,
-                    ee_img_data: userImage
+                    ee_img_data: userImage,
+                    ee_exp: userExp,
+                    ee_skill: userSkill
                 })
                 .returning('*')
                 .then((updatedUser) => {

@@ -45,9 +45,9 @@ const EmployerEditPost = () => {
 
     function handleUpdate(e) {
         e.preventDefault();
-        erJobUpdate(job_id, jobTitle, jobFunction, reqExp, salary, jobDes, workPeriod, jobStatus, jobLocation, empType).then(() => {
-            alert("updated")
-        })
+        erJobUpdate(job_id, jobTitle, jobFunction, reqExp, salary, jobDes, workPeriod, jobStatus, jobLocation, empType).then(()=>{
+                alert("updated")
+            })
     }
 
     function handleCheckbokChange(e) {

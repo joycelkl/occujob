@@ -17,15 +17,18 @@ const ApplicantProfile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
 
-const {ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability}=EEProfileState[0] || {}
+const {ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability, ee_exp, ee_skill}=EEProfileState[0] || {}
 
-const [industry, setIndustry] = useState(ee_industry );
+  const [name, setName] = useState(ee_name);
+  const [industry, setIndustry] = useState(ee_industry );
   const [location, setLocation] = useState(ee_location);
   const [phone, setPhone] = useState(ee_phone);
   const [intro, setIntro] = useState(self_intro);
   const [expectedSalary, setExpectedSalary] = useState(expected_salary);
   const [available, setAvailable] = useState(availability);
   const [image, setImage] = useState(ee_img_data)
+  const [expYr, setExpYr] = useState(ee_exp)
+  const [skill, setSkill] = useState(ee_skill)
 
   console.log('image', image)
 console.log(EEProfileState)
@@ -61,7 +64,7 @@ function handleOnSubmit (e) {
   e.preventDefault();
   console.log('update')
   // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
-  updateEEProfileAction(intro, phone, expectedSalary, industry, available, location, image)
+  updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill)
   alert("Updated Profile")
 }
 return(
@@ -70,9 +73,14 @@ return(
     <div className="container d-flex">
     <div className="col-6">
     <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
-     <Label for="Name"><h1>{ee_name}</h1></Label><br></br>
-     <Label for="phone">Email </Label><br></br>
-     <Label for="Email">{ee_email}</Label>
+      <FormGroup>
+     <Label for="Name"><h1>Applicant's Name</h1></Label>
+     <Input type="text" name="phone" id="phone" value={name} onChange={(e)=>setName(e.target.value)}/>
+      </FormGroup>
+      <FormGroup>
+     <Label for="email">Email </Label>
+     <Input type="email" name="email" id="email" value={ee_email} disabled/>
+     </FormGroup>
     <FormGroup>
         <Label for="phone">Phone Number</Label>
         <Input type="number" name="phone" id="phone" value={phone}  onChange={(e)=>setPhone(e.target.value)}/>
@@ -83,7 +91,11 @@ return(
       </FormGroup>
       <FormGroup>
         <Label for="Skill">Skills</Label>
-        <Input type="textarea" name="text" id="Skill" placeholder="Tags" />
+        <Input type="text" name="skill" id="Skill" placeholder="Tags" value={skill} onChange={(e)=>setSkill(e.target.value)} />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Skill">No. of Year of Working Experience</Label>
+        <Input type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e)=>setExpYr(e.target.value)} />
       </FormGroup>
       <FormGroup>
         <Label for="industry">Job Function</Label>
@@ -100,7 +112,7 @@ return(
       <FormGroup>
         <Label for="preferworklocation">preferworklocation</Label>
         <Input type="select" name="select" id="preferworklocation" value={location} onChange={(e)=>setLocation(e.target.value)}>
-        <option>{ee_location}</option>
+        <option selected>{location}</option>
           <option>Islands</option>
           <option>Kwai Tsing</option>
           <option>North</option>

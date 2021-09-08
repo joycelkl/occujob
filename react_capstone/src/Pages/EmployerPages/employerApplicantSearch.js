@@ -48,7 +48,7 @@ const EmployerApplicantSearch = () => {
             <Col lg={12}>
               <FormGroup>
                 <Label for="Availability">Availability</Label>
-                <Input type="select" name="Availability" id="Availability" placeholder="Availability" >
+                <Input type="select" name="Availability" id="Availability" placeholder="Availability" value={available} onChange={(e)=>setAvailable(e.target.value)} >
                   <option>Weekdays Only</option>
                   <option>Weekends Only</option>
                   <option>Anyday</option>       
@@ -58,7 +58,11 @@ const EmployerApplicantSearch = () => {
             <Col lg={12}>
               <FormGroup>
                 <Label for="ExpectedSalary">ExpectedSalary</Label>
-                <Input type="number" name="ExpectedSalary" id="ExpectedSalary" placeholder="ExpectedSalary" />
+                <Input type="number" name="ExpectedSalary" id="ExpectedSalary" placeholder="ExpectedSalary">
+                <option>Weekdays Only</option>
+                  <option>Weekends Only</option>
+                  <option>Anyday</option>   
+                </Input>
               </FormGroup>
             </Col>
           </Row>
