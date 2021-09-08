@@ -137,22 +137,18 @@ class EmployerRouter {
             console.log('repost')
             const {
                 jobTitle,
-                jobFunction,
+                jobDescription,
                 reqExp,
                 expectSalary,
-                jobDescription,
+                jobType,
+                jobFunction,
                 workPeriod,
                 location
             } = req.body
 
             return this.employerServices.jobPosting(req.user.id,
-                    jobTitle,
-                    jobFunction,
-                    reqExp,
-                    expectSalary,
-                    jobDescription,
-                    workPeriod,
-                    location
+                    jobTitle, jobFunction, reqExp, expectSalary,
+                    jobDescription, workPeriod, location, jobType
                 )
                 .then((postedJob) => {
                     return res.json(postedJob)

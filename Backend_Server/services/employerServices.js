@@ -156,7 +156,7 @@ class EmployerServices {
             })
     }
 
-    jobUpdating(jobId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location) {
+    jobUpdating(jobId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, jobType) {
         console.log('job updating', jobId)
 
         return this.knex('job')
@@ -171,7 +171,8 @@ class EmployerServices {
                 job_description: jobDescription,
                 work_period: workPeriod,
                 status: status,
-                job_location: location
+                job_location: location,
+                job_type: jobType
             })
             .returning('*')
             .then((updatedJob) => {
