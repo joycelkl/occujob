@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect,useState} from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch,useSelector} from "react-redux";
@@ -9,15 +9,14 @@ import S3 from 'react-aws-s3';
 
 const ApplicantProfile = () => {
   const EEProfileState = useSelector((state)=>state.EEProfile);
-  const dispatch = useDispatch();
-  const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
-  const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
-  useEffect(()=>{
-    loadEEProfileThunkAction();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
 
-const {ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability, ee_exp, ee_skill}=EEProfileState[0] || {}
+  console.log('EEprofile', EEProfileState)
+  const dispatch = useDispatch();
+
+  const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
+  const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
+
+const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill}=EEProfileState
 
   const [name, setName] = useState(ee_name);
   const [industry, setIndustry] = useState(ee_industry );
@@ -30,8 +29,27 @@ const {ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_
   const [expYr, setExpYr] = useState(ee_exp)
   const [skill, setSkill] = useState(ee_skill)
 
+  
+
+  useEffect(() => {
+    loadEEProfileThunkAction();
+    setName(ee_name);
+    setIndustry(ee_industry );
+    setLocation(ee_location);
+    setPhone(ee_phone);
+    setIntro(self_intro);
+    setExpectedSalary(expected_salary);
+    setAvailable(availability);
+    setImage(ee_img_data)
+    setExpYr(ee_exp)
+    setSkill(ee_skill)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [ee_email, ee_exp, ee_img_data])
+
+  console.log('origin', ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability, ee_exp, ee_skill)
   console.log('image', image)
-console.log(EEProfileState)
+  console.log('data', name, industry, location, phone, intro, expectedSalary, available, image, expYr, skill)
+
 //****************DONOT CHANGE THE SETTING HERE*****************************/
     // S3 setup
     const config = {
@@ -56,6 +74,7 @@ console.log(EEProfileState)
     .uploadFile(e.target.files[0], newFileName)
     .then((data) => {
         console.log(data)
+        setImage("")
         setImage(data.location)})
     .catch(err => console.error(err))
 }
@@ -75,7 +94,7 @@ return(
     <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
       <FormGroup>
      <Label for="Name"><h1>Applicant's Name</h1></Label>
-     <Input type="text" name="phone" id="phone" value={name} onChange={(e)=>setName(e.target.value)}/>
+     <Input type="text" name="name" id="name" value={name} onChange={(e)=>setName(e.target.value)}/>
       </FormGroup>
       <FormGroup>
      <Label for="email">Email </Label>
