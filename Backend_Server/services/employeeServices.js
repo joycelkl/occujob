@@ -50,6 +50,14 @@ class EmployeeService {
             ind.push(userIndustry);
         }
 
+        let sky = [];
+
+        if (Array.isArray(userSkill)) {
+            sky = userSkill;
+        } else {
+            sky.push(userSkill);
+        }
+
         if (ind.length == 0) {
             return this.knex("employee")
                 .where({
@@ -63,9 +71,9 @@ class EmployeeService {
                     availability: userAvailability,
                     ee_location: userLocation,
                     ee_img_data: userImage,
-                    ee_industry: userIndustry,
+                    ee_industry: ind,
                     ee_exp: userExp,
-                    ee_skill: userSkill
+                    ee_skill: sky
                 })
                 .returning('*')
                 .then((updatedUser) => {
@@ -87,7 +95,7 @@ class EmployeeService {
                     ee_location: userLocation,
                     ee_img_data: userImage,
                     ee_exp: userExp,
-                    ee_skill: userSkill
+                    ee_skill: sky
                 })
                 .returning('*')
                 .then((updatedUser) => {
