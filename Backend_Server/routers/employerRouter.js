@@ -86,8 +86,8 @@ class EmployerRouter {
 
             return this.employerServices.jobPosting(req.user.id, jobTitle, jobFunction, reqExp, expectSalary,
                     jobDescription, workPeriod, location, jobType)
-                .then((job) => {
-                    return res.json(job)
+                .then(() => {
+                    return res.json('Job Created')
                 })
                 .catch((err) => {
                     res.status(500).json(err)
