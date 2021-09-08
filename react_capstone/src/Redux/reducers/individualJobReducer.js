@@ -2,7 +2,7 @@ import { LOAD_INDIVIDUAL_JOB_SUCCESS_ACTION, LOAD_INDIVIDUAL_JOB_FAIL_ACTION } f
 
 
 const initialState = {
-    jobDetail: {},
+    jobDetail: [],
 };
 
 const reducer = (state = initialState, action) => {

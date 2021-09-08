@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 const EmployerCreateJobPage = () => {
 
     const [jobTitle, setJobTitle] = useState('')
-    const [jobDescription, setJobDescription] = useState('')
+    const [jobDes, setJobDes] = useState('')
     const [exp, setExp] = useState('')
     const [salary, setSalary] = useState('')
     const [empType, setEmpType] = useState('')
@@ -19,17 +19,17 @@ const EmployerCreateJobPage = () => {
     const history = useHistory();
     
 
-    console.log('data',jobTitle ,jobDescription ,exp ,salary ,empType ,jobFunction ,location ,workPeriod)
+    console.log('data',jobTitle ,jobDes ,exp ,salary ,empType ,jobFunction ,location ,workPeriod)
 
     function handleOnSubmit (e) {
         e.preventDefault();
-        if (!jobTitle || !jobDescription || !exp || !salary || !empType || !jobFunction || !location || !workPeriod) {
+        if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunction || !location || !workPeriod) {
             alert('Please fill in all information')
             console.log('submitting')
             return;
         }
         erJobCreate(jobTitle, jobFunction, exp, salary,
-            jobDescription, workPeriod, location, empType).then(()=>{
+            jobDes, workPeriod, location, empType).then(()=>{
                 history.push('/employerJobRecordsList')
             })
         
@@ -37,7 +37,7 @@ const EmployerCreateJobPage = () => {
 
     function handleReset () {
         setJobTitle('');
-        setJobDescription('');
+        setJobDes('');
         setExp('');
         setSalary('');
         setEmpType('');
@@ -79,12 +79,12 @@ const EmployerCreateJobPage = () => {
                         <Input type="text" name="text" id="jobTitle" placeholder="" value={jobTitle} onChange={(e)=>setJobTitle(e.target.value)}/>
                         <FormGroup>
                             <Label for="Text">Job Description</Label>
-                            <Input type="textarea" name="text" id="intro" placeholder="" value={jobDescription} onChange={(e)=>setJobDescription(e.target.value)} />
+                            <Input type="textarea" name="text" id="intro" placeholder="" value={jobDes} onChange={(e)=>setJobDes(e.target.value)} />
                         </FormGroup>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="Years of Experience">Years of Experience</Label>
-                        <Input type="number" name="number" id="yearsOfExperience" placeholder="" value={exp} onChange={(e)=>setExp(e.target.value)}/>
+                        <Label for="reqExp">Required Experience</Label>
+                        <Input type="number" name="number" id="reqExp" placeholder="Year of Experience" value={exp} onChange={(e)=>setExp(e.target.value)}/>
                     </FormGroup>
 
                     <FormGroup>
