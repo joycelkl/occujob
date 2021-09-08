@@ -14,8 +14,6 @@ const EmployerEditPost = () => {
     
     const dispatch = useDispatch()
     const {erJobUpdate} = bindActionCreators(actionCreators, dispatch)
-
-
     const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period } = indJobState[0] || {}
 
     console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period)
