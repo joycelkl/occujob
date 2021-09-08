@@ -11,7 +11,7 @@ const ProfileImage = (props) => {
         <h1>Profile Image</h1>
         <div className="container">
         <input type="file" onChange={(e)=>handleOnChange(e)} /> {/* input position can change but DON'T CHANGE the content */}
-        {url ? <img src={url} alt="userPic" style={{width: 200, height: 200}} /> : <input placeholder="please upload a picture" style={{width: 200, height: 200}}/>}
+        {url ? <img src={url} alt="userPic" style={{width: 200, height: 200}} /> : <input placeholder="please upload a picture" style={{width: 200, height: 200, textAlign:'center'}} disabled/>}
         </div>
          </div>
     )

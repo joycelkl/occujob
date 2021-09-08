@@ -27,7 +27,7 @@ export const loadEEProfileThunkAction = () => async(dispatch) => {
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employee/profile').then(res => {
-            dispatch(loadEEProfileSuccessAction(res.data))
+            dispatch(loadEEProfileSuccessAction(res.data[0]))
         }).catch(err => {
             console.log("EE Profile load err res", err.response)
             dispatch(loadEEProfileFailAction())

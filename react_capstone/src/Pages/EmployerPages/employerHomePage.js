@@ -11,12 +11,11 @@ import EmployerHomeCard from '../../Components/Employer/EmployerHomeJobCard';
 const EmployerHomePage = () => {
     const employerJobState = useSelector((state) => state.employerJob)
     const dispatch = useDispatch();
-    const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)
+
     const { loadEmployerJobThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     useEffect(() => {
         loadEmployerJobThunkAction();   
-        loadErProfileThunkAction();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
