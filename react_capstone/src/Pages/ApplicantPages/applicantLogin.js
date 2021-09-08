@@ -46,7 +46,7 @@ const ApplicantLogin = () => {
         if (!validEmail(email)) {
             alert('Please input valid Email')
         }
-
+        console.log('applicant login')
         loginEEuserThunkAction(email, password);
 
     }
