@@ -177,6 +177,7 @@ class EmployerServices {
             .returning('*')
             .then((updatedJob) => {
                 // id = encryptFunction.encryptString(id)
+                console.log('upatedjob', updatedJob)
                 return updatedJob;
             })
             .catch((err) => {
