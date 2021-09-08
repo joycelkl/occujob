@@ -64,7 +64,7 @@ const ApplicantLogin = () => {
         if (!validEmail(email)) {
             wrongEmail()
         }
-
+        console.log('applicant login')
         loginEEuserThunkAction(email, password);
 
     }

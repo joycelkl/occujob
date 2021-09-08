@@ -24,7 +24,33 @@ import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearch
 import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
 import EmployerSignUp from './Pages/EmployerPages/employerSignup';
 
-
+const PublicRoute = ({component, ...rest}) => {
+  const {isAuthenticated, user} = useSelector((state) => state.auth)
+  const Component = component;
+  console.log('user', user)
+  console.log('isAuth',isAuthenticated)
+  if (Component != null) {
+    return (
+      <Route
+      {...rest}
+      render={(props)=>
+        isAuthenticated ? ((user) && (user === 'er') ?
+          (<Redirect to={{
+            pathname: "/employerHomePage",
+            state: {from: props.location},}}/>) : 
+            (<Redirect to={{
+              pathname: "/applicantHomePage",
+              state: {from: props.location},}}/>)
+        ) : (
+      <Component {...props} />
+        ) 
+      }
+    />
+    );
+  } else {
+    return null;
+  }
+}
 
 const PrivateRoute = ({component, ...rest}) =>{
   const {isAuthenticated} = useSelector((state) => state.auth)
@@ -57,11 +83,11 @@ function App() {
 
         <Router >
         <Switch>
-        <Route path = "/" exact component = { Home }/> 
-        <Route path = "/employerLogin" component = { EmployerLogin } /> 
-        <Route path = "/applicantLogin" component = { ApplicantLogin } /> 
-        <Route path = "/employerSignup" component = { EmployerSignUp } /> 
-        <Route path = "/applicantSignup" component = { ApplicantSignUp } /> 
+        <PublicRoute path = "/" exact component = { Home }/> 
+        <PublicRoute path = "/employerLogin" component = { EmployerLogin } /> 
+        <PublicRoute path = "/applicantLogin" component = { ApplicantLogin } /> 
+        <PublicRoute path = "/employerSignup" component = { EmployerSignUp } /> 
+        <PublicRoute path = "/applicantSignup" component = { ApplicantSignUp } /> 
         <PrivateRoute path = "/employerHomePage" component = { EmployerHomePage } /> 
         <PrivateRoute path = "/employerProfilePage" component = { EmployerProfilePage } /> 
         <PrivateRoute path = "/employerCreateJobPage"  component = { EmployerCreateJobPage }/> 

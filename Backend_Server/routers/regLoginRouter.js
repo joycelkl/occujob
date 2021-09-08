@@ -93,7 +93,7 @@ class RegLoginRouter {
                     };
                     //insert the new user, get the user info
                     let user1 = await knex('employee').insert(newUser).returning("*");
-                    console.log("New EE user in database: ", user);
+                    console.log("New EE user in database: ", user1);
                     let user = user1[0]
 
                     // generate that token to the user
