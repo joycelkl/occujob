@@ -32,7 +32,7 @@ exports.up = function(knex) {
                 table.text("self_intro");
                 table.integer("ee_phone");
                 table.decimal("expected_salary", 14, 2);
-                table.boolean("availability");
+                table.text("availability");
                 table.text('ee_location'); //to be confirmed
                 table.text('ee_exp'); //check query for search
                 table.timestamps(false, true);

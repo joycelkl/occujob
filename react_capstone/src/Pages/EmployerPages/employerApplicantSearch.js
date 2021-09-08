@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../employerSearch.css";
 
 const EmployerApplicantSearch = () => {
+
+  const [available, setAvailable] = useState('');
+  const [expSalary, setExpSalary] = useState('');
+  const [jobFunction, setJobFunction] = useState('');
+  const [location, setLocation] = useState('')
+
   return (
     <div>
       <EmployerNavbar />
@@ -15,7 +21,9 @@ const EmployerApplicantSearch = () => {
             <Col lg={12}>
               <FormGroup>
                 <Label for="Availability">Availability</Label>
-                <Input type="text" name="Availability" id="Availability" placeholder="Availability" />
+                <Input type="select" name="Availability" id="Availability" placeholder="Availability" >
+
+                </Input>
               </FormGroup>
             </Col>
             <Col lg={12}>
