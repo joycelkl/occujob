@@ -1,9 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../employerSearch.css";
+import authAxios from "../../Redux/authAxios";
+import { useHistory } from 'react-router';
 
 const EmployerApplicantSearch = () => {
+
+  const [available, setAvailable] = useState('');
+  const [expSalary, setExpSalary] = useState('');
+  const [jobFunction, setJobFunction] = useState('');
+  const [location, setLocation] = useState('')
+
+
+  const history = useHistory();
+
+  function handleOnSubmit (e) {
+    e.preventDefault();
+
+    erAppSearch(available, jobFunction, expSalary, location)
+    .then(()=>{
+            console.log('redirect')
+            // history.push('/employerApplicantSearchList')
+        })
+    
+}
+
+  async function erAppSearch (available, jobFunction, expSalary, location) {
+        const authAxiosConfig = await authAxios();
+    return await authAxiosConfig.post('/employer/candidateSearch', {
+      available: available, jobFunction: jobFunction, expSalary: expSalary, location: location
+    }).then(() => {
+       console.log('sent')
+    }).catch(err => {
+        console.log("search candidate err res", err.response)
+    })
+}
+
   return (
     <div>
       <EmployerNavbar />
@@ -15,7 +48,11 @@ const EmployerApplicantSearch = () => {
             <Col lg={12}>
               <FormGroup>
                 <Label for="Availability">Availability</Label>
-                <Input type="text" name="Availability" id="Availability" placeholder="Availability" />
+                <Input type="select" name="Availability" id="Availability" placeholder="Availability" >
+                  <option>Weekdays Only</option>
+                  <option>Weekends Only</option>
+                  <option>Anyday</option>       
+                </Input>
               </FormGroup>
             </Col>
             <Col lg={12}>
