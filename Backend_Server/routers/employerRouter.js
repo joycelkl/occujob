@@ -119,10 +119,10 @@ class EmployerRouter {
         router.post('/job/:job_id', (req, res) => {
             //update individual job detail
             console.log('job updating no.', req.params.job_id)
-            const { jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location } = req.body
+            const { jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType } = req.body
 
             return this.employerServices.jobUpdating(req.params.id,
-                    jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location)
+                    jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType)
                 .then((updatedJob) => {
                     return res.json(updatedJob)
                 })
