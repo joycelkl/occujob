@@ -158,30 +158,31 @@ class EmployerServices {
 
     jobUpdating(jobId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, jobType) {
         console.log('job updating', jobId)
+        console.log('serivce in data',jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, jobType)
 
-        return this.knex('job')
-            .where({
-                job_id: jobId
-            })
-            .update({
-                job_title: jobTitle,
-                job_function: jobFunction,
-                req_exp: reqExp,
-                expect_salary: expectSalary,
-                job_description: jobDescription,
-                work_period: workPeriod,
-                status: status,
-                job_location: location,
-                job_type: jobType
-            })
-            .returning('*')
-            .then((updatedJob) => {
-                // id = encryptFunction.encryptString(id)
-                return updatedJob;
-            })
-            .catch((err) => {
-                throw new Error(err)
-            });
+        // return this.knex('job')
+        //     .where({
+        //         job_id: jobId
+        //     })
+        //     .update({
+        //         job_title: jobTitle,
+        //         job_function: jobFunction,
+        //         req_exp: reqExp,
+        //         expect_salary: expectSalary,
+        //         job_description: jobDescription,
+        //         work_period: workPeriod,
+        //         status: status,
+        //         job_location: location,
+        //         job_type: jobType
+        //     })
+        //     .returning('*')
+        //     .then((updatedJob) => {
+        //         // id = encryptFunction.encryptString(id)
+        //         return updatedJob;
+            // })
+            // .catch((err) => {
+            //     throw new Error(err)
+            // });
     }
 
     candidateDetail(applicationId) {
