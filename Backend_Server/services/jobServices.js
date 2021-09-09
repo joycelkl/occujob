@@ -49,7 +49,7 @@ class JobServices {
 
     skill() {
 
-        return this.knex('skill')
+        return this.knex('skills')
             .then((skill) => {
 
                 return skill
