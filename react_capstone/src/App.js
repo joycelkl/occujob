@@ -24,6 +24,7 @@ import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearch
 import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
 import EmployerSignUp from './Pages/EmployerPages/employerSignup';
 import EmployerProfilePageR from './Pages/EmployerPages/employerProfilePage_r';
+import EmployerProfilePageStyle from './Pages/EmployerPages/employerProfilePageWithStyle';
 
 const PublicRoute = ({component, ...rest}) => {
   const {isAuthenticated, user} = useSelector((state) => state.auth)
@@ -106,6 +107,7 @@ function App() {
         <PrivateRoute path = "/applicantOfferDetail" component = { ApplicantOfferDetail }/> 
         <PrivateRoute path = "/applicantHomePage" component = { ApplicantHomePage } />
         <PrivateRoute path = "/employerProfilePager" component = { EmployerProfilePageR } /> 
+        <PrivateRoute path = "/employerProfilePageStyle" component = { EmployerProfilePageStyle } /> 
         </Switch>
         </ Router>
 

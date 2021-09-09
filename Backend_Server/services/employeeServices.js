@@ -33,6 +33,7 @@ class EmployeeService {
         userImage,
         userExp,
         userSkill,
+        userSalaryType
     ) {
 
         // need to review the tags function here
@@ -43,11 +44,15 @@ class EmployeeService {
         // }
 
         let ind = [];
-
-        if (Array.isArray(userIndustry)) {
-            ind = userIndustry;
+        if (userIndustry = null) {
+            ind = [' ']
         } else {
-            ind.push(userIndustry);
+
+            if (Array.isArray(userIndustry)) {
+                ind = userIndustry;
+            } else {
+                ind.push(userIndustry);
+            }
         }
 
         let sky = [];

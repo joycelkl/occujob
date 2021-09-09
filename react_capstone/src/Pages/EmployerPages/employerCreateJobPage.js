@@ -17,6 +17,7 @@ const EmployerCreateJobPage = () => {
     const [jobFunction, setJobFunction] = useState('')
     const [location, setLocation] = useState('')
     const [workPeriod, setWorkPeriod] = useState('');
+    const [salaryType, setSalaryType] = useState('')
 
     const history = useHistory();
 
@@ -46,10 +47,11 @@ const EmployerCreateJobPage = () => {
         setJobFunction('');
         setLocation('');
         setWorkPeriod('');
+        setSalaryType('');
     }
 
     async function erJobCreate(jobTitle, jobFunction, reqExp, expectSalary,
-        jobDescription, workPeriod, location, jobType) {
+        jobDescription, workPeriod, location, jobType, salaryType) {
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post('/employer/job/posting', {
             jobTitle: jobTitle,
@@ -59,7 +61,8 @@ const EmployerCreateJobPage = () => {
             jobDescription: jobDescription,
             workPeriod: workPeriod,
             location: location,
-            jobType: jobType
+            jobType: jobType,
+            salaryType: salaryType
         }).then(res => {
             updatedToast()
         }).catch(err => {
@@ -88,7 +91,13 @@ const EmployerCreateJobPage = () => {
                             <Label for="reqExp">Required Experience</Label>
                             <Input type="number" name="number" id="reqExp" placeholder="Year of Experience" value={exp} onChange={(e) => setExp(e.target.value)} />
                         </FormGroup>
-
+                        <FormGroup>
+                            <Label for="salaryType">Expected Salary Type </Label>
+                            <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                                <option value={'perJob'} selected> Per Job </option>
+                                <option value={'perHour'}> Per Hour</option>
+                            </Input>
+                        </FormGroup>
                         <FormGroup>
                             <Label for="Expected Salary">Salary</Label>
                             <Input type="number" name="number" id="Salary" placeholder="Salary" value={salary} onChange={(e) => setSalary(e.target.value)} />
