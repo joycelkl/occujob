@@ -13,7 +13,7 @@ exports.seed = function(knex) {
           // Inserts seed entries
           return knex('employer').insert([
               { er_name: 'ER_user1', er_email: 'eruser1@mail.com', er_password: '$2b$10$3mLApKxROB7Jk.7VLvNMlOJXLmlkt58fxPaXpuKO9LrhpI0aOvTlS', er_type: "er", er_phone:'12345678'},
-              { er_name: 'ER_user2', er_email: 'eruser2@mail.com', er_password: '1234', er_type: "er" },
+              { er_name: 'ER_user2', er_email: 'eruser2@mail.com', er_password: '$2b$10$3mLApKxROB7Jk.7VLvNMlOJXLmlkt58fxPaXpuKO9LrhpI0aOvTlS', er_type: "er" },
               { er_name: 'ER_user3', er_email: 'eruser3@mail.com', er_password: '1234', er_type: "er" }
           ]).then(() => {
               return knex('employee').insert([
