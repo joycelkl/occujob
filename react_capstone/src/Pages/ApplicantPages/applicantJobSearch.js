@@ -21,7 +21,7 @@ const ApplicantJobSearch = (props) => {
             <Col md={6}>
               <FormGroup>
                 <Label for="JobTitle">Job Title/Company</Label>
-                <Input type="text" name="JobTitle" id="JobTitle" value={search} placeholder="Job Title/Company" />
+                <Input type="text" name="JobTitle" id="JobTitle" value={search} placeholder="Job Title/Company" onChange={() => props.onSearchChange()}/>
               </FormGroup>
             </Col>
             <Col md={6}>
@@ -45,7 +45,7 @@ const ApplicantJobSearch = (props) => {
               </FormGroup>
             </Col>
           </Row>
-          <Button onClick={() => props.onSearchChange()}>
+          <Button type='submit'>
          Search</Button>
         </div>
       </div>

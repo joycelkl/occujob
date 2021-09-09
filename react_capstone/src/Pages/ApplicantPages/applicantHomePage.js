@@ -10,7 +10,7 @@ import ApplicantHomeCard from '../../Components/Applicants/ApplicantHomeJobCard'
 const ApplicantHomePage = () => {
     const applicantJobState = useSelector((state) => state.applicantJob)
     const dispatch = useDispatch();
-
+  
     const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch)
  
     useEffect(() => {

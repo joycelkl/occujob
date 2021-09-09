@@ -7,9 +7,11 @@ const ApplicantOfferDetail = ()=>{
 return(
 <div>
   <ApplicantNavbar />
- <JobDetail/>
- <Button>Accept</Button>
- <Button>Reject</Button>
+  <div className="container">
+  <h2>Offer Detail</h2>
+  <JobDetail/>
+  <br></br>
+ </div>
 </div>
   );
 }
