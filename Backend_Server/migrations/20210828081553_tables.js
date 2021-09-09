@@ -28,12 +28,12 @@ exports.up = function(knex) {
                 table.string("ee_password").notNullable();
                 table.string("ee_type").notNullable();
                 table.text("ee_img_data"); //will change to text later for url
-                table.specificType("ee_industry", 'text ARRAY');
+                table.specificType("ee_industry", 'text ARRAY'); //job function
                 table.text("self_intro");
                 table.integer("ee_phone");
                 table.decimal("expected_salary", 14, 2);
-                table.text("availability");
-                table.text('ee_location'); //to be confirmed
+                table.text("availability"); //option with weedends, weekdays, anyday
+                table.text('ee_location'); //dropdown list
                 table.text('ee_exp'); //check query for search
                 table.specificType('ee_skill', 'text ARRAY'); //e.g. javascript
                 table.timestamps(false, true);
