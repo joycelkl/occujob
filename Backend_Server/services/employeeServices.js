@@ -11,11 +11,11 @@ class EmployeeService {
             .where("ee_id", userId)
             .then((data) => {
                 console.log('listuserdata', data)
-                if (data[0].img_data) {
-                    let base = Buffer.from(data[0].img_data);
-                    let conversion = base.toString('base64');
-                    data[0].image = conversion;
-                }
+                    // if (data[0].img_data) {
+                    //     let base = Buffer.from(data[0].img_data);
+                    //     let conversion = base.toString('base64');
+                    //     data[0].image = conversion;
+                    // }
                 return data;
             });
     }
@@ -56,57 +56,83 @@ class EmployeeService {
         }
 
         let sky = [];
-
-        if (Array.isArray(userSkill)) {
-            sky = userSkill;
+        if (userSkill = null) {
+            sky = [' ']
         } else {
-            sky.push(userSkill);
+            if (Array.isArray(userSkill)) {
+                sky = userSkill;
+            } else {
+                sky.push(userSkill);
+            }
         }
 
-        if (ind.length == 0) {
-            return this.knex("employee")
-                .where({
-                    ee_id: userId
-                })
-                .update({
-                    ee_name: userName,
-                    self_intro: userIntro,
-                    ee_phone: userPhone,
-                    expected_salary: userExpectedSalary,
-                    availability: userAvailability,
-                    ee_location: userLocation,
-                    ee_img_data: userImage,
-                    ee_industry: ind,
-                    ee_exp: userExp,
-                    ee_skill: sky
-                })
-                .returning('*')
-                .then((updatedUser) => {
-                    return updatedUser
-                })
-        } else {
-            console.log('ind', ind)
-            return this.knex("employee")
-                .where({
-                    ee_id: userId
-                })
-                .update({
-                    ee_name: userName,
-                    self_intro: userIntro,
-                    ee_phone: userPhone,
-                    expected_salary: userExpectedSalary,
-                    ee_industry: ind,
-                    availability: userAvailability,
-                    ee_location: userLocation,
-                    ee_img_data: userImage,
-                    ee_exp: userExp,
-                    ee_skill: sky
-                })
-                .returning('*')
-                .then((updatedUser) => {
-                    return updatedUser
-                })
-        }
+        return this.knex("employee")
+            .where({
+                ee_id: userId
+            })
+            .update({
+                ee_name: userName,
+                self_intro: userIntro,
+                ee_phone: userPhone,
+                expected_salary: userExpectedSalary,
+                ee_industry: ind,
+                availability: userAvailability,
+                ee_location: userLocation,
+                ee_img_data: userImage,
+                ee_exp: userExp,
+                ee_skill: sky,
+                ee_salary_type: userSalaryType,
+            })
+            .returning('*')
+            .then((updatedUser) => {
+                return updatedUser
+            })
+
+        // if (ind.length == 0) {
+        //     return this.knex("employee")
+        //         .where({
+        //             ee_id: userId
+        //         })
+        //         .update({
+        //             ee_name: userName,
+        //             self_intro: userIntro,
+        //             ee_phone: userPhone,
+        //             expected_salary: userExpectedSalary,
+        //             availability: userAvailability,
+        //             ee_location: userLocation,
+        //             ee_img_data: userImage,
+        //             ee_industry: ind,
+        //             ee_exp: userExp,
+        //             ee_skill: sky
+        //         })
+        //         .returning('*')
+        //         .then((updatedUser) => {
+        //             return updatedUser
+        //         })
+        // } else {
+        //     console.log('ind', ind)
+        //     return this.knex("employee")
+        //         .where({
+        //             ee_id: userId
+        //         })
+        //         .update({
+        //             ee_name: userName,
+        //             self_intro: userIntro,
+        //             ee_phone: userPhone,
+        //             expected_salary: userExpectedSalary,
+        //             ee_industry: ind,
+        //             availability: userAvailability,
+        //             ee_location: userLocation,
+        //             ee_img_data: userImage,
+        //             ee_exp: userExp,
+        //             ee_skill: sky,
+        //             ee_salary_type: userSalaryType,
+        //         })
+        //         .returning('*')
+        //         .then((updatedUser) => {
+        //             return updatedUser
+        //         })
+        // }
     }
 
 
@@ -261,7 +287,7 @@ class EmployeeService {
 
         return this.knex('job')
             .join('employer', 'employer.er_id', '=', 'job.employer_id')
-            // .where('job.expiry_date', '>', new Date())
+            .where('job.expiry_date', '>', new Date())
             .select('job.job_title', 'employer.er_name', 'job.job_location', 'job.created_at', 'employer.er_img_data', 'job.job_id', 'job.job_type')
             .then((jobDetail) => {
                 console.log('public', jobDetail)

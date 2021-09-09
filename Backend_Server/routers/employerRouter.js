@@ -49,7 +49,6 @@ class EmployerRouter {
         //         .catch((err) => {
         //             res.status(500).json(err)
         //         });
-
         // });
 
         //tested ok
@@ -81,11 +80,12 @@ class EmployerRouter {
                 jobType,
                 jobFunction,
                 workPeriod,
-                location
+                location,
+                salaryType
             } = req.body
 
             return this.employerServices.jobPosting(req.user.id, jobTitle, jobFunction, reqExp, expectSalary,
-                    jobDescription, workPeriod, location, jobType)
+                    jobDescription, workPeriod, location, jobType, salaryType)
                 .then(() => {
                     return res.json('Job Created')
                 })
@@ -119,10 +119,10 @@ class EmployerRouter {
         router.post('/job/:job_id', (req, res) => {
             //update individual job detail
             console.log('job updating no.', req.params.job_id)
-            const { jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType } = req.body
+            const { jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType, salaryType } = req.body
             console.log('req.body', req.body)
             return this.employerServices.jobUpdating(req.params.job_id,
-                    jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType)
+                    jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType, salaryType)
                 .then((updatedJob) => {
                     return res.json(updatedJob)
                 })
@@ -143,12 +143,13 @@ class EmployerRouter {
                 jobType,
                 jobFunction,
                 workPeriod,
-                location
+                location,
+                salaryType
             } = req.body
 
             return this.employerServices.jobPosting(req.user.id,
                     jobTitle, jobFunction, reqExp, expectSalary,
-                    jobDescription, workPeriod, location, jobType
+                    jobDescription, workPeriod, location, jobType, salaryType
                 )
                 .then((postedJob) => {
                     return res.json(postedJob)
