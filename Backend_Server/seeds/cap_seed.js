@@ -107,6 +107,51 @@ exports.seed = async function(knex) {
                
             ])
         })
+        .then(() => {
+            return knex('skills').insert([
+                {skills: 'Budget Planning'},
+                {skills: 'Engineering'},
+                {skills: 'Operations'},
+                {skills: 'Project Planning'},
+                {skills: 'Quality Control'},
+                {skills: 'Scheduling'},
+                {skills: 'Task Management'},
+                {skills: 'Coding'},
+                {skills: 'Javascript'},
+                {skills: 'React'},
+                {skills: 'Node JS'},
+                {skills: 'HTML'},
+                {skills: 'CSS'},
+                {skills: 'Customer Support'},
+                {skills: 'Debugging'},
+                {skills: 'Design'},
+                {skills: 'Development'},
+                {skills: 'Implementation'},
+                {skills: 'Languages'},
+                {skills: 'Security'},
+                {skills: 'Photography'},
+                {skills: 'Marketing'},
+                {skills: 'Technology'},
+                {skills: 'Troubleshooting'},
+                {skills: 'Blogging'},
+                {skills: 'Digital Media'},
+                {skills: 'Networking'},
+                {skills: 'Web Analytics'},
+                {skills: 'Social Media'},
+                {skills: 'Client Relations'},
+                {skills: 'AI'},
+                {skills: 'Video Creation'},
+                {skills: 'Presenting'},
+                {skills: 'Spreadsheets'},
+                {skills: 'Writing'},
+                {skills: 'Math'},
+                {skills: 'Science'},
+                {skills: 'Productivity'},
+                
+                
+               
+            ])
+        })
       });
 };
 
