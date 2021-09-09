@@ -1,8 +1,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("industry", (industry) => {
-        admin.increments("industry_id").primary();
-        admin.string('industry').notNullable();
-        admin.timestamps(false, true);
+        industry.increments("industry_id").primary();
+        industry.string('industry').notNullable();
+        industry.timestamps(false, true);
     })
 };
 

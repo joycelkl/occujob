@@ -1,8 +1,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("location", (location) => {
-        admin.increments("location_id").primary();
-        admin.string('location').notNullable();
-        admin.timestamps(false, true);
+        location.increments("location_id").primary();
+        location.string('location').notNullable();
+        location.timestamps(false, true);
     })
 };
 
