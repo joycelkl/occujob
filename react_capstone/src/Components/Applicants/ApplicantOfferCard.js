@@ -1,25 +1,30 @@
 import React , {useEffect}from "react";
+import authAxios from '../../Redux/authAxios';
 import {Card, Badge} from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { useState } from "react";
-import { actionCreators } from '../../Redux';
+
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const ApplicantOfferCard = (props)=>{
-    const dispatch = useDispatch();
+    
     const {offerCard} = props;
     const {job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
     console.log("testoffer",offer)
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+    const [post, setPost] = useState(null);
 //offer accept reject
-    const {offerAcceptAction} = bindActionCreators(actionCreators, dispatch)
-    useEffect(() => {
-        offerAcceptAction();
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [])
-
+    async function acceptoffer(application_id,reply){
+        console.log("offer app ID",application_id)
+        const authAxiosConfig = await authAxios();
+        return await authAxiosConfig.post(`/employee/accept/offer/${application_id}`,{reply:true})
+        .then(res => {
+           console.log("accepted")
+        }).catch(err => {
+            console.log("pubulic job load err res", err.response)
+        })
+    }
+   
 
     return(
     <Card className='my-4'>
@@ -52,7 +57,7 @@ const ApplicantOfferCard = (props)=>{
         Required Exp: {req_exp}<br/>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" value= "accept" onClick={toggle}>accept</Button>{' '}
+          <Button color="primary" value= {application_id} onClick={acceptoffer}>accept</Button>{' '}
           <Button color="primary" onClick={toggle}>reject</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
