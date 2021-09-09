@@ -2,7 +2,7 @@ import { LOAD_EE_PROFILE_SUCCESS_ACTION, LOAD_EE_PROFILE_FAIL_ACTION } from '../
 
 
 const initialState = {
-    EEProfile: []
+    EEProfile: {}
 };
 
 const reducer = (state = initialState, action) => {

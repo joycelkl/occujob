@@ -26,8 +26,20 @@ export const LOGOUT_NOW_ACTION = "LOGOUT_NOW"
 export const logoutNowAction = () => {
     return (dispatch) => {
         localStorage.clear('token');
+        localStorage.clear('type');
         dispatch({
             type: LOGOUT_NOW_ACTION
+        })
+    }
+}
+
+export const ERROR_VALUE_ACTION = "ERROR_VALUE"
+
+export const errorValueAction = () => {
+    return (dispatch) => {
+        dispatch({
+            type: ERROR_VALUE_ACTION,
+
         })
     }
 }
@@ -42,8 +54,8 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
                 password: password
             }).then(res => {
                 console.log("ER User login success")
+                localStorage.setItem('type', 'er')
                 localStorage.setItem("token", res.data)
-
             })
             .then(() => {
                 dispatch(regLoginSuccessAction())
@@ -67,6 +79,7 @@ export const loginEEuserThunkAction = (email, password) => async(dispatch) => {
             password: password
         }).then(res => {
             console.log("EE User login success")
+            localStorage.setItem('type', 'ee')
             localStorage.setItem("token", res.data);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
@@ -88,6 +101,7 @@ export const registerERuserThunkAction = (name, email, password) => async(dispat
             password: password
         }).then(res => {
             console.log("ER User login success")
+            localStorage.setItem('type', 'er');
             localStorage.setItem("token", res.data);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
@@ -108,7 +122,8 @@ export const registerEEuserThunkAction = (name, email, password) => async(dispat
             email: email,
             password: password
         }).then(res => {
-            console.log("ER User login success")
+            console.log("EE User login success")
+            localStorage.setItem('type', 'ee')
             localStorage.setItem("token", res.data);
             dispatch(regLoginSuccessAction())
         }).catch(err => {

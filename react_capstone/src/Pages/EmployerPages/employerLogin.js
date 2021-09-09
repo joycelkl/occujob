@@ -6,22 +6,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import logoBackground from '../../Images/logoBackground.png';
 import "../Applicant CSS/applicantLogin.css"
 
 
 const EmployerLogin = () => {
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const noLoginToast = () => toast("Please Input Login Email & Password");
+    const wrongEmail = () => toast("Please input valid Email");
+    const invalidToast = () => toast("Invalid Email or Password");
     const authState = useSelector((state) => state.auth);
     const { isAuthenticated, error } = authState
     const history = useHistory();
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+
     const dispatch = useDispatch();
 
     const { loginERuserThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { errorValueAction } = bindActionCreators(actionCreators, dispatch)
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -29,6 +35,14 @@ const EmployerLogin = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated]);
+
+    useEffect(() => {
+        if (error) {
+            invalidToast()
+            errorValueAction()
+
+        }
+    }, [error]);
 
     function validEmail(email) {
         // eslint-disable-next-line no-useless-escape
@@ -39,12 +53,12 @@ const EmployerLogin = () => {
         e.preventDefault();
         console.log('ER handle Login')
         if (!email || !password) {
-            alert('Please input login Email & Password')
+            noLoginToast()
             return;
         }
 
         if (!validEmail(email)) {
-            alert('Please input valid Email')
+            wrongEmail()
         }
 
         loginERuserThunkAction(email, password)
@@ -60,8 +74,8 @@ const EmployerLogin = () => {
                     <div className="container" style={{ border: "1px solid black", padding: "80px", backgroundColor: "rgb(59, 105, 121)", marginTop: "150px", marginLeft: "100px", marginRight: "100px", borderRadius: "25px", color: "white" }}>
                         <h1 >Employer Login Page</h1>
                         <Login link="/employerSignup" onEmailChange={(v)=>setEmail(v)} onPasswordChange={(v)=>setPassword(v)} handleLogin={(e)=>handleLogin(e)} email={email} password={password} />
-                        {error && alert(error)}
-
+                        {error && invalidToast()} 
+                        <ToastContainer />
 
                     </div>
                     <div className="container">

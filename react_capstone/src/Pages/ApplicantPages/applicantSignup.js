@@ -20,6 +20,7 @@ const ApplicantSignUp = (props) => {
   const { registerEEuserThunkAction } = bindActionCreators(actionCreators, dispatch)
 
   useEffect(() => {
+    console.log('isAuthenticated')
     if (isAuthenticated) {
       history.push('/applicantHomePage')
     }
@@ -43,6 +44,7 @@ const ApplicantSignUp = (props) => {
     }
 
     registerEEuserThunkAction(name, email, password);
+    console.log('new applicant register')
 
   }
 

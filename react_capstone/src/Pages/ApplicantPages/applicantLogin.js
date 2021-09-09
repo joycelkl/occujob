@@ -7,22 +7,30 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
 import '../Applicant CSS/applicantLogin.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 
 const ApplicantLogin = () => {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const noLoginToast = () => toast("Please Input Login Email & Password");
+    const wrongEmail = () => toast("Please input valid Email");
+    const invalidToast = () => toast("Invalid Email or Password");
     const authState = useSelector((state) => state.auth);
     const { isAuthenticated, error } = authState
     const history = useHistory();
+    
+ 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
 
     const dispatch = useDispatch();
 
     const { loginEEuserThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { errorValueAction } = bindActionCreators(actionCreators, dispatch)
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -30,6 +38,16 @@ const ApplicantLogin = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated]);
+
+    useEffect(() => {
+        if (error) {
+            invalidToast()
+            errorValueAction()
+
+        }
+    }, [error]);
+
+    
 
     function validEmail(email) {
         // eslint-disable-next-line no-useless-escape
@@ -39,14 +57,14 @@ const ApplicantLogin = () => {
     function handleLogin(e) {
         e.preventDefault();
         if (!email || !password) {
-            alert('Please input login Email & Password')
+            noLoginToast()
             return;
         }
 
         if (!validEmail(email)) {
-            alert('Please input valid Email')
+            wrongEmail()
         }
-
+        console.log('applicant login')
         loginEEuserThunkAction(email, password);
 
     }
@@ -60,7 +78,9 @@ const ApplicantLogin = () => {
                     <div className="container" style={{ border: "1px solid black", padding: "80px", backgroundColor: "rgb(59, 105, 121)", marginTop: "150px", marginLeft: "100px", marginRight: "100px", borderRadius: "25px", color: "white" }}>
                         <h1>Applicant Login Page</h1>
                         <Login link="/applicantSignup" onEmailChange={(v) => setEmail(v)} onPasswordChange={(v) => setPassword(v)} handleLogin={(e) => handleLogin(e)} email={email} password={password} />
-                        {error && alert(error)}
+                        {error && invalidToast()} 
+                        <ToastContainer />
+
 
                     </div>
                     <div className="container">
@@ -73,8 +93,8 @@ const ApplicantLogin = () => {
                     </div>
                 </div>
             </div>
-            </div>
-            )
+        </div>
+    )
 };
 
-            export default ApplicantLogin;
+export default ApplicantLogin;

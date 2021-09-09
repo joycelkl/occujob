@@ -6,16 +6,13 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import ApplicantHomeCard from '../../Components/Applicants/ApplicantHomeJobCard';
 
+
 const ApplicantHomePage = () => {
-    
-    const applicantJobState = useSelector((state) => {
-        { console.log("Applicant Job:", state.applicantJob) }
-        return state.applicantJob
-    })
+    const applicantJobState = useSelector((state) => state.applicantJob)
     const dispatch = useDispatch();
     const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
     const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch)
-
+ 
     useEffect(() => {
         loadApplicantJobThunkAction();
         loadEEProfileThunkAction();
