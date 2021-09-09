@@ -79,10 +79,12 @@ const EmployerProfilePage = () => {
       .catch(err => console.error(err))
   }
 
+  console.log("image:", image)
+
 
   function handleOnSubmit(e) {
     e.preventDefault();
-    console.log('update')
+    console.log('update', industry, compDescription, phone, location, image)
 
     updateErProfileAction(industry, compDescription, phone, location, image)
     updateToast()
@@ -138,9 +140,9 @@ const EmployerProfilePage = () => {
             <div class="col-md-4">
               <div class="profile-img">
                 <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
-                <div class="file btn btn-lg btn-primary">
+                {/* <div class="file btn btn-lg btn-primary">
                   Change Photo
-                </div>
+                </div> */}
               </div>
             </div>
             <div class="col-md-6">
@@ -247,7 +249,7 @@ const EmployerProfilePage = () => {
             </div>
           </div>
           <div class="col-md-2">
-              <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Save" />
+              <input type="submit" class="profile-edit-btn" name="btnAddMore"/>
             </div>
             <ToastContainer />
         </Form>
