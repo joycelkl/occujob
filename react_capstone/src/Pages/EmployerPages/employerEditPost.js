@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
+import authAxios from '../../Redux/authAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
@@ -14,7 +15,7 @@ const EmployerEditPost = () => {
 
     const dispatch = useDispatch()
     const { erJobUpdate } = bindActionCreators(actionCreators, dispatch)
-    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, ee_img_data, availability, ee_email, expected_salary, ee_location, ee_industry } = indJobState[0] || {}
+    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, ee_img_data, availability, ee_email, expected_salary, ee_location, ee_industry, application_id } = indJobState[0] || {}
 
     console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period)
 
@@ -46,7 +47,16 @@ const EmployerEditPost = () => {
                 alert("updated")
             })
     }
-
+    async function giveOffer(application_id){
+        console.log("offer app ID",application_id)
+        const authAxiosConfig = await authAxios();
+        return await authAxiosConfig.post(`/employer/job/candidate/offer/${application_id}`)
+        .then(res => {
+           console.log(res)
+        }).catch(err => {
+            console.log("pubulic job load err res", err.response)
+        })
+    }
     function handleCheckbokChange(e) {
         console.log("Checked", e.target.checked)
         e.target.checked == true ? setJobStatus(false) : setJobStatus(true);
@@ -156,7 +166,7 @@ const EmployerEditPost = () => {
                                     </ModalBody>
                                     <ModalFooter>
                                         <Button color="primary" onClick={toggle}>Message</Button>{' '}
-                                        <Button color="secondary" onClick={toggle}>Offer</Button>
+                                        <Button color="secondary" onClick={()=>giveOffer(application_id)}>Offer</Button>
                                     </ModalFooter>
                                 </Modal>
                     </tbody>

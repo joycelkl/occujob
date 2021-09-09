@@ -222,6 +222,7 @@ class EmployeeService {
     }
 
     acceptOffer(id) {
+        console.log('accept offer', id)
         return this.knex("application")
             .where({
                 application_id: id,
