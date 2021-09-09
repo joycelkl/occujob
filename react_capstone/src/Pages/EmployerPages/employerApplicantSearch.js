@@ -11,6 +11,8 @@ const EmployerApplicantSearch = () => {
   const [expSalary, setExpSalary] = useState('');
   const [jobFunction, setJobFunction] = useState('');
   const [location, setLocation] = useState('')
+  const [salaryType, setSalaryType] = useState('')
+  const [skill, setSkill] = useState('')
 
 
   const history = useHistory();
@@ -18,7 +20,7 @@ const EmployerApplicantSearch = () => {
   function handleOnSubmit (e) {
     e.preventDefault();
 
-    erAppSearch(available, jobFunction, expSalary, location)
+    erAppSearch(available, jobFunction, expSalary, location, skill, salaryType)
     .then(()=>{
             console.log('redirect')
             // history.push('/employerApplicantSearchList')
@@ -26,16 +28,19 @@ const EmployerApplicantSearch = () => {
     
 }
 
-  async function erAppSearch (available, jobFunction, expSalary, location) {
+  async function erAppSearch (available, jobFunction, expSalary, location, skill, salaryType) {
         const authAxiosConfig = await authAxios();
     return await authAxiosConfig.post('/employer/candidateSearch', {
-      available: available, jobFunction: jobFunction, expSalary: expSalary, location: location
+      available: available, jobFunction: jobFunction, expSalary: expSalary, location: location, skill:skill , salaryType: salaryType
     }).then(() => {
        console.log('sent')
     }).catch(err => {
         console.log("search candidate err res", err.response)
     })
 }
+ console.log('salary Type',salaryType)
+ console.log('expSalary', expSalary)
+
 
   return (
     <div>
@@ -43,7 +48,7 @@ const EmployerApplicantSearch = () => {
         <div className="searchHeader">
       <Container>
       <Form>
-        <div className="mb-3 search-text-box" id="home">
+        <div className="mb-3 search-text-box text-start" id="home">
           <Row form>
             <Col lg={12}>
               <FormGroup>
@@ -57,20 +62,56 @@ const EmployerApplicantSearch = () => {
             </Col>
             <Col lg={12}>
               <FormGroup>
-                <Label for="ExpectedSalary">ExpectedSalary</Label>
-                <Input type="number" name="ExpectedSalary" id="ExpectedSalary" placeholder="ExpectedSalary">
-                <option>Weekdays Only</option>
-                  <option>Weekends Only</option>
-                  <option>Anyday</option>   
+                <FormGroup>
+                <Label for="salaryType">Expected Salary Type</Label>
+                <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e)=>setSalaryType(e.target.value)}>
+                  <option value={'perJob'} selected>Per Job</option>
+                  <option value={'perHour'}>Per Hour</option>
                 </Input>
+               </FormGroup>
+               {salaryType ? (salaryType === 'perJob'? 
+               (<FormGroup>
+                <Input className='mt-2' type="select" name="perJobExpectedSalary" id="perJobExpectedSalary" value={expSalary} onChange={(e)=>setExpSalary(e.target.value)}>
+                  <option value={2500} selected>$2500 or below</option>
+                  <option value={5000}>$5000 or below</option>
+                  <option value={7500}>$7500 or below</option>
+                  <option value={10000}>$10000 or above</option>   
+                </Input>
+              </FormGroup>)
+               :(<FormGroup>
+                <Input className='mt-2' type="select" name="perHourExpectedSalary" id="perHourExpectedSalary" value={expSalary} onChange={(e)=>setExpSalary(e.target.value)}>
+                  <option value={70} selected>$70 or below</option>
+                  <option value={150}>$150 or below</option>
+                  <option value={200}>$200 or below</option>
+                  <option value={250}>$250 or above</option>   
+                </Input>
+              </FormGroup>)
+               ): <p>Please select the Salary Type</p>}             
               </FormGroup>
             </Col>
           </Row>
           <Row form>
+          <Col md={12}>
+              <FormGroup>
+                <Label for="Job Function">With Experience</Label>
+                <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={jobFunction} onChange={(e)=>setExpSalary(e.target.value)} >
+                  <option value={0} selected>Nil</option>
+                  <option value={2}>2 years or below</option>
+                  <option value={5}>5 years or below</option>
+                  <option value={8}>8 years or above</option>   
+                  </Input>
+              </FormGroup>
+            </Col>
             <Col md={12}>
               <FormGroup>
                 <Label for="Job Function">Job Function</Label>
-                <Input type="text" name="Job Function" id="Job Function" placeholder="Job Function" />
+                <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={jobFunction} onChange={(e)=>setExpSalary(e.target.value)} />
+              </FormGroup>
+            </Col>
+            <Col md={12}>
+              <FormGroup>
+                <Label for="Job Function">Skill</Label>
+                <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={skill} onChange={(e)=>setSkill(e.target.value)} />
               </FormGroup>
             </Col>
             <Col md={12}>
