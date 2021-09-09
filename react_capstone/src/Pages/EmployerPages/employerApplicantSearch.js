@@ -125,6 +125,8 @@ const EmployerApplicantSearch = () => {
         </div>
       </Form>
       </Container>
+
+      
       </div>
       
     </div>

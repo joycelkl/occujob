@@ -73,6 +73,41 @@ exports.seed = async function(knex) {
                 {location: 'Southern'},
                 {location: 'Wan Chai'},
             ])
-        });
+        })
+        .then(() => {
+            return knex('industry').insert([
+                {industry: 'Educational Services'},
+                {industry: 'Real Estate'},
+                {industry: 'Administration'},
+                {industry: 'Management Services'},
+                {industry: 'Scientific Services'},
+                {industry: 'Construction'},
+                {industry: 'Healthcare'},
+                {industry: 'Arts'},
+                {industry: 'Entertainment'},
+                {industry: 'Wholesale Trade'},
+                {industry: 'Transportation'},
+                {industry: 'Finance'},
+                {industry: 'Insurance'},
+                {industry: 'Agriculture'},
+                {industry: 'Food Services'},
+                {industry: 'Hospitality'},
+                {industry: 'Retail'},
+                {industry: 'Manufacturing'},
+                {industry: 'Technology'},
+                {industry: 'IT'},
+                {industry: 'Engineering'},
+                {industry: 'Business'},
+                {industry: 'Advisory'},
+                {industry: 'Photography'},
+                {industry: 'Media'},
+                {industry: 'Recreation'},
+                {industry: 'Publishing'},
+                {industry: 'Consumer Goods'},
+               
+            ])
+        })
       });
 };
+
+
