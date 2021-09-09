@@ -7,8 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EmployerCreateJobPage = () => {
+
     const fillInfoToast = () => toast("Please Fill In All Information")
-    const updatedToast = () => toast("Job Has Been Posted")
+    const updatedToast = () => toast("Job Has Been Posted") // should be no need
     const [jobTitle, setJobTitle] = useState('')
     const [jobDes, setJobDes] = useState('')
     const [exp, setExp] = useState('')
@@ -22,33 +23,34 @@ const EmployerCreateJobPage = () => {
     const history = useHistory();
 
 
-    console.log('data', jobTitle, jobDes, exp, salary, empType, jobFunction, location, workPeriod)
-
+    
     function handleOnSubmit(e) {
         e.preventDefault();
-        if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunction || !location || !workPeriod) {
+        if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunction || !location || !workPeriod ) {
             fillInfoToast();
             console.log('submitting')
             return;
         }
         erJobCreate(jobTitle, jobFunction, exp, salary,
-            jobDes, workPeriod, location, empType).then(() => {
+            jobDes, workPeriod, location, empType, salaryType).then(() => {
                 history.push('/employerJobRecordsList')
             })
-
-    }
-
-    function handleReset() {
-        setJobTitle('');
-        setJobDes('');
-        setExp('');
-        setSalary('');
-        setEmpType('');
-        setJobFunction('');
-        setLocation('');
-        setWorkPeriod('');
-        setSalaryType('');
-    }
+            
+        }
+        
+        function handleReset() {
+            setJobTitle('');
+            setJobDes('');
+            setExp('');
+            setSalary('');
+            setEmpType('');
+            setJobFunction('');
+            setLocation('');
+            setWorkPeriod('');
+            setSalaryType('');
+        }
+        
+        console.log('data', jobTitle, jobDes, exp, salary, empType, jobFunction, location, workPeriod, salaryType)
 
     async function erJobCreate(jobTitle, jobFunction, reqExp, expectSalary,
         jobDescription, workPeriod, location, jobType, salaryType) {
@@ -66,7 +68,7 @@ const EmployerCreateJobPage = () => {
         }).then(res => {
             updatedToast()
         }).catch(err => {
-            console.log("pubulic job load err res", err.response)
+            console.log("job posting err res", err.response)
         })
     }
 
@@ -105,7 +107,7 @@ const EmployerCreateJobPage = () => {
                         <FormGroup>
                             <Label for="employmentType">Employment Type</Label>
                             <Input type="select" name="employmentType" id="employmentType" value={empType} onChange={(e) => setEmpType(e.target.value)}>
-                                <option>Freelance</option>
+                                <option selected>Freelance</option>
                                 <option>Part-Time</option>
                             </Input>
                         </FormGroup>

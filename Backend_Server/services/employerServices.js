@@ -46,7 +46,6 @@ class EmployerServices {
                 console.err
                 throw new Error(err)
             });
-
     }
 
     // //url should be text
@@ -67,8 +66,6 @@ class EmployerServices {
     //             console.log(err)
     //             throw new Error(err)
     //         });
-
-
     // }
 
     listJobHistory(userId) {
@@ -89,7 +86,7 @@ class EmployerServices {
             });
     }
 
-    jobPosting(userId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, location, jobType) {
+    jobPosting(userId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, location, jobType, salaryType) {
 
         let expiry = new Date(new Date().setDate(new Date().getDate() + 14));
         let formatted_date = expiry.getFullYear() + "-" + (expiry.getMonth() + 1) + "-" + expiry.getDate();
@@ -99,6 +96,7 @@ class EmployerServices {
                 employer_id: userId,
                 job_title: jobTitle,
                 job_function: jobFunction,
+                job_type: jobType,
                 req_exp: reqExp,
                 expect_salary: expectSalary,
                 job_description: jobDescription,
@@ -106,11 +104,12 @@ class EmployerServices {
                 expiry_date: formatted_date,
                 status: true,
                 job_location: location,
-                job_type: jobType,
+                job_salary_type: salaryType
             })
-            // .returning('*')
-            .then(() => {
-                return 'done'
+            .returning('*')
+            .then((postedJob) => {
+                console.log(postedJob)
+                return postedJob
             })
             .catch((err) => {
                 throw new Error(err)
@@ -126,6 +125,7 @@ class EmployerServices {
             .then((result) => {
                 if (result.length == 0) {
                     return this.knex('job')
+                        .select({ jobCreate: 'job.created_at' }, 'job.*')
                         .where('job_id', jobId)
                         .then((jobDetail) => {
                             return jobDetail;
@@ -156,7 +156,7 @@ class EmployerServices {
             })
     }
 
-    jobUpdating(jobId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, jobType) {
+    jobUpdating(jobId, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, jobType, salaryType) {
         console.log('job updating', jobId)
 
         return this.knex('job')
@@ -166,13 +166,14 @@ class EmployerServices {
             .update({
                 job_title: jobTitle,
                 job_function: jobFunction,
+                job_type: jobType,
                 req_exp: reqExp,
                 expect_salary: expectSalary,
                 job_description: jobDescription,
                 work_period: workPeriod,
                 status: status,
                 job_location: location,
-                job_type: jobType
+                job_salary_type: salaryType
             })
             .returning('*')
             .then((updatedJob) => {

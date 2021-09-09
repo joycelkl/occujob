@@ -126,26 +126,6 @@ class EmployeeRouter {
         })
 
         //tested
-        router.get('/search/result/:job_id', (req, res) => {
-            //list job:id details
-            return this.jobServices
-                .viewindividualjob(req.params.job_id)
-                .then((job) => {
-                    res.json(job)
-                })
-                .catch((err) => {
-                    console.log(err)
-                    res.status(500).json(err)
-                })
-        })
-
-
-
-
-
-
-
-        //tested
         router.post('/offer/accept/:application_id', (req, res) => {
             console.log('running accept')
             return this.employeeService
@@ -182,6 +162,20 @@ class EmployeeRouter {
                     res.status(500).json(err)
                 })
 
+        })
+
+        //tested
+        router.get('/search/result/:job_id', (req, res) => {
+            //list job:id details
+            return this.jobServices
+                .viewindividualjob(req.params.job_id)
+                .then((job) => {
+                    res.json(job)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    res.status(500).json(err)
+                })
         })
 
         return router;
