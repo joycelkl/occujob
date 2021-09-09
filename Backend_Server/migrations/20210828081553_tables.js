@@ -37,6 +37,7 @@ exports.up = function(knex) {
                 table.text('ee_exp'); //check query for search
                 table.specificType('ee_skill', 'text ARRAY'); //e.g. javascript
                 table.timestamps(false, true);
+                table.text('ee_salary_type'); //perJob or perHour
             });
         })
         .then(() => {
@@ -66,6 +67,7 @@ exports.up = function(knex) {
                 job.boolean("status").notNullable();
                 job.text('job_location').notNullable();
                 job.timestamps(false, true);
+                job.text('job_salary_type').notNullable(); //perJob or perHour
             });
         })
         .then(() => {
