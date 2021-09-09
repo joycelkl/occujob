@@ -13,11 +13,11 @@ class EmployerServices {
             })
             .then((profile) => {
                 console.log("employer", profile)
-                if (profile[0].img_data) {
-                    let base = Buffer.from(profile[0].img_data);
-                    let conversion = base.toString('base64');
-                    profile[0].image = conversion;
-                }
+                    // if (profile[0].img_data) {
+                    //     let base = Buffer.from(profile[0].img_data);
+                    //     let conversion = base.toString('base64');
+                    //     profile[0].image = conversion;
+                    // }
                 return profile;
             })
             .catch((err) => {
