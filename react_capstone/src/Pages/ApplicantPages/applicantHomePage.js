@@ -10,12 +10,11 @@ import ApplicantHomeCard from '../../Components/Applicants/ApplicantHomeJobCard'
 const ApplicantHomePage = () => {
     const applicantJobState = useSelector((state) => state.applicantJob)
     const dispatch = useDispatch();
-    const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
+  
     const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch)
  
     useEffect(() => {
         loadApplicantJobThunkAction();
-        loadEEProfileThunkAction();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
