@@ -47,6 +47,48 @@ class JobServices {
             });
     }
 
+    skill() {
+
+        return this.knex('skill')
+            .then((skill) => {
+
+                return skill
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            });
+
+    }
+
+    location() {
+
+        return this.knex('location')
+            .then((location) => {
+
+                return location
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            });
+
+    }
+
+    industry() {
+
+        return this.knex('industry')
+            .then((industry) => {
+
+                return industry
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            });
+
+    }
+
 }
 
 
