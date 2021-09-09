@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const EmployerProfilePageR = () => {
+const EmployerProfilePageStyle = () => {
   const updateToast = () => toast("Profile Updated");
     const erProfileState = useSelector((state) =>{console.log("ER", state.erProfile);
   return state.erProfile});
@@ -210,4 +210,4 @@ const EmployerProfilePageR = () => {
     )
 }
 
-export default EmployerProfilePageR
+export default EmployerProfilePageStyle
