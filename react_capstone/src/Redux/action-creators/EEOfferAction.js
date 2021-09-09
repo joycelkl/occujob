@@ -37,3 +37,18 @@ export const loadOfferThunkAction = () => async(dispatch) => {
         console.error(err)
     }
 }
+
+export const offerAcceptAction = (application_id) => async(dispatch) => {
+    console.log("EE offer Accept")
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.post(`/employee/offer/accept/{application_id}`).then(res => {
+            dispatch(loadOfferSuccessAction(res.data))
+        }).catch(err => {
+            console.log("Update fail err res", err.response)
+            dispatch(loadOfferFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}

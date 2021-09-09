@@ -1,15 +1,33 @@
-import React from "react";
+import React , {useEffect}from "react";
 import {Card, Badge} from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { useState } from "react";
+import { actionCreators } from '../../Redux';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const ApplicantOfferCard = (props)=>{
-
+    const dispatch = useDispatch();
     const {offerCard} = props;
-    const {job_title, er_name, created_at, job_type, job_location, er_img_data,offer} = offerCard;
+    const {job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
     console.log("testoffer",offer)
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+//offer accept reject
+    const {offerAcceptAction} = bindActionCreators(actionCreators, dispatch)
+    useEffect(() => {
+        offerAcceptAction();
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [])
+      function acceptOffer (e) {
+        e.preventDefault();
+        console.log('accept')
+        // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
+        offerAcceptAction(application_id)
+        alert("Accepted Offer App ID:", {application_id},"Job ID:",{job_id})
+      }
+
+
     return(
     <Card className='my-4'>
     <Card.Body onClick={() => setModal(!modal)}>
@@ -31,12 +49,18 @@ const ApplicantOfferCard = (props)=>{
     </Card.Body>
     <div>
       <Modal isOpen={modal} toggle={toggle} >
-        <ModalHeader toggle={toggle}>{job_title}</ModalHeader>
+        <ModalHeader toggle={toggle}>{job_title}{er_name} ID:{job_id} </ModalHeader>
         <ModalBody>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Type: {job_type}<br/>
+        Job Description: {job_description}<br/>
+        Work Time: {work_period}<br/>
+        Working Location: {job_location}<br/>
+        Salary: {expect_salary}<br/>
+        Required Exp: {req_exp}<br/>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+          <Button color="primary" value= "accept" onClick={acceptOffer(e.target.value)}>accept</Button>{' '}
+          <Button color="primary" onClick={toggle}>reject</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
