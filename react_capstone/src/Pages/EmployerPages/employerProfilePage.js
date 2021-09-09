@@ -90,6 +90,8 @@ const EmployerProfilePage = () => {
     updateToast()
     }
 
+ console.log('image', image)
+
   return (
     <div>
       <EmployerNavbar />
@@ -131,7 +133,7 @@ const EmployerProfilePage = () => {
           </Form>
         </div>
         <div className="col-6 m-3">
-          <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
+        <ProfileImage url={image} handleOnChange={(e)=>upload(e)}/>
         </div>
       </div> */}
       <div class="container emp-profile">
