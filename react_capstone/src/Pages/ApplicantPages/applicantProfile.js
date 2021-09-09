@@ -12,9 +12,12 @@ const ApplicantProfile = () => {
 
   console.log('EEprofile', EEProfileState)
   const dispatch = useDispatch();
-
-  const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
   const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
+  const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
+//   useEffect(()=>{
+//     loadEEProfileThunkAction();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [])
 
 const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill}=EEProfileState
 

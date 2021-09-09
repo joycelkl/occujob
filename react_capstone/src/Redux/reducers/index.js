@@ -5,6 +5,7 @@ import EEProfileReducer from './EEProfileReducer'
 import employerProfileReducer from './employerProfileReducer'
 import employerJobReducer from './employerJobReducer';
 import applicantJobCardReducer from './applicantJobCardReducer'
+import EEOfferReducer from './EEOfferReducer'
 import individualJobReducer from './individualJobReducer'
 
 const reducers = combineReducers({
@@ -14,6 +15,7 @@ const reducers = combineReducers({
     erProfile: employerProfileReducer,
     employerJob: employerJobReducer,
     applicantJob: applicantJobCardReducer,
+    EEOffer: EEOfferReducer,
     individualJob: individualJobReducer,
 
 })

@@ -14,8 +14,6 @@ const EmployerEditPost = () => {
 
     const dispatch = useDispatch()
     const { erJobUpdate } = bindActionCreators(actionCreators, dispatch)
-
-
     const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, ee_img_data, availability, ee_email, expected_salary, ee_location, ee_industry } = indJobState[0] || {}
 
     console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period)
@@ -30,14 +28,13 @@ const EmployerEditPost = () => {
     const [jobFunction, setJobFunction] = useState(job_function || '...Loading');
     const [workPeriod, setWorkPeriod] = useState(work_period || '...Loading');
     const [modal, setModal] = useState(false);
-
+    const [modalJob, setModalJob] = useState({});
 
     function toggle(name) {
         console.log('toggle name', name)
+        
         setModal(!modal);
     }
-
-
 
     function handleRepost() {
         console.log('repost')
@@ -136,27 +133,32 @@ const EmployerEditPost = () => {
 
                     <tbody>
                         {indJobState.length > 0 ? indJobState.map((job) => (
-                            <tr onClick={() => toggle(job.ee_name)} key={job.ee_id} style={{ cursor: "pointer" }}>
-                                <Modal isOpen={modal} toggle={toggle}>
-                                    <ModalHeader toggle={toggle}>{job.ee_name} {console.log('name', job.ee_name)} <img src={job.ee_img_data} width="200px" height="200x" /></ModalHeader>
-                                    <ModalBody>
-                                        Self Introduction: {job.self_intro} <br />
-                                        Expected Salary: {job.expected_salary} <br />
-                                        Skills: {job.ee_industry} <br />
-                                        Location Preference: {job.ee_location} <br />
-                                        availability: {job.availability}
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button color="primary" onClick={toggle}>Message</Button>{' '}
-                                        <Button color="secondary" onClick={toggle}>Offer</Button>
-                                    </ModalFooter>
-                                </Modal>
+                            <tr onClick={() => {
+                                setModalJob(job)
+                                toggle(job.ee_name)}
+                            } 
+                                key={job.ee_id} style={{ cursor: "pointer" }}>
+                            
                                 <td>{job.ee_name}</td>
                                 <td>{job.created_at}</td>
                                 <td>{job.offer}</td>
                             </tr>
 
                         )) : "loading..."}
+                        <Modal isOpen={modal} toggle={toggle}>
+                                    <ModalHeader >{modalJob.ee_name} {console.log('nametest', modalJob.ee_name)} <img src={modalJob.ee_img_data} width="200px" height="200x" /></ModalHeader>
+                                    <ModalBody>
+                                        Self Introduction: {modalJob.self_intro} <br />
+                                        Expected Salary: {modalJob.expected_salary} <br />
+                                        Skills: {modalJob.ee_industry} <br />
+                                        Location Preference: {modalJob.ee_location} <br />
+                                        availability: {modalJob.availability}
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="primary" onClick={toggle}>Message</Button>{' '}
+                                        <Button color="secondary" onClick={toggle}>Offer</Button>
+                                    </ModalFooter>
+                                </Modal>
                     </tbody>
 
 
