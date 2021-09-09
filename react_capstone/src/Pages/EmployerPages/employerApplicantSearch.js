@@ -120,6 +120,12 @@ const EmployerApplicantSearch = () => {
                 <Input type="text" name="Working Location" id="Working Location" placeholder="Work Location" />
               </FormGroup>
             </Col>
+            <Col md={12}>
+                  <FormGroup>
+                    <Label for="JobType">JobType</Label>
+                    <Input type="text" name="JobType" id="WorkingLocation" placeholder="Working Location" />
+                  </FormGroup>
+                </Col>
           </Row>
           <a href="/employerApplicantSearchList" className="search-Homebtn">Search</a>
         </div>
