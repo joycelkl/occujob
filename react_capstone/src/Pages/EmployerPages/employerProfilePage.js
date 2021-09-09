@@ -8,7 +8,7 @@ import ProfileImage from '../../Components/ProfileImage';
 import S3 from 'react-aws-s3';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import "./employerProfilePage.css";
 
 const EmployerProfilePage = () => {
   const updateToast = () => toast("Profile Updated");
