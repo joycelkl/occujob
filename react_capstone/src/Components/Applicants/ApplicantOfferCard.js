@@ -19,13 +19,6 @@ const ApplicantOfferCard = (props)=>{
         offerAcceptAction();
           // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
-      function acceptOffer (e) {
-        e.preventDefault();
-        console.log('accept')
-        // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
-        offerAcceptAction(application_id)
-        alert("Accepted Offer App ID:", {application_id},"Job ID:",{job_id})
-      }
 
 
     return(
@@ -59,7 +52,7 @@ const ApplicantOfferCard = (props)=>{
         Required Exp: {req_exp}<br/>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" value= "accept" onClick={acceptOffer(e.target.value)}>accept</Button>{' '}
+          <Button color="primary" value= "accept" onClick={toggle}>accept</Button>{' '}
           <Button color="primary" onClick={toggle}>reject</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
