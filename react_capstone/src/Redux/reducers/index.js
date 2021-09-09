@@ -7,6 +7,9 @@ import employerJobReducer from './employerJobReducer';
 import applicantJobCardReducer from './applicantJobCardReducer'
 import EEOfferReducer from './EEOfferReducer'
 import individualJobReducer from './individualJobReducer'
+import skillsReducer from './skillsReducer'
+import locationReducer from './locationReducer'
+import industryReducer from './industryReducer'
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -17,6 +20,9 @@ const reducers = combineReducers({
     applicantJob: applicantJobCardReducer,
     EEOffer: EEOfferReducer,
     individualJob: individualJobReducer,
+    skills: skillsReducer,
+    location: locationReducer,
+    industry: industryReducer,
 
 })
 
