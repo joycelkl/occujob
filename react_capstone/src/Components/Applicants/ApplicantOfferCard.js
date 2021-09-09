@@ -10,21 +10,31 @@ const ApplicantOfferCard = (props)=>{
     const {offerCard} = props;
     const {job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
     console.log("testoffer",offer)
+    console.log('data', job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id)
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [post, setPost] = useState(null);
 //offer accept reject
-    async function acceptoffer(application_id,reply){
+    async function acceptoffer(application_id){
         console.log("offer app ID",application_id)
         const authAxiosConfig = await authAxios();
-        return await authAxiosConfig.post(`/employee/accept/offer/${application_id}`,{reply:true})
+        return await authAxiosConfig.post(`/employee/offer/accept/${application_id}`)
         .then(res => {
-           console.log("accepted")
+           console.log(res)
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
         })
     }
-   
+    async function declineoffer(application_id){
+        console.log("offer app ID",application_id)
+        const authAxiosConfig = await authAxios();
+        return await authAxiosConfig.post(`/employee/offer/decline/${application_id}`)
+        .then(res => {
+           console.log(res)
+        }).catch(err => {
+            console.log("pubulic job load err res", err.response)
+        })
+    }
 
     return(
     <Card className='my-4'>
@@ -57,8 +67,8 @@ const ApplicantOfferCard = (props)=>{
         Required Exp: {req_exp}<br/>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" value= {application_id} onClick={acceptoffer}>accept</Button>{' '}
-          <Button color="primary" onClick={toggle}>reject</Button>{' '}
+          <Button color="primary" onClick={()=>acceptoffer(application_id)}>accept</Button>{' '}
+          <Button color="primary" onClick={()=>declineoffer(application_id)}>decline</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
