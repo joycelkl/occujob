@@ -45,20 +45,50 @@ const ApplicantJobSearch = (props) => {
   const [worklocation, setworkLocation] = useState('')
   const [salaryType, setSalaryType] = useState('')
   const [expSalary, setExpSalary] = useState('')
+  const [available, setAvailable] = useState('')
+
   const industies =[]
   if (industryState.length>0){
-    industryState.map((ind)=>(district.push({"label":ind.industryState,"value":ind.industryState,"role":"master"})))}
+    industryState.map((ind)=>(industies.push({"label":ind.industry,"value":ind.industry,"role":"master"})))}
   const district = []
   if (locationState.length>0){
   locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
-  
+
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    if(!available || !jobFunction || !expSalary || !worklocation || !salaryType){
+      alert('please fillin critiria')
+      return
+    }
+    console.log('submitted', available, jobFunction, expSalary, worklocation, salaryType)
+
+    // erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
+    //   .then(() => {
+    //     console.log('redirect')
+    //     // history.push('/employerApplicantSearchList')
+    //   })
+
+  }
+
+  async function erAppSearch(available, jobFunction, expSalary, location,  skills, salaryType, workExp) {
+    const authAxiosConfig = await authAxios();
+    return await authAxiosConfig.post('/employer/candidateSearch', {
+      available: available, jobFunction: jobFunction, expSalary: expSalary, location: location, salaryType: salaryType, skills: skills, workExp: workExp
+    }).then(() => {
+      console.log('sent')
+    }).catch(err => {
+      console.log("search candidate err res", err.response)
+    })
+  }
+
+
   return (
 
     <div>
       <ApplicantNavbar />
       <div className="searchHeader">
         <Container>
-          <Form>
+          <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
             <div className="mb-3 search-text-box" id="home">
               <Row form>
                 <Col md={12}>

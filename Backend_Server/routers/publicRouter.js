@@ -49,7 +49,7 @@ class PublicRouter {
         })
 
         router.get('/industry', (req, res) => {
-            console.log('getting skill')
+            console.log('getting industry')
 
             return this.jobSerivces.industry()
                 .then((industry) => {
