@@ -83,8 +83,8 @@ const ApplicantJobSearch = (props) => {
   if (industryState.length > 0) {
     industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
   }
-  console.log('industryTag', industryTag)
-
+  console.log('industryTag...', industryTag)
+  
   return (
 
     <div>
