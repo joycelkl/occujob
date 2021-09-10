@@ -7,6 +7,7 @@ import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
+import { TagPicker } from 'rsuite';
 
 const ApplicantJobSearch = (props) => {
   const skillsState = useSelector((state) => {
@@ -112,11 +113,13 @@ const ApplicantJobSearch = (props) => {
                 <Col md={12}>
                   <FormGroup>
                     <Label for="Working Location">Work Location</Label>
-                    <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                    {/* <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                       {locationState.length > 0 ? locationState.map((location) => (
                         <option value={location.location} selected>{location.location}</option>
                       )) : "loading..."}
-                    </Input>
+                    </Input> */}
+                  <TagPicker data={location.location} style={{ width: 100 }}  />
+                
                   </FormGroup>
                 </Col>
                 </Col>
