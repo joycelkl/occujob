@@ -22,7 +22,8 @@ const EmployerApplicantSearch = () => {
     console.log("location", state.location);
     return state.location
   });
-  console.log("location", locationState)
+ 
+  console.log("location Tag Data", locationState)
 
   const industryState = useSelector((state) => {
     console.log("industry", state.industry);
@@ -156,8 +157,8 @@ const EmployerApplicantSearch = () => {
                     <Label for="Job Function">Job Function</Label>
                     <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
                       <option value={null} selected>Please select</option>
-                      {industryState.length > 0 ? industryState.map((industry) => (
-                        <option key={industry.industry_id} value={industry.industry} selected>{industry.industry}</option>
+                      {industryState.length > 0 ? industryState.map((industry, i) => (
+                        <option key={i} value={industry.industry}>{industry.industry}</option>
                       )) : "loading..."}
                     </Input>
                   </FormGroup>
@@ -168,8 +169,8 @@ const EmployerApplicantSearch = () => {
                     <Label for="skills">Skill</Label>
                     <Input type="select" name="skills" id="skills" placeholder="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
                     <option value={null} selected>Please select</option>
-                      {skillsState.length > 0 ? skillsState.map((skill) => (
-                        <option key={skill.skills_id} value={skill.skills} selected>{skill.skills}</option>
+                      {skillsState.length > 0 ? skillsState.map((skill,i) => (
+                        <option key={i} value={skill.skills} selected>{skill.skills}</option>
                       )) : "loading..."}
                     </Input>
                   </FormGroup>
@@ -179,8 +180,8 @@ const EmployerApplicantSearch = () => {
                     <Label for="Working Location">Work Location</Label>
                     <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                     <option value={null} selected>Please select</option>
-                      {locationState.length > 0 ? locationState.map((location) => (
-                        <option key={location.location_id} value={location.location} selected>{location.location}</option>
+                      {locationState.length > 0 ? locationState.map((location, i) => (
+                        <option key={i} value={location.location} selected>{location.location}</option>
                       )) : "loading..."}
                     </Input>
                   </FormGroup>
