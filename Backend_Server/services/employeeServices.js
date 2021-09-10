@@ -206,12 +206,75 @@ class EmployeeService {
         }
         let jobfnum = jobFunctionArr.length;
         if (jobfnum != 3) {
-            for (var i = 0; i < (3 - jjobfnum); i++) {
+            for (var i = 0; i < (3 - jobfnum); i++) {
                 jobFunctionArr.push('')
             }
         }
 
+        let locationArr = []
+        if (location == null) {
+            locationArr = ['', '', '']
+        } else {
+            if (!Array.isArray(location)) {
+                locationArr.push(location)
+            } else {
+                locationArr = location
+            }
+        }
+        let localnum = locationArr.length;
+        if (localnum != 3) {
+            for (var i = 0; i < (3 - localnum); i++) {
+                locationArr.push('')
+            }
+        }
 
+        if (salaryType == null) {
+            return this.knex('job')
+                .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                .select('job.*', 'employer.er_name')
+                .orWhere('job.job_title', jobTitleArr[0])
+                .orWhere('job.job_title', jobTitleArr[1])
+                .orWhere('job.job_title', jobTitleArr[2])
+                .orWhere('employer.er_name', companyArr[0])
+                .orWhere('employer.er_name', companyArr[1])
+                .orWhere('employer.er_name', companyArr[2])
+                .orWhere('job.job_function', jobFunctionArr[0])
+                .orWhere('job.job_function', jobFunctionArr[1])
+                .orWhere('job.job_function', jobFunctionArr[2])
+                .orWhere('job.job_location', locationArr[0])
+                .orWhere('job.job_location', locationArr[1])
+                .orWhere('job.job_location', locationArr[2])
+                .andWhere('job.job_type', jobType)
+                .andWhere('job.expiry_date', '>', new Date())
+                .orderBy('updated_at', 'desc')
+                .then((jobList) => {
+                    return jobList
+                }).catch(err => console.log(err))
+        } else {
+            return this.knex('job')
+                .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                .select('job.*', 'employer.er_name')
+                .orWhere('job.job_title', jobTitleArr[0])
+                .orWhere('job.job_title', jobTitleArr[1])
+                .orWhere('job.job_title', jobTitleArr[2])
+                .orWhere('employer.er_name', companyArr[0])
+                .orWhere('employer.er_name', companyArr[1])
+                .orWhere('employer.er_name', companyArr[2])
+                .orWhere('job.job_function', jobFunctionArr[0])
+                .orWhere('job.job_function', jobFunctionArr[1])
+                .orWhere('job.job_function', jobFunctionArr[2])
+                .orWhere('job.job_location', locationArr[0])
+                .orWhere('job.job_location', locationArr[1])
+                .orWhere('job.job_location', locationArr[2])
+                .andWhere('job.job_type', jobType)
+                .andWhere('job.job_salary_type', salaryType)
+                .andWhere('job.expect_salary', '>=', salary)
+                .andWhere('job.expiry_date', '>', new Date())
+                .orderBy('updated_at', 'desc')
+                .then((jobList) => {
+                    return jobList
+                }).catch(err => console.log(err))
+        }
 
 
         // let searchList = {}
