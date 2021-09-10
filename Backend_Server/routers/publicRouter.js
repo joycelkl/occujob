@@ -49,7 +49,7 @@ class PublicRouter {
         })
 
         router.get('/industry', (req, res) => {
-            console.log('getting skill')
+            console.log('getting industry')
 
             return this.jobSerivces.industry()
                 .then((industry) => {
@@ -61,6 +61,16 @@ class PublicRouter {
                 });
         })
 
+        router.get('/company', (req, res) => {
+            return this.jobSerivces.company()
+                .then((companyName) => {
+                    return res.json(companyName)
+                })
+                .catch((err) => {
+                    console.error(err)
+                    res.status(500).json(err)
+                });
+        })
 
         return router;
     }

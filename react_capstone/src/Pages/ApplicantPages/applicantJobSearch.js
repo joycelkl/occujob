@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
-import { useHistory } from 'react-router';
 import Select from 'react-select'
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
@@ -17,7 +16,7 @@ const ApplicantJobSearch = (props) => {
     console.log("ER", state.skills);
     return state.skills
   });
-
+  
   const locationState = useSelector((state) => {
     console.log("location", state.location);
     return state.location
@@ -27,29 +26,60 @@ const ApplicantJobSearch = (props) => {
     console.log("industry", state.industry);
     return state.industry
   });
+  const companyNameState = useSelector((state) => {
+    console.log("CompanyName", state.companyName);
+    return state.companyName
+  });
+  
   const dispatch = useDispatch();
-
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadCompanyNameThunkAction } = bindActionCreators(actionCreators, dispatch)
+
   useEffect(() => {
     loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
+    loadCompanyNameThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const [jobtitle, setJobtitle] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [jobFunction, setJobFunction] = useState('');
   const [jobType, setJobType] = useState('')
-  const [location, setLocation] = useState('')
+  const [worklocation, setworkLocation] = useState('')
   const [salaryType, setSalaryType] = useState('')
   const [expSalary, setExpSalary] = useState('')
   const [jobTitleTag, setJobTitleTag] = useState([])
 
-
   //******* TAGS  *******8 */
+   function handleOnSubmit(e) {
+  //   e.preventDefault();
+  //   if(!available || !jobFunction || !expSalary || !worklocation || !salaryType){
+  //     alert('please fillin critiria')
+  //     return
+  //   }
+  //   console.log('submitted', available, jobFunction, expSalary, worklocation, salaryType)
 
+  //   erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
+  //     .then(() => {
+  //       console.log('redirect')
+  //       // history.push('/employerApplicantSearchList')
+  //     })
+
+   }
+
+  async function erAppSearch(available, jobFunction, expSalary, location,  skills, salaryType, workExp) {
+    const authAxiosConfig = await authAxios();
+    return await authAxiosConfig.post('/employee/search', {
+      available: available, jobFunction: jobFunction, expSalary: expSalary, location: location, salaryType: salaryType, skills: skills, workExp: workExp
+    }).then(() => {
+      console.log('sent')
+    }).catch(err => {
+      console.log("search candidate err res", err.response)
+    })
+  }
 
   let locationTag = []
   if (locationState.length > 0) {
@@ -83,15 +113,15 @@ const ApplicantJobSearch = (props) => {
   if (industryState.length > 0) {
     industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
   }
-  console.log('industryTag...', industryTag)
-  
+  // console.log('industryTag', industryTag)
+
   return (
 
     <div>
       <ApplicantNavbar />
       <div className="searchHeader">
         <Container>
-          <Form>
+          <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
             <div className="mb-3 search-text-box" id="home">
               <Row form>
                 <Col md={12}>
@@ -127,18 +157,20 @@ const ApplicantJobSearch = (props) => {
                     {salaryType ? (salaryType === 'perJob' ?
                       (<FormGroup>
                         <Input className='mt-2' type="select" name="perJobExpectedSalary" id="perJobExpectedSalary" value={expSalary} onChange={(e) => setExpSalary(e.target.value)}>
-                          <option value={2500} selected>$2500 or below</option>
-                          <option value={5000}>$5000 or below</option>
-                          <option value={7500}>$7500 or below</option>
-                          <option value={10000}>$10000 or above</option>
+                        <option value={null} selected>Please select</option>
+                          <option value={1000} >$1000 or above</option>
+                          <option value={2500}>$2500 or above</option>
+                          <option value={5000}>$5000 or above</option>
+                          <option value={7500}>$7500 or above</option>
                         </Input>
                       </FormGroup>)
                       : (<FormGroup>
                         <Input className='mt-2' type="select" name="perHourExpectedSalary" id="perHourExpectedSalary" value={expSalary} onChange={(e) => setExpSalary(e.target.value)}>
-                          <option value={70} selected>$70 or below</option>
-                          <option value={150}>$150 or below</option>
-                          <option value={200}>$200 or below</option>
-                          <option value={250}>$250 or above</option>
+                        <option value={null} selected>Please select</option>
+                          <option value={50} >$50 or above</option>
+                          <option value={100}>$100 or above</option>
+                          <option value={150}>$150 or above</option>
+                          <option value={200}>$200 or above</option>
                         </Input>
                       </FormGroup>)
                     ) : <p>Please select the Salary Type</p>}

@@ -18,7 +18,7 @@ const ApplicantHomePage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log('Applicant', applicantJobState)
+    console.log('ApplicantJob Data', applicantJobState)
     return (
         <div>
             <ApplicantNavbar />
