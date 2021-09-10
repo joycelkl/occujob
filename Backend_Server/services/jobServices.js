@@ -50,6 +50,7 @@ class JobServices {
     skill() {
 
         return this.knex('skills')
+            .select('skills')
             .then((skill) => {
 
                 return skill
@@ -64,6 +65,7 @@ class JobServices {
     location() {
 
         return this.knex('location')
+            .select('location')
             .then((location) => {
 
                 return location
@@ -78,6 +80,7 @@ class JobServices {
     industry() {
 
         return this.knex('industry')
+            .select('industry')
             .then((industry) => {
 
                 return industry
