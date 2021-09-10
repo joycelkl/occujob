@@ -229,101 +229,301 @@ class EmployerServices {
 
     //to be rewrited
     candidateFilter(value) {
-        //value = expectedSalary, jobFunction(industry)
-        console.log('industry', value.industry);
-        console.log('salary', value.csExpectedSalary)
-        if ((value.csExpectedSalary == 'default' && value.industry == 'default') || (value.csExpectedSalary == 'default' && value.industry == undefined)) {
-            console.log("view all")
-            return this.knex('employee')
-                .orderBy('updated_at', 'desc')
-                .then((candidateList) => {
-                    return candidateList
-                })
-                .catch(err => console.log(err))
 
-        } else if (value.csExpectedSalary == "default") {
-            let checkingArr = value.industry;
-            let searchArr = [];
-            if (!Array.isArray(checkingArr)) {
-                searchArr.push(value.industry)
-            } else {
-                searchArr = value.industry
+        console.log('search value', value)
+        const { available, salaryType, expSalary, workExp, jobFunction, skills, location } = value
+
+        console.log('data', available, salaryType, expSalary, workExp, jobFunction, skills, location)
+
+        let availableArr = [];
+        if (!Array.isArray(available)) {
+            availableArr.push(available)
+        } else {
+            availableArr = available
+        }
+        let avanum = availableArr.length;
+        if (avanum != 3) {
+            for (var i = 0; i < (3 - avanum); i++) {
+                availableArr.push('')
             }
-            let num = searchArr.length;
-            if (num != 5) {
-                for (var i = 0; i < (5 - num); i++) {
-                    searchArr.push('')
+        }
+
+        let jobFunctionArr = [];
+        if (!Array.isArray(jobFunction)) {
+            jobFunctionArr.push(jobFunction)
+        } else {
+            jobFunctionArr = jobFunction
+        }
+        let jobfnum = jobFunctionArr.length;
+        if (jobfnum != 3) {
+            for (var i = 0; i < (3 - jobfnum); i++) {
+                jobFunctionArr.push('')
+            }
+        }
+
+        let skillsArr = [];
+        if (!Array.isArray(skills)) {
+            skillsArr.push(skills)
+        } else {
+            skillsArr = skills
+        }
+        let skillsnum = skillsArr.length;
+        if (skillsnum != 3) {
+            for (var i = 0; i < (3 - skillsnum); i++) {
+                skillsArr.push('')
+            }
+        }
+
+        if (salaryType == 'perJob') {
+            if (expSalary < 7501) {
+                if (workExp < 6) {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '<=', expSalary)
+                        .andWhere('expectedSalary', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '<=', expSalary)
+                        .andWhere('expectedSalary', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
                 }
-            }
-
-            return this.knex('employee')
-                .orWhere((this.knex.raw('? = any (industry)', searchArr[0])))
-                .orWhere((this.knex.raw('? = any (industry)', searchArr[1])))
-                .orWhere((this.knex.raw('? = any (industry)', searchArr[2])))
-                .orWhere((this.knex.raw('? = any (industry)', searchArr[3])))
-                .orWhere((this.knex.raw('? = any (industry)', searchArr[4])))
-                .orderBy('updated_at', 'desc')
-                .then((candidateList) => {
-                    return candidateList
-                }).catch(err => console.log(err))
-        } else if (value.industry == 'default' || value.industry == undefined) {
-            console.log("no job function set")
-            if (value.csExpectedSalary < 20000) {
-                return this.knex('employee')
-                    .andWhere('expectedSalary', '<', value.csExpectedSalary)
-                    .orderBy('updated_at', 'desc')
-                    .then((candidateList) => {
-                        return candidateList
-                    }).catch(err => console.log(err))
             } else {
-                return this.knex('employee')
-                    .andWhere('expectedSalary', '>=', value.csExpectedSalary)
-                    .orderBy('updated_at', 'desc')
-                    .then((candidateList) => {
-                        return candidateList
-                    }).catch(err => console.log(err))
+                if (workExp < 6) {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '>=', expSalary)
+                        .andWhere('expectedSalary', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '>=', expSalary)
+                        .andWhere('expectedSalary', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
+                }
             }
         } else {
-            let checkingArr = value.industry;
-            let searchArr = [];
-            if (!Array.isArray(checkingArr)) {
-                searchArr.push(value.industry)
-            } else {
-                searchArr = value.industry
-            }
-            let num = searchArr.length;
-            if (num != 5) {
-                for (var i = 0; i < (5 - num); i++) {
-                    searchArr.push('')
+            if (expSalary < 201) {
+                if (workExp < 6) {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '<=', expSalary)
+                        .andWhere('expectedSalary', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '<=', expSalary)
+                        .andWhere('expectedSalary', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
                 }
-            }
-            if (value.csExpectedSalary < 20000) {
-                return this.knex('employee')
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[0])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[1])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[2])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[3])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[4])))
-                    .andWhere('expectedSalary', '<', value.csExpectedSalary)
-                    .orderBy('updated_at', 'desc')
-                    .then((candidateList) => {
-                        return candidateList
-                    }).catch(err => console.log(err))
             } else {
-                return this.knex('employee')
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[0])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[1])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[2])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[3])))
-                    .orWhere((this.knex.raw('? = any (industry)', searchArr[4])))
-                    .andWhere('expectedSalary', '>=', value.csExpectedSalary)
-                    .orderBy('updated_at', 'desc')
-                    .then((candidateList) => {
-                        return candidateList
-                    }).catch(err => console.log(err))
+                if (workExp < 6) {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '>=', expSalary)
+                        .andWhere('expectedSalary', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
+                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
+                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
+                        .andWhere('ee_salary_type', salaryType)
+                        .andWhere('expectedSalary', '>=', expSalary)
+                        .andWhere('expectedSalary', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            return candidateList
+                        }).catch(err => console.log(err))
+                }
             }
 
         }
+        // if ((value.csExpectedSalary == 'default' && value.industry == 'default') || (value.csExpectedSalary == 'default' && value.industry == undefined)) {
+        //     console.log("view all")
+        //     return this.knex('employee')
+        //         .orderBy('updated_at', 'desc')
+        //         .then((candidateList) => {
+        //             return candidateList
+        //         })
+        //         .catch(err => console.log(err))
+
+        // } else if (value.csExpectedSalary == "default") {
+        //     let checkingArr = value.industry;
+        //     let searchArr = [];
+        //     if (!Array.isArray(checkingArr)) {
+        //         searchArr.push(value.industry)
+        //     } else {
+        //         searchArr = value.industry
+        //     }
+        //     let num = searchArr.length;
+        //     if (num != 5) {
+        //         for (var i = 0; i < (5 - num); i++) {
+        //             searchArr.push('')
+        //         }
+        //     }
+
+        //     return this.knex('employee')
+        //         .orWhere((this.knex.raw('? = any (industry)', searchArr[0])))
+        //         .orWhere((this.knex.raw('? = any (industry)', searchArr[1])))
+        //         .orWhere((this.knex.raw('? = any (industry)', searchArr[2])))
+        //         .orWhere((this.knex.raw('? = any (industry)', searchArr[3])))
+        //         .orWhere((this.knex.raw('? = any (industry)', searchArr[4])))
+        //         .orderBy('updated_at', 'desc')
+        //         .then((candidateList) => {
+        //             return candidateList
+        //         }).catch(err => console.log(err))
+        // } else if (value.industry == 'default' || value.industry == undefined) {
+        //     console.log("no job function set")
+        //     if (value.csExpectedSalary < 20000) {
+        //         return this.knex('employee')
+        //             .andWhere('expectedSalary', '<', value.csExpectedSalary)
+        //             .orderBy('updated_at', 'desc')
+        //             .then((candidateList) => {
+        //                 return candidateList
+        //             }).catch(err => console.log(err))
+        //     } else {
+        //         return this.knex('employee')
+        //             .andWhere('expectedSalary', '>=', value.csExpectedSalary)
+        //             .orderBy('updated_at', 'desc')
+        //             .then((candidateList) => {
+        //                 return candidateList
+        //             }).catch(err => console.log(err))
+        //     }
+        // } else {
+        //     let checkingArr = value.industry;
+        //     let searchArr = [];
+        //     if (!Array.isArray(checkingArr)) {
+        //         searchArr.push(value.industry)
+        //     } else {
+        //         searchArr = value.industry
+        //     }
+        //     let num = searchArr.length;
+        //     if (num != 5) {
+        //         for (var i = 0; i < (5 - num); i++) {
+        //             searchArr.push('')
+        //         }
+        //     }
+        //     if (value.csExpectedSalary < 20000) {
+        //         return this.knex('employee')
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[0])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[1])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[2])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[3])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[4])))
+        //             .andWhere('expectedSalary', '<', value.csExpectedSalary)
+        //             .orderBy('updated_at', 'desc')
+        //             .then((candidateList) => {
+        //                 return candidateList
+        //             }).catch(err => console.log(err))
+        //     } else {
+        //         return this.knex('employee')
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[0])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[1])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[2])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[3])))
+        //             .orWhere((this.knex.raw('? = any (industry)', searchArr[4])))
+        //             .andWhere('expectedSalary', '>=', value.csExpectedSalary)
+        //             .orderBy('updated_at', 'desc')
+        //             .then((candidateList) => {
+        //                 return candidateList
+        //             }).catch(err => console.log(err))
+        //     }
+
+        // }
 
     }
 
