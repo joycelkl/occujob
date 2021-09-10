@@ -7,9 +7,9 @@ import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../employerSearch.css";
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
+import 'rsuite/dist/styles/rsuite-default.css';
 import { TagPicker } from 'rsuite';
 import Select from 'react-select'
-
 
 
 const EmployerApplicantSearch = () => {
@@ -124,7 +124,14 @@ const EmployerApplicantSearch = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  let district = []
+  if (locationState.length>0){
+  locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
+console.log('district',district)
+let industies = []
+  if (industryState.length>0){
+  locationState.map((ind)=>(industies.push({"label":ind.industry,"value":ind.industry,"role":"master"})))}
+console.log('industies',industies)
 
 
   const history = useHistory();

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Home from './Pages/home';
 import './App.css';
+import 'rsuite/lib/styles/index.less';
 import ApplicantLogin from './Pages/ApplicantPages/applicantLogin';
 import EmployerLogin from './Pages/EmployerPages/employerLogin';
 import ApplicantProfile from './Pages/ApplicantPages/applicantProfile';
