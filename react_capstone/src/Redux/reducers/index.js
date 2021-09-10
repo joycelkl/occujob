@@ -10,7 +10,7 @@ import individualJobReducer from './individualJobReducer'
 import skillsReducer from './skillsReducer'
 import locationReducer from './locationReducer'
 import industryReducer from './industryReducer'
-
+import applicantJobSearchReducer from './applicantJobCardReducer'
 const reducers = combineReducers({
     auth: authReducer,
     publicJob: publicJobReducer,
@@ -23,6 +23,7 @@ const reducers = combineReducers({
     skills: skillsReducer,
     location: locationReducer,
     industry: industryReducer,
+    companyName: applicantJobSearchReducer,
 
 })
 

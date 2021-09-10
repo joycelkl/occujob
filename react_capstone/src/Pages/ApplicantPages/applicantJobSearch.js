@@ -30,19 +30,18 @@ const ApplicantJobSearch = (props) => {
     console.log("CompanyName", state.companyName);
     return state.companyName
   });
-  const applicantJobState = useSelector((state) => state.applicantJob)
+  
   const dispatch = useDispatch();
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
-  const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch)
-  console.log('ApplicantJobSearchData', applicantJobState)
-  console.log("test test",locationState)
+  const { loadCompanyNameThunkAction } = bindActionCreators(actionCreators, dispatch)
+
   useEffect(() => {
     loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
-    loadApplicantJobThunkAction();
+    loadCompanyNameThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const [jobtitle, setJobtitle] = useState('');

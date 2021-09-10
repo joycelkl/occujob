@@ -1,15 +1,15 @@
-import { LOAD_SEARCH_ITEM_SUCCESS_ACTION, LOAD_SEARCH_ITEM_FAIL_ACTION } from "../action-creators/applicantJobActionCard"; 
+import { LOAD_COMPANY_NAME_SUCCESS_ACTION, LOAD_COMPANY_NAME_FAIL_ACTION } from "../action-creators"; 
 
 const initialState = {
-    searchJob: []
+    compName: []
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOAD_SEARCH_ITEM_SUCCESS_ACTION:
+        case LOAD_COMPANY_NAME_SUCCESS_ACTION:
             console.log("ACTION SUCCESS", action.payload)
             return action.payload;
-        case LOAD_SEARCH_ITEM_FAIL_ACTION:
+        case LOAD_COMPANY_NAME_FAIL_ACTION:
             console.log("ACTION FAIL")
             return state;
         default:
