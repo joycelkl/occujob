@@ -155,27 +155,149 @@ class EmployeeService {
 
     //to be rewrite the logic
     searchJob(value) {
-        let searchList = {}
-        for (let elements in value) {
-            if (value[elements] === "Choose") {
-                value[elements] = ''
-            }
-            if (value[elements] !== '') {
-                searchList[elements] = value[elements]
+
+        console.log('value', value)
+
+        const { jobTitle, company, jobType, salaryType, salary, jobFunction, location } = value
+
+        let jobTitleArr = []
+        if (jobTitle == null) {
+            jobTitleArr = ['', '', '']
+        } else {
+            if (!Array.isArray(jobTitle)) {
+                jobTitleArr.push(jobTitle)
+            } else {
+                jobTitleArr = jobTitle
             }
         }
-        console.log(searchList)
-        return this.knex("employer")
-            .select("*")
-            .join("job", "employer.id", "=", "job.employer_id")
-            .where(searchList)
-            .then((job) => {
-                console.log('search resuly job', job)
-                return job
-            })
-            .catch((err) => {
-                throw new Error(err)
-            })
+        let jobtnum = jobTitleArr.length;
+        if (jobtnum != 3) {
+            for (var i = 0; i < (3 - jobtnum); i++) {
+                jobTitleArr.push('')
+            }
+        }
+
+        let companyArr = []
+        if (company == null) {
+            companyArr = ['', '', '']
+        } else {
+            if (!Array.isArray(company)) {
+                companyArr.push(company)
+            } else {
+                companyArr = company
+            }
+        }
+        let compnum = companyArr.length;
+        if (compnum != 3) {
+            for (var i = 0; i < (3 - compnum); i++) {
+                companyArr.push('')
+            }
+        }
+
+        let jobFunctionArr = []
+        if (jobFunction == null) {
+            jobFunctionArr = ['', '', '']
+        } else {
+            if (!Array.isArray(jobFunction)) {
+                jobFunctionArr.push(jobFunction)
+            } else {
+                jobFunctionArr = jobFunction
+            }
+        }
+        let jobfnum = jobFunctionArr.length;
+        if (jobfnum != 3) {
+            for (var i = 0; i < (3 - jobfnum); i++) {
+                jobFunctionArr.push('')
+            }
+        }
+
+        let locationArr = []
+        if (location == null) {
+            locationArr = ['', '', '']
+        } else {
+            if (!Array.isArray(location)) {
+                locationArr.push(location)
+            } else {
+                locationArr = location
+            }
+        }
+        let localnum = locationArr.length;
+        if (localnum != 3) {
+            for (var i = 0; i < (3 - localnum); i++) {
+                locationArr.push('')
+            }
+        }
+
+        if (salaryType == null) {
+            return this.knex('job')
+                .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                .select('job.*', 'employer.er_name')
+                .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
+                .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
+                .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
+                .orWhere('employer.er_name', companyArr[0])
+                .orWhere('employer.er_name', companyArr[1])
+                .orWhere('employer.er_name', companyArr[2])
+                .orWhere('job.job_function', jobFunctionArr[0])
+                .orWhere('job.job_function', jobFunctionArr[1])
+                .orWhere('job.job_function', jobFunctionArr[2])
+                .orWhere('job.job_location', locationArr[0])
+                .orWhere('job.job_location', locationArr[1])
+                .orWhere('job.job_location', locationArr[2])
+                .andWhere('job.job_type', jobType)
+                .andWhere('job.expiry_date', '>', new Date())
+                .orderBy('updated_at', 'desc')
+                .then((jobList) => {
+                    return jobList
+                }).catch(err => console.log(err))
+        } else {
+            return this.knex('job')
+                .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                .select('job.*', 'employer.er_name')
+                .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
+                .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
+                .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
+                .orWhere('employer.er_name', companyArr[0])
+                .orWhere('employer.er_name', companyArr[1])
+                .orWhere('employer.er_name', companyArr[2])
+                .orWhere('job.job_function', jobFunctionArr[0])
+                .orWhere('job.job_function', jobFunctionArr[1])
+                .orWhere('job.job_function', jobFunctionArr[2])
+                .orWhere('job.job_location', locationArr[0])
+                .orWhere('job.job_location', locationArr[1])
+                .orWhere('job.job_location', locationArr[2])
+                .andWhere('job.job_type', jobType)
+                .andWhere('job.job_salary_type', salaryType)
+                .andWhere('job.expect_salary', '>=', salary)
+                .andWhere('job.expiry_date', '>', new Date())
+                .orderBy('updated_at', 'desc')
+                .then((jobList) => {
+                    return jobList
+                }).catch(err => console.log(err))
+        }
+
+
+        // let searchList = {}
+        // for (let elements in value) {
+        //     if (value[elements] === "Choose") {
+        //         value[elements] = ''
+        //     }
+        //     if (value[elements] !== '') {
+        //         searchList[elements] = value[elements]
+        //     }
+        // }
+        // console.log(searchList)
+        // return this.knex("employer")
+        //     .select("*")
+        //     .join("job", "employer.id", "=", "job.employer_id")
+        //     .where(searchList)
+        //     .then((job) => {
+        //         console.log('search resuly job', job)
+        //         return job
+        //     })
+        //     .catch((err) => {
+        //         throw new Error(err)
+        //     })
     }
 
 
