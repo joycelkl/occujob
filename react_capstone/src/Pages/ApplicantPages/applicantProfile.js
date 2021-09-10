@@ -14,6 +14,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const ApplicantProfile = () => {
+//upload cv
+
+
   const updateToast = () => toast("Profile Updated");
   const EEProfileState = useSelector((state) => state.EEProfile);
   const skillsState = useSelector((state) => {
@@ -116,6 +119,7 @@ const ApplicantProfile = () => {
   const [expYr, setExpYr] = useState(ee_exp)
   const [skill, setSkill] = useState(ee_skill)
   const [salaryType, setSalaryType] = useState(ee_salary_type);
+  const [cv, setCV] = useState();
 
 
 
@@ -188,6 +192,41 @@ const ApplicantProfile = () => {
       })
       .catch(err => console.error(err))
   }
+
+
+//**********************CV *****************************/
+
+
+  //****************DONOT CHANGE THE SETTING HERE*****************************/
+  // S3 setup
+  const CVconfig = {
+    bucketName: process.env.REACT_APP_BUCKET_NAME,
+    dirName: 'eeCVFolder', /* further setting required at here */
+    region: process.env.REACT_APP_REGION,
+    accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+  }
+
+  const ReactCV = new S3(CVconfig);
+
+  //the file name should be the user ID and will change later
+  const newFileCVName = `CV_${ee_id}.pdf`
+
+  //***************************************************** */
+
+  //upload cv setup ***DONT MODIFY THIS PART***
+  function uploadCV(e) {
+    console.log("cv data", e.target.files[0])
+    ReactCV
+      .uploadFile(e.target.files[0], newFileCVName)
+      .then((data) => {
+        console.log(data)
+        setCV("")
+        setCV(data.location)
+      })
+      .catch(err => console.error(err))
+  }
+  console.log("success cv:", cv)
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -383,7 +422,43 @@ const ApplicantProfile = () => {
 
                       </div>
                     </FormGroup>
+                        
+                    <div class="row">
 
+                      <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>
+                      <FormGroup>
+                        <div class="col-md-6">
+                          <Label for="uploadCV">Upload CV </Label>
+                        </div>
+                        <div class="col-md-6">
+                          <Input type="file" name="uploadCV" />
+                        <button type="submit">Upload</button>
+                        </div>
+                      </FormGroup>
+                      </Form>
+                    </div>
+                    <div class="row">
+                      <FormGroup>
+                        <div class="col-md-6">
+                          <Label for="uploadCV">Upload CV </Label>
+                        </div>
+                        <div class="col-md-6">
+                          <Input type="file" name="uploadCV" />
+                        <button>Upload</button>
+                        </div>
+                      </FormGroup>
+                    </div>
+                    <div class="row">
+                      <FormGroup>
+                        <div class="col-md-6">
+                          <Label for="uploadCV">Upload CV </Label>
+                        </div>
+                        <div class="col-md-6">
+                          <Input type="file" name="uploadCV" />
+                        <button>Upload</button>
+                        </div>
+                      </FormGroup>
+                    </div>
                   </div>
                 </div>
               </div>
