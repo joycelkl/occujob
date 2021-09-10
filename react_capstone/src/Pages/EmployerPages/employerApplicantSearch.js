@@ -9,6 +9,8 @@ import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
 import 'rsuite/dist/styles/rsuite-default.css';
 import { TagPicker } from 'rsuite';
+import Select from 'react-select'
+
 
 const EmployerApplicantSearch = () => {
 
@@ -37,8 +39,76 @@ const EmployerApplicantSearch = () => {
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
 
+  let skillsTag = []
+  if (skillsState.length > 0) {
+    skillsState.map((ski) => (skillsTag.push({ "label": ski.skills, "value": ski.skills})))
+  }
+  console.log('skillsTag', skillsTag)
+
+  const SkillsTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="skills"
+    options={skillsTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+  const IndustryTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="skills"
+    options={industryTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+
+  let avaData = [
+    {label: "Monday",value: "monday" },
+    {label: "Tuesday", value: "tuesday" ,},
+    {label: "Wednesday", value: "wednesday"},
+    {label: "Thursday", value: "thursday" },
+    {label: "Friday",value: "friday" },
+    {label: "Saturday",value: "saturday" },
+    {label: "Sunday",value: "sunday" }
+] 
+
+  const AvailabilityTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="availability"
+    options={avaData}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+
+  let industryTag = []
+  if (industryState.length > 0) {
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
+  }
+  console.log('industryTag', industryTag)
 
 
+  let locationTag = []
+  if (locationState.length > 0) {
+    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location})))
+  }
+
+  const LocationTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="location"
+    options={locationTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
   const [available, setAvailable] = useState('');
   const [expSalary, setExpSalary] = useState('');
   const [jobFunction, setJobFunction] = useState('');
@@ -62,6 +132,7 @@ let industies = []
   if (industryState.length>0){
   locationState.map((ind)=>(industies.push({"label":ind.industry,"value":ind.industry,"role":"master"})))}
 console.log('industies',industies)
+
 
   const history = useHistory();
 
@@ -106,19 +177,14 @@ console.log('industies',industies)
               <Row form>
                 <Col lg={12}>
                   <FormGroup>
-                    <Label for="Availability">Availability</Label>
-                    <Input type="select" name="Availability" id="Availability" placeholder="Availability" value={available} onChange={(e) => setAvailable(e.target.value)} >
-                    <option value={null} selected>Please select</option>
-                      <option>Weekdays Only</option>
-                      <option>Weekends Only</option>
-                      <option>Anyday</option>
-                    </Input>
+                    <Label for="Availability" style={{color:"white"}}>Availability</Label>
+                    <AvailabilityTag />
                   </FormGroup>
                 </Col>
                 <Col lg={12}>
                   <FormGroup>
                     <FormGroup>
-                      <Label for="salaryType">Expected Salary Type</Label>
+                      <Label for="salaryType" style={{color:"white"}} >Expected Salary Type</Label>
                       <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
                       <option value={null}>Please select</option>
                         <option value={'perJob'} selected>Per Job</option>
@@ -151,7 +217,7 @@ console.log('industies',industies)
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="requiredExp">Year of Working Experience</Label>
+                    <Label for="requiredExp" style={{color:"white"}}>Year of Working Experience</Label>
                     <Input type="select" name="requiredExp" id="requiredExp" placeholder="requiredExp" value={workExp} onChange={(e) => setWorkExp(e.target.value)} >
                       <option value={null} selected>Please select</option>
                       <option value={2}>2 years or below</option>
@@ -162,34 +228,21 @@ console.log('industies',industies)
                 </Col>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="Job Function">Job Function</Label>
-                    {/* <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
-                      <option value={null} selected>Please select</option>
-                      {industryState.length > 0 ? industryState.map((industry, i) => (
-                        <option key={i} value={industry.industry}>{industry.industry}</option>
-                      )) : "loading..."}
-                    </Input> */}
-                    <TagPicker size="sm" data={industies} style={{ width: 600 }} />
+                    <Label for="Job Function" style={{color:"white"}}>Job Function</Label>
+                    <IndustryTag />
                   </FormGroup>
                 </Col>
                 <Col md={12}>
 
                   <FormGroup>
-                    <Label for="skills">Skill</Label>
-                    <Input type="select" name="skills" id="skills" placeholder="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
-                    <option value={null} selected>Please select</option>
-                      {skillsState.length > 0 ? skillsState.map((skill,i) => (
-                        <option key={i} value={skill.skills} selected>{skill.skills}</option>
-                      )) : "loading..."}
-                    </Input>
+                    <Label for="skills" style={{color:"white"}}>Skill</Label>
+                    <SkillsTag />
                   </FormGroup>
                 </Col>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="Working Location">Work Location</Label>
-                    {/* <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}> */}
-                    <TagPicker size="sm" data={district} style={{ width: 600 }} />
-                    {/* </Input> */}
+                    <Label for="Working Location" style={{color:"white"}}>Work Location</Label>
+                    <LocationTag />
                   </FormGroup>
                 </Col>
               </Row>
