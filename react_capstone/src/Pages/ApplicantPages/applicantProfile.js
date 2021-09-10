@@ -19,7 +19,7 @@ const ApplicantProfile = () => {
 //     // eslint-disable-next-line react-hooks/exhaustive-deps
 // }, [])
 
-const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill}=EEProfileState
+const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type}=EEProfileState
 
   const [name, setName] = useState(ee_name);
   const [industry, setIndustry] = useState(ee_industry );
@@ -31,6 +31,7 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
   const [image, setImage] = useState(ee_img_data)
   const [expYr, setExpYr] = useState(ee_exp)
   const [skill, setSkill] = useState(ee_skill)
+  const [salaryType, setSalaryType] = useState(ee_salary_type);
 
   
 
@@ -46,6 +47,7 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
     setImage(ee_img_data)
     setExpYr(ee_exp)
     setSkill(ee_skill)
+    setSalaryType(ee_salary_type)
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [ee_email, ee_exp, ee_img_data])
 
@@ -86,7 +88,7 @@ function handleOnSubmit (e) {
   e.preventDefault();
   console.log('update')
   // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
-  updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill)
+  updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill, salaryType)
   alert("Updated Profile")
 }
 return(
@@ -123,18 +125,39 @@ return(
         <Label for="industry">Job Function</Label>
      <Input type="text" name="industry" id="industry" value={industry}  onChange={(e)=>setIndustry(e.target.value)}/>
       </FormGroup>
+      <Label for="preferworklocation">Expected Salary</Label>
       <FormGroup>
+        <Label for="salaryType">Salary Type</Label>
+        <Input type="select" name="select" id="salaryType" value={salaryType} onChange={(e)=>setSalaryType(e.target.value)}>
+        <option value={null} selected>Please select</option>
+          <option value={'perJob'}>Per Job</option>
+          <option value={'perHour'}>Per Hour</option>
+        </Input>
+      </FormGroup>
+      {salaryType ? (
+        <FormGroup>
         <Label for="Expected Salary">Expected Salary</Label>
       <Input type="number" name="number" id="Expected Salary" value={expectedSalary}  onChange={(e)=>setExpectedSalary(e.target.value)}/>
       </FormGroup>
+      ): null}
+      
       <FormGroup>
         <Label for="Availabilty">Availabilty</Label>
-        <Input type="text" name="number" id="Availabilty"  value={available} onChange={(e)=>setAvailable(e.target.value)}/>
+        <Input type="text" name="number" id="Availabilty"  value={available} onChange={(e)=>setAvailable(e.target.value)}>
+        <option value={null} selected>Please select</option>
+          <option value={'Mon'}>Monday</option>
+          <option value={'Tue'}>Tuesday</option>
+          <option value={'Wed'}>Wednesday</option>
+          <option value={'Thu'}>Thurday</option>
+          <option value={'Fri'}>Friday</option>
+          <option value={'Sat'}>Saturday</option>
+          <option value={'Sun'}>Sunday</option>
+        </Input>
       </FormGroup>
       <FormGroup>
-        <Label for="preferworklocation">preferworklocation</Label>
+        <Label for="preferworklocation">Preferred Work Location</Label>
         <Input type="select" name="select" id="preferworklocation" value={location} onChange={(e)=>setLocation(e.target.value)}>
-        <option selected>{location}</option>
+        <option value={null} selected>Please select</option>
           <option>Islands</option>
           <option>Kwai Tsing</option>
           <option>North</option>
