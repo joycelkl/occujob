@@ -7,7 +7,8 @@ import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../employerSearch.css";
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
-
+import { TagPicker } from 'rsuite';
+import 'rsuite/dist/styles/rsuite-default.css';
 
 const EmployerApplicantSearch = () => {
   const skillsState = useSelector((state) => {
@@ -35,6 +36,7 @@ const EmployerApplicantSearch = () => {
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
 
 
+
   const [available, setAvailable] = useState('');
   const [expSalary, setExpSalary] = useState('');
   const [jobFunction, setJobFunction] = useState('');
@@ -50,8 +52,10 @@ const EmployerApplicantSearch = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-
+  let district = []
+  if (locationState.length>0){
+  locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
+console.log('district',district)
   const history = useHistory();
 
   function handleOnSubmit(e) {
@@ -175,12 +179,9 @@ const EmployerApplicantSearch = () => {
                 <Col md={12}>
                   <FormGroup>
                     <Label for="Working Location">Work Location</Label>
-                    <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                    <option value={null} selected>Please select</option>
-                      {locationState.length > 0 ? locationState.map((location) => (
-                        <option key={location.location_id} value={location.location} selected>{location.location}</option>
-                      )) : "loading..."}
-                    </Input>
+                    {/* <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}> */}
+                    <TagPicker size="sm" data={district} style={{ width: 600 }} />
+                    {/* </Input> */}
                   </FormGroup>
                 </Col>
               </Row>

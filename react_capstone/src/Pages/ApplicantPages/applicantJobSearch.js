@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
 import { TagPicker } from 'rsuite';
+import 'rsuite/dist/styles/rsuite-default.css';
 
 const ApplicantJobSearch = (props) => {
   const skillsState = useSelector((state) => {
@@ -15,6 +16,7 @@ const ApplicantJobSearch = (props) => {
     return state.skills
   });
 
+  
   const locationState = useSelector((state) => {
     console.log("location", state.location);
     return state.location
@@ -29,6 +31,8 @@ const ApplicantJobSearch = (props) => {
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+
+  console.log("test test",locationState)
   useEffect(() => {
     loadSkillsThunkAction();
     loadLocationThunkAction();
@@ -39,12 +43,16 @@ const ApplicantJobSearch = (props) => {
   const [companyName, setCompanyName] = useState('');
   const [jobFunction, setJobFunction] = useState('');
   const [jobType, setJobType] = useState('')
-  const [location, setLocation] = useState('')
+  const [worklocation, setworkLocation] = useState('')
   const [salaryType, setSalaryType] = useState('')
   const [expSalary, setExpSalary] = useState('')
+  const industies =[]
+  if (industryState.length>0){
+    industryState.map((ind)=>(district.push({"label":ind.industryState,"value":ind.industryState,"role":"master"})))}
+  const district = []
+  if (locationState.length>0){
+  locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
   
-
-
   return (
 
     <div>
@@ -106,20 +114,15 @@ const ApplicantJobSearch = (props) => {
                 <Col md={12}>
                   <FormGroup>
                     <Label for="Job Function">Job Function</Label>
-                    <Input type="text" name="Job Function" id="JobFunction" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}placeholder="Job Function" />
+                    <TagPicker data={industies} style={{ width: 800 }}/>
                   </FormGroup>
                 </Col>
                 <Col md={12}>
                 <Col md={12}>
                   <FormGroup>
                     <Label for="Working Location">Work Location</Label>
-                    {/* <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                      {locationState.length > 0 ? locationState.map((location) => (
-                        <option value={location.location} selected>{location.location}</option>
-                      )) : "loading..."}
-                    </Input> */}
-                  <TagPicker data={location.location} style={{ width: 100 }}  />
-                
+                         
+                    <TagPicker data={district} style={{ width: 800 }}/>
                   </FormGroup>
                 </Col>
                 </Col>
