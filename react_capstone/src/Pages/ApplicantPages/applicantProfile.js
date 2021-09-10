@@ -1,7 +1,7 @@
-import React, { useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
-import { useDispatch,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import ProfileImage from '../../Components/ProfileImage';
@@ -9,7 +9,7 @@ import S3 from 'react-aws-s3';
 
 
 const ApplicantProfile = () => {
-  const EEProfileState = useSelector((state)=>state.EEProfile);
+  const EEProfileState = useSelector((state) => state.EEProfile);
   const skillsState = useSelector((state) => {
     console.log("ER", state.skills);
     return state.skills
@@ -28,26 +28,26 @@ const ApplicantProfile = () => {
   });
   console.log("industry", industryState)
 
- 
+
 
 
 
   console.log('EEprofile', EEProfileState)
   const dispatch = useDispatch();
-  const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
-  const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
+  const { loadEEProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
+  const { updateEEProfileAction } = bindActionCreators(actionCreators, dispatch)
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
-//   useEffect(()=>{
-//     loadEEProfileThunkAction();
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, [])
+  //   useEffect(()=>{
+  //     loadEEProfileThunkAction();
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill}=EEProfileState
+  const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill } = EEProfileState
 
   const [name, setName] = useState(ee_name);
-  const [industry, setIndustry] = useState(ee_industry );
+  const [industry, setIndustry] = useState(ee_industry);
   const [location, setLocation] = useState(ee_location);
   const [phone, setPhone] = useState(ee_phone);
   const [intro, setIntro] = useState(self_intro);
@@ -58,12 +58,12 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
   const [skill, setSkill] = useState(ee_skill)
 
 
-  
+
 
   useEffect(() => {
     loadEEProfileThunkAction();
     setName(ee_name);
-    setIndustry(ee_industry );
+    setIndustry(ee_industry);
     setLocation(ee_location);
     setPhone(ee_phone);
     setIntro(self_intro);
@@ -73,39 +73,39 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
     setExpYr(ee_exp)
     setSkill(ee_skill)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [ee_email, ee_exp, ee_img_data])
+  }, [ee_email, ee_exp, ee_img_data])
 
-useEffect(() => {
-  loadSkillsThunkAction();
+  useEffect(() => {
+    loadSkillsThunkAction();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-useEffect(() => {
-  loadLocationThunkAction();
+  useEffect(() => {
+    loadLocationThunkAction();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-useEffect(() => {
-  loadIndustryThunkAction();
+  useEffect(() => {
+    loadIndustryThunkAction();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
 
-  console.log('origin', ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability, ee_exp, ee_skill)
+  console.log('origin', ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill)
   console.log('image', image)
   console.log('data', name, industry, location, phone, intro, expectedSalary, available, image, expYr, skill)
 
-//****************DONOT CHANGE THE SETTING HERE*****************************/
-    // S3 setup
-    const config = {
-      bucketName: process.env.REACT_APP_BUCKET_NAME,
-      dirName: 'eeUsersImg', /* further setting required at here */
-      region: process.env.REACT_APP_REGION,
-      accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-      secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+  //****************DONOT CHANGE THE SETTING HERE*****************************/
+  // S3 setup
+  const config = {
+    bucketName: process.env.REACT_APP_BUCKET_NAME,
+    dirName: 'eeUsersImg', /* further setting required at here */
+    region: process.env.REACT_APP_REGION,
+    accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
   }
 
   const ReactSaveImg = new S3(config);
@@ -116,87 +116,93 @@ useEffect(() => {
   //***************************************************** */
 
   //upload image setup ***DONT MODIFY THIS PART***
-  function upload (e) {
-    console.log("data",e.target.files[0])
+  function upload(e) {
+    console.log("data", e.target.files[0])
     ReactSaveImg
-    .uploadFile(e.target.files[0], newFileName)
-    .then((data) => {
+      .uploadFile(e.target.files[0], newFileName)
+      .then((data) => {
         console.log(data)
         setImage("")
-        setImage(data.location)})
-    .catch(err => console.error(err))
-}
+        setImage(data.location)
+      })
+      .catch(err => console.error(err))
+  }
 
-function handleOnSubmit (e) {
-  e.preventDefault();
-  console.log('update')
-  // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
-  updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill)
-  alert("Updated Profile")
-}
-return(
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    console.log('update')
+    // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
+    updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill)
+    alert("Updated Profile")
+  }
+  return (
     <div>
       <ApplicantNavbar />
-    <div className="container d-flex">
-    <div className="col-6">
-    <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
-      <FormGroup>
-     <Label for="Name"><h1>Applicant's Name</h1></Label>
-     <Input type="text" name="name" id="name" value={name} onChange={(e)=>setName(e.target.value)}/>
-      </FormGroup>
-      <FormGroup>
-     <Label for="email">Email </Label>
-     <Input type="email" name="email" id="email" value={ee_email} disabled/>
-     </FormGroup>
-    <FormGroup>
-        <Label for="phone">Phone Number</Label>
-        <Input type="number" name="phone" id="phone" value={phone}  onChange={(e)=>setPhone(e.target.value)}/>
-      </FormGroup>
-    <FormGroup>
-        <Label for="Text">Self-Introduction</Label>
-      <Input type="textarea" name="text" id="intro" value={intro}  onChange={(e)=>setIntro(e.target.value)}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="Skill">Skills</Label>
-        <Input type="text" name="skill" id="Skill" placeholder="Tags" value={skill} onChange={(e)=>setSkill(e.target.value)} />
-      </FormGroup>
-      <FormGroup>
-        <Label for="Skill">No. of Year of Working Experience</Label>
-        <Input type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e)=>setExpYr(e.target.value)} />
-      </FormGroup>
-      <FormGroup>
-        <Label for="industry">Job Function</Label>
-     <Input type="text" name="industry" id="industry" value={industry}  onChange={(e)=>setIndustry(e.target.value)}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="Expected Salary">Expected Salary</Label>
-      <Input type="number" name="number" id="Expected Salary" value={expectedSalary}  onChange={(e)=>setExpectedSalary(e.target.value)}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="Availabilty">Availabilty</Label>
-        <Input type="text" name="number" id="Availabilty"  value={available} onChange={(e)=>setAvailable(e.target.value)}/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="preferworklocation">preferworklocation</Label>
-        <Input type="select" name="select" id="preferworklocation" value={location} onChange={(e)=>setLocation(e.target.value)}>
-        <option selected>{location}</option>
-          <option>Islands</option>
-          <option>Kwai Tsing</option>
-          <option>North</option>
-          <option>Sai Kung</option>
-          <option>Sha Tin</option>
-        </Input>
-      </FormGroup>
-      <Button type='submit'>Update</Button>
-      </Form>
-      </div>
-      <div className="col-4">
-      <ProfileImage url={image} handleOnChange={(e)=>upload(e)}/>
+      <div className="container d-flex">
+        <div className="col-6">
+          <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
+            <FormGroup>
+              <Label for="Name"><h1>Applicant's Name</h1></Label>
+              <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="email">Email </Label>
+              <Input type="email" name="email" id="email" value={ee_email} disabled />
+            </FormGroup>
+            <FormGroup>
+              <Label for="phone">Phone Number</Label>
+              <Input type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="Text">Self-Introduction</Label>
+              <Input type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="Skill">Skills</Label>
+              <Input type="select" name="skill" id="skill" placeholder="skill" value={skill} onChange={(e) => setSkill(e.target.value)}>
+                <option value={null} selected>Please select</option>
+                {skillsState.length > 0 ? skillsState.map((skill) => (
+                  <option key={skill.skills_id} value={skill.skills} selected>{skill.skills}</option>
+                )) : "loading..."}
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="Skill">No. of Year of Working Experience</Label>
+              <Input type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="industry">Job Function</Label>
+              <Input type="text" name="industry" id="industry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="Expected Salary">Expected Salary</Label>
+              <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="Availabilty">Availabilty</Label>
+              <Input type="text" name="number" id="Availabilty" value={available} onChange={(e) => setAvailable(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="preferworklocation">preferworklocation</Label>
+              <Input type="select" name="select" id="preferworklocation" value={location} onChange={(e) => setLocation(e.target.value)}>
+                <option selected>{location}</option>
+                <option>Islands</option>
+                <option>Kwai Tsing</option>
+                <option>North</option>
+                <option>Sai Kung</option>
+                <option>Sha Tin</option>
+              </Input>
+            </FormGroup>
+            <Button type='submit'>Update</Button>
+          </Form>
+        </div>
+        <div className="col-4">
+          <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
+        </div>
       </div>
     </div>
-    </div>
-    
-)
+
+  )
 };
 
 export default ApplicantProfile;
