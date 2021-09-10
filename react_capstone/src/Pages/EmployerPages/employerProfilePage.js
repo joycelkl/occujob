@@ -106,9 +106,6 @@ const EmployerProfilePage = () => {
             <div class="col-md-4">
               <div class="profile-img">
                 <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
-                {/* <div class="file btn btn-lg btn-primary">
-                  Change Photo
-                </div> */}
               </div>
             </div>
             <div class="col-md-6">
