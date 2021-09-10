@@ -7,10 +7,14 @@ import { actionCreators } from '../../Redux';
 import ProfileImage from '../../Components/ProfileImage';
 import S3 from 'react-aws-s3';
 import Select from 'react-select'
+import "../EmployerPages/employerProfilePage.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
 const ApplicantProfile = () => {
+  const updateToast = () => toast("Profile Updated");
   const EEProfileState = useSelector((state) => state.EEProfile);
   const skillsState = useSelector((state) => {
     console.log("ER", state.skills);
@@ -34,55 +38,55 @@ const ApplicantProfile = () => {
 
   let skillsTag = []
   if (skillsState.length > 0) {
-    skillsState.map((ski) => (skillsTag.push({ "label": ski.skills, "value": ski.skills})))
+    skillsState.map((ski) => (skillsTag.push({ "label": ski.skills, "value": ski.skills })))
   }
   console.log('skillsTag', skillsTag)
 
   const SkillsTag = () => (
     <Select
-    defaultValue={null}
-    isMulti
-    name="skills"
-    options={skillsTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
+      defaultValue={null}
+      isMulti
+      name="skills"
+      options={skillsTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
   )
   const IndustryTag = () => (
     <Select
-    defaultValue={null}
-    isMulti
-    name="skills"
-    options={industryTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
+      defaultValue={null}
+      isMulti
+      name="skills"
+      options={industryTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
   )
 
   let avaData = [
-    {label: "Monday",value: "monday" },
-    {label: "Tuesday", value: "tuesday" ,},
-    {label: "Wednesday", value: "wednesday"},
-    {label: "Thursday", value: "thursday" },
-    {label: "Friday",value: "friday" },
-    {label: "Saturday",value: "saturday" },
-    {label: "Sunday",value: "sunday" }
-] 
+    { label: "Monday", value: "monday" },
+    { label: "Tuesday", value: "tuesday", },
+    { label: "Wednesday", value: "wednesday" },
+    { label: "Thursday", value: "thursday" },
+    { label: "Friday", value: "friday" },
+    { label: "Saturday", value: "saturday" },
+    { label: "Sunday", value: "sunday" }
+  ]
 
   const AvailabilityTag = () => (
     <Select
-    defaultValue={null}
-    isMulti
-    name="availability"
-    options={avaData}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
+      defaultValue={null}
+      isMulti
+      name="availability"
+      options={avaData}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
   )
 
   let industryTag = []
   if (industryState.length > 0) {
-    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
   }
   console.log('industryTag', industryTag)
 
@@ -190,80 +194,213 @@ const ApplicantProfile = () => {
     console.log('update')
     // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
     updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill, salaryType)
-    alert("Updated Profile")
+    updateToast()
   }
   return (
     <div>
       <ApplicantNavbar />
-      <div className="container d-flex">
-        <div className="col-6">
-          <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
-            <FormGroup>
-              <Label for="Name"><h1>Applicant's Name</h1></Label>
-              <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
-            </FormGroup>
-            <FormGroup>
-              <Label for="email">Email </Label>
-              <Input type="email" name="email" id="email" value={ee_email} disabled />
-            </FormGroup>
-            <FormGroup>
-              <Label for="phone">Phone Number</Label>
-              <Input type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-            </FormGroup>
-            <FormGroup>
-              <Label for="Text">Self-Introduction</Label>
-              <Input type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
-            </FormGroup>
-            <FormGroup>
-              <Label for="Skill">Skills</Label>
-              <SkillsTag />
-            </FormGroup>
-            <FormGroup>
-              <Label for="Skill">No. of Year of Working Experience</Label>
-              <Input type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
-            </FormGroup>
-            <FormGroup>
-            <FormGroup>
-              <Label for="Availabilty">Availabilty</Label>
-              <AvailabilityTag />
-            </FormGroup>
-              <Label for="industry">Job Function</Label>
-              <IndustryTag />
-            </FormGroup>
-            <Label for="preferworklocation">Expected Salary</Label>
-            <FormGroup>
-              <Label for="salaryType">Salary Type</Label>
-              <Input type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
-                <option value={null} selected>Please select</option>
-                <option value={'perJob'}>Per Job</option>
-                <option value={'perHour'}>Per Hour</option>
-              </Input>
-            </FormGroup>
-            {ee_skill ? (
-              <FormGroup>
-                <Label for="Expected Salary">Expected Salary</Label>
-                <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
-              </FormGroup>
-            ) : null}
-            
-            <FormGroup>
-              <Label for="preferworklocation">Prefered Work Location</Label>
-              <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                <option value={null} selected>Please select</option>
-                {locationState.length > 0 ? locationState.map((location, i) => (
-                  <option key={i} value={location.location} selected>{location.location}</option>
-                )) : "loading..."}
-              </Input>
+      <div class="container emp-profile">
+        <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="profile-img">
+                <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
+              </div>
+            </div>
 
-            </FormGroup>
-            <Button type='submit'>Update</Button>
-          </Form>
-        </div>
-        <div className="col-4">
+            <div class="col-md-6">
+              <div class="profile-head">
+                <FormGroup>
+                  <Label for="Name"><h1>Applicant's Name</h1></Label>
+                  <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                </FormGroup>
+                <p class="proile-rating">Ratings : <span>8/10</span></p>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="profile-work">
+                <p>WORK LINK</p>
+                <a href="*">Website Link</a><br />
+                <a href="*">Bootsnipp Profile</a><br />
+                <a href="*">Bootply Profile</a>
+                <p>SKILLS</p>
+                <a href="*">Web Designer</a><br />
+                <a href="*">Web Developer</a><br />
+                <a href="*">WordPress</a><br />
+                <a href="*">WooCommerce</a><br />
+                <a href="*">PHP, .Net</a><br />
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="row">
+                    <FormGroup>
+                      <div class="col-md-6">
+                        <Label for="email">Email </Label>
+                      </div>
+                      <div class="col-md-6">
+                        <Input type="email" name="email" id="email" value={ee_email} disabled />
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div class="row">
+                    <FormGroup>
+                      <div class="col-md-6">
+                        <Label for="phone">Phone Number</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <Input type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div class="row">
+                    <FormGroup>
+                      <div class="col-md-6">
+                        <Label for="Text">Self-Introduction</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <Input type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div class="row">
+                    <FormGroup>
+                      <div class="col-md-6">
+                        <Label for="Skill">Skills</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <SkillsTag />
+                      </div>
+                    </FormGroup>
+
+                  </div>
+                  <div class="row">
+                    <FormGroup>
+                      <div class="col-md-6">
+                        <Label for="Skill">No. of Year of Working Experience</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <Input type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
+                      </div>
+                    </FormGroup>
+                  </div>
+
+                  <div class="row">
+                    <FormGroup>
+
+                      <div class="col-md-6">
+                        <Label for="Availabilty">Availabilty</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <AvailabilityTag />
+                      </div>
+                    </FormGroup>
+
+                  </div>
+                  <div class="row">
+                    <FormGroup>
+
+                      <div class="col-md-6">
+                        <Label for="industry">Job Function</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <IndustryTag />
+                      </div>
+                    </FormGroup>
+
+                  </div>
+                  <div class="col-md-6">
+                    <Label for="preferworklocation">Expected Salary</Label>
+                  </div>
+                  <div class="row">
+                    <FormGroup>
+
+                      <div class="col-md-6">
+                        <Label for="salaryType">Salary Type</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <Input type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          <option value={'perJob'}>Per Job</option>
+                          <option value={'perHour'}>Per Hour</option>
+                        </Input>
+                      </div>
+                    </FormGroup>
+
+                  </div>
+
+                  {ee_salary_type ? (
+                    <div class="row">
+                      <FormGroup>
+
+                        <div class="col-md-6">
+                          <Label for="Expected Salary">Expected Salary</Label>
+                        </div>
+                        <div class="col-md-6">
+                          <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+                        </div>
+                      </FormGroup>
+
+                    </div>
+                  ) : (salaryType ? (
+                    <div class="row">
+                      <FormGroup>
+
+                        <div class="col-md-6">
+                          <Label for="Expected Salary">Expected Salary</Label>
+                        </div>
+                        <div class="col-md-6">
+                          <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+                        </div>
+                      </FormGroup>
+
+                    </div>
+                  ) : null)}
+
+                  <div class="row">
+                    <FormGroup>
+
+                      <div class="col-md-6">
+                        <Label for="preferworklocation">Prefered Work Location</Label>
+                      </div>
+                      <div class="col-md-6">
+                        <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          {locationState.length > 0 ? locationState.map((location, i) => (
+                            <option key={i} value={location.location} selected>{location.location}</option>
+                          )) : "loading..."}
+                        </Input>
+
+                      </div>
+                    </FormGroup>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <input type="submit" class="profile-edit-btn" name="btnAddMore" />
+          </div>
+          <ToastContainer />
+        </Form>
+
+        {/* <div className="col-4">
           <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
-        </div>
+        </div> */}
       </div>
     </div>
+
 
   )
 };

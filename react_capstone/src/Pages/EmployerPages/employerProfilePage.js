@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { FormGroup, Label, Input, Form} from 'reactstrap';
+import { FormGroup, Label, Input, Form } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import ProfileImage from '../../Components/ProfileImage';
@@ -12,26 +12,35 @@ import "./employerProfilePage.css";
 
 const EmployerProfilePage = () => {
   const updateToast = () => toast("Profile Updated");
-    const erProfileState = useSelector((state) =>{console.log("ER", state.erProfile);
-  return state.erProfile});
+  const erProfileState = useSelector((state) => {
+    console.log("ER", state.erProfile);
+    return state.erProfile
+  });
   console.log("Profile", erProfileState)
+
+  const locationState = useSelector((state) => {
+    console.log("location", state.location);
+    return state.location
+  });
+  console.log("location", locationState)
 
   const dispatch = useDispatch();
 
-  const {loadErProfileThunkAction} = bindActionCreators(actionCreators, dispatch)
-  const {updateErProfileAction} = bindActionCreators(actionCreators, dispatch)
+  const { loadErProfileThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { updateErProfileAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
 
-  const {er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone} = erProfileState
-  
+  const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfileState
+
   const [industry, setIndustry] = useState(er_industry);
   const [location, setLocation] = useState(er_location);
   const [phone, setPhone] = useState(er_phone);
   const [compDescription, setCompDescription] = useState(comp_description)
   const [image, setImage] = useState(er_img_data)
-  const [name, setName] = useState(er_name)  
-  const [email, setEmail] = useState(er_email)  
+  const [name, setName] = useState(er_name)
+  const [email, setEmail] = useState(er_email)
 
-  useEffect(()=>{
+  useEffect(() => {
     loadErProfileThunkAction();
     setIndustry(er_industry)
     setLocation(er_location)
@@ -40,60 +49,63 @@ const EmployerProfilePage = () => {
     setImage(er_img_data)
     setName(er_name)
     setEmail(er_email)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [er_name, er_phone])
 
   console.log('image', image)
+  useEffect(() => {
+    loadLocationThunkAction();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   //****************DONOT CHANGE THE SETTING HERE*****************************/
-    // S3 setup
-    const config = {
-        bucketName: process.env.REACT_APP_BUCKET_NAME,
-        dirName: 'erUsersImg', /* further setting required at here */
-        region: process.env.REACT_APP_REGION,
-        accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-        secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
-    }
-  
-    const ReactSaveImg = new S3(config);
-  
-    //the file name should be the user ID and will change later
-    const newFileName = `${er_id}.jpg`
-  
-    //***************************************************** */
-  
-    //upload image setup ***DONT MODIFY THIS PART***
-    function upload (e) {
-      console.log("data",e.target.files[0])
-      ReactSaveImg
-      .uploadFile(e.target.files[0], newFileName)
-      .then((data) => {
-          console.log(data)
-          setImage("")
-          setImage(data.location)})
-      .catch(err => console.error(err))    
+  // S3 setup
+  const config = {
+    bucketName: process.env.REACT_APP_BUCKET_NAME,
+    dirName: 'erUsersImg', /* further setting required at here */
+    region: process.env.REACT_APP_REGION,
+    accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
   }
 
-  function handleOnSubmit (e) {
+  const ReactSaveImg = new S3(config);
+
+  //the file name should be the user ID and will change later
+  const newFileName = `${er_id}.jpg`
+
+  //***************************************************** */
+
+  //upload image setup ***DONT MODIFY THIS PART***
+  function upload(e) {
+    console.log("data", e.target.files[0])
+    ReactSaveImg
+      .uploadFile(e.target.files[0], newFileName)
+      .then((data) => {
+        console.log(data)
+        setImage("")
+        setImage(data.location)
+      })
+      .catch(err => console.error(err))
+  }
+
+  function handleOnSubmit(e) {
     e.preventDefault();
     console.log('update')
- 
+
     updateErProfileAction(industry, compDescription, phone, location, image)
     updateToast()
   }
 
-    return (
-        <div>
-            <EmployerNavbar />
-            <div class="container emp-profile">
+  return (
+    <div>
+      <EmployerNavbar />
+      <div class="container emp-profile">
         <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
           <div class="row">
             <div class="col-md-4">
               <div class="profile-img">
                 <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
-                {/* <div class="file btn btn-lg btn-primary">
-                  Change Photo
-                </div> */}  
               </div>
             </div>
             <div class="col-md-6">
@@ -110,11 +122,11 @@ const EmployerProfilePage = () => {
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                   </li>
-                  
+
                 </ul>
               </div>
             </div>
-        
+
           </div>
           <div class="row">
             <div class="col-md-4">
@@ -183,31 +195,30 @@ const EmployerProfilePage = () => {
                         <Label for="location">Location</Label>
                       </div>
                       <div class="col-md-6">
-                        <Input type="select" name="location" id="officelocation" value={location} onChange={(e) => setLocation(e.target.value)}>
-                          <option>Islands</option>
-                          <option>Kwai Tsing</option>
-                          <option>North</option>
-                          <option>Sai Kung</option>
-                          <option>Sha Tin</option>
+                        <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          {locationState.length > 0 ? locationState.map((location, i) => (
+                            <option key={i} value={location.location} selected>{location.location}</option>
+                          )) : "loading..."}
                         </Input>
                       </div>
                     </FormGroup>
 
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
           <div class="col-md-2">
-              <input type="submit" class="profile-edit-btn" name="btnAddMore"/>
-            </div>
-            <ToastContainer />
+            <input type="submit" class="profile-edit-btn" name="btnAddMore" />
+          </div>
+          <ToastContainer />
         </Form>
       </div>
     </div>
 
-    )
+  )
 }
 
 
