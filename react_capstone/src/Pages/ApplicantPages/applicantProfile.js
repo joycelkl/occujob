@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import ProfileImage from '../../Components/ProfileImage';
 import S3 from 'react-aws-s3';
+import Select from 'react-select'
+
 
 
 const ApplicantProfile = () => {
@@ -30,6 +32,59 @@ const ApplicantProfile = () => {
 
 
 
+  let skillsTag = []
+  if (skillsState.length > 0) {
+    skillsState.map((ski) => (skillsTag.push({ "label": ski.skills, "value": ski.skills})))
+  }
+  console.log('skillsTag', skillsTag)
+
+  const SkillsTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="skills"
+    options={skillsTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+  const IndustryTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="skills"
+    options={industryTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+
+  let avaData = [
+    {label: "Monday",value: "monday" },
+    {label: "Tuesday", value: "tuesday" ,},
+    {label: "Wednesday", value: "wednesday"},
+    {label: "Thursday", value: "thursday" },
+    {label: "Friday",value: "friday" },
+    {label: "Saturday",value: "saturday" },
+    {label: "Sunday",value: "sunday" }
+] 
+
+  const AvailabilityTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="availability"
+    options={avaData}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+
+  let industryTag = []
+  if (industryState.length > 0) {
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
+  }
+  console.log('industryTag', industryTag)
 
 
   console.log('EEprofile', EEProfileState)
@@ -44,7 +99,7 @@ const ApplicantProfile = () => {
   //     // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type}=EEProfileState
+  const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
 
   const [name, setName] = useState(ee_name);
   const [industry, setIndustry] = useState(ee_industry);
@@ -135,7 +190,7 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
     console.log('update')
     // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
     updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill, salaryType)
-  alert("Updated Profile")
+    alert("Updated Profile")
   }
   return (
     <div>
@@ -161,62 +216,45 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
             </FormGroup>
             <FormGroup>
               <Label for="Skill">Skills</Label>
-              <Input type="select" name="skill" id="skill" placeholder="skill" value={skill} onChange={(e) => setSkill(e.target.value)}>
-                <option value={null} selected>Please select</option>
-                {skillsState.length > 0 ? skillsState.map((skill) => (
-                  <option key={skill.skills_id} value={skill.skills} selected>{skill.skills}</option>
-                )) : "loading..."}
-              </Input>
+              <SkillsTag />
             </FormGroup>
             <FormGroup>
               <Label for="Skill">No. of Year of Working Experience</Label>
               <Input type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
             </FormGroup>
             <FormGroup>
+            <FormGroup>
+              <Label for="Availabilty">Availabilty</Label>
+              <AvailabilityTag />
+            </FormGroup>
               <Label for="industry">Job Function</Label>
-              <Input type="select" name="industry" id="industry" value={industry} onChange={(e) => setIndustry(e.target.value)}>
-              <option value={null} selected>Please select</option>
-                      {industryState.length > 0 ? industryState.map((industry, i) => (
-                        <option key={i} value={industry.industry}>{industry.industry}</option>
-                      )) : "loading..."}
-                    </Input>
+              <IndustryTag />
             </FormGroup>
             <Label for="preferworklocation">Expected Salary</Label>
-      <FormGroup>
-        <Label for="salaryType">Salary Type</Label>
-        <Input type="select" name="select" id="salaryType" value={salaryType} onChange={(e)=>setSalaryType(e.target.value)}>
-        <option value={null} selected>Please select</option>
-          <option value={'perJob'}>Per Job</option>
-          <option value={'perHour'}>Per Hour</option>
-        </Input>
-      </FormGroup>
-      {ee_skill ? (
-        <FormGroup>
-        <Label for="Expected Salary">Expected Salary</Label>
-      <Input type="number" name="number" id="Expected Salary" value={expectedSalary}  onChange={(e)=>setExpectedSalary(e.target.value)}/>
-      </FormGroup>
-      ): null}
             <FormGroup>
-        <Label for="Availabilty">Availabilty</Label>
-        <Input type="select" name="number" id="Availabilty"  value={available} onChange={(e)=>setAvailable(e.target.value)}>
-        <option value={null} selected>Please Select</option>
-          <option value={'Mon'}>Monday</option>
-          <option value={'Tue'}>Tuesday</option>
-          <option value={'Wed'}>Wednesday</option>
-          <option value={'Thu'}>Thurday</option>
-          <option value={'Fri'}>Friday</option>
-          <option value={'Sat'}>Saturday</option>
-          <option value={'Sun'}>Sunday</option>
-        </Input>
-      </FormGroup>
+              <Label for="salaryType">Salary Type</Label>
+              <Input type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                <option value={null} selected>Please select</option>
+                <option value={'perJob'}>Per Job</option>
+                <option value={'perHour'}>Per Hour</option>
+              </Input>
+            </FormGroup>
+            {ee_skill ? (
+              <FormGroup>
+                <Label for="Expected Salary">Expected Salary</Label>
+                <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+              </FormGroup>
+            ) : null}
+            
             <FormGroup>
               <Label for="preferworklocation">Prefered Work Location</Label>
               <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-              <option value={null} selected>Please select</option>
-                      {locationState.length > 0 ? locationState.map((location, i) => (
-                        <option key={i} value={location.location} selected>{location.location}</option>
-                      )) : "loading..."}
-                    </Input>
+                <option value={null} selected>Please select</option>
+                {locationState.length > 0 ? locationState.map((location, i) => (
+                  <option key={i} value={location.location} selected>{location.location}</option>
+                )) : "loading..."}
+              </Input>
+
             </FormGroup>
             <Button type='submit'>Update</Button>
           </Form>

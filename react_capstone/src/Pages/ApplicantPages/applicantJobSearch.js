@@ -7,6 +7,8 @@ import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
+import Select from 'react-select'
+
 
 const ApplicantJobSearch = (props) => {
   const skillsState = useSelector((state) => {
@@ -41,8 +43,42 @@ const ApplicantJobSearch = (props) => {
   const [location, setLocation] = useState('')
   const [salaryType, setSalaryType] = useState('')
   const [expSalary, setExpSalary] = useState('')
+
   
 
+  let locationTag = []
+  if (locationState.length > 0) {
+    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location})))
+  }
+
+  const LocationTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="location"
+    options={locationTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+
+  const IndustryTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="skills"
+    options={industryTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+
+ 
+  let industryTag = []
+  if (industryState.length > 0) {
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
+  }
+  console.log('industryTag', industryTag)
 
   return (
 
@@ -55,15 +91,15 @@ const ApplicantJobSearch = (props) => {
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="JobTitle">Job Title</Label>
+                    <Label for="JobTitle" style={{color:'white'}}>Job Title</Label>
                     <Input type="text" name="JobTitle" id="JobTitle" value={jobtitle} onChange={(e) => setJobtitle(e.target.value)} placeholder="Job Title" />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="Company">Company</Label>
+                    <Label for="Company" style={{color:'white'}}>Company</Label>
                     <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" />
                   </FormGroup>
                   <FormGroup>
-                      <Label for="JobType">Job Type</Label>
+                      <Label for="JobType" style={{color:'white'}}>Job Type</Label>
                       <Input type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
                         <option value={'PartTime'} selected>Part Time</option>
                         <option value={'Freelance'}>Freelance</option>
@@ -74,7 +110,7 @@ const ApplicantJobSearch = (props) => {
                 <Col lg={12}>
                   <FormGroup>
                     <FormGroup>
-                      <Label for="salaryType">Expected Salary Type</Label>
+                      <Label for="salaryType" style={{color:'white'}}>Expected Salary Type</Label>
                       <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
                         <option value={'perJob'} selected>Per Job</option>
                         <option value={'perHour'}>Per Hour</option>
@@ -104,19 +140,15 @@ const ApplicantJobSearch = (props) => {
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="Job Function">Job Function</Label>
-                    <Input type="text" name="Job Function" id="JobFunction" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}placeholder="Job Function" />
+                    <Label for="Job Function" style={{color:'white'}}>Job Function</Label>
+                        <IndustryTag />
                   </FormGroup>
                 </Col>
                 <Col md={12}>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="Working Location">Work Location</Label>
-                    <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                      {locationState.length > 0 ? locationState.map((location) => (
-                        <option value={location.location} selected>{location.location}</option>
-                      )) : "loading..."}
-                    </Input>
+                    <Label for="Working Location" style={{color:'white'}}>Work Location</Label>
+                    <LocationTag />
                   </FormGroup>
                 </Col>
                 </Col>
