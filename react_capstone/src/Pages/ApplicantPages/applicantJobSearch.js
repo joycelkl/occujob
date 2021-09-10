@@ -6,14 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
-<<<<<<< HEAD
-import 'rsuite/dist/styles/rsuite-default.css';
-import { TagPicker } from 'rsuite';
-=======
-import { useHistory } from 'react-router';
 import Select from 'react-select'
 
->>>>>>> ef87d9a3dcc9f6f76fb2cbfc7c7bbde960e1f37e
 
 const ApplicantJobSearch = (props) => {
   const skillsState = useSelector((state) => {
@@ -55,20 +49,14 @@ const ApplicantJobSearch = (props) => {
   const [expSalary, setExpSalary] = useState('')
   const [available, setAvailable] = useState('')
 
-  const industies =[]
-  if (industryState.length>0){
-    industryState.map((ind)=>(industies.push({"label":ind.industry,"value":ind.industry,"role":"master"})))}
-  const district = []
-  if (locationState.length>0){
-  locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
-const companyNameLoad =[]
-const jobFunctionLoad =[]
+const companyNameTag =[]
+const jobTitleTag =[]
 if (applicantJobState.length>0){
-  applicantJobState.map((job)=>(companyNameLoad.push({"label":job.er_name,"value":job.er_name,"role":"master"})))
-  applicantJobState.map((job)=>(jobFunctionLoad.push({"label":job.job_title,"value":job.job_title,"role":"master"})))}
+  applicantJobState.map((job)=>(companyNameTag.push({"label":job.er_name,"value":job.er_name,"role":"master"})))
+  applicantJobState.map((job)=>(jobTitleTag.push({"label":job.job_title,"value":job.job_title,"role":"master"})))}
+  
 
-  console.log("puting in array",companyNameLoad,jobFunctionLoad)
-
+console.log("result",items)
   function handleOnSubmit(e) {
     e.preventDefault();
     if(!available || !jobFunction || !expSalary || !worklocation || !salaryType){
@@ -100,6 +88,26 @@ if (applicantJobState.length>0){
   if (locationState.length > 0) {
     locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location})))
   }
+  const CompanyNameTag = () => (
+    <Select
+    defaultValue={null}
+    isMulti
+    name="CompanyName"
+    options={companyNameTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+  
+  const JobTitleTag = () => (
+    <Select
+   
+    isMulti
+    name="JobTitle"
+    options={jobTitleTag}
+   
+  />
+  )
 
   const LocationTag = () => (
     <Select
@@ -128,7 +136,7 @@ if (applicantJobState.length>0){
   if (industryState.length > 0) {
     industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
   }
-  console.log('industryTag', industryTag)
+  // console.log('industryTag', industryTag)
 
   return (
 
@@ -142,18 +150,24 @@ if (applicantJobState.length>0){
                 <Col md={12}>
                   <FormGroup>
                     <Label for="JobTitle" style={{color:'white'}}>Job Title</Label>
-                    <Input type="text" name="JobTitle" id="JobTitle" value={jobtitle} onChange={(e) => setJobtitle(e.target.value)} placeholder="Job Title" />
+                    {/* <Input type="text" name="JobTitle" id="JobTitle" value={jobtitle} onChange={(e) => setJobtitle(e.target.value)} placeholder="Job Title" /> */}
+                    <JobTitleTag />
                   </FormGroup>
                   <FormGroup>
                     <Label for="Company" style={{color:'white'}}>Company</Label>
-                    <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" />
+                    <CompanyNameTag />
+                    {/* <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" /> */}
                   </FormGroup>
                   <FormGroup>
                       <Label for="JobType" style={{color:'white'}}>Job Type</Label>
-                      <Input type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
-                        <option value={'PartTime'} selected>Part Time</option>
-                        <option value={'Freelance'}>Freelance</option>
-                      </Input>
+                      <Select type="select" name="JobType" id="JobType" options={[
+          { value: "PartTime", label: "PartTime" },
+          { value: "Freelance", label: "Freelance" }
+        ]} >
+        {/*  onChange={(e) => setJobType(e.target.value)}>
+                         <option value={'PartTime'} selected>Part Time</option>
+                         <option value={'Freelance'}>Freelance</option> */}
+                      </Select>
                     </FormGroup>
 
                 </Col>
@@ -190,26 +204,15 @@ if (applicantJobState.length>0){
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-<<<<<<< HEAD
-                    <Label for="Job Function">Job Function</Label>
-                    <TagPicker data={industies} style={{ width: 800 }}/>
-=======
                     <Label for="Job Function" style={{color:'white'}}>Job Function</Label>
                         <IndustryTag />
->>>>>>> ef87d9a3dcc9f6f76fb2cbfc7c7bbde960e1f37e
                   </FormGroup>
                 </Col>
                 <Col md={12}>
                 <Col md={12}>
                   <FormGroup>
-<<<<<<< HEAD
-                    <Label for="Working Location">Work Location</Label>
-                         
-                    <TagPicker data={district} style={{ width: 800 }}/>
-=======
                     <Label for="Working Location" style={{color:'white'}}>Work Location</Label>
                     <LocationTag />
->>>>>>> ef87d9a3dcc9f6f76fb2cbfc7c7bbde960e1f37e
                   </FormGroup>
                 </Col>
                 </Col>
