@@ -158,18 +158,20 @@ const ApplicantJobSearch = (props) => {
                     {salaryType ? (salaryType === 'perJob' ?
                       (<FormGroup>
                         <Input className='mt-2' type="select" name="perJobExpectedSalary" id="perJobExpectedSalary" value={expSalary} onChange={(e) => setExpSalary(e.target.value)}>
-                          <option value={2500} selected>$2500 or below</option>
-                          <option value={5000}>$5000 or below</option>
-                          <option value={7500}>$7500 or below</option>
-                          <option value={10000}>$10000 or above</option>
+                        <option value={null} selected>Please select</option>
+                          <option value={1000} >$1000 or above</option>
+                          <option value={2500}>$2500 or above</option>
+                          <option value={5000}>$5000 or above</option>
+                          <option value={7500}>$7500 or above</option>
                         </Input>
                       </FormGroup>)
                       : (<FormGroup>
                         <Input className='mt-2' type="select" name="perHourExpectedSalary" id="perHourExpectedSalary" value={expSalary} onChange={(e) => setExpSalary(e.target.value)}>
-                          <option value={70} selected>$70 or below</option>
-                          <option value={150}>$150 or below</option>
-                          <option value={200}>$200 or below</option>
-                          <option value={250}>$250 or above</option>
+                        <option value={null} selected>Please select</option>
+                          <option value={50} >$50 or above</option>
+                          <option value={100}>$100 or above</option>
+                          <option value={150}>$150 or above</option>
+                          <option value={200}>$200 or above</option>
                         </Input>
                       </FormGroup>)
                     ) : <p>Please select the Salary Type</p>}

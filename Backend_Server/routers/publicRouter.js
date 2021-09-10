@@ -61,6 +61,16 @@ class PublicRouter {
                 });
         })
 
+        router.get('/company', (req, res) => {
+            return this.jobSerivces.company()
+                .then((companyName) => {
+                    return res.json(companyName)
+                })
+                .catch((err) => {
+                    console.error(err)
+                    res.status(500).json(err)
+                });
+        })
 
         return router;
     }
