@@ -11,6 +11,7 @@ import 'rsuite/dist/styles/rsuite-default.css';
 import { TagPicker } from 'rsuite';
 
 const EmployerApplicantSearch = () => {
+
   const skillsState = useSelector((state) => {
     console.log("ER", state.skills);
     return state.skills
@@ -21,7 +22,8 @@ const EmployerApplicantSearch = () => {
     console.log("location", state.location);
     return state.location
   });
-  console.log("location", locationState)
+ 
+  console.log("location Tag Data", locationState)
 
   const industryState = useSelector((state) => {
     console.log("industry", state.industry);
@@ -163,8 +165,8 @@ console.log('industies',industies)
                     <Label for="Job Function">Job Function</Label>
                     {/* <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
                       <option value={null} selected>Please select</option>
-                      {industryState.length > 0 ? industryState.map((industry) => (
-                        <option key={industry.industry_id} value={industry.industry} selected>{industry.industry}</option>
+                      {industryState.length > 0 ? industryState.map((industry, i) => (
+                        <option key={i} value={industry.industry}>{industry.industry}</option>
                       )) : "loading..."}
                     </Input> */}
                     <TagPicker size="sm" data={industies} style={{ width: 600 }} />
@@ -176,8 +178,8 @@ console.log('industies',industies)
                     <Label for="skills">Skill</Label>
                     <Input type="select" name="skills" id="skills" placeholder="skills" value={skills} onChange={(e) => setSkills(e.target.value)}>
                     <option value={null} selected>Please select</option>
-                      {skillsState.length > 0 ? skillsState.map((skill) => (
-                        <option key={skill.skills_id} value={skill.skills} selected>{skill.skills}</option>
+                      {skillsState.length > 0 ? skillsState.map((skill,i) => (
+                        <option key={i} value={skill.skills} selected>{skill.skills}</option>
                       )) : "loading..."}
                     </Input>
                   </FormGroup>
@@ -195,8 +197,7 @@ console.log('industies',industies)
             </div>
           </Form>
         </Container>
-
-
+    
       </div>
 
     </div>
