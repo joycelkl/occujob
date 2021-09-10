@@ -7,8 +7,8 @@ import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../employerSearch.css";
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
-import { TagPicker } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
+import { TagPicker } from 'rsuite';
 
 const EmployerApplicantSearch = () => {
   const skillsState = useSelector((state) => {
@@ -56,6 +56,11 @@ const EmployerApplicantSearch = () => {
   if (locationState.length>0){
   locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
 console.log('district',district)
+let industies = []
+  if (industryState.length>0){
+  locationState.map((ind)=>(industies.push({"label":ind.industry,"value":ind.industry,"role":"master"})))}
+console.log('industies',industies)
+
   const history = useHistory();
 
   function handleOnSubmit(e) {
@@ -156,12 +161,13 @@ console.log('district',district)
                 <Col md={12}>
                   <FormGroup>
                     <Label for="Job Function">Job Function</Label>
-                    <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
+                    {/* <Input type="select" name="Job Function" id="Job Function" placeholder="Job Function" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
                       <option value={null} selected>Please select</option>
                       {industryState.length > 0 ? industryState.map((industry) => (
                         <option key={industry.industry_id} value={industry.industry} selected>{industry.industry}</option>
                       )) : "loading..."}
-                    </Input>
+                    </Input> */}
+                    <TagPicker size="sm" data={industies} style={{ width: 600 }} />
                   </FormGroup>
                 </Col>
                 <Col md={12}>

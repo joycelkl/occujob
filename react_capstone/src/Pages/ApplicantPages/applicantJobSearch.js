@@ -6,9 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
-import { useHistory } from 'react-router';
-import { TagPicker } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
+import { TagPicker } from 'rsuite';
 
 const ApplicantJobSearch = (props) => {
   const skillsState = useSelector((state) => {
