@@ -7,9 +7,11 @@ import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../employerSearch.css";
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
+import { TagPicker } from 'rsuite';
 
 
 const EmployerApplicantSearch = () => {
+
   const skillsState = useSelector((state) => {
     console.log("ER", state.skills);
     return state.skills
@@ -185,8 +187,7 @@ const EmployerApplicantSearch = () => {
             </div>
           </Form>
         </Container>
-
-
+    
       </div>
 
     </div>

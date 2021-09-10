@@ -7,13 +7,38 @@ import { actionCreators } from '../../Redux';
 import ProfileImage from '../../Components/ProfileImage';
 import S3 from 'react-aws-s3';
 
+
 const ApplicantProfile = () => {
   const EEProfileState = useSelector((state)=>state.EEProfile);
+  const skillsState = useSelector((state) => {
+    console.log("ER", state.skills);
+    return state.skills
+  });
+  console.log("skills", skillsState)
+
+  const locationState = useSelector((state) => {
+    console.log("location", state.location);
+    return state.location
+  });
+  console.log("location", locationState)
+
+  const industryState = useSelector((state) => {
+    console.log("industry", state.industry);
+    return state.industry
+  });
+  console.log("industry", industryState)
+
+ 
+
+
 
   console.log('EEprofile', EEProfileState)
   const dispatch = useDispatch();
   const {loadEEProfileThunkAction} = bindActionCreators(actionCreators,dispatch);
   const {updateEEProfileAction} = bindActionCreators(actionCreators, dispatch)
+  const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
 //   useEffect(()=>{
 //     loadEEProfileThunkAction();
 //     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,6 +57,7 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
   const [expYr, setExpYr] = useState(ee_exp)
   const [skill, setSkill] = useState(ee_skill)
 
+
   
 
   useEffect(() => {
@@ -48,6 +74,25 @@ const {ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location,self_intr
     setSkill(ee_skill)
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [ee_email, ee_exp, ee_img_data])
+
+useEffect(() => {
+  loadSkillsThunkAction();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
+useEffect(() => {
+  loadLocationThunkAction();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
+useEffect(() => {
+  loadIndustryThunkAction();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+
 
   console.log('origin', ee_id,ee_name,ee_email,ee_industry,ee_img_data,ee_location,self_intro,ee_phone,expected_salary,availability, ee_exp, ee_skill)
   console.log('image', image)
