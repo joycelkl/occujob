@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import "../employerSearch.css";
@@ -7,6 +7,8 @@ import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
 import Select from 'react-select'
+import ReactTagInput from "@pathofdev/react-tag-input";
+import "@pathofdev/react-tag-input/build/index.css";
 
 
 const ApplicantJobSearch = (props) => {
@@ -47,14 +49,11 @@ const ApplicantJobSearch = (props) => {
   const [worklocation, setworkLocation] = useState('')
   const [salaryType, setSalaryType] = useState('')
   const [expSalary, setExpSalary] = useState('')
-  const [available, setAvailable] = useState('')
+  const [jobTitleTag, setJobTitleTag] = useState([])
 
-const companyNameTag =[]
-const jobTitleTag =[]
-if (applicantJobState.length>0){
-  applicantJobState.map((job)=>(companyNameTag.push({"label":job.er_name,"value":job.er_name,"role":"master"})))
-  applicantJobState.map((job)=>(jobTitleTag.push({"label":job.job_title,"value":job.job_title,"role":"master"})))}
-  
+
+  //******* TAGS  *******8 */
+
 
 console.log("result",items)
   function handleOnSubmit(e) {
@@ -86,7 +85,7 @@ console.log("result",items)
 
   let locationTag = []
   if (locationState.length > 0) {
-    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location})))
+    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location })))
   }
   const CompanyNameTag = () => (
     <Select
@@ -111,30 +110,30 @@ console.log("result",items)
 
   const LocationTag = () => (
     <Select
-    defaultValue={null}
-    isMulti
-    name="location"
-    options={locationTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
+      defaultValue={null}
+      isMulti
+      name="location"
+      options={locationTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
   )
 
   const IndustryTag = () => (
     <Select
-    defaultValue={null}
-    isMulti
-    name="skills"
-    options={industryTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
+      defaultValue={null}
+      isMulti
+      name="skills"
+      options={industryTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
   )
 
- 
+
   let industryTag = []
   if (industryState.length > 0) {
-    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
   }
   // console.log('industryTag', industryTag)
 
@@ -149,32 +148,29 @@ console.log("result",items)
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="JobTitle" style={{color:'white'}}>Job Title</Label>
-                    {/* <Input type="text" name="JobTitle" id="JobTitle" value={jobtitle} onChange={(e) => setJobtitle(e.target.value)} placeholder="Job Title" /> */}
-                    <JobTitleTag />
+                    <Label for="JobTitle" style={{ color: 'white' }}>Job Title</Label>
+                    <ReactTagInput
+                      tags={jobTitleTag}
+                      onChange={(newTags) => setJobTitleTag(newTags)}
+                    />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="Company" style={{color:'white'}}>Company</Label>
-                    <CompanyNameTag />
-                    {/* <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" /> */}
+                    <Label for="Company" style={{ color: 'white' }}>Company</Label>
+                    <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" />
                   </FormGroup>
                   <FormGroup>
-                      <Label for="JobType" style={{color:'white'}}>Job Type</Label>
-                      <Select type="select" name="JobType" id="JobType" options={[
-          { value: "PartTime", label: "PartTime" },
-          { value: "Freelance", label: "Freelance" }
-        ]} >
-        {/*  onChange={(e) => setJobType(e.target.value)}>
-                         <option value={'PartTime'} selected>Part Time</option>
-                         <option value={'Freelance'}>Freelance</option> */}
-                      </Select>
-                    </FormGroup>
+                    <Label for="JobType" style={{ color: 'white' }}>Job Type</Label>
+                    <Input type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
+                      <option value={'PartTime'} selected>Part Time</option>
+                      <option value={'Freelance'}>Freelance</option>
+                    </Input>
+                  </FormGroup>
 
                 </Col>
                 <Col lg={12}>
                   <FormGroup>
                     <FormGroup>
-                      <Label for="salaryType" style={{color:'white'}}>Expected Salary Type</Label>
+                      <Label for="salaryType" style={{ color: 'white' }}>Expected Salary Type</Label>
                       <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
                         <option value={'perJob'} selected>Per Job</option>
                         <option value={'perHour'}>Per Hour</option>
@@ -204,17 +200,17 @@ console.log("result",items)
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="Job Function" style={{color:'white'}}>Job Function</Label>
-                        <IndustryTag />
+                    <Label for="Job Function" style={{ color: 'white' }}>Job Function</Label>
+                    <IndustryTag />
                   </FormGroup>
                 </Col>
                 <Col md={12}>
-                <Col md={12}>
-                  <FormGroup>
-                    <Label for="Working Location" style={{color:'white'}}>Work Location</Label>
-                    <LocationTag />
-                  </FormGroup>
-                </Col>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="Working Location" style={{ color: 'white' }}>Work Location</Label>
+                      <LocationTag />
+                    </FormGroup>
+                  </Col>
                 </Col>
               </Row>
               <Button onClick={() => props.onSearchChange()} className="search-Homebtn">
