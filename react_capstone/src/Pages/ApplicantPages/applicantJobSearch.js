@@ -26,9 +26,12 @@ const ApplicantJobSearch = (props) => {
     console.log("industry", state.industry);
     return state.industry
   });
+  const companyNameState = useSelector((state) => {
+    console.log("CompanyName", state.companyName);
+    return state.companyName
+  });
   const applicantJobState = useSelector((state) => state.applicantJob)
   const dispatch = useDispatch();
-
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
@@ -51,30 +54,26 @@ const ApplicantJobSearch = (props) => {
   const [expSalary, setExpSalary] = useState('')
   const [jobTitleTag, setJobTitleTag] = useState([])
 
-
   //******* TAGS  *******8 */
+   function handleOnSubmit(e) {
+  //   e.preventDefault();
+  //   if(!available || !jobFunction || !expSalary || !worklocation || !salaryType){
+  //     alert('please fillin critiria')
+  //     return
+  //   }
+  //   console.log('submitted', available, jobFunction, expSalary, worklocation, salaryType)
 
+  //   erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
+  //     .then(() => {
+  //       console.log('redirect')
+  //       // history.push('/employerApplicantSearchList')
+  //     })
 
-console.log("result",items)
-  function handleOnSubmit(e) {
-    e.preventDefault();
-    if(!available || !jobFunction || !expSalary || !worklocation || !salaryType){
-      alert('please fillin critiria')
-      return
-    }
-    console.log('submitted', available, jobFunction, expSalary, worklocation, salaryType)
-
-    // erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
-    //   .then(() => {
-    //     console.log('redirect')
-    //     // history.push('/employerApplicantSearchList')
-    //   })
-
-  }
+   }
 
   async function erAppSearch(available, jobFunction, expSalary, location,  skills, salaryType, workExp) {
     const authAxiosConfig = await authAxios();
-    return await authAxiosConfig.post('/employer/candidateSearch', {
+    return await authAxiosConfig.post('/employee/search', {
       available: available, jobFunction: jobFunction, expSalary: expSalary, location: location, salaryType: salaryType, skills: skills, workExp: workExp
     }).then(() => {
       console.log('sent')
@@ -87,26 +86,6 @@ console.log("result",items)
   if (locationState.length > 0) {
     locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location })))
   }
-  const CompanyNameTag = () => (
-    <Select
-    defaultValue={null}
-    isMulti
-    name="CompanyName"
-    options={companyNameTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
-  )
-  
-  const JobTitleTag = () => (
-    <Select
-   
-    isMulti
-    name="JobTitle"
-    options={jobTitleTag}
-   
-  />
-  )
 
   const LocationTag = () => (
     <Select
