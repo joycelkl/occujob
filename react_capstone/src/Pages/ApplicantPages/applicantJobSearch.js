@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import "../employerSearch.css";
@@ -8,6 +8,8 @@ import { bindActionCreators } from 'redux';
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
 import Select from 'react-select'
+import ReactTagInput from "@pathofdev/react-tag-input";
+import "@pathofdev/react-tag-input/build/index.css";
 
 
 const ApplicantJobSearch = (props) => {
@@ -43,40 +45,43 @@ const ApplicantJobSearch = (props) => {
   const [location, setLocation] = useState('')
   const [salaryType, setSalaryType] = useState('')
   const [expSalary, setExpSalary] = useState('')
+  const [jobTitleTag, setJobTitleTag] = useState([])
 
-  
+
+  //******* TAGS  *******8 */
+
 
   let locationTag = []
   if (locationState.length > 0) {
-    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location})))
+    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location })))
   }
 
   const LocationTag = () => (
     <Select
-    defaultValue={null}
-    isMulti
-    name="location"
-    options={locationTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
+      defaultValue={null}
+      isMulti
+      name="location"
+      options={locationTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
   )
 
   const IndustryTag = () => (
     <Select
-    defaultValue={null}
-    isMulti
-    name="skills"
-    options={industryTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
+      defaultValue={null}
+      isMulti
+      name="skills"
+      options={industryTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
   )
 
- 
+
   let industryTag = []
   if (industryState.length > 0) {
-    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
   }
   console.log('industryTag', industryTag)
 
@@ -91,26 +96,29 @@ const ApplicantJobSearch = (props) => {
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="JobTitle" style={{color:'white'}}>Job Title</Label>
-                    <Input type="text" name="JobTitle" id="JobTitle" value={jobtitle} onChange={(e) => setJobtitle(e.target.value)} placeholder="Job Title" />
+                    <Label for="JobTitle" style={{ color: 'white' }}>Job Title</Label>
+                    <ReactTagInput
+                      tags={jobTitleTag}
+                      onChange={(newTags) => setJobTitleTag(newTags)}
+                    />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="Company" style={{color:'white'}}>Company</Label>
+                    <Label for="Company" style={{ color: 'white' }}>Company</Label>
                     <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" />
                   </FormGroup>
                   <FormGroup>
-                      <Label for="JobType" style={{color:'white'}}>Job Type</Label>
-                      <Input type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
-                        <option value={'PartTime'} selected>Part Time</option>
-                        <option value={'Freelance'}>Freelance</option>
-                      </Input>
-                    </FormGroup>
+                    <Label for="JobType" style={{ color: 'white' }}>Job Type</Label>
+                    <Input type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
+                      <option value={'PartTime'} selected>Part Time</option>
+                      <option value={'Freelance'}>Freelance</option>
+                    </Input>
+                  </FormGroup>
 
                 </Col>
                 <Col lg={12}>
                   <FormGroup>
                     <FormGroup>
-                      <Label for="salaryType" style={{color:'white'}}>Expected Salary Type</Label>
+                      <Label for="salaryType" style={{ color: 'white' }}>Expected Salary Type</Label>
                       <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
                         <option value={'perJob'} selected>Per Job</option>
                         <option value={'perHour'}>Per Hour</option>
@@ -140,17 +148,17 @@ const ApplicantJobSearch = (props) => {
               <Row form>
                 <Col md={12}>
                   <FormGroup>
-                    <Label for="Job Function" style={{color:'white'}}>Job Function</Label>
-                        <IndustryTag />
+                    <Label for="Job Function" style={{ color: 'white' }}>Job Function</Label>
+                    <IndustryTag />
                   </FormGroup>
                 </Col>
                 <Col md={12}>
-                <Col md={12}>
-                  <FormGroup>
-                    <Label for="Working Location" style={{color:'white'}}>Work Location</Label>
-                    <LocationTag />
-                  </FormGroup>
-                </Col>
+                  <Col md={12}>
+                    <FormGroup>
+                      <Label for="Working Location" style={{ color: 'white' }}>Work Location</Label>
+                      <LocationTag />
+                    </FormGroup>
+                  </Col>
                 </Col>
               </Row>
               <Button onClick={() => props.onSearchChange()} className="search-Homebtn">
