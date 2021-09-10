@@ -28,7 +28,7 @@ class EmployeeRouter {
             return this.employeeService
                 .updateProfile(
                     req.user.id,
-                    name, intro, phone, expectedSalary, industry, availability, location, image, exp, skill)
+                    name, intro, phone, expectedSalary, industry, availability, location, image, exp, skill, salaryType)
                 .then((updatedUser) => {
                     res.json(updatedUser)
                 })
@@ -84,26 +84,12 @@ class EmployeeRouter {
         })
 
         //tested
-        router.get('/search/result/:job_id', (req, res) => {
-            //list job:id details
-            return this.jobServices
-                .viewindividualjob(req.params.job_id)
-                .then((job) => {
-                    res.json(job)
-                })
-                .catch((err) => {
-                    console.log(err)
-                    res.status(500).json(err)
-                })
-        })
-
-        //tested ok
-        router.post('/search/result/:id', (req, res) => {
-            //apply btn
+        router.get('/offer', (req, res) => {
+            //list all offer from offer table where id = user
             return this.employeeService
-                .apply(req.params.id, req.user.id)
-                .then((apply) => {
-                    res.json(apply)
+                .listJob(req.user.id)
+                .then((jobs) => {
+                    res.json(jobs)
                 })
                 .catch((err) => {
                     console.error(err)
@@ -111,13 +97,13 @@ class EmployeeRouter {
                 })
         })
 
-        //tested
-        router.get('/offer', (req, res) => {
-            //list all offer from offer table where id = user
+        //tested ok
+        router.post('/search/result/:job_id', (req, res) => {
+            //apply btn
             return this.employeeService
-                .listJob(req.user.id)
-                .then((jobs) => {
-                    res.json(jobs)
+                .apply(req.params.job_id, req.user.id)
+                .then((apply) => {
+                    res.json(apply)
                 })
                 .catch((err) => {
                     console.error(err)
@@ -176,6 +162,20 @@ class EmployeeRouter {
                     res.status(500).json(err)
                 })
 
+        })
+
+        //tested
+        router.get('/search/result/:job_id', (req, res) => {
+            //list job:id details
+            return this.jobServices
+                .viewindividualjob(req.params.job_id)
+                .then((job) => {
+                    res.json(job)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    res.status(500).json(err)
+                })
         })
 
         return router;

@@ -40,12 +40,7 @@ export const loadEmployerJobThunkAction = () => async(dispatch) => {
 }
 
 
-
-
-
-
-
-
+// getting job posting history
 export const erJobRecordAction = () => async(dispatch) => {
     console.log("ER Job Posting")
     try {
@@ -63,7 +58,7 @@ export const erJobRecordAction = () => async(dispatch) => {
 
 //Update Job for Employer Job Records Page
 
-export const erJobUpdate = (job_id, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType) => async(dispatch) => {
+export const erJobUpdate = (job_id, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType, salaryType) => async(dispatch) => {
     console.log("ER JOB UPDATE")
     try {
         const authAxiosConfig = await authAxios();
@@ -76,7 +71,8 @@ export const erJobUpdate = (job_id, jobTitle, jobFunction, reqExp, expectSalary,
             workPeriod: workPeriod,
             status: status,
             location: location,
-            empType: empType
+            empType: empType,
+            salaryType: salaryType,
         }).then(res => {
             dispatch(loadEmployerJobSuccessAction(res.data))
         }).catch(err => {

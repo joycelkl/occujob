@@ -1,33 +1,40 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import authAxios from '../../Redux/authAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
+import { useHistory } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const EmployerEditPost = () => {
-
+    
+    const fillInfoToast = () => toast("Please Fill In All Information")
     const indJobState = useSelector((state) => state.individualJob)
 
     console.log("individual job", indJobState)
 
     const dispatch = useDispatch()
     const { erJobUpdate } = bindActionCreators(actionCreators, dispatch)
-    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, ee_img_data, availability, ee_email, expected_salary, ee_location, ee_industry, application_id } = indJobState[0] || {}
+    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type } = indJobState[0] || {}
+
+    const history = useHistory();
 
     console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period)
 
-    const [salary, setSalary] = useState(expect_salary || '...Loading');
-    const [jobTitle, setJobTitle] = useState(job_title || '...Loading');
-    const [jobLocation, setJobLocation] = useState(job_location || '...Loading');
-    const [empType, setEmpType] = useState(job_type || '...Loading');
-    const [reqExp, setReqExp] = useState(req_exp || '...Loading');
-    const [jobDes, setJobDes] = useState(job_description || '...Loading');
-    const [jobStatus, setJobStatus] = useState(status || '...Loading');
-    const [jobFunction, setJobFunction] = useState(job_function || '...Loading');
-    const [workPeriod, setWorkPeriod] = useState(work_period || '...Loading');
+    const [salary, setSalary] = useState(expect_salary );
+    const [jobTitle, setJobTitle] = useState(job_title);
+    const [jobLocation, setJobLocation] = useState(job_location );
+    const [empType, setEmpType] = useState(job_type );
+    const [reqExp, setReqExp] = useState(req_exp );
+    const [jobDes, setJobDes] = useState(job_description );
+    const [jobStatus, setJobStatus] = useState(status );
+    const [jobFunction, setJobFunction] = useState(job_function);
+    const [workPeriod, setWorkPeriod] = useState(work_period);
+    const[salaryType, setSalaryType] = useState(job_salary_type);
     const [modal, setModal] = useState(false);
     const [modalJob, setModalJob] = useState({});
 
@@ -37,14 +44,49 @@ const EmployerEditPost = () => {
         setModal(!modal);
     }
 
-    function handleRepost() {
+    function handleRepost(e) {
+        e.preventDefault();
         console.log('repost')
+        if (!jobTitle || !jobDes || !reqExp || !salary || !empType || !jobFunction || !jobLocation || !workPeriod ) {
+            fillInfoToast();
+            console.log('submitting')
+            return;
+        }
+        erJobCreate(jobTitle, jobFunction, reqExp, salary,
+            jobDes, workPeriod, jobLocation, empType, salaryType).then(() => {
+                history.push('/employerJobRecordsList')
+            })
+    }
+
+    async function erJobCreate(jobTitle, jobFunction, reqExp, expectSalary,
+        jobDescription, workPeriod, location, jobType, salaryType) {
+        const authAxiosConfig = await authAxios();
+        return await authAxiosConfig.post('/employer/job/posting', {
+            jobTitle: jobTitle,
+            jobFunction: jobFunction,
+            reqExp: reqExp,
+            expectSalary: expectSalary,
+            jobDescription: jobDescription,
+            workPeriod: workPeriod,
+            location: location,
+            jobType: jobType,
+            salaryType: salaryType
+        }).then(res => {
+            console.log('job reposted')
+        }).catch(err => {
+            console.log("job posting err res", err.response)
+        })
     }
 
     function handleUpdate(e) {
         e.preventDefault();
-        erJobUpdate(job_id, jobTitle, jobFunction, reqExp, salary, jobDes, workPeriod, jobStatus, jobLocation, empType).then(()=>{
+        if (!jobTitle || !jobDes || !reqExp || !salary || !empType || !jobFunction || !jobLocation || !workPeriod ) {
+            fillInfoToast();
+            return;
+        }
+        erJobUpdate(job_id, jobTitle, jobFunction, reqExp, salary, jobDes, workPeriod, jobStatus, jobLocation, empType, salaryType).then(()=>{
                 alert("updated")
+                history.push('/employerJobRecordsList')
             })
     }
     async function giveOffer(application_id){
@@ -59,7 +101,7 @@ const EmployerEditPost = () => {
     }
     function handleCheckbokChange(e) {
         console.log("Checked", e.target.checked)
-        e.target.checked == true ? setJobStatus(false) : setJobStatus(true);
+        e.target.checked === true ? setJobStatus(false) : setJobStatus(true);
         console.log(e.target.value)
         console.log("status:", jobStatus)
     }
@@ -74,19 +116,19 @@ const EmployerEditPost = () => {
                         <h5>Create Date: {jobCreate}</h5>
                         <h5>Expiry Date: {expiry_date}</h5>
                         <div>
-                            <h5>Job Status: {jobStatus ? 'Active' : 'Inactive'}</h5>
-                            <FormGroup check>
+                            <h5>Job Status: {status ? 'Active' : 'Inactive'}</h5>
+                            {status? (<FormGroup check>
                                 <Label check>
                                     <Input type="checkbox" onChange={(e) => handleCheckbokChange(e)} />{' '}
-                                    Deactive Job Post
+                                    Deactivate Job Post
                                 </Label>
-                            </FormGroup>
+                            </FormGroup>):null}
                         </div>
                     </div>
                     <Form className='form-group' onSubmit={(e) => handleUpdate(e)}>
                         <FormGroup>
                             <Label for="Job Title">Job Title</Label>
-                            {jobStatus ? <Input type="text" name="text" id="jobTitle" placeholder="Job Title" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} disabled /> : <Input type="text" name="text" id="jobTitle" placeholder="Job Title" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />}
+                            {status ? <Input type="text" name="text" id="jobTitle" placeholder="Job Title" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} disabled /> : <Input type="text" name="text" id="jobTitle" placeholder="Job Title" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />}
                         </FormGroup>
                         <FormGroup>
                             <Label for="Text">Job Description</Label>
@@ -95,6 +137,13 @@ const EmployerEditPost = () => {
                         <FormGroup>
                             <Label for="requiredExp">Required Experience</Label>
                             <Input type="number" name="number" id="requiredExp" placeholder="Year of Experience" value={reqExp} onChange={(e) => setReqExp(e.target.value)} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="employmentType">Salary Type</Label>
+                            <Input type="select" name="employmentType" id="employmentType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                                <option value={'perJob'}>Per Job</option>
+                                <option value={'perHour'}>Per Hour</option>
+                            </Input>
                         </FormGroup>
                         <FormGroup>
                             <Label for="Expected Salary">Salary</Label>
@@ -126,8 +175,9 @@ const EmployerEditPost = () => {
                             </Input>
                         </FormGroup>
                         <div className='row'>
-                            <Button type='submit'>Save Changes</Button>
+                            {status?<Button type='submit'>Save Changes</Button>:null}
                             <Button onClick={(e) => handleRepost(e)}>Repost</Button>
+                            <ToastContainer />
                         </div>
                     </Form>
                 </div>
@@ -142,7 +192,7 @@ const EmployerEditPost = () => {
                     </thead>
 
                     <tbody>
-                        {indJobState.length > 0 ? indJobState.map((job) => (
+                        {indJobState[0].ee_name ? indJobState.map((job) => (
                             <tr onClick={() => {
                                 setModalJob(job)
                                 toggle(job.ee_name)}
@@ -154,9 +204,11 @@ const EmployerEditPost = () => {
                                 <td>{job.offer}</td>
                             </tr>
 
-                        )) : "loading..."}
+                        )) : "Waiting for Applicant Apply"}
                         <Modal isOpen={modal} toggle={toggle}>
-                                    <ModalHeader >{modalJob.ee_name} {console.log('nametest', modalJob.ee_name)} <img src={modalJob.ee_img_data} width="200px" height="200x" /></ModalHeader>
+                                    <ModalHeader>{modalJob.ee_name} {console.log('nametest', modalJob.ee_name)} 
+                                    <img src={modalJob.ee_img_data} width="200px" height="200x" alt=''/>
+                                    </ModalHeader>
                                     <ModalBody>
                                         Self Introduction: {modalJob.self_intro} <br />
                                         Expected Salary: {modalJob.expected_salary} <br />
@@ -170,8 +222,6 @@ const EmployerEditPost = () => {
                                     </ModalFooter>
                                 </Modal>
                     </tbody>
-
-
                 </Table>
 
             </div>

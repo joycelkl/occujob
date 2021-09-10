@@ -32,7 +32,7 @@ exports.up = function(knex) {
                 table.text("self_intro");
                 table.integer("ee_phone");
                 table.decimal("expected_salary", 14, 2);
-                table.text("availability"); //option with weedends, weekdays, anyday
+                table.specificType("availability", 'text ARRAY'); //option with Mon, Tue, Wed, Thu, Fri, Sat, Sun
                 table.text('ee_location'); //dropdown list
                 table.text('ee_exp'); //check query for search
                 table.specificType('ee_skill', 'text ARRAY'); //e.g. javascript
