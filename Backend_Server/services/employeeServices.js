@@ -194,6 +194,22 @@ class EmployeeService {
             }
         }
 
+        let jobFunctionArr = []
+        if (jobFunction == null) {
+            jobFunctionArr = ['', '', '']
+        } else {
+            if (!Array.isArray(jobFunction)) {
+                jobFunctionArr.push(jobFunction)
+            } else {
+                jobFunctionArr = jobFunction
+            }
+        }
+        let jobfnum = jobFunctionArr.length;
+        if (jobfnum != 3) {
+            for (var i = 0; i < (3 - jjobfnum); i++) {
+                jobFunctionArr.push('')
+            }
+        }
 
 
 
