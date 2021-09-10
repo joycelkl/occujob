@@ -71,11 +71,7 @@ class EmployeeRouter {
             return this.employeeService
                 .searchJob(req.body)
                 .then((job) => {
-                    console.log('req.body', req.body)
-                    res.render('searchResults', {
-                        job: job,
-                        layout: "JobSeeker"
-                    })
+                    res.json(job)
                 })
                 .catch((err) => {
                     console.error(err)

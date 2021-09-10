@@ -155,27 +155,70 @@ class EmployeeService {
 
     //to be rewrite the logic
     searchJob(value) {
-        let searchList = {}
-        for (let elements in value) {
-            if (value[elements] === "Choose") {
-                value[elements] = ''
-            }
-            if (value[elements] !== '') {
-                searchList[elements] = value[elements]
+
+        console.log('value', value)
+
+        const { jobTitle, company, jobType, salaryType, salary, jobFunction, location } = value
+
+        let jobTitleArr = []
+        if (jobTitle == null) {
+            jobTitleArr = ['', '', '']
+        } else {
+            if (!Array.isArray(jobTitle)) {
+                jobTitleArr.push(jobTitle)
+            } else {
+                jobTitleArr = jobTitle
             }
         }
-        console.log(searchList)
-        return this.knex("employer")
-            .select("*")
-            .join("job", "employer.id", "=", "job.employer_id")
-            .where(searchList)
-            .then((job) => {
-                console.log('search resuly job', job)
-                return job
-            })
-            .catch((err) => {
-                throw new Error(err)
-            })
+        let jobtnum = jobTitleArr.length;
+        if (jobtnum != 3) {
+            for (var i = 0; i < (3 - jobtnum); i++) {
+                jobTitleArr.push('')
+            }
+        }
+
+        let companyArr = []
+        if (company == null) {
+            companyArr = ['', '', '']
+        } else {
+            if (!Array.isArray(company)) {
+                companyArr.push(company)
+            } else {
+                companyArr = company
+            }
+        }
+        let compnum = companyArr.length;
+        if (compnum != 3) {
+            for (var i = 0; i < (3 - compnum); i++) {
+                companyArr.push('')
+            }
+        }
+
+
+
+
+
+        // let searchList = {}
+        // for (let elements in value) {
+        //     if (value[elements] === "Choose") {
+        //         value[elements] = ''
+        //     }
+        //     if (value[elements] !== '') {
+        //         searchList[elements] = value[elements]
+        //     }
+        // }
+        // console.log(searchList)
+        // return this.knex("employer")
+        //     .select("*")
+        //     .join("job", "employer.id", "=", "job.employer_id")
+        //     .where(searchList)
+        //     .then((job) => {
+        //         console.log('search resuly job', job)
+        //         return job
+        //     })
+        //     .catch((err) => {
+        //         throw new Error(err)
+        //     })
     }
 
 
