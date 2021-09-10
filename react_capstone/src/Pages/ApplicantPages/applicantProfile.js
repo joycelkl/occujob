@@ -134,7 +134,7 @@ return(
           <option value={'perHour'}>Per Hour</option>
         </Input>
       </FormGroup>
-      {salaryType ? (
+      {ee_skill ? (
         <FormGroup>
         <Label for="Expected Salary">Expected Salary</Label>
       <Input type="number" name="number" id="Expected Salary" value={expectedSalary}  onChange={(e)=>setExpectedSalary(e.target.value)}/>
