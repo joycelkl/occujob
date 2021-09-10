@@ -14,7 +14,6 @@ const ApplicantJobSearch = (props) => {
     console.log("ER", state.skills);
     return state.skills
   });
-
   
   const locationState = useSelector((state) => {
     console.log("location", state.location);
@@ -25,17 +24,20 @@ const ApplicantJobSearch = (props) => {
     console.log("industry", state.industry);
     return state.industry
   });
+  const applicantJobState = useSelector((state) => state.applicantJob)
   const dispatch = useDispatch();
 
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
-
+  const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch)
+  console.log('ApplicantJobSearchData', applicantJobState)
   console.log("test test",locationState)
   useEffect(() => {
     loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
+    loadApplicantJobThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const [jobtitle, setJobtitle] = useState('');
@@ -53,6 +55,13 @@ const ApplicantJobSearch = (props) => {
   const district = []
   if (locationState.length>0){
   locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
+const companyNameLoad =[]
+const jobFunctionLoad =[]
+if (applicantJobState.length>0){
+  applicantJobState.map((job)=>(companyNameLoad.push({"label":job.er_name,"value":job.er_name,"role":"master"})))
+  applicantJobState.map((job)=>(jobFunctionLoad.push({"label":job.job_title,"value":job.job_title,"role":"master"})))}
+
+  console.log("puting in array",companyNameLoad,jobFunctionLoad)
 
   function handleOnSubmit(e) {
     e.preventDefault();
