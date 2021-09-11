@@ -161,7 +161,7 @@ class EmployeeService {
         const { jobTitle, company, jobType, salaryType, salary, jobFunction, location } = value
 
         let jobTitleArr = []
-        if (jobTitle == null) {
+        if (jobTitle.length == 0) {
             jobTitleArr = ['', '', '']
         } else {
             if (!Array.isArray(jobTitle)) {

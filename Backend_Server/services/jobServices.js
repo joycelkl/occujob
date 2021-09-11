@@ -94,8 +94,8 @@ class JobServices {
     company() {
         return this.knex('employer')
         .select('er_name')
-        .then((name)=>{
-            return name
+        .then((companyName)=>{
+            return companyName
         })
         .catch((err) => {
             console.error(err)
