@@ -5,39 +5,52 @@ import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import "../employerSearch.css";
-import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
 import 'rsuite/dist/styles/rsuite-default.css';
-import { TagPicker } from 'rsuite';
 import Select from 'react-select'
 
 
 const EmployerApplicantSearch = () => {
-
-  const skillsState = useSelector((state) => {
-    console.log("ER", state.skills);
-    return state.skills
-  });
-  console.log("skills", skillsState)
-
-  const locationState = useSelector((state) => {
-    console.log("location", state.location);
-    return state.location
-  });
- 
-  console.log("location Tag Data", locationState)
-
-  const industryState = useSelector((state) => {
-    console.log("industry", state.industry);
-    return state.industry
-  });
-  console.log("industry", industryState)
 
   const dispatch = useDispatch();
 
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const {erAppSearch } = bindActionCreators(actionCreators, dispatch)
+
+
+  useEffect(() => {
+    loadSkillsThunkAction();
+    loadLocationThunkAction();
+    loadIndustryThunkAction();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+      
+  const [available, setAvailable] = useState(null);
+  const [expSalary, setExpSalary] = useState(null);
+  const [jobFunction, setJobFunction] = useState(null);
+  const [location, setLocation] = useState(null)
+  const [salaryType, setSalaryType] = useState(null)
+  const [workExp , setWorkExp] = useState(null)
+  const [skills, setSkills] = useState(null)
+
+  useEffect(() => {
+    if (salaryType === 'Please select') {
+      setSalaryType(null)
+      setExpSalary(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [salaryType])
+
+  //setup skills tags
+  const skillsState = useSelector((state) => {
+    console.log("ER", state.skills);
+    return state.skills
+  });
+  console.log("skills", skillsState)
 
   let skillsTag = []
   if (skillsState.length > 0) {
@@ -45,9 +58,15 @@ const EmployerApplicantSearch = () => {
   }
   console.log('skillsTag', skillsTag)
 
+  const handleOnChangeSkills = obj =>{
+    setSkills(obj)
+  }
+
   const SkillsTag = () => (
     <Select
     defaultValue={null}
+    value={skills}
+    onChange={handleOnChangeSkills}
     isMulti
     name="skills"
     options={skillsTag}
@@ -55,17 +74,68 @@ const EmployerApplicantSearch = () => {
     classNamePrefix="select"
   />
   )
+  
+  //setup job function tags
+  const industryState = useSelector((state) => {
+    console.log("industry", state.industry);
+    return state.industry
+  });
+  console.log("industry", industryState)
+
+  let industryTag = []
+  if (industryState.length > 0) {
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
+  }
+  console.log('industryTag', industryTag)
+
+  const handleOnChangeIndustry = obj =>{
+    setJobFunction(obj)
+  }
+
   const IndustryTag = () => (
     <Select
     defaultValue={null}
+    value={jobFunction}
+    onChange={handleOnChangeIndustry}
     isMulti
-    name="skills"
+    name="jobFunction"
     options={industryTag}
     className="basic-multi-select"
     classNamePrefix="select"
   />
   )
+  
+  //setup location tags
+  const locationState = useSelector((state) => {
+    console.log("location", state.location);
+    return state.location
+  });
+ 
+  console.log("location Tag Data", locationState)
 
+  let locationTag = []
+  if (locationState.length > 0) {
+    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location})))
+  }
+
+  const handleOnChangeLocation = obj =>{
+    setLocation(obj)
+  }
+
+  const LocationTag = () => (
+    <Select
+    defaultValue={null}
+    value={location}
+    onChange={handleOnChangeLocation}
+    isMulti
+    name="location"
+    options={locationTag}
+    className="basic-multi-select"
+    classNamePrefix="select"
+  />
+  )
+    
+  //setup availability tags
   let avaData = [
     {label: "Monday",value: "monday" },
     {label: "Tuesday", value: "tuesday" ,},
@@ -76,9 +146,16 @@ const EmployerApplicantSearch = () => {
     {label: "Sunday",value: "sunday" }
 ] 
 
+  const handleOnChangeAvailable = obj =>{
+    setAvailable(obj)
+  }
+
   const AvailabilityTag = () => (
+
     <Select
-    defaultValue={null}
+    defaultValue={available}
+    value={available}
+    onChange={handleOnChangeAvailable}
     isMulti
     name="availability"
     options={avaData}
@@ -86,84 +163,22 @@ const EmployerApplicantSearch = () => {
     classNamePrefix="select"
   />
   )
-
-  let industryTag = []
-  if (industryState.length > 0) {
-    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
-  }
-  console.log('industryTag', industryTag)
-
-
-  let locationTag = []
-  if (locationState.length > 0) {
-    locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location})))
-  }
-
-  const LocationTag = () => (
-    <Select
-    defaultValue={null}
-    isMulti
-    name="location"
-    options={locationTag}
-    className="basic-multi-select"
-    classNamePrefix="select"
-  />
-  )
-  const [available, setAvailable] = useState('');
-  const [expSalary, setExpSalary] = useState('');
-  const [jobFunction, setJobFunction] = useState('');
-  const [location, setLocation] = useState('')
-  const [salaryType, setSalaryType] = useState('')
-  const [workExp , setWorkExp] = useState('')
-  const [skills, setSkills] = useState('')
-
-  useEffect(() => {
-    loadSkillsThunkAction();
-    loadLocationThunkAction();
-    loadIndustryThunkAction();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  let district = []
-  if (locationState.length>0){
-  locationState.map((loc)=>(district.push({"label":loc.location,"value":loc.location,"role":"master"})))}
-console.log('district',district)
-let industies = []
-  if (industryState.length>0){
-  locationState.map((ind)=>(industies.push({"label":ind.industry,"value":ind.industry,"role":"master"})))}
-console.log('industies',industies)
-
-
+  
   const history = useHistory();
 
   function handleOnSubmit(e) {
     e.preventDefault();
-    if(!available || !jobFunction || !expSalary || !location || !skills || !salaryType || !workExp){
-      alert('please fillin critiria')
-      return
-    }
+  
     console.log('submitted', available, jobFunction, expSalary, location, skills, salaryType, workExp)
 
-    // erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
-    //   .then(() => {
-    //     console.log('redirect')
-    //     // history.push('/employerApplicantSearchList')
-    //   })
+    erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
+      .then(() => {
+        history.push('/employerApplicantSearchList')
+      })
 
   }
 
-  async function erAppSearch(available, jobFunction, expSalary, location,  skills, salaryType, workExp) {
-    const authAxiosConfig = await authAxios();
-    return await authAxiosConfig.post('/employer/candidateSearch', {
-      available: available, jobFunction: jobFunction, expSalary: expSalary, location: location, salaryType: salaryType, skills: skills, workExp: workExp
-    }).then(() => {
-      console.log('sent')
-    }).catch(err => {
-      console.log("search candidate err res", err.response)
-    })
-  }
-  console.log('salary Type', salaryType)
-  console.log('expSalary', expSalary)
+
 
 
   return (
@@ -186,8 +201,8 @@ console.log('industies',industies)
                     <FormGroup>
                       <Label for="salaryType" style={{color:"white"}} >Expected Salary Type</Label>
                       <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
-                      <option value={null}>Please select</option>
-                        <option value={'perJob'} selected>Per Job</option>
+                      <option value={null} selected>Please select</option>
+                        <option value={'perJob'} >Per Job</option>
                         <option value={'perHour'}>Per Hour</option>
                       </Input>
                     </FormGroup>
