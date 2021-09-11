@@ -27,7 +27,7 @@ export const loadApplicantSearchProfileThunkAction = (ee_id) => async(dispatch) 
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get(`/employer/candidateSearch/${ee_id}`).then(res => {
-            dispatch(loadApplicantSearchProfileSuccessAction(res.data))
+            dispatch(loadApplicantSearchProfileSuccessAction(res.data[0]))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
             dispatch(loadApplicantSearchProfileFailAction())
