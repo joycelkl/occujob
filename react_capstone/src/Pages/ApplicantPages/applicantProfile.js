@@ -48,6 +48,7 @@ const ApplicantProfile = () => {
   const SkillsTag = () => (
     <Select
       defaultValue={null}
+      value={ee_industry}
       isMulti
       name="skills"
       options={skillsTag}

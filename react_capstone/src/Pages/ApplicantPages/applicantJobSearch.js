@@ -9,13 +9,12 @@ import authAxios from "../../Redux/authAxios";
 import Select from 'react-select'
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
+import { useHistory } from 'react-router';
 
 
 const ApplicantJobSearch = (props) => {
-  const skillsState = useSelector((state) => {
-    console.log("ER", state.skills);
-    return state.skills
-  });
+
+  const dispatch = useDispatch();
   
   const locationState = useSelector((state) => {
     console.log("location", state.location);
@@ -27,107 +26,117 @@ const ApplicantJobSearch = (props) => {
     return state.industry
   });
   const companyNameState = useSelector((state) => {
-    console.log("CompanyName", state.companyName);
+    console.log("companyName", state.companyName);
     return state.companyName
   });
   
-  const dispatch = useDispatch();
-  const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadCompanyNameThunkAction } = bindActionCreators(actionCreators, dispatch)
 
   useEffect(() => {
     loadCompanyNameThunkAction();
-    loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
-    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const [jobtitle, setJobtitle] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [jobFunction, setJobFunction] = useState('');
-  const [jobType, setJobType] = useState('')
-  const [worklocation, setworkLocation] = useState('')
-  const [salaryType, setSalaryType] = useState('')
-  const [expSalary, setExpSalary] = useState('')
-  const [jobTitleTag, setJobTitleTag] = useState([])
+  const [jobTitleTag, setJobTitleTag] = useState([]);
+  const [companyName, setCompanyName] = useState(null);
+  const [jobFunction, setJobFunction] = useState(null);
+  const [jobType, setJobType] = useState(null);
+  const [worklocation, setWorkLocation] = useState(null);
+  const [salaryType, setSalaryType] = useState(null);
+  const [expSalary, setExpSalary] = useState(null);
+  const history = useHistory();
+
 
   //******* TAGS  *******8 */
    function handleOnSubmit(e) {
-  //   e.preventDefault();
-  //   if(!available || !jobFunction || !expSalary || !worklocation || !salaryType){
-  //     alert('please fillin critiria')
-  //     return
-  //   }
-  //   console.log('submitted', available, jobFunction, expSalary, worklocation, salaryType)
+    e.preventDefault();
+    // if(!jobTitleTag ||!companyName || !jobFunction || !jobType || !worklocation || !salaryType || !expSalary){
+    //   alert('please fillin critiria')
+    //   return
+    // }
+    console.log('submitted', jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary )
 
-  //   erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
-  //     .then(() => {
-  //       console.log('redirect')
-  //       // history.push('/employerApplicantSearchList')
-  //     })
-
+    eeJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
+      .then(() => {
+        console.log('redirect')
+        history.push('/ApplicantJobSearchResult')
+      })
    }
 
-  async function erAppSearch(available, jobFunction, expSalary, location,  skills, salaryType, workExp) {
+  async function eeJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary) {
     const authAxiosConfig = await authAxios();
-    return await authAxiosConfig.post('/employee/search', {
-      available: available, jobFunction: jobFunction, expSalary: expSalary, location: location, salaryType: salaryType, skills: skills, workExp: workExp
+    return await authAxiosConfig.post('/employee/search/result', {
+      jobTitle:jobTitleTag, company:companyName, jobType:jobType, salaryType:salaryType, salary:expSalary, jobFunction:jobFunction, location:worklocation
     }).then(() => {
       console.log('sent')
     }).catch(err => {
       console.log("search candidate err res", err.response)
     })
   }
-  let companyNameTag = []
-  if (companyNameState.length > 0) {
-    companyNameState.map((com) => (companyNameTag.push({"label": com.er_name, "value": com.er_name })))
-  }
-
+  
+// Company Name Related Set Tag n Select
+let companyNameTag = []
+if (companyNameState.length > 0) {
+  companyNameState.map((com) => (companyNameTag.push({"label": com.er_name, "value": com.er_name })))
+}
+const handleCompanyNameChange = obj => {
+  setCompanyName(obj);
+}
+  const CompanyNameTag = () => (
+    <Select
+    defaultValue={companyName}
+    value={companyName}
+      isMulti
+      name="location"
+      options={companyNameTag}
+      onChange={handleCompanyNameChange}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
+  )
+// Work Location Related Set Tag n Select
   let locationTag = []
   if (locationState.length > 0) {
     locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location })))
   }
-  const CompanyNameTag = () => (
-    <Select
-      defaultValue={null}
-      isMulti
-      name="location"
-      options={companyNameTag}
-      className="basic-multi-select"
-      classNamePrefix="select"
-    />
-  )
+  const handleLocationChange = obj => {
+    setWorkLocation(obj);
+  }
   const LocationTag = () => (
     <Select
-      defaultValue={null}
+      defaultValue={worklocation}
+      value={worklocation}
       isMulti
       name="location"
       options={locationTag}
+      onChange={handleLocationChange}
       className="basic-multi-select"
       classNamePrefix="select"
     />
   )
-
+// Industry Related Set Tag n Select
+let industryTag = []
+if (industryState.length > 0) {
+  industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
+}
+const handleIndustryChange = obj => {
+  setJobFunction(obj);
+}
   const IndustryTag = () => (
     <Select
-      defaultValue={null}
+      defaultValue={jobFunction}
+      value={jobFunction}
       isMulti
       name="skills"
       options={industryTag}
+      onChange={handleIndustryChange}
       className="basic-multi-select"
       classNamePrefix="select"
     />
   )
-
-
-  let industryTag = []
-  if (industryState.length > 0) {
-    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
-  }
-   console.log('nameTag', companyNameTag)
 
   return (
 
@@ -153,7 +162,7 @@ const ApplicantJobSearch = (props) => {
                   </FormGroup>
                   <FormGroup>
                     <Label for="JobType" style={{ color: 'white' }}>Job Type</Label>
-                    <Input type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
+                    <Input type="select" name="JobType" id="JobType" value={'PartTime'} onChange={(e) => setJobType(e.target.value)}>
                       <option value={'PartTime'} selected>Part Time</option>
                       <option value={'Freelance'}>Freelance</option>
                     </Input>
@@ -208,7 +217,7 @@ const ApplicantJobSearch = (props) => {
                   </Col>
                 </Col>
               </Row>
-              <Button onClick={() => props.onSearchChange()} className="search-Homebtn">
+              <Button type='submit' className="search-Homebtn">
                 Search</Button>
             </div>
           </Form>

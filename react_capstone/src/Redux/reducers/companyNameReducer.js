@@ -1,7 +1,7 @@
 import { LOAD_COMPANY_NAME_SUCCESS_ACTION, LOAD_COMPANY_NAME_FAIL_ACTION } from "../action-creators"; 
 
 const initialState = {
-    compName: []
+    companyName: []
 };
 
 const reducer = (state = initialState, action) => {

@@ -62,6 +62,7 @@ class PublicRouter {
         })
 
         router.get('/company', (req, res) => {
+            console.log('getting CompanyName')
             return this.jobSerivces.company()
                 .then((companyName) => {
                     return res.json(companyName)

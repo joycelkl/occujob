@@ -178,9 +178,6 @@ const EmployerApplicantSearch = () => {
 
   }
 
-
-
-
   return (
     <div>
       <EmployerNavbar />
