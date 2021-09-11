@@ -36,18 +36,6 @@ class EmployeeService {
         userSalaryType
     ) {
 
-        console.log('received data', userName,
-            userIntro,
-            userPhone,
-            userExpectedSalary,
-            userIndustry,
-            userAvailability,
-            userLocation,
-            userImage,
-            userExp,
-            userSkill,
-            userSalaryType)
-
         let ind = [];
         if (userIndustry == null) {
             ind = null
@@ -80,19 +68,6 @@ class EmployeeService {
                 ava.push(userAvailability);
             }
         }
-
-        console.log('received data after',
-            userName,
-            userIntro,
-            userPhone,
-            userExpectedSalary,
-            ind,
-            ava,
-            userLocation,
-            userImage,
-            userExp,
-            sky,
-            userSalaryType)
 
         return this.knex("employee")
             .where({

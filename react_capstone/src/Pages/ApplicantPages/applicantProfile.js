@@ -173,9 +173,6 @@ const ApplicantProfile = () => {
     />
   )
 
-  console.log('origin', ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill)
-  console.log('image', image)
-  console.log('data', name, industryArr, location, phone, intro, expectedSalary, availableArr, image, expYr, skillArr)
 
   //****************DONOT CHANGE THE SETTING HERE*****************************/
   // S3 setup
@@ -210,7 +207,7 @@ const ApplicantProfile = () => {
   function handleOnSubmit(e) {
     e.preventDefault();
     console.log('update')
-    console.log('data', name, intro, phone, expectedSalary, industryArr, availableArr, location, image, expYr, skillArr, salaryType)
+
 
     let available = null
     if (availableArr && availableArr.length > 0) {
@@ -234,10 +231,7 @@ const ApplicantProfile = () => {
         return arr.value
       })
     } 
-    console.log('industry', industry)
-
-    console.log('salaryType', salaryType)
-    console.log('posting data', name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill, salaryType)
+ 
     updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill, salaryType)
     updateToast()
   }
