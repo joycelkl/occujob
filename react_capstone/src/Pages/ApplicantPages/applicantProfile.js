@@ -10,31 +10,87 @@ import Select from 'react-select'
 import "../EmployerPages/employerProfilePage.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PortfolioUpload from "../../Components/Applicants/PortfolioUpload";
 
 const ApplicantProfile = () => {
 
-  const updateToast = () => toast("Profile Updated");
-
+  
+  const dispatch = useDispatch();
+  const { loadEEProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
+  const { updateEEProfileAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+  
   const EEProfileState = useSelector((state) => state.EEProfile);
+  console.log('EEprofile', EEProfileState)
 
-  const skillsState = useSelector((state) => {
-    console.log("ER", state.skills);
-    return state.skills
-  });
+  const skillsState = useSelector((state) => state.skills);
   console.log("skills", skillsState)
 
-  const locationState = useSelector((state) => {
-    console.log("location", state.location);
-    return state.location
-  });
+  const locationState = useSelector((state) => state.location);
   console.log("location", locationState)
 
-  const industryState = useSelector((state) => {
-    console.log("industry", state.industry);
-    return state.industry
-  });
+  const industryState = useSelector((state) => state.industry);
   console.log("industry", industryState)
 
+  const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
+  
+  const [name, setName] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [intro, setIntro] = useState(null);
+  const [expectedSalary, setExpectedSalary] = useState(null);
+  const [image, setImage] = useState(null);
+  const [expYr, setExpYr] = useState(null)
+  const [salaryType, setSalaryType] = useState(null);
+  const [availableArr, setAvailableArr] = useState(null);
+  const [industryArr, setIndustryArr] = useState(null);
+  const [skillArr, setSkillArr] = useState(null)
+
+  useEffect(() => {
+    loadEEProfileThunkAction();
+    setName(ee_name);
+    setPhone(ee_phone);
+    setLocation(ee_location);
+    setImage(ee_img_data)
+    setIntro(self_intro);
+    setSalaryType(ee_salary_type)
+    setExpectedSalary(expected_salary);
+    setExpYr(ee_exp);
+    let avaobj
+    if(availability && availability.length >0){
+      avaobj = availability.map((ava)=>{
+        return {'label': ava, 'value': ava}
+      })
+      setAvailableArr(avaobj);
+    } 
+    let indobj
+    if(ee_industry && ee_industry.length >0){
+      indobj = ee_industry.map((ind)=>{
+        return {'label': ind, 'value': ind}
+      })
+      setIndustryArr(indobj);
+    } 
+    let skyobj
+    if(ee_skill && ee_skill.length >0){
+      skyobj = ee_skill.map((sky)=>{
+        return {'label': sky, 'value': sky}
+      })
+      setSkillArr(skyobj)
+    } 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ee_email, ee_exp, ee_img_data])
+
+  useEffect(() => {
+    loadSkillsThunkAction();
+    loadLocationThunkAction();
+    loadIndustryThunkAction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const updateToast = () => toast("Profile Updated");
+   
 
   //setup skillsTag
   let skillsTag = []
@@ -43,10 +99,16 @@ const ApplicantProfile = () => {
   }
   console.log('skillsTag', skillsTag)
 
+  const handleOnChangeSkills = obj =>{
+    console.log('setSkill', obj)
+    setSkillArr(obj)
+  }
+
   const SkillsTag = () => (
     <Select
       defaultValue={null}
-      value={ee_industry}
+      value={skillArr}
+      onChange={handleOnChangeSkills}
       isMulti
       name="skills"
       options={skillsTag}
@@ -62,11 +124,18 @@ const ApplicantProfile = () => {
   }
   console.log('industryTag', industryTag)
 
+  const handleOnChangeIndustry = obj =>{
+    console.log('setIndustry', obj)
+    setIndustryArr(obj)
+  }
+
   const IndustryTag = () => (
     <Select
       defaultValue={null}
+      value={industryArr}
+      onChange={handleOnChangeIndustry}
       isMulti
-      name="skills"
+      name="industry"
       options={industryTag}
       className="basic-multi-select"
       classNamePrefix="select"
@@ -84,9 +153,16 @@ const ApplicantProfile = () => {
     { label: "Sunday", value: "sunday" }
   ]
 
+  const handleOnChangeAvailable = obj =>{
+    console.log('setIndustry', obj)
+    setAvailableArr(obj)
+  }
+
   const AvailabilityTag = () => (
     <Select
       defaultValue={null}
+      value={availableArr}
+      onChange={handleOnChangeAvailable}
       isMulti
       name="availability"
       options={avaData}
@@ -95,63 +171,6 @@ const ApplicantProfile = () => {
     />
   )
 
- 
-  console.log('EEprofile', EEProfileState)
-  const dispatch = useDispatch();
-  const { loadEEProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
-  const { updateEEProfileAction } = bindActionCreators(actionCreators, dispatch)
-  const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
-  const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
-  const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
-  //   useEffect(()=>{
-  //     loadEEProfileThunkAction();
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
-
-  const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
-
-  const [name, setName] = useState(ee_name);
-  const [industry, setIndustry] = useState(ee_industry);
-  const [location, setLocation] = useState(ee_location);
-  const [phone, setPhone] = useState(ee_phone);
-  const [intro, setIntro] = useState(self_intro);
-  const [expectedSalary, setExpectedSalary] = useState(expected_salary);
-  const [available, setAvailable] = useState(availability);
-  const [image, setImage] = useState(ee_img_data)
-  const [expYr, setExpYr] = useState(ee_exp)
-  const [skill, setSkill] = useState(ee_skill)
-  const [salaryType, setSalaryType] = useState(ee_salary_type);
-  // const [cv, setCV] = useState();
-
-
-  useEffect(() => {
-    loadEEProfileThunkAction();
-    setName(ee_name);
-    setIndustry(ee_industry);
-    setLocation(ee_location);
-    setPhone(ee_phone);
-    setIntro(self_intro);
-    setExpectedSalary(expected_salary);
-    setAvailable(availability);
-    setImage(ee_img_data)
-    setExpYr(ee_exp)
-    setSkill(ee_skill)
-    setSalaryType(ee_salary_type)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ee_email, ee_exp, ee_img_data])
-
-  useEffect(() => {
-    loadSkillsThunkAction();
-    loadLocationThunkAction();
-    loadIndustryThunkAction();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-
-  console.log('origin', ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill)
-  console.log('image', image)
-  console.log('data', name, industry, location, phone, intro, expectedSalary, available, image, expYr, skill)
 
   //****************DONOT CHANGE THE SETTING HERE*****************************/
   // S3 setup
@@ -183,11 +202,34 @@ const ApplicantProfile = () => {
       .catch(err => console.error(err))
   }
 
-
   function handleOnSubmit(e) {
     e.preventDefault();
     console.log('update')
-    // console.log('data', intro, phone, expectedSalary, industry, available, location, image)
+
+
+    let available = null
+    if (availableArr && availableArr.length > 0) {
+      available= availableArr.map((arr) => {
+        return arr.value
+      })
+    } 
+    console.log('available', available)
+
+    let skill = null
+    if (skillArr && skillArr.length > 0) {
+      skill = skillArr.map((arr) => {
+        return arr.value
+      })
+    }
+    console.log('skill', skill)
+
+    let industry = null
+    if (industryArr && industryArr.length > 0) {
+      industry= industryArr.map((arr) => {
+        return arr.value
+      })
+    } 
+ 
     updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill, salaryType)
     updateToast()
   }
@@ -379,9 +421,9 @@ const ApplicantProfile = () => {
                             <option key={i} value={location.location} selected>{location.location}</option>
                           )) : "loading..."}
                         </Input>
-
                       </div>
                     </FormGroup>
+                    <PortfolioUpload />
                   </div>
                 </div>
               </div>
@@ -392,7 +434,8 @@ const ApplicantProfile = () => {
           </div>
           <ToastContainer />
         </Form>
-
+        
+ 
          {/* <div class="row">
 
                       <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>

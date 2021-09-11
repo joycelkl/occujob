@@ -37,21 +37,22 @@ export const loadEEProfileThunkAction = () => async(dispatch) => {
     }
 }
 
-export const updateEEProfileAction = (name, intro, phone, expectedSalary, industry, available, location, image, exp, skill) => async(dispatch) => {
+export const updateEEProfileAction = (name, intro, phone, expectedSalary, industry, availability, location, image, exp, skill, salaryType) => async(dispatch) => {
     console.log("EE Profile update")
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employee/profile', {
             name: name,
-            industry: industry,
             intro: intro,
-            expectedSalary: expectedSalary,
             phone: phone,
-            availability: available,
+            expectedSalary: expectedSalary,
+            industry: industry,
+            availability: availability,
             location: location,
             image: image,
             exp: exp,
-            skill: skill
+            skill: skill,
+            salaryType: salaryType
         }).then(res => {
             dispatch(loadEEProfileSuccessAction(res.data))
         }).catch(err => {
