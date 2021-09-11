@@ -11,8 +11,6 @@ import "../EmployerPages/employerProfilePage.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
 const ApplicantProfile = () => {
 //upload cv
 
