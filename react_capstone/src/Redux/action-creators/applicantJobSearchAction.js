@@ -3,11 +3,11 @@ import authAxios from '../authAxios'
 //for home page
 export const LOAD_COMPANY_NAME_SUCCESS_ACTION = 'LOAD_COMPANY_NAME_SUCCESS';
 
-export const loadCompanyNameSuccessAction = (compName) => {
+export const loadCompanyNameSuccessAction = (companyName) => {
     return (dispatch) => {
         dispatch({
             type: LOAD_COMPANY_NAME_SUCCESS_ACTION,
-            payload: compName
+            payload: companyName
         })
     }
 }

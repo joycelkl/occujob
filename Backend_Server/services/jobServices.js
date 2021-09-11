@@ -91,6 +91,17 @@ class JobServices {
             });
 
     }
+    company() {
+        return this.knex('employer')
+        .select('er_name')
+        .then((name)=>{
+            return name
+        })
+        .catch((err) => {
+            console.error(err)
+            throw new Error(err)
+        });
+    }
 
 }
 
