@@ -24,9 +24,7 @@ const EmployerSearchApplicantProfile = () => {
                         <Label for="Skill">Skills</Label>
                     </FormGroup>
 
-                    <Label for="Portfolio Link">Optional Portfolio Link</Label>
-                    <Button>Download CV</Button>
-
+                    
 
 
                 </div>
