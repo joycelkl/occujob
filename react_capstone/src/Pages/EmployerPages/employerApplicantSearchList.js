@@ -1,19 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
-import { Button, Form, FormGroup, Label, Input, FormText, Table } from 'reactstrap';
+import React, {useEffect } from "react";
+import { useDispatch,useSelector } from 'react-redux';
+import {Table} from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
+import { useHistory } from "react-router";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../Redux";
+
+
 
 const EmployerApplicantSearchList = () => {
-
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const { loadApplicantSearchProfileThunkAction } = bindActionCreators(
+      actionCreators,
+      dispatch
+    );
     const appSearchState = useSelector((state) =>state.applicantSearch);
-
     console.log ('applicant search result',appSearchState)
-
+    
+    function handleOnclick (Id) {
+        loadApplicantSearchProfileThunkAction(Id).then(()=>{
+            history.push('/employerSearchApplicantProfile')
+        })}
 
 
     return (
         <div>
             <EmployerNavbar />
+            <h1>Apllicants Search Result</h1>
             <div className="row">
 
 
@@ -27,42 +41,17 @@ const EmployerApplicantSearchList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>John  Doe</td>
-                            <td>HR Manager</td>
-                            <td>$21000</td>
-                            <td>Weekends</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob Thornton</td>
-                            <td>Marketing Executive</td>
-                            <td>$22000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
-                        <tr>
-                            <td>Larry Bird</td>
-                            <td>Photographer</td>
-                            <td>$23000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
-                        <tr>
-                            <td>John  Doe</td>
-                            <td>HR Manager</td>
-                            <td>$21000</td>
-                            <td>Weekends</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob Thornton</td>
-                            <td>Marketing Executive</td>
-                            <td>$22000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
-                        <tr>
-                            <td>Larry Bird</td>
-                            <td>Photographer</td>
-                            <td>$23000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
+                    {appSearchState.length>0?appSearchState.map((result) => (
+                            <tr 
+                            onClick={()=>handleOnclick(result.ee_id)} key={result.ee_id} value={result.ee_id}style={{ cursor: "pointer" }}>
+                            
+                                <td>{result.ee_name}</td>
+                                <td>{result.ee_industry}</td>
+                                <td>{result.expected_Salary}</td>
+                                <td>{result.availability}</td>
+                            </tr>
+
+                        )) : "No Result"}
                     </tbody>
                 </Table>
 

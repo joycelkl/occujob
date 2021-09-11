@@ -4,9 +4,20 @@ import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
 import ProfileImage from "../../Components/ProfileImage";
 import Select from 'react-select'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
+import { useHistory } from 'react-router';
 
 const EmployerSearchApplicantProfile = () => {
+    const indJobState = useSelector((state) => state.individualJob)
+
+    console.log("individual job", indJobState)
+
+    const dispatch = useDispatch()
+
+
+
 
     return (
         <div>

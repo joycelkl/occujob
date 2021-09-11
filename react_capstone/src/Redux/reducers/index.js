@@ -12,6 +12,7 @@ import locationReducer from './locationReducer'
 import industryReducer from './industryReducer'
 import employerApplicantSearchReducer from "./employerApplicantSearchReducer";
 import companyNameReducer from './companyNameReducer'
+import employerApplicantSearchProfileReducer from './employerApplicantSearchProfileReducer'
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -27,7 +28,7 @@ const reducers = combineReducers({
     industry: industryReducer,
     companyName: companyNameReducer,
     applicantSearch: employerApplicantSearchReducer,
-
+    profile: employerApplicantSearchProfileReducer,
 })
 
 export default reducers
