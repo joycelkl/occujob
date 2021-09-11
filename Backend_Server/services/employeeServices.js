@@ -88,51 +88,6 @@ class EmployeeService {
                 return updatedUser
             })
 
-        // if (ind.length == 0) {
-        //     return this.knex("employee")
-        //         .where({
-        //             ee_id: userId
-        //         })
-        //         .update({
-        //             ee_name: userName,
-        //             self_intro: userIntro,
-        //             ee_phone: userPhone,
-        //             expected_salary: userExpectedSalary,
-        //             availability: userAvailability,
-        //             ee_location: userLocation,
-        //             ee_img_data: userImage,
-        //             ee_industry: ind,
-        //             ee_exp: userExp,
-        //             ee_skill: sky
-        //         })
-        //         .returning('*')
-        //         .then((updatedUser) => {
-        //             return updatedUser
-        //         })
-        // } else {
-        //     console.log('ind', ind)
-        //     return this.knex("employee")
-        //         .where({
-        //             ee_id: userId
-        //         })
-        //         .update({
-        //             ee_name: userName,
-        //             self_intro: userIntro,
-        //             ee_phone: userPhone,
-        //             expected_salary: userExpectedSalary,
-        //             ee_industry: ind,
-        //             availability: userAvailability,
-        //             ee_location: userLocation,
-        //             ee_img_data: userImage,
-        //             ee_exp: userExp,
-        //             ee_skill: sky,
-        //             ee_salary_type: userSalaryType,
-        //         })
-        //         .returning('*')
-        //         .then((updatedUser) => {
-        //             return updatedUser
-        //         })
-        // }
     }
 
 
@@ -162,24 +117,23 @@ class EmployeeService {
 
         let jobTitleArr = []
         if (jobTitle.length == 0) {
-            jobTitleArr = ['', '', '']
+            jobTitleArr = ['default', 'default', 'default']
         } else {
-            if (!Array.isArray(jobTitle)) {
-                jobTitleArr.push(jobTitle)
-            } else {
-                jobTitleArr = jobTitle
-            }
+            jobTitleArr = jobTitle.map((tag) => {
+                return tag.toUpperCase();
+            })
         }
         let jobtnum = jobTitleArr.length;
         if (jobtnum != 3) {
             for (var i = 0; i < (3 - jobtnum); i++) {
-                jobTitleArr.push('')
+                jobTitleArr.push(jobTitleArr[0])
             }
         }
+        console.log('jobTitleArr', jobTitleArr)
 
         let companyArr = []
         if (company == null) {
-            companyArr = ['', '', '']
+            companyArr = ['default', 'default', 'default']
         } else {
             if (!Array.isArray(company)) {
                 companyArr.push(company)
@@ -190,13 +144,14 @@ class EmployeeService {
         let compnum = companyArr.length;
         if (compnum != 3) {
             for (var i = 0; i < (3 - compnum); i++) {
-                companyArr.push('')
+                companyArr.push(companyArr[0])
             }
         }
+        console.log('companyArr', companyArr)
 
         let jobFunctionArr = []
         if (jobFunction == null) {
-            jobFunctionArr = ['', '', '']
+            jobFunctionArr = ['default', 'default', 'default']
         } else {
             if (!Array.isArray(jobFunction)) {
                 jobFunctionArr.push(jobFunction)
@@ -207,13 +162,14 @@ class EmployeeService {
         let jobfnum = jobFunctionArr.length;
         if (jobfnum != 3) {
             for (var i = 0; i < (3 - jobfnum); i++) {
-                jobFunctionArr.push('')
+                jobFunctionArr.push(jobFunctionArr[0])
             }
         }
+        console.log('jobFunctionArr', jobFunctionArr)
 
         let locationArr = []
         if (location == null) {
-            locationArr = ['', '', '']
+            locationArr = ['default', 'default', 'default']
         } else {
             if (!Array.isArray(location)) {
                 locationArr.push(location)
@@ -224,8 +180,19 @@ class EmployeeService {
         let localnum = locationArr.length;
         if (localnum != 3) {
             for (var i = 0; i < (3 - localnum); i++) {
-                locationArr.push('')
+                locationArr.push(locationArr[0])
             }
+        }
+        console.log('locationArr', locationArr)
+
+        if (jobTitle.length === 0 && company === null && jobType === null && salaryType === null && salary === null && jobFunction === null && location === null) {
+            return this.knex('job')
+                .andWhere('job.expiry_date', '>', new Date())
+                .orderBy('updated_at', 'desc')
+                .then((jobList) => {
+                    console.log('all null', jobList)
+                    return jobList
+                }).catch(err => console.log(err))
         }
 
         if (salaryType == null) {
@@ -248,6 +215,7 @@ class EmployeeService {
                 .andWhere('job.expiry_date', '>', new Date())
                 .orderBy('updated_at', 'desc')
                 .then((jobList) => {
+                    console.log('no salaryType', jobList)
                     return jobList
                 }).catch(err => console.log(err))
         } else {
@@ -272,32 +240,11 @@ class EmployeeService {
                 .andWhere('job.expiry_date', '>', new Date())
                 .orderBy('updated_at', 'desc')
                 .then((jobList) => {
+                    console.log('with SalaryType', jobList)
                     return jobList
                 }).catch(err => console.log(err))
         }
 
-
-        // let searchList = {}
-        // for (let elements in value) {
-        //     if (value[elements] === "Choose") {
-        //         value[elements] = ''
-        //     }
-        //     if (value[elements] !== '') {
-        //         searchList[elements] = value[elements]
-        //     }
-        // }
-        // console.log(searchList)
-        // return this.knex("employer")
-        //     .select("*")
-        //     .join("job", "employer.id", "=", "job.employer_id")
-        //     .where(searchList)
-        //     .then((job) => {
-        //         console.log('search resuly job', job)
-        //         return job
-        //     })
-        //     .catch((err) => {
-        //         throw new Error(err)
-        //     })
     }
 
 

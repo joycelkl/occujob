@@ -15,57 +15,57 @@ const EmployerApplicantSearchList = () => {
         <div>
             <EmployerNavbar />
             <div className="row">
-
-
-                <Table striped>
-                    <thead>
-                        <tr>
-                            <th>Applicant's Name</th>
-                            <th>Job Function</th>
-                            <th>Expected Salary</th>
-                            <th>Availability</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John  Doe</td>
-                            <td>HR Manager</td>
-                            <td>$21000</td>
-                            <td>Weekends</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob Thornton</td>
-                            <td>Marketing Executive</td>
-                            <td>$22000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
-                        <tr>
-                            <td>Larry Bird</td>
-                            <td>Photographer</td>
-                            <td>$23000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
-                        <tr>
-                            <td>John  Doe</td>
-                            <td>HR Manager</td>
-                            <td>$21000</td>
-                            <td>Weekends</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob Thornton</td>
-                            <td>Marketing Executive</td>
-                            <td>$22000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
-                        <tr>
-                            <td>Larry Bird</td>
-                            <td>Photographer</td>
-                            <td>$23000</td>
-                            <td>Monday-Friday</td>
-                        </tr>
-                    </tbody>
-                </Table>
-
+            <h1>Applicant Search Result</h1>
+            {appSearchState.length > 0 ? 
+             (<Table striped>
+             <thead>
+                 <tr>
+                     <th>Applicant's Name</th>
+                     <th>Job Function</th>
+                     <th>Expected Salary</th>
+                     <th>Availability</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td>John  Doe</td>
+                     <td>HR Manager</td>
+                     <td>$21000</td>
+                     <td>Weekends</td>
+                 </tr>
+                 <tr>
+                     <td>Jacob Thornton</td>
+                     <td>Marketing Executive</td>
+                     <td>$22000</td>
+                     <td>Monday-Friday</td>
+                 </tr>
+                 <tr>
+                     <td>Larry Bird</td>
+                     <td>Photographer</td>
+                     <td>$23000</td>
+                     <td>Monday-Friday</td>
+                 </tr>
+                 <tr>
+                     <td>John  Doe</td>
+                     <td>HR Manager</td>
+                     <td>$21000</td>
+                     <td>Weekends</td>
+                 </tr>
+                 <tr>
+                     <td>Jacob Thornton</td>
+                     <td>Marketing Executive</td>
+                     <td>$22000</td>
+                     <td>Monday-Friday</td>
+                 </tr>
+                 <tr>
+                     <td>Larry Bird</td>
+                     <td>Photographer</td>
+                     <td>$23000</td>
+                     <td>Monday-Friday</td>
+                 </tr>
+             </tbody>
+         </Table>) : <h3>Sorry, No match applicant at this moment.</h3>}
+               
             </div>
        
         </div>

@@ -10,6 +10,7 @@ import Select from 'react-select'
 import "../EmployerPages/employerProfilePage.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PortfolioUpload from "../../Components/Applicants/PortfolioUpload";
 
 
 
@@ -381,9 +382,9 @@ const ApplicantProfile = () => {
                             <option key={i} value={location.location} selected>{location.location}</option>
                           )) : "loading..."}
                         </Input>
-
                       </div>
                     </FormGroup>
+                    <PortfolioUpload />
                   </div>
                 </div>
               </div>
@@ -394,7 +395,8 @@ const ApplicantProfile = () => {
           </div>
           <ToastContainer />
         </Form>
-
+        
+ 
          {/* <div class="row">
 
                       <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>

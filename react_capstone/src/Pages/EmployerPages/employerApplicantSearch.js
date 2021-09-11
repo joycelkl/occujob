@@ -29,13 +29,13 @@ const EmployerApplicantSearch = () => {
   }, [])
 
       
-  const [available, setAvailable] = useState(null);
   const [expSalary, setExpSalary] = useState(null);
-  const [jobFunction, setJobFunction] = useState(null);
-  const [location, setLocation] = useState(null)
   const [salaryType, setSalaryType] = useState(null)
   const [workExp , setWorkExp] = useState(null)
-  const [skills, setSkills] = useState(null)
+  const [jobFunctionArr, setJobFunctionArr] = useState(null);
+  const [locationArr, setLocationArr] = useState(null)
+  const [availableArr, setAvailableArr] = useState(null);
+  const [skillsArr, setSkillsArr] = useState(null)
 
   useEffect(() => {
     if (salaryType === 'Please select') {
@@ -59,13 +59,14 @@ const EmployerApplicantSearch = () => {
   console.log('skillsTag', skillsTag)
 
   const handleOnChangeSkills = obj =>{
-    setSkills(obj)
+    console.log('setSkill', obj)
+    setSkillsArr(obj)
   }
 
   const SkillsTag = () => (
     <Select
     defaultValue={null}
-    value={skills}
+    value={skillsArr}
     onChange={handleOnChangeSkills}
     isMulti
     name="skills"
@@ -89,13 +90,14 @@ const EmployerApplicantSearch = () => {
   console.log('industryTag', industryTag)
 
   const handleOnChangeIndustry = obj =>{
-    setJobFunction(obj)
+    console.log('set Job Function', obj)
+    setJobFunctionArr(obj)
   }
 
   const IndustryTag = () => (
     <Select
     defaultValue={null}
-    value={jobFunction}
+    value={jobFunctionArr}
     onChange={handleOnChangeIndustry}
     isMulti
     name="jobFunction"
@@ -119,13 +121,14 @@ const EmployerApplicantSearch = () => {
   }
 
   const handleOnChangeLocation = obj =>{
-    setLocation(obj)
+    console.log('set Location', obj)
+    setLocationArr(obj)
   }
 
   const LocationTag = () => (
     <Select
     defaultValue={null}
-    value={location}
+    value={locationArr}
     onChange={handleOnChangeLocation}
     isMulti
     name="location"
@@ -147,14 +150,15 @@ const EmployerApplicantSearch = () => {
 ] 
 
   const handleOnChangeAvailable = obj =>{
-    setAvailable(obj)
+    console.log('set available', obj)
+    setAvailableArr(obj)
   }
 
   const AvailabilityTag = () => (
 
     <Select
-    defaultValue={available}
-    value={available}
+    defaultValue={null}
+    value={availableArr}
     onChange={handleOnChangeAvailable}
     isMulti
     name="availability"
@@ -168,8 +172,58 @@ const EmployerApplicantSearch = () => {
 
   function handleOnSubmit(e) {
     e.preventDefault();
+    if ((availableArr && availableArr.length > 3) || (jobFunctionArr && jobFunctionArr.length > 3) || (skillsArr && skillsArr.length >3) || (locationArr && locationArr.length > 3)){
+      alert('Maximum 3 options allowed')
+      return
+    }
+
+    if (salaryType !== null && expSalary == null){
+        alert('please select salary amount')
+        return
+    }
+
+    let available
+    if (availableArr && availableArr.length > 0) {
+      available= availableArr.map((arr) => {
+        return arr.value
+      })
+    } else {
+      available = null;
+    }
+    console.log('available', available)
+    
+    let jobFunction
+    if (jobFunctionArr && jobFunctionArr.length > 0) {
+      jobFunction= jobFunctionArr.map((arr) => {
+        return arr.value
+      })
+    } else {
+      jobFunction = null;
+    }
+    console.log('jobFunction', jobFunction)
+
+    let skills
+    if (skillsArr && skillsArr.length > 0) {
+      skills= skillsArr.map((arr) => {
+        return arr.value
+      })
+    } else {
+      skills = null;
+    }
+    console.log('skills', skills)
+
+    let location
+    if (locationArr && locationArr.length > 0) {
+      location= locationArr.map((arr) => {
+        return arr.value
+      })
+    } else {
+      location = null;
+    }
+    console.log('location', location)
+
   
-    console.log('submitted', available, jobFunction, expSalary, location, skills, salaryType, workExp)
+    console.log('submitted', availableArr, jobFunctionArr, expSalary, locationArr, skillsArr, salaryType, workExp)
 
     erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
       .then(() => {

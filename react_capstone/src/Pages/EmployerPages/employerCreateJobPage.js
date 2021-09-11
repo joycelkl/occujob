@@ -23,7 +23,6 @@ const EmployerCreateJobPage = () => {
     const history = useHistory();
 
 
-    
     function handleOnSubmit(e) {
         e.preventDefault();
         if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunction || !location || !workPeriod ) {
@@ -83,7 +82,7 @@ const EmployerCreateJobPage = () => {
                     <Form className="form-group" onSubmit={(e) => handleOnSubmit(e)}>
                         <FormGroup>
                             <Label for="Job Title">Job Title</Label>
-                            <Input type="text" name="text" id="jobTitle" placeholder="" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
+                            <Input type="text" name="text" id="jobTitle" placeholder="" value={jobTitle} onChange={(e) => setJobTitle(e.target.value.toUpperCase())} />
                             <FormGroup>
                                 <Label for="Text">Job Description</Label>
                                 <Input type="textarea" name="text" id="intro" placeholder="" value={jobDes} onChange={(e) => setJobDes(e.target.value)} />
