@@ -36,18 +36,10 @@ class EmployeeService {
         userSalaryType
     ) {
 
-        // need to review the tags function here
-        // if (Array.isArray(userIndustry)) {
-        //     ind = userIndustry;
-        // } else if (userIndustry !== 'default' && userIndustry !== undefined) {
-        //     ind.push(userIndustry);
-        // }
-
         let ind = [];
-        if (userIndustry = null) {
-            ind = [' ']
+        if (userIndustry == null) {
+            ind = null
         } else {
-
             if (Array.isArray(userIndustry)) {
                 ind = userIndustry;
             } else {
@@ -56,13 +48,24 @@ class EmployeeService {
         }
 
         let sky = [];
-        if (userSkill = null) {
-            sky = [' ']
+        if (userSkill == null) {
+            sky = null
         } else {
             if (Array.isArray(userSkill)) {
                 sky = userSkill;
             } else {
                 sky.push(userSkill);
+            }
+        }
+
+        let ava = [];
+        if (userAvailability == null) {
+            ava = null
+        } else {
+            if (Array.isArray(userAvailability)) {
+                ava = userAvailability;
+            } else {
+                ava.push(userAvailability);
             }
         }
 
@@ -76,7 +79,7 @@ class EmployeeService {
                 ee_phone: userPhone,
                 expected_salary: userExpectedSalary,
                 ee_industry: ind,
-                availability: userAvailability,
+                availability: ava,
                 ee_location: userLocation,
                 ee_img_data: userImage,
                 ee_exp: userExp,
