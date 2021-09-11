@@ -197,6 +197,7 @@ class EmployerRouter {
             //req.body = expectedSalary, jobFunction
             return this.employerServices.candidateFilter(req.body)
                 .then((candidateList) => {
+                    console.log('candidateList in post', candidateList)
                     return res.json(candidateList)
                 })
                 .catch((err) => {

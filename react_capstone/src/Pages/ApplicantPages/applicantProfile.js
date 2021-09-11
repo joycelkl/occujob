@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Component } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import React, { useEffect, useState } from "react";
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -12,11 +12,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ApplicantProfile = () => {
-//upload cv
-
 
   const updateToast = () => toast("Profile Updated");
+
   const EEProfileState = useSelector((state) => state.EEProfile);
+
   const skillsState = useSelector((state) => {
     console.log("ER", state.skills);
     return state.skills
@@ -36,7 +36,7 @@ const ApplicantProfile = () => {
   console.log("industry", industryState)
 
 
-
+  //setup skillsTag
   let skillsTag = []
   if (skillsState.length > 0) {
     skillsState.map((ski) => (skillsTag.push({ "label": ski.skills, "value": ski.skills })))
@@ -54,6 +54,14 @@ const ApplicantProfile = () => {
       classNamePrefix="select"
     />
   )
+  
+  //setup industryTag
+  let industryTag = []
+  if (industryState.length > 0) {
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
+  }
+  console.log('industryTag', industryTag)
+
   const IndustryTag = () => (
     <Select
       defaultValue={null}
@@ -64,7 +72,8 @@ const ApplicantProfile = () => {
       classNamePrefix="select"
     />
   )
-
+  
+  // setup availability tags
   let avaData = [
     { label: "Monday", value: "monday" },
     { label: "Tuesday", value: "tuesday", },
@@ -86,13 +95,7 @@ const ApplicantProfile = () => {
     />
   )
 
-  let industryTag = []
-  if (industryState.length > 0) {
-    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
-  }
-  console.log('industryTag', industryTag)
-
-
+ 
   console.log('EEprofile', EEProfileState)
   const dispatch = useDispatch();
   const { loadEEProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
@@ -118,9 +121,7 @@ const ApplicantProfile = () => {
   const [expYr, setExpYr] = useState(ee_exp)
   const [skill, setSkill] = useState(ee_skill)
   const [salaryType, setSalaryType] = useState(ee_salary_type);
-  const [cv, setCV] = useState();
-
-
+  // const [cv, setCV] = useState();
 
 
   useEffect(() => {
@@ -141,17 +142,7 @@ const ApplicantProfile = () => {
 
   useEffect(() => {
     loadSkillsThunkAction();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
     loadLocationThunkAction();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
     loadIndustryThunkAction();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -193,40 +184,6 @@ const ApplicantProfile = () => {
   }
 
 
-//**********************CV *****************************/
-
-
-  //****************DONOT CHANGE THE SETTING HERE*****************************/
-  // S3 setup
-  const CVconfig = {
-    bucketName: process.env.REACT_APP_BUCKET_NAME,
-    dirName: 'eeCVFolder', /* further setting required at here */
-    region: process.env.REACT_APP_REGION,
-    accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
-  }
-
-  const ReactCV = new S3(CVconfig);
-
-  //the file name should be the user ID and will change later
-  const newFileCVName = `CV_${ee_id}.pdf`
-
-  //***************************************************** */
-
-  //upload cv setup ***DONT MODIFY THIS PART***
-  function uploadCV(e) {
-    console.log("cv data", e.target.files[0])
-    ReactCV
-      .uploadFile(e.target.files[0], newFileCVName)
-      .then((data) => {
-        console.log(data)
-        setCV("")
-        setCV(data.location)
-      })
-      .catch(err => console.error(err))
-  }
-  console.log("success cv:", cv)
-
   function handleOnSubmit(e) {
     e.preventDefault();
     console.log('update')
@@ -234,6 +191,7 @@ const ApplicantProfile = () => {
     updateEEProfileAction(name, intro, phone, expectedSalary, industry, available, location, image, expYr, skill, salaryType)
     updateToast()
   }
+  
   return (
     <div>
       <ApplicantNavbar />
@@ -424,8 +382,18 @@ const ApplicantProfile = () => {
 
                       </div>
                     </FormGroup>
-                        
-                    <div class="row">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <input type="submit" class="profile-edit-btn" name="btnAddMore" />
+          </div>
+          <ToastContainer />
+        </Form>
+
+         {/* <div class="row">
 
                       <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>
                       <FormGroup>
@@ -438,8 +406,8 @@ const ApplicantProfile = () => {
                         </div>
                       </FormGroup>
                       </Form>
-                    </div>
-                    <div class="row">
+                    </div> */}
+                    {/* <div class="row">
                       <FormGroup>
                         <div class="col-md-6">
                           <Label for="uploadCV">Upload CV </Label>
@@ -460,17 +428,7 @@ const ApplicantProfile = () => {
                         <button>Upload</button>
                         </div>
                       </FormGroup>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <input type="submit" class="profile-edit-btn" name="btnAddMore" />
-          </div>
-          <ToastContainer />
-        </Form>
+                    </div> */}
 
         {/* <div className="col-4">
           <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
