@@ -8,7 +8,6 @@ import "../employerSearch.css";
 import authAxios from "../../Redux/authAxios";
 import { useHistory } from 'react-router';
 import 'rsuite/dist/styles/rsuite-default.css';
-import { TagPicker } from 'rsuite';
 import Select from 'react-select'
 
 
@@ -48,6 +47,7 @@ const EmployerApplicantSearch = () => {
   const SkillsTag = () => (
     <Select
     defaultValue={null}
+    getValue={setSkills}
     isMulti
     name="skills"
     options={skillsTag}
@@ -116,12 +116,11 @@ const EmployerApplicantSearch = () => {
   const [salaryType, setSalaryType] = useState('')
   const [workExp , setWorkExp] = useState('')
   const [skills, setSkills] = useState('')
-
+console.log("testSkill",skills)
   useEffect(() => {
     loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   let district = []
