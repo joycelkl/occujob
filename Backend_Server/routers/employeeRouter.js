@@ -25,6 +25,9 @@ class EmployeeRouter {
         router.post('/profile', (req, res) => {
             //should take the form job and 
             const { name, intro, phone, expectedSalary, industry, availability, location, image, exp, skill, salaryType } = req.body
+
+            console.log('res.body', req.body)
+
             return this.employeeService
                 .updateProfile(
                     req.user.id,

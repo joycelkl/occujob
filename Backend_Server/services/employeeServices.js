@@ -36,18 +36,22 @@ class EmployeeService {
         userSalaryType
     ) {
 
-        // need to review the tags function here
-        // if (Array.isArray(userIndustry)) {
-        //     ind = userIndustry;
-        // } else if (userIndustry !== 'default' && userIndustry !== undefined) {
-        //     ind.push(userIndustry);
-        // }
+        console.log('received data', userName,
+            userIntro,
+            userPhone,
+            userExpectedSalary,
+            userIndustry,
+            userAvailability,
+            userLocation,
+            userImage,
+            userExp,
+            userSkill,
+            userSalaryType)
 
         let ind = [];
-        if (userIndustry = null) {
-            ind = [' ']
+        if (userIndustry == null) {
+            ind = null
         } else {
-
             if (Array.isArray(userIndustry)) {
                 ind = userIndustry;
             } else {
@@ -56,8 +60,8 @@ class EmployeeService {
         }
 
         let sky = [];
-        if (userSkill = null) {
-            sky = [' ']
+        if (userSkill == null) {
+            sky = null
         } else {
             if (Array.isArray(userSkill)) {
                 sky = userSkill;
@@ -65,6 +69,30 @@ class EmployeeService {
                 sky.push(userSkill);
             }
         }
+
+        let ava = [];
+        if (userAvailability == null) {
+            ava = null
+        } else {
+            if (Array.isArray(userAvailability)) {
+                ava = userAvailability;
+            } else {
+                ava.push(userAvailability);
+            }
+        }
+
+        console.log('received data after',
+            userName,
+            userIntro,
+            userPhone,
+            userExpectedSalary,
+            ind,
+            ava,
+            userLocation,
+            userImage,
+            userExp,
+            sky,
+            userSalaryType)
 
         return this.knex("employee")
             .where({
@@ -76,7 +104,7 @@ class EmployeeService {
                 ee_phone: userPhone,
                 expected_salary: userExpectedSalary,
                 ee_industry: ind,
-                availability: userAvailability,
+                availability: ava,
                 ee_location: userLocation,
                 ee_img_data: userImage,
                 ee_exp: userExp,
