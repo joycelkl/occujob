@@ -93,14 +93,14 @@ class JobServices {
     }
     company() {
         return this.knex('employer')
-        .select('er_name')
-        .then((companyName)=>{
-            return companyName
-        })
-        .catch((err) => {
-            console.error(err)
-            throw new Error(err)
-        });
+            .select('er_name')
+            .then((companyName) => {
+                return companyName
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            });
     }
 
 }
