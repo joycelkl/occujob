@@ -38,10 +38,11 @@ const ApplicantJobSearch = (props) => {
   const { loadCompanyNameThunkAction } = bindActionCreators(actionCreators, dispatch)
 
   useEffect(() => {
+    loadCompanyNameThunkAction();
     loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
-    loadCompanyNameThunkAction();
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const [jobtitle, setJobtitle] = useState('');
@@ -80,12 +81,25 @@ const ApplicantJobSearch = (props) => {
       console.log("search candidate err res", err.response)
     })
   }
+  let companyNameTag = []
+  if (companyNameState.length > 0) {
+    companyNameState.map((com) => (companyNameTag.push({"label": com.er_name, "value": com.er_name })))
+  }
 
   let locationTag = []
   if (locationState.length > 0) {
     locationState.map((loc) => (locationTag.push({ "label": loc.location, "value": loc.location })))
   }
-
+  const CompanyNameTag = () => (
+    <Select
+      defaultValue={null}
+      isMulti
+      name="location"
+      options={companyNameTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
+  )
   const LocationTag = () => (
     <Select
       defaultValue={null}
@@ -113,7 +127,7 @@ const ApplicantJobSearch = (props) => {
   if (industryState.length > 0) {
     industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
   }
-  // console.log('industryTag', industryTag)
+   console.log('nameTag', companyNameTag)
 
   return (
 
@@ -134,7 +148,8 @@ const ApplicantJobSearch = (props) => {
                   </FormGroup>
                   <FormGroup>
                     <Label for="Company" style={{ color: 'white' }}>Company</Label>
-                    <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" />
+                    {/* <Input type="text" name="Company Name" id="Company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="Company Name" /> */}
+                    <CompanyNameTag/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="JobType" style={{ color: 'white' }}>Job Type</Label>
