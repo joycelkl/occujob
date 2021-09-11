@@ -18,7 +18,7 @@ import EmployerProfilePage from './Pages/EmployerPages/employerProfilePage';
 import EmployerCreateJobPage from './Pages/EmployerPages/employerCreateJobPage';
 import EmployerJobRecordsList from './Pages/EmployerPages/employerJobRecordsList';
 import EmployerEditPost from './Pages/EmployerPages/employerEditPost';
-import EmployerApplicantProfile from './Pages/EmployerPages/employerApplicantProfile';
+// import EmployerApplicantProfile from './Pages/EmployerPages/employerApplicantProfile';
 import EmployerApplicantSearch from './Pages/EmployerPages/employerApplicantSearch';
 import EmployerApplicantSearchList from './Pages/EmployerPages/employerApplicantSearchList';
 import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearchApplicantProfile';
@@ -95,7 +95,7 @@ function App() {
         <PrivateRoute path = "/employerProfilePage" component = { EmployerProfilePage } /> 
         <PrivateRoute path = "/employerCreateJobPage"  component = { EmployerCreateJobPage }/> 
         <PrivateRoute path = "/employerJobRecordsList" component = { EmployerJobRecordsList }/> 
-        <PrivateRoute path = "/employerApplicantProfile" component = { EmployerApplicantProfile }/> 
+        {/* <PrivateRoute path = "/employerApplicantProfile" component = { EmployerApplicantProfile }/>  changed to Modal to display */}
         <PrivateRoute path = "/employerEditPost" component = { EmployerEditPost }/> 
         <PrivateRoute path = "/employerApplicantSearch" component = { EmployerApplicantSearch } /> 
         <PrivateRoute path = "/employerApplicantSearchList" component = { EmployerApplicantSearchList }/> 
