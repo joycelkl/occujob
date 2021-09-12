@@ -4,9 +4,21 @@ import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
 import ProfileImage from "../../Components/ProfileImage";
 import Select from 'react-select'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
+import { useHistory } from 'react-router';
 
 const EmployerSearchApplicantProfile = () => {
+    const profile = useSelector((state) => state.profile)
+
+    console.log("individual job", profile)
+
+    const dispatch = useDispatch()
+    const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = profile
+
+
+
 
     return (
         <div>
@@ -24,7 +36,7 @@ const EmployerSearchApplicantProfile = () => {
                             <div class="profile-head">
                                 <FormGroup>
                                     <Label for="Name"><h1>Applicant's Name</h1></Label>
-                                    <Input type="text" name="name" id="name" disabled />
+                                    <Input type="text" name="name" value={ee_name} id="name" disabled />
                                 </FormGroup>
 
                                 <p class="proile-rating">Ratings : <span>8/10</span></p>
@@ -59,21 +71,10 @@ const EmployerSearchApplicantProfile = () => {
                                     <div class="row">
                                         <FormGroup>
                                             <div class="col-md-6">
-                                                <Label for="email">Email </Label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <Input type="email" name="email" id="email" disabled />
-                                            </div>
-                                        </FormGroup>
-                                    </div>
-
-                                    <div class="row">
-                                        <FormGroup>
-                                            <div class="col-md-6">
                                                 <Label for="Text">Self-Introduction</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" id="intro" disabled/>
+                                                <Input type="textarea" name="text" value={self_intro}id="intro" disabled/>
                                             </div>
                                         </FormGroup>
                                     </div>
@@ -83,7 +84,7 @@ const EmployerSearchApplicantProfile = () => {
                                                 <Label for="Skill">Skills</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" id="skills" disabled/>
+                                                <Input type="textarea" name="text" value={ee_skill}id="skills" disabled/>
                                             </div>
                                         </FormGroup>
 
@@ -94,7 +95,7 @@ const EmployerSearchApplicantProfile = () => {
                                                 <Label for="Skill">No. of Year of Working Experience</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="text" name="skill" id="Skill" placeholder="Tags" disabled/>
+                                                <Input type="text" name="skill" id="Skill" placeholder={ee_exp} disabled/>
                                             </div>
                                         </FormGroup>
                                     </div>
@@ -106,7 +107,7 @@ const EmployerSearchApplicantProfile = () => {
                                                 <Label for="Availabilty">Availabilty</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" id="availability" disabled/>
+                                                <Input type="textarea" name="text" id="availability" value={availability} disabled/>
                                             </div>
                                         </FormGroup>
                                         
@@ -119,7 +120,7 @@ const EmployerSearchApplicantProfile = () => {
                                                 <Label for="Availabilty">Expected Salary</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" id="expectedSalary" disabled/>
+                                                <Input type="textarea" name="text" id="expectedSalary" value={expected_salary} disabled/>
                                             </div>
                                         </FormGroup>
 

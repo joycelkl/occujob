@@ -12,8 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PortfolioUpload from "../../Components/Applicants/PortfolioUpload";
 
-
-
 const ApplicantProfile = () => {
 
   
