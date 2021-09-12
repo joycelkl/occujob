@@ -5,7 +5,6 @@ import "../employerSearch.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
-import authAxios from "../../Redux/authAxios";
 import Select from 'react-select'
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
@@ -19,6 +18,7 @@ const ApplicantJobSearch = () => {
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadCompanyNameThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { appJobSearch } = bindActionCreators(actionCreators, dispatch)
 
   useEffect(() => {
     loadCompanyNameThunkAction();
@@ -111,7 +111,6 @@ const ApplicantJobSearch = () => {
       />
     )
  
-  
   const history = useHistory();
 
   //******* TAGS  *******8 */
@@ -158,22 +157,11 @@ const ApplicantJobSearch = () => {
     
     console.log('submitted', jobTitleTag, companyNameArr, jobFunctionArr,jobType,worklocationArr, salaryType,expSalary )
 
-    eeJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
+    appJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
       .then(() => {
         history.push('/ApplicantJobSearchResult')
       })
    }
-
-  async function eeJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary) {
-    const authAxiosConfig = await authAxios();
-    return await authAxiosConfig.post('/employee/search/result', {
-      jobTitle:jobTitleTag, company:companyName, jobType:jobType, salaryType:salaryType, salary:expSalary, jobFunction:jobFunction, location:worklocation
-    }).then(() => {
-      console.log('sent')
-    }).catch(err => {
-      console.log("search candidate err res", err.response)
-    })
-  }
   
 
   return (

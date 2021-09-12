@@ -45,8 +45,8 @@ exports.up = function(knex) {
                 product.increments('portfolio_id').primary();
                 product.integer('employee_id').unsigned().notNullable();
                 product.foreign('employee_id').references('employee.ee_id');
-                product.binary('data').notNullable(); //need to change to url
-                product.date('completed_date'); //no need??
+                product.text('portfolio_url').notNullable();
+                product.text('portfolio_name'); //no need??
                 product.text('portfolio_description');
                 product.timestamps(false, true);
             });

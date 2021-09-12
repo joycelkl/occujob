@@ -1,11 +1,10 @@
-import React, {useEffect } from "react";
+import React from "react";
 import { useDispatch,useSelector } from 'react-redux';
 import {Table} from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import { useHistory } from "react-router";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../Redux";
-
 
 
 const EmployerApplicantSearchList = () => {
@@ -22,6 +21,7 @@ const EmployerApplicantSearchList = () => {
         loadApplicantSearchProfileThunkAction(Id).then(()=>{
             history.push('/employerSearchApplicantProfile')
         })}
+    
 
 
     return (
