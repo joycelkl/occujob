@@ -93,7 +93,6 @@ const ApplicantProfile = () => {
 
   const updateToast = () => toast("Profile Updated");
    
-
   //setup skillsTag
   let skillsTag = []
   if (skillsState.length > 0) {
