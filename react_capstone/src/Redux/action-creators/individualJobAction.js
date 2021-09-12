@@ -21,7 +21,7 @@ export const loadIndJobFailAction = () => {
     }
 }
 
-//Load Indvidual Job Detail in ER
+//Load Indvidual Job Detail in ER (not to reuse)
 export const loadIndJobThunkAction = (jobId) => async(dispatch) => {
     console.log("Indvidual Job Load")
     try {
@@ -30,6 +30,22 @@ export const loadIndJobThunkAction = (jobId) => async(dispatch) => {
             dispatch(loadIndJobSuccessAction(res.data))
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
+            dispatch(loadIndJobFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+//Load Indvidual Job Detail in Job Search 
+export const loadSearchIndJobThunkAction = (jobId) => async(dispatch) => {
+    console.log("Indvidual Job Load")
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.get(`/employee/search/result/${jobId}`).then(res => {
+            dispatch(loadIndJobSuccessAction(res.data))
+        }).catch(err => {
+            console.log("search ind job detail load err res", err.response)
             dispatch(loadIndJobFailAction())
         })
     } catch (err) {

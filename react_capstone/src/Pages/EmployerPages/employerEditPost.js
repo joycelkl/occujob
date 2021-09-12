@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import authAxios from '../../Redux/authAxios';
@@ -18,7 +18,22 @@ const EmployerEditPost = () => {
     console.log("individual job", indJobState)
 
     const dispatch = useDispatch()
-    const { erJobUpdate } = bindActionCreators(actionCreators, dispatch)
+    const { erJobUpdate } = bindActionCreators
+    (actionCreators, dispatch)
+    const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+
+    useEffect(() => {
+        loadLocationThunkAction();
+      loadIndustryThunkAction();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const locationState = useSelector((state) => state.location);
+    console.log("location", locationState)
+    const industryState = useSelector((state) => state.industry);
+    console.log("industry", industryState)
+    
     const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type } = indJobState[0] || {}
 
     const history = useHistory();
@@ -89,6 +104,7 @@ const EmployerEditPost = () => {
                 history.push('/employerJobRecordsList')
             })
     }
+
     async function giveOffer(application_id){
         console.log("offer app ID",application_id)
         const authAxiosConfig = await authAxios();
@@ -99,6 +115,7 @@ const EmployerEditPost = () => {
             console.log("pubulic job load err res", err.response)
         })
     }
+
     function handleCheckbokChange(e) {
         console.log("Checked", e.target.checked)
         e.target.checked === true ? setJobStatus(false) : setJobStatus(true);
@@ -158,7 +175,12 @@ const EmployerEditPost = () => {
                         </FormGroup>
                         <FormGroup>
                             <Label for="JobFunction">Job Function</Label>
-                            <Input type="textarea" name="text" id="JobFunction" placeholder="Job Function" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)} />
+                            <Input type="select" name="JobFunction" id="JobFunction"  value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          {industryState.length > 0 ? industryState.map((industry, i) => (
+                            <option key={i} value={industry.industry} selected>{industry.industry}</option>
+                          )) : "loading..."}
+                          </Input>
                         </FormGroup>
                         <FormGroup>
                             <Label for="workPeriod">Work Period</Label>
@@ -166,12 +188,11 @@ const EmployerEditPost = () => {
                         </FormGroup>
                         <FormGroup>
                             <Label for="preferworklocation">Work Location</Label>
-                            <Input type="select" name="select" id="preferworklocation" value={jobLocation} onChange={(e) => setJobLocation(e.target.value)}>
-                                <option>Islands</option>
-                                <option>Kwai Tsing</option>
-                                <option>North</option>
-                                <option>Sai Kung</option>
-                                <option>Sha Tin</option>
+                            <Input type="select" name="location" id="location" placeholder="location" value={jobLocation} onChange={(e) => setJobLocation(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          {locationState.length > 0 ? locationState.map((location, i) => (
+                            <option key={i} value={location.location} selected>{location.location}</option>
+                          )) : "loading..."}
                             </Input>
                         </FormGroup>
                         <div className='row'>

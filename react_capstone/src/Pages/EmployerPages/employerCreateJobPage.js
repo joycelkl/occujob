@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import authAxios from '../../Redux/authAxios'
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch,useSelector } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../Redux";
 
 const EmployerCreateJobPage = () => {
+    const dispatch = useDispatch();
+    const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+    useEffect(() => {
+        loadLocationThunkAction();
+      loadIndustryThunkAction();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    const locationState = useSelector((state) => state.location);
+    console.log("location", locationState)
+    const industryState = useSelector((state) => state.industry);
+    console.log("industry", industryState)
+
+   
+
 
     const fillInfoToast = () => toast("Please Fill In All Information")
     const updatedToast = () => toast("Job Has Been Posted") // should be no need
@@ -95,6 +113,7 @@ const EmployerCreateJobPage = () => {
                         <FormGroup>
                             <Label for="salaryType">Expected Salary Type </Label>
                             <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                                <option value={null} selected>Please select</option>
                                 <option value={'perJob'} selected> Per Job </option>
                                 <option value={'perHour'}> Per Hour</option>
                             </Input>
@@ -106,13 +125,19 @@ const EmployerCreateJobPage = () => {
                         <FormGroup>
                             <Label for="employmentType">Employment Type</Label>
                             <Input type="select" name="employmentType" id="employmentType" value={empType} onChange={(e) => setEmpType(e.target.value)}>
+                            <option value={null} selected>Please select</option>
                                 <option selected>Freelance</option>
                                 <option>Part-Time</option>
                             </Input>
                         </FormGroup>
                         <FormGroup>
                             <Label for="JobFunction">Job Function</Label>
-                            <Input type="textarea" name="text" id="JobFunction" placeholder="" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)} />
+                            <Input type="select" name="JobFunction" id="JobFunction"  value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          {industryState.length > 0 ? industryState.map((industry, i) => (
+                            <option key={i} value={industry.industry} selected>{industry.industry}</option>
+                          )) : "loading..."}
+                        </Input>
                         </FormGroup>
                         <FormGroup>
                             <Label for="workPeriod">Work Period</Label>
@@ -120,12 +145,11 @@ const EmployerCreateJobPage = () => {
                         </FormGroup>
                         <FormGroup>
                             <Label for="preferworklocation">Work Location</Label>
-                            <Input type="select" name="select" id="preferworklocation" value={location} onChange={(e) => setLocation(e.target.value)}>
-                                <option>Islands</option>
-                                <option>Kwai Tsing</option>
-                                <option>North</option>
-                                <option>Sai Kung</option>
-                                <option>Sha Tin</option>
+                            <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          {locationState.length > 0 ? locationState.map((location, i) => (
+                            <option key={i} value={location.location} selected>{location.location}</option>
+                          )) : "loading..."}
                             </Input>
                         </FormGroup>
                         <Button className="m-2" type="submit">Post</Button>

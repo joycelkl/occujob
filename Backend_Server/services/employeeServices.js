@@ -190,6 +190,8 @@ class EmployeeService {
 
         if (jobTitle.length === 0 && company === null && jobType === null && salaryType === null && salary === null && jobFunction === null && location === null) {
             return this.knex('job')
+                .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                .select('job.*', 'employer.er_name')
                 .andWhere('job.expiry_date', '>', new Date())
                 .orderBy('updated_at', 'desc')
                 .then((jobList) => {
