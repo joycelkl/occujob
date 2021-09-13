@@ -237,17 +237,17 @@ const EmployerApplicantSearch = () => {
       <EmployerNavbar />
       <div className="searchHeader">
         <Container>
-        <h1 className='mt-5' style={{color:'white'}}>Candidate Search</h1>
+        <h1 className='mt-5' style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline'}}>Candidate Search</h1>
           <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
             <div className="mb-3 search-text-box text-start" id="home">
-              <Row form>
-                <Col lg={12}>
+              <Row>
+                <Col lg={6}>
                   <FormGroup>
                     <Label for="Availability" style={{color:"white"}}>Availability</Label>
                     <AvailabilityTag />
                   </FormGroup>
                 </Col>
-                <Col lg={12}>
+                <Col lg={6}>
                   <FormGroup>
                     <FormGroup>
                       <Label for="salaryType" style={{color:"white"}} >Expected Salary Type</Label>
@@ -280,8 +280,8 @@ const EmployerApplicantSearch = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Row form>
-                <Col md={12}>
+              <Row>
+                <Col md={6}>
                   <FormGroup>
                     <Label for="requiredExp" style={{color:"white"}}>Year of Working Experience</Label>
                     <Input type="select" name="requiredExp" id="requiredExp" placeholder="requiredExp" value={workExp} onChange={(e) => setWorkExp(e.target.value)} >
@@ -292,20 +292,20 @@ const EmployerApplicantSearch = () => {
                     </Input>
                   </FormGroup>
                 </Col>
-                <Col md={12}>
+                <Col md={6}>
                   <FormGroup>
                     <Label for="Job Function" style={{color:"white"}}>Job Function</Label>
                     <IndustryTag />
                   </FormGroup>
                 </Col>
-                <Col md={12}>
+                <Col md={6}>
 
                   <FormGroup>
                     <Label for="skills" style={{color:"white"}}>Skill</Label>
                     <SkillsTag />
                   </FormGroup>
                 </Col>
-                <Col md={12}>
+                <Col md={6}>
                   <FormGroup>
                     <Label for="Working Location" style={{color:"white"}}>Work Location</Label>
                     <LocationTag />

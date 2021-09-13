@@ -25,6 +25,9 @@ const ApplicantOfferCard = (props) => {
         const [modal, setModal] = useState(false);
         const toggle = () => setModal(!modal);
 
+
+
+
         function handleAccept() {
             console.log('application id', application_id)
             offerAcceptAction(application_id)
@@ -35,24 +38,27 @@ const ApplicantOfferCard = (props) => {
             offerDeclineAction(application_id)
         }
 
+
         //date format
-        let date = new Date(created_at)
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-        return(
-        <Card className='my-4'>
-        <Card.Body onClick={() => setModal(!modal)}>
-            <div className="d-flex justify-content-between" >
-                <div>
-                    <Card.Title>
-                        {job_title} - <span className="text-muted font-weight-light">{er_name}</span>
-                    </Card.Title>
-                    <Card.Subtitle className="text-muted mb-2">
-                        {day + "/" + month + "/" + year}
-                    </Card.Subtitle>
-                    {offer? <p className="flex" style={{backgroundColor:"green"}}>{String(offer)}</p>: <p></p>}
-                    <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
+    let date = new Date(created_at)
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return(
+        <div style={{ display: "flex", justifyContent: "center" }}>
+
+    <Card className='my-4' style={{ width: "70%" }}>
+    <Card.Body onClick={() => setModal(!modal)}>
+        <div className="d-flex justify-content-between" >
+            <div>
+                <Card.Title>
+                    {job_title} - <span className="text-muted font-weight-light">{er_name}</span>
+                </Card.Title>
+                <Card.Subtitle className="text-muted mb-2">
+                    {day + "/" + month + "/" + year}
+                </Card.Subtitle>
+                {offer? <p className="flex" style={{backgroundColor:"green"}}>{String(offer)}</p>: <p></p>}
+                <Badge className="job-list-badge" variant="secondary" style={{marginRight:'5px'}}>{job_type}</Badge>
                 <Badge className="job-list-badge" variant="secondary">{job_location}</Badge>
                 </div>
         {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test"/>:<p></p>}
@@ -77,6 +83,8 @@ const ApplicantOfferCard = (props) => {
         <ToastContainer />
       </Modal>
     </div>
-</Card>)
+</Card>
+</div>
+)
 }
 export default ApplicantOfferCard;
