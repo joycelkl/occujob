@@ -14,15 +14,10 @@ class EmployeeService {
                 } else {
                     return data
                 }
-
-                // if (data[0].img_data) {
-                //     let base = Buffer.from(data[0].img_data);
-                //     let conversion = base.toString('base64');
-                //     data[0].image = conversion;
-                // }
             })
             .then((data) => {
                 console.log('listuserdata', data)
+                return data
             })
     }
 
