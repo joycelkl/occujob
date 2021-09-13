@@ -479,7 +479,7 @@ const ApplicantProfile = () => {
                             <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               {locationState.length > 0 ? locationState.map((location, i) => (
-                                <option key={i} value={location.location} selected>{location.location}</option>
+                                <option key={i} value={location.location}>{location.location}</option>
                               )) : "loading..."}
                             </Input>
                           </div>

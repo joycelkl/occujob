@@ -13,9 +13,9 @@ const ApplicantJobDetail = () => {
     <div>
       <ApplicantNavbar />
       <div>
-        <JobDetail />
-        <Button>Message</Button>
-        <Button>Apply</Button>
+        <JobDetail 
+        indJob={jobDetailState}/>
+
       </div>
     </div>
   );

@@ -36,6 +36,11 @@ const ApplicantOfferCard = (props)=>{
         })
     }
 
+//date format
+    let date = new Date(created_at)
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
     return(
     <Card className='my-4'>
     <Card.Body onClick={() => setModal(!modal)}>
@@ -45,7 +50,7 @@ const ApplicantOfferCard = (props)=>{
                     {job_title} - <span className="text-muted font-weight-light">{er_name}</span>
                 </Card.Title>
                 <Card.Subtitle className="text-muted mb-2">
-                    {created_at}
+                    {day + "/" + month + "/" + year}
                 </Card.Subtitle>
                 {offer? <p className="flex" style={{backgroundColor:"green"}}>0</p>: <p></p>}
                 <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
@@ -56,7 +61,7 @@ const ApplicantOfferCard = (props)=>{
         </div>
     </Card.Body>
     <div>
-      <Modal isOpen={modal} toggle={toggle} >
+      <Modal isOpen={modal} toggle={toggle} fade={false}>
         <ModalHeader toggle={toggle}>{job_title}{er_name} ID:{job_id} </ModalHeader>
         <ModalBody>
         Type: {job_type}<br/>

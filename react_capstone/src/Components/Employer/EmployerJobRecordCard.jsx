@@ -23,7 +23,17 @@ const EmployerJobRecordCard = (props) => {
         history.push('/employerEditPost')
     })
 }
+//date format
+let createDate = new Date(created_at)
+    let cday = createDate.getDate();
+    let cmonth = createDate.getMonth() + 1;
+    let cyear = createDate.getFullYear();
 
+let expDate = new Date(expiry_date)
+    let eday = expDate.getDate();
+    let emonth = expDate.getMonth() + 1;
+    let eyear = expDate.getFullYear();
+    
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -33,10 +43,10 @@ const EmployerJobRecordCard = (props) => {
               <div>
                 <Card.Title>{job_title}</Card.Title>
                 <Card.Subtitle className="text-muted mb-2">
-                  {created_at} (DOP)
+                {cday + "/" + cmonth + "/" + cyear} (DOP)
                 </Card.Subtitle>
                 <Card.Subtitle className="text-muted mb-2">
-                  {expiry_date} (EXP)
+                {eday + "/" + emonth + "/" + eyear} (EXP)
                 </Card.Subtitle>
 
                 <Badge className="job-list-badge" variant="secondary">
