@@ -97,9 +97,7 @@ const EmployerCreateJobPage = () => {
         })
     }
 
-    // {industryState.length > 0 ? industryState.map((industry, i) => (
-    //     <option key={i} value={industry.industry} selected>{industry.industry}</option>
-    //   )) : "loading..."}
+  
      //setup industryTag
   let industryTag = []
   if (industryState.length > 0) {
@@ -111,12 +109,7 @@ const EmployerCreateJobPage = () => {
     console.log('setJobFunction', obj)
     setJobFunctionArr(obj)
   }
-{/* <Input type="select" name="JobFunction" id="JobFunction"  value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
-                          <option value={null} selected>Please select</option>
-                          {industryState.length > 0 ? industryState.map((industry, i) => (
-                            <option key={i} value={industry.industry} selected>{industry.industry}</option>
-                          )) : "loading..."}
-                        </Input> */}
+
   const IndustryTag = () => (
     <Select
       defaultValue={null}
@@ -174,12 +167,6 @@ const EmployerCreateJobPage = () => {
                         <FormGroup>
                             <Label for="JobFunction">Job Function</Label>
                             <IndustryTag />
-                            {/* <Input type="select" name="JobFunction" id="JobFunction"  value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
-                          <option value={null} selected>Please select</option>
-                          {industryState.length > 0 ? industryState.map((industry, i) => (
-                            <option key={i} value={industry.industry} selected>{industry.industry}</option>
-                          )) : "loading..."}
-                        </Input> */}
                         </FormGroup>
                         <FormGroup>
                             <Label for="workPeriod">Work Period</Label>
