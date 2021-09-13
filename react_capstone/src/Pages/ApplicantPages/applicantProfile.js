@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, FormGroup, Label, Input, Table } from 'reactstrap';
+import { Form, FormGroup, Label, Input} from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -10,7 +10,7 @@ import Select from 'react-select'
 import "../EmployerPages/employerProfilePage.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PortfolioUpload from "../../Components/Applicants/PortfolioUpload";
+import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 
 const ApplicantProfile = () => {
 
@@ -23,6 +23,7 @@ const ApplicantProfile = () => {
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+
 
   const EEProfileState = useSelector((state) => state.EEProfile);
   console.log('EEprofile', EEProfileState)
@@ -56,6 +57,7 @@ const ApplicantProfile = () => {
 
   useEffect(() => {
     loadEEProfileThunkAction();
+    
     setName(ee_name);
     setPhone(ee_phone);
     setLocation(ee_location);
@@ -492,40 +494,7 @@ const ApplicantProfile = () => {
                   {togglePortfolio &&
                     <div>
                       <div class="row">
-                        <Table striped>
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Name</th>
-                              <th>Description</th>
-                              <th>Upload</th>
-                              <th>Delete</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td><Input type="text" /></td>
-                              <td><Input type="text" /></td>
-                              <td> <PortfolioUpload /></td>
-                              <td><button>Delete</button></td>
-                            </tr>
-                            <tr>
-                              <th scope="row">2</th>
-                              <td><Input type="text" /></td>
-                              <td><Input type="text" /></td>
-                              <td> <PortfolioUpload /></td>
-                              <td><button>Delete</button></td>
-                            </tr>
-                            <tr>
-                              <th scope="row">3</th>
-                              <td><Input type="text" /></td>
-                              <td><Input type="text" /></td>
-                              <td> <PortfolioUpload /></td>
-                              <td><button>Delete</button></td>
-                            </tr>
-                          </tbody>
-                        </Table>
+                        <PortfolioTable />
                       </div>
                     </div>
                   }

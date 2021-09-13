@@ -7,14 +7,6 @@ class EmployeeService {
         console.log('list ee info')
         return this.knex('employee')
             .where("ee_id", userId)
-            .join('portfolio', 'portfolio.employee_id', '=', 'employee.ee_id')
-            .then((data) => {
-                if (data.length == 0) {
-                    return this.knex('employee').where("ee_id", userId)
-                } else {
-                    return data
-                }
-            })
             .then((data) => {
                 console.log('listuserdata', data)
                 return data
