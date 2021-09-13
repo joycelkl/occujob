@@ -112,6 +112,7 @@ const EmployerEditPost = () => {
         return await authAxiosConfig.post(`/employer/job/candidate/offer/${application_id}`)
         .then(res => {
            console.log(res)
+           setModal(!modal);
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
         })
@@ -224,8 +225,8 @@ const EmployerEditPost = () => {
                             
                                 <td>{job.ee_name}</td>
                                 <td>{job.created_at}</td>
-                                <td>{String(job.offer)}</td>
-                                <td>{String(job.reply)}</td>
+                                {job.offer? <td> Offer Sent</td> : <td> No Offer</td>}
+                                {job.reply === true? <td>Accepted </td> : (job.reply === false ?<td>Declined</td> : <td> No Reply</td>)} 
                             </tr>
 
                         )) : "Waiting for Applicant Apply"}
