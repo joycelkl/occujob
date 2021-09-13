@@ -43,14 +43,13 @@ const PortfolioUpload = (props) => {
 
 
     return (
-        <div>
-             
-                <FormGroup>
-                    <Label for="uploadCV">Upload CV </Label>
-                    <Input type="file" name="uploadCV" onChange={(e)=>uploadCV(e)} />
-                </FormGroup>
+        <>           
+                
+                   
+        <Input type="file" name="uploadCV" onChange={(e)=>uploadCV(e)} />
+               
             
-        </div>
+        </>
     )
 }
 
