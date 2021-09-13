@@ -39,6 +39,9 @@ const EmployerProfilePage = () => {
   const [image, setImage] = useState(er_img_data)
   const [name, setName] = useState(er_name)
   const [email, setEmail] = useState(er_email)
+  const [toggleAbout, setToggleAbout] = useState(true);
+  const [toggleContact, setToggleContact] = useState(false);
+  const [toggleJobPreference, setToggleJobPreference] = useState(false);
 
   useEffect(() => {
     loadErProfileThunkAction();
@@ -58,6 +61,21 @@ const EmployerProfilePage = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  //handle toggles 
+  const aboutHandler = () => {
+    setToggleAbout(true);
+    setToggleContact(false);
+    
+
+  };
+  const contactHandler = () => {
+    setToggleContact(true);
+    setToggleAbout(false);
+    
+  };
+  
+
 
   //****************DONOT CHANGE THE SETTING HERE*****************************/
   // S3 setup
@@ -120,8 +138,12 @@ const EmployerProfilePage = () => {
                 <p class="proile-rating">Ratings : <span>8/10</span></p>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                    <a class="nav-link active" id="home-tab" onClick={aboutHandler}>About</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" onClick={contactHandler}>Contact</a>
+                  </li>
+                  
 
                 </ul>
               </div>
@@ -148,26 +170,33 @@ const EmployerProfilePage = () => {
                 {/* fade cause problem */}
                 {/* <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
                 <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                  <div class="row">
-                    <FormGroup>
-                      <div class="col-md-6">
-                        <Label for="email">Email</Label>
+                  {toggleContact &&
+                    <div>
+                      <div class="row">
+                        <FormGroup>
+                          <div class="col-md-6">
+                            <Label for="email">Email</Label>
+                          </div>
+                          <div class="col-md-6">
+                            <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
+                          </div>
+                        </FormGroup>
                       </div>
-                      <div class="col-md-6">
-                        <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
+                      <div class="row">
+                        <FormGroup>
+                          <div class="col-md-6">
+                            <Label for="phone">Phone Number</Label>
+                          </div>
+                          <div class="col-md-6">
+                            <Input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
+                          </div>
+                        </FormGroup>
                       </div>
-                    </FormGroup>
-                  </div>
-                  <div class="row">
-                    <FormGroup>
-                      <div class="col-md-6">
-                        <Label for="phone">Phone Number</Label>
-                      </div>
-                      <div class="col-md-6">
-                        <Input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
-                      </div>
-                    </FormGroup>
-                  </div>
+                    </div>
+                  }
+
+                  {toggleAbout &&
+                  <div>
                   <div class="row">
                     <FormGroup>
 
@@ -207,6 +236,8 @@ const EmployerProfilePage = () => {
                     </FormGroup>
 
                   </div>
+                  </div>
+}
                 </div>
 
               </div>
