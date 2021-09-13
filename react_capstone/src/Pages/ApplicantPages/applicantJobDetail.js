@@ -15,6 +15,7 @@ const ApplicantJobDetail = () => {
       <div>
         <JobDetail 
         indJob={jobDetailState}/>
+
       </div>
     </div>
   );

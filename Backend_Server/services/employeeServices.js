@@ -5,19 +5,20 @@ class EmployeeService {
 
     listUserInfo(userId) {
         console.log('list ee info')
-        return this.knex
-            .select("*")
-            .from("employee")
+        return this.knex('employee')
             .where("ee_id", userId)
+            .join('portfolio', 'portfolio.employee_id', '=', 'employee.ee_id')
+            .then((data) => {
+                if (data.length == 0) {
+                    return this.knex('employee').where("ee_id", userId)
+                } else {
+                    return data
+                }
+            })
             .then((data) => {
                 console.log('listuserdata', data)
-                    // if (data[0].img_data) {
-                    //     let base = Buffer.from(data[0].img_data);
-                    //     let conversion = base.toString('base64');
-                    //     data[0].image = conversion;
-                    // }
-                return data;
-            });
+                return data
+            })
     }
 
 
@@ -93,25 +94,7 @@ class EmployeeService {
 
     }
 
-
-    // //to be rewrite to save to cloud
-    // updateImg(file, userId) {
-    //     return this.knex("employee")
-    //         .where({
-    //             id: userId
-    //         })
-    //         .update({
-    //             img_data: file
-    //         })
-    //         .then(() => {
-    //             return 'Update saved';
-    //         })
-    //         .catch((err) => {
-    //             throw new Error(err)
-    //         })
-    // }
-
-    //to be rewrite the logic
+    //rewrote already
     searchJob(value) {
 
         console.log('value', value)
@@ -272,6 +255,9 @@ class EmployeeService {
 
     apply(jobId, userId) {
         // checking whether the candidate had applied same jobId
+        let rday = new Date(new Date().setDate(new Date().getDate() + 7));
+        let formatted_date = rday.getFullYear() + "-" + (rday.getMonth() + 1) + "-" + rday.getDate();
+
         return this.knex('application')
             .where({
                 job_id: jobId,
@@ -284,6 +270,8 @@ class EmployeeService {
                         .insert({
                             job_id: jobId,
                             employee_id: userId,
+                            enable_rating: formatted_date,
+                            rating: false
                         })
                         .returning('*')
                         .then((apply) => {
@@ -371,6 +359,67 @@ class EmployeeService {
                 console.error(err)
                 throw new Error(err)
             });
+    }
+
+    addPortfolio(ee_id, pName, pDes, purl) {
+        return this.knex('portfolio')
+            .insert({
+                employee_id: ee_id,
+                portfolio_url: purl,
+                portfolio_name: pName,
+                protfolio_description: pDes
+            })
+            .returning('*')
+            .then((portfolio) => {
+                return portfolio
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            })
+    }
+
+    getPortfolio(ee_id) {
+        return this.knex('portfolio')
+            .where('employee_id', ee_id)
+            .then((portfolio) => {
+                return portfolio
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            })
+    }
+
+    udpatePortfolio(p_id, pName, pDes, purl) {
+        return this.knex('portfolio')
+            .where('portfolio_id', p_id)
+            .update({
+                portfolio_url: purl,
+                portfolio_name: pName,
+                protfolio_description: pDes
+            })
+            .returning('*')
+            .then((updatedP) => {
+                return updatedP
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            })
+    }
+
+    delPortfolio(p_id) {
+        return this.knex('portfolio')
+            .where('portfolio_id', p_id)
+            .del()
+            .then(() => {
+                return 'deleted'
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            })
     }
 }
 

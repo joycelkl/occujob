@@ -51,6 +51,7 @@ class JobServices {
 
         return this.knex('skills')
             .select('skills')
+            .orderBy('skills', 'asc')
             .then((skill) => {
 
                 return skill
@@ -66,6 +67,7 @@ class JobServices {
 
         return this.knex('location')
             .select('location')
+            .orderBy('location', 'asc')
             .then((location) => {
 
                 return location
@@ -81,6 +83,7 @@ class JobServices {
 
         return this.knex('industry')
             .select('industry')
+            .orderBy('industry', 'asc')
             .then((industry) => {
 
                 return industry

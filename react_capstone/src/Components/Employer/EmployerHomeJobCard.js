@@ -6,6 +6,11 @@ const EmployerHomeCard = (props) => {
     const { employerJob } = props;
     const { job_title, er_name, created_at, job_type, er_img_data } = employerJob;
 
+    //date format
+    let date = new Date(created_at)
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <Card className='my-4' style={{ width: "70%" }}>
@@ -16,7 +21,7 @@ const EmployerHomeCard = (props) => {
                                 {job_title} - <span className="text-muted font-weight-light">{er_name}</span>
                             </Card.Title>
                             <Card.Subtitle className="text-muted mb-2">
-                                {created_at}
+                            {day + "/" + month + "/" + year}
                             </Card.Subtitle>
                             <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
 

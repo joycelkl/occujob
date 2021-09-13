@@ -225,6 +225,10 @@ const ApplicantProfile = () => {
   //upload image setup ***DONT MODIFY THIS PART***
   function upload(e) {
     console.log("data", e.target.files[0])
+    if (e.target.files[0].size>1024*1024) {
+      alert('Please upload image 1MB or below')
+      return
+    }
     ReactSaveImg
       .uploadFile(e.target.files[0], newFileName)
       .then((data) => {
@@ -475,7 +479,7 @@ const ApplicantProfile = () => {
                             <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               {locationState.length > 0 ? locationState.map((location, i) => (
-                                <option key={i} value={location.location} selected>{location.location}</option>
+                                <option key={i} value={location.location}>{location.location}</option>
                               )) : "loading..."}
                             </Input>
                           </div>
