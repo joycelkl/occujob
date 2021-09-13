@@ -2,11 +2,15 @@ import React , {useEffect}from "react";
 import authAxios from '../../Redux/authAxios';
 import {Card, Badge} from 'react-bootstrap';
 import { useState } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 const ApplicantOfferCard = (props)=>{
-    
+     //toast
+  const acceptToast = () => toast("You Have Accepted This Offer")
+  const declineToast = () => toast("You Have Declined This Offer")
+
     const {offerCard} = props;
     const {job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
     console.log("testoffer",offer)
@@ -14,12 +18,14 @@ const ApplicantOfferCard = (props)=>{
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     const [post, setPost] = useState(null);
+
 //offer accept reject
     async function acceptoffer(application_id){
         console.log("offer app ID",application_id)
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employee/offer/accept/${application_id}`)
         .then(res => {
+            acceptToast();
            console.log(res)
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
@@ -30,6 +36,7 @@ const ApplicantOfferCard = (props)=>{
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employee/offer/decline/${application_id}`)
         .then(res => {
+            declineToast();
            console.log(res)
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
@@ -76,6 +83,7 @@ const ApplicantOfferCard = (props)=>{
           <Button color="primary" onClick={()=>declineoffer(application_id)}>decline</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
+        <ToastContainer />
       </Modal>
     </div>
 </Card>)

@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const EmployerEditPost = () => {
     
+    const offerToast = () => toast("An Offer Has Been Made")
     const fillInfoToast = () => toast("Please Fill In All Information")
     const indJobState = useSelector((state) => state.individualJob)
 
@@ -110,6 +111,7 @@ const EmployerEditPost = () => {
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employer/job/candidate/offer/${application_id}`)
         .then(res => {
+            offerToast()
            console.log(res)
         }).catch(err => {
             console.log("pubulic job load err res", err.response)

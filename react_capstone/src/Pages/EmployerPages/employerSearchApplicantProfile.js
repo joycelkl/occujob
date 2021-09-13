@@ -28,7 +28,7 @@ const EmployerSearchApplicantProfile = () => {
                     <div class="row">
                         <div class="col-md-4">
                             <div class="profile-img">
-
+                            <img src={ee_img_data} width="200px" height="200x" alt=''/>
                             </div>
                         </div>
 
@@ -135,7 +135,7 @@ const EmployerSearchApplicantProfile = () => {
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" />
+                        <Button>Message</Button>
                     </div>
 
 

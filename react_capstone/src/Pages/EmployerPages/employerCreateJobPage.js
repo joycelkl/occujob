@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch,useSelector } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../Redux";
+import Select from 'react-select';
 
 const EmployerCreateJobPage = () => {
     const dispatch = useDispatch();
@@ -37,6 +38,8 @@ const EmployerCreateJobPage = () => {
     const [location, setLocation] = useState('')
     const [workPeriod, setWorkPeriod] = useState('');
     const [salaryType, setSalaryType] = useState('')
+    const [industryArr, setIndustryArr] = useState(null);
+
 
     const history = useHistory();
 
@@ -89,6 +92,33 @@ const EmployerCreateJobPage = () => {
         })
     }
 
+    // {industryState.length > 0 ? industryState.map((industry, i) => (
+    //     <option key={i} value={industry.industry} selected>{industry.industry}</option>
+    //   )) : "loading..."}
+     //setup industryTag
+  let industryTag = []
+  if (industryState.length > 0) {
+    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
+  }
+  console.log('industryTag', industryTag)
+
+  const handleOnChangeIndustry = obj => {
+    console.log('setIndustry', obj)
+    setIndustryArr(obj)
+  }
+
+  const IndustryTag = () => (
+    <Select
+      defaultValue={null}
+      value={industryArr}
+      onChange={handleOnChangeIndustry}
+      isMulti
+      name="industry"
+      options={industryTag}
+      className="basic-multi-select"
+      classNamePrefix="select"
+    />
+  )
 
     return (
 
