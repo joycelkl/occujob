@@ -1,4 +1,4 @@
-import { LOAD_OFFER_SUCCESS_ACTION, LOAD_OFFER_FAIL_ACTION, ACCEPT_OFFER_SUCCESS_ACTION } from '../action-creators';
+import { LOAD_OFFER_SUCCESS_ACTION, LOAD_OFFER_FAIL_ACTION } from '../action-creators';
 
 const initialState = {
     eeOffer: []
@@ -11,9 +11,6 @@ const reducer = (state = initialState, action) => {
             return action.payload;
         case LOAD_OFFER_FAIL_ACTION:
             console.log("ACTION FAIL")
-            return state;
-        case ACCEPT_OFFER_SUCCESS_ACTION:
-            console.log('ACCEPT_OFFER_SUCCESS', action.payload)
             return state;
         default:
             console.log("DEFAULT ACTION")
