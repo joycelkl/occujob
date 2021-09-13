@@ -38,6 +38,17 @@ export const loadOfferThunkAction = () => async(dispatch) => {
     }
 }
 
+export const ACCEPT_OFFER_SUCCESS_ACTION = 'LOAD_OFFER_SUCCESS';
+
+export const acceptOfferFailAction = (accept) => {
+    return (dispatch) => {
+        dispatch({
+            type: ACCEPT_OFFER_SUCCESS_ACTION,
+            payload: accept
+        })
+    }
+}
+
 export const offerAcceptAction = (application_id) => async(dispatch) => {
     console.log("EE offer Accept")
     try {
