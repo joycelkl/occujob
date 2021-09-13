@@ -149,11 +149,26 @@ class EmployeeRouter {
         })
 
         router.get('/home', (req, res) => {
-            //list job details via application id 
+            console.log('home run')
+                //list job details via application id 
+            let data = [];
             return this.employeeService
                 .homeJobList()
                 .then((jobDetail) => {
-                    res.json(jobDetail)
+                    return data = [...jobDetail]
+                })
+                .then(() => {
+                    return this.employeeService.listUserInfo(req.user.id)
+                })
+                .then((userp) => {
+                    console.log('userp', userp)
+                    const { ee_name } = userp[0];
+                    data = data.concat(ee_name)
+                    console.log('data in return', data)
+                })
+                .then(() => {
+                    console.log('new data', data)
+                    return res.json(data)
                 })
                 .catch((err) => {
                     res.status(500).json(err)
@@ -168,6 +183,62 @@ class EmployeeRouter {
                 .viewindividualjob(req.params.job_id)
                 .then((job) => {
                     res.json(job)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    res.status(500).json(err)
+                })
+        })
+
+        //getting portfolio by eeid
+        router.get('/portfolio/add', (req, res) => {
+
+            return this.employeeService
+                .getPortfolio(req.user.id)
+                .then((portfolio) => {
+                    return portfolio
+                })
+                .catch((err) => {
+                    console.log(err)
+                    res.status(500).json(err)
+                })
+        })
+
+        router.post('/portfolio/add', (req, res) => {
+            const { pName, pDes, purl } = res.body
+
+            return this.employeeService
+                .addPortfolio(req.user.id, pName, pDes, purl)
+                .then((portfolio) => {
+                    return portfolio
+                })
+                .catch((err) => {
+                    console.log(err)
+                    res.status(500).json(err)
+                })
+        })
+
+        router.post('/portfolio/update', (req, res) => {
+            const { p_id, pName, pDes, purl } = res.body
+
+            return this.employeeService
+                .updatePortfolio(p_id, pName, pDes, purl)
+                .then((updatedP) => {
+                    return updatedP
+                })
+                .catch((err) => {
+                    console.log(err)
+                    res.status(500).json(err)
+                })
+        })
+
+        router.post('/portfolio/delete', (req, res) => {
+            const { p_id } = res.body
+
+            return this.employeeService
+                .delPortfolio(p_id)
+                .then(() => {
+                    return 'deleted'
                 })
                 .catch((err) => {
                     console.log(err)
