@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import ApplicantOfferCard from "../../Components/Applicants/ApplicantOfferCard";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ApplicantOfferList = ()=>{
-  // return(
-  //   <div>Underconstruction</div>
-  // )
+  
+
+ 
+  
   const EEOfferState = useSelector((state) => {
     { console.log("Applicant Offer:", state.EEOffer) }
     return state.EEOffer
