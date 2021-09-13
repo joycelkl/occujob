@@ -221,9 +221,23 @@ class EmployerRouter {
 
         router.get('/home', (req, res) => {
 
+            let data = []
             return this.employerServices.homeJobList()
                 .then((jobDetail) => {
-                    return res.json(jobDetail)
+                    return data = [...jobDetail]
+                })
+                .then(() => {
+                    return this.employerServices.loadProfile(req.user.id)
+                })
+                .then((userp) => {
+                    console.log('userp', userp)
+                    const { er_name } = userp[0];
+                    data = data.concat(er_name)
+                    console.log('data in return', data)
+                })
+                .then(() => {
+                    console.log('new data', data)
+                    return res.json(data)
                 })
                 .catch((err) => {
                     console.log(err)

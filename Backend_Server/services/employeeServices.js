@@ -5,19 +5,25 @@ class EmployeeService {
 
     listUserInfo(userId) {
         console.log('list ee info')
-        return this.knex
-            .select("*")
-            .from("employee")
+        return this.knex('employee')
             .where("ee_id", userId)
+            .join('portfolio', 'portfolio.employee_id', '=', 'employee.ee_id')
+            .then((data) => {
+                if (data.length == 0) {
+                    return this.knex('employee').where("ee_id", userId)
+                } else {
+                    return data
+                }
+
+                // if (data[0].img_data) {
+                //     let base = Buffer.from(data[0].img_data);
+                //     let conversion = base.toString('base64');
+                //     data[0].image = conversion;
+                // }
+            })
             .then((data) => {
                 console.log('listuserdata', data)
-                    // if (data[0].img_data) {
-                    //     let base = Buffer.from(data[0].img_data);
-                    //     let conversion = base.toString('base64');
-                    //     data[0].image = conversion;
-                    // }
-                return data;
-            });
+            })
     }
 
 
