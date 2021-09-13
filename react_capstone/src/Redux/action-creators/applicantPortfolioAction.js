@@ -23,7 +23,7 @@ export const loadAppPortfolioFailAction = () => {
 
 //Load Applicant Portfolio
 export const loadAppPortfolioThunkAction = () => async(dispatch) => {
-    console.log("ER Profile Load")
+    console.log("Applicant Profile Load")
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employee/portfolio').then(res => {
@@ -39,7 +39,7 @@ export const loadAppPortfolioThunkAction = () => async(dispatch) => {
 
 //add portfolio
 export const addAppPortfolioThunkAction = (pName, pDes, purl) => async(dispatch) => {
-    console.log("ER Profile Load")
+    console.log("ER Profile Load", pName, pDes, purl)
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employee/portfolio/add', {

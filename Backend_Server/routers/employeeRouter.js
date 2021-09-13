@@ -205,17 +205,19 @@ class EmployeeRouter {
         })
 
         router.post('/portfolio/add', (req, res) => {
-            const { pName, pDes, purl } = res.body
+            // const { pName, pDes, purl } = res.body
 
-            return this.employeeService
-                .addPortfolio(req.user.id, pName, pDes, purl)
-                .then((portfolio) => {
-                    return portfolio
-                })
-                .catch((err) => {
-                    console.log(err)
-                    res.status(500).json(err)
-                })
+            console.log('portfolio add', res.body)
+
+            // return this.employeeService
+            //     .addPortfolio(req.user.id, pName, pDes, purl)
+            //     .then((portfolio) => {
+            //         return portfolio
+            //     })
+            //     .catch((err) => {
+            //         console.log(err)
+            //         res.status(500).json(err)
+            //     })
         })
 
         router.post('/portfolio/update', (req, res) => {

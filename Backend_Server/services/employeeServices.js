@@ -374,6 +374,7 @@ class EmployeeService {
     getPortfolio(ee_id) {
         return this.knex('portfolio')
             .where('employee_id', ee_id)
+            .returning('*')
             .then((portfolio) => {
                 return portfolio
             })
