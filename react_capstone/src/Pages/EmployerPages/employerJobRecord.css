@@ -1,13 +1,13 @@
-.header {
+.jobListHeader {
     min-height: 500px;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Images/BannerWallpaper.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../Images/records.jpg);
     background-position: center;
     background-size: cover;
     position: relative;
 }
 
-.text-box {
+.jobListText-box {
     width: 90%;
     color: White;
     position: absolute;
@@ -17,14 +17,14 @@
     text-align: center;
   }
   
-  .text-box h1 {
+  .jobListText-box h1 {
     font-size: 70px;
     animation: fadeIn;
     animation-duration: 2s;
     
   }
   
-  .text-box p {
+  .jobListText-box p {
     margin: 10px 0 40px;
     font-size: 20px;
     color: White;
@@ -50,7 +50,7 @@
     color: white;
   }
   
-  .Homebtn2 {
+  .offerListHomebtn2 {
     display: inline-block;
     text-decoration: none;
     color: white;
@@ -63,7 +63,7 @@
     margin-left: 15px;
   }
   
-  .Homebtn2:hover {
+  .offerListHomebtn2:hover {
     border: 1px solid black;
     background: rgb(0, 180, 216);
     transition: 1s;

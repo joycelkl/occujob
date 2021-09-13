@@ -54,7 +54,9 @@ const ApplicantOfferCard = (props)=>{
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     return(
-    <Card className='my-4'>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+
+    <Card className='my-4' style={{ width: "70%" }}>
     <Card.Body onClick={() => setModal(!modal)}>
         <div className="d-flex justify-content-between" >
             <div>
@@ -65,7 +67,7 @@ const ApplicantOfferCard = (props)=>{
                     {day + "/" + month + "/" + year}
                 </Card.Subtitle>
                 {offer? <p className="flex" style={{backgroundColor:"green"}}>{String(offer)}</p>: <p></p>}
-                <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
+                <Badge className="job-list-badge" variant="secondary" style={{marginRight:'5px'}}>{job_type}</Badge>
                 <Badge className="job-list-badge" variant="secondary">{job_location}</Badge>
 
             </div>
@@ -91,6 +93,8 @@ const ApplicantOfferCard = (props)=>{
         <ToastContainer />
       </Modal>
     </div>
-</Card>)
+</Card>
+</div>
+)
 }
 export default ApplicantOfferCard;
