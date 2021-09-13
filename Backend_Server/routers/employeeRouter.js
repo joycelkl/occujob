@@ -191,7 +191,7 @@ class EmployeeRouter {
         })
 
         //getting portfolio by eeid
-        router.get('/portfolio/add', (req, res) => {
+        router.get('/portfolio', (req, res) => {
 
             return this.employeeService
                 .getPortfolio(req.user.id)

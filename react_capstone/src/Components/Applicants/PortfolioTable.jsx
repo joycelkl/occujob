@@ -22,6 +22,7 @@ const PortfolioTable = props => {
     const [portName1, setPortName1] = useState(null)
     const [portDes1, setPortDes1] = useState(null)
     const [savePort1, setSavePort1] = useState(false)
+    const [pUrl1, setPurl1] = useState(null)
     // const [portName2, setPortName2] = useState(null)
     // const [portDes2, setPortDes2] = useState(null)
     // const [portName3, setPortName3] = useState(null)
@@ -32,10 +33,12 @@ const PortfolioTable = props => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    function handleSaveP1() {
+    async function handleSaveP1() {
         setSavePort1(true)
-      }
+        
+    }
 
+    console.log('purl1',pUrl1)
 
     return (
         <>
@@ -56,9 +59,9 @@ const PortfolioTable = props => {
                 <th scope="row">1</th>
                 <td><Input type="text" value={portName1} /></td>
                 <td><Input type="text" value={portDes1} /></td>
-                <td> <PortfolioUpload id={eeId} n={1} save={savePort1} resetSave={()=>setSavePort1(false)}/></td>
+                <td> <PortfolioUpload id={eeId} n={1} save={savePort1} resetSave={()=>setSavePort1(false)} /></td>
                 <td><p onClick={()=>handleSaveP1()}>save</p></td>
-                <td><button>Delete</button></td>
+                <td><p>Delete</p></td>
             </tr>
             <tr>
                 <th scope="row">2</th>

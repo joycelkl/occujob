@@ -5,9 +5,13 @@ import S3 from 'react-aws-s3';
 
 const PortfolioUpload = (props) => {
 
-    const {id, n, save, resetSave} = props;
+    const {id, n, save, resetSave} = props; 
 
-    const [cv, setCV] = useState('')
+    const [fileData, setFileData] = useState(null);
+    const [url, setUrl] = useState(null);
+
+    console.log('url',url)
+    
 
       //****************DONOT CHANGE THE SETTING HERE*****************************/
   // S3 setup
@@ -33,31 +37,33 @@ const PortfolioUpload = (props) => {
       alert('Upload File should be 5MB or below')
       return
     }
-    if (save) {
-      console.log('save')
-      resetSave()
-      return
-    }
+
+    setFileData( e.target.files[0])
+        
+  }
+  
+  if (save) {
+    console.log('saved')
+    console.log('fileData', fileData)
+
+    setUrl('Im a link')
+
     // ReactCV
-    //   .uploadFile(e.target.files[0], newFileCVName)
+    //   .uploadFile(fileData, newFileCVName)
     //   .then((data) => {
     //     console.log(data)
-    //     setCV("")
-    //     setCV(data.location)
+    //     setUrl(data.location)
     //   })
     //   .catch(err => console.error(err))
+
+    resetSave()
   }
-  console.log("success cv:", cv)
 
 
 
     return (
-        <>           
-                
-                   
+        <>                        
         <Input type="file" name="uploadCV" onChange={(e)=>uploadCV(e)} />
-               
-            
         </>
     )
 }

@@ -308,7 +308,6 @@ const ApplicantProfile = () => {
                   <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" onClick={portfolioHandler}>Portfolio</a>
                   </li>
-
                 </ul> */}
               </div>
             </div>
@@ -496,7 +495,7 @@ const ApplicantProfile = () => {
                   {togglePortfolio &&
                     <div>
                       <div class="row">
-                        <PortfolioTable />
+                        <PortfolioTable eeId={ee_id} />
                       </div>
                     </div>
                   }
