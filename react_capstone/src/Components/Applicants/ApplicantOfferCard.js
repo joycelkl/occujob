@@ -5,28 +5,19 @@ import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { useDispatch} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
 
 const ApplicantOfferCard = (props)=>{
      //toast
   const acceptToast = () => toast("You Have Accepted This Offer")
   const declineToast = () => toast("You Have Declined This Offer")
 
+  const dispatch = useDispatch();
+  const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
+
     const {offerCard} = props;
-    const {job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
-import { useDispatch} from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../Redux';
-
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-
-const ApplicantOfferCard = (props)=>{
-    const dispatch = useDispatch();
-    const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
-    
-    
-    const {offerCard, key} = props;
-    console.log(key)
-
     const {reply,job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
     console.log("testoffer",offer)
     console.log('data', job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id)

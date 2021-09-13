@@ -34,11 +34,11 @@ const EmployerCreateJobPage = () => {
     const [exp, setExp] = useState('')
     const [salary, setSalary] = useState('')
     const [empType, setEmpType] = useState('')
-    const [jobFunction, setJobFunction] = useState('')
+    const [jobFunctionArr, setJobFunctionArr] = useState('')
     const [location, setLocation] = useState('')
     const [workPeriod, setWorkPeriod] = useState('');
     const [salaryType, setSalaryType] = useState('')
-    const [industryArr, setIndustryArr] = useState(null);
+   
 
 
     const history = useHistory();
@@ -46,11 +46,16 @@ const EmployerCreateJobPage = () => {
 
     function handleOnSubmit(e) {
         e.preventDefault();
-        if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunction || !location || !workPeriod ) {
+        if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunctionArr || !location || !workPeriod ) {
             fillInfoToast();
             console.log('submitting')
             return;
         }
+
+        let jobFunction = jobFunctionArr.value
+       
+        console.log('data', jobTitle, jobDes, exp, salary, empType, jobFunction, location, workPeriod, salaryType)
+
         erJobCreate(jobTitle, jobFunction, exp, salary,
             jobDes, workPeriod, location, empType, salaryType).then(() => {
                 history.push('/employerJobRecordsList')
@@ -64,13 +69,13 @@ const EmployerCreateJobPage = () => {
             setExp('');
             setSalary('');
             setEmpType('');
-            setJobFunction('');
+            setJobFunctionArr('');
             setLocation('');
             setWorkPeriod('');
             setSalaryType('');
         }
         
-        console.log('data', jobTitle, jobDes, exp, salary, empType, jobFunction, location, workPeriod, salaryType)
+        
 
     async function erJobCreate(jobTitle, jobFunction, reqExp, expectSalary,
         jobDescription, workPeriod, location, jobType, salaryType) {
@@ -103,22 +108,28 @@ const EmployerCreateJobPage = () => {
   console.log('industryTag', industryTag)
 
   const handleOnChangeIndustry = obj => {
-    console.log('setIndustry', obj)
-    setIndustryArr(obj)
+    console.log('setJobFunction', obj)
+    setJobFunctionArr(obj)
   }
-
+{/* <Input type="select" name="JobFunction" id="JobFunction"  value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
+                          <option value={null} selected>Please select</option>
+                          {industryState.length > 0 ? industryState.map((industry, i) => (
+                            <option key={i} value={industry.industry} selected>{industry.industry}</option>
+                          )) : "loading..."}
+                        </Input> */}
   const IndustryTag = () => (
     <Select
       defaultValue={null}
-      value={industryArr}
+      value={jobFunctionArr}
       onChange={handleOnChangeIndustry}
-      isMulti
       name="industry"
       options={industryTag}
       className="basic-multi-select"
       classNamePrefix="select"
     />
   )
+
+
 
     return (
 
@@ -162,12 +173,13 @@ const EmployerCreateJobPage = () => {
                         </FormGroup>
                         <FormGroup>
                             <Label for="JobFunction">Job Function</Label>
-                            <Input type="select" name="JobFunction" id="JobFunction"  value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
+                            <IndustryTag />
+                            {/* <Input type="select" name="JobFunction" id="JobFunction"  value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
                           <option value={null} selected>Please select</option>
                           {industryState.length > 0 ? industryState.map((industry, i) => (
                             <option key={i} value={industry.industry} selected>{industry.industry}</option>
                           )) : "loading..."}
-                        </Input>
+                        </Input> */}
                         </FormGroup>
                         <FormGroup>
                             <Label for="workPeriod">Work Period</Label>
