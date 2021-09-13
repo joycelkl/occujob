@@ -7,6 +7,7 @@ import ApplicantOfferCard from "../../Components/Applicants/ApplicantOfferCard";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './applicantOfferList.css';
+import "../EmployerPages/modalFullPage.css";
 
 const ApplicantOfferList = ()=>{
   

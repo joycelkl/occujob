@@ -8,6 +8,7 @@ import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import "./modalFullPage.css";
 
 
 const EmployerEditPost = () => {
@@ -242,12 +243,12 @@ const EmployerEditPost = () => {
                             </tr>
 
                         )) : "Waiting for Applicant Apply"}
-                        <Modal isOpen={modal} toggle={toggle} fade={false}>
+                        <Modal isOpen={modal} toggle={toggle} fade={false} className='modal-sandbox'>
 
                                     <ModalHeader>{modalJob.ee_name} {console.log('nametest', modalJob.ee_name)} 
                                     <img src={modalJob.ee_img_data} width="200px" height="200x" alt=''/>
                                     </ModalHeader>
-                                    <ModalBody>
+                                    <ModalBody className='modal-content'>
                                         Self Introduction: {modalJob.self_intro} <br />
                                         Expected Salary: {modalJob.expected_salary} <br />
                                         Skills: {modalJob.ee_industry} <br />

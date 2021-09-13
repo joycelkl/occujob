@@ -38,23 +38,30 @@ export const loadOfferThunkAction = () => async(dispatch) => {
     }
 }
 
-export const ACCEPT_OFFER_SUCCESS_ACTION = 'LOAD_OFFER_SUCCESS';
 
-export const acceptOfferFailAction = (accept) => {
-    return (dispatch) => {
-        dispatch({
-            type: ACCEPT_OFFER_SUCCESS_ACTION,
-            payload: accept
-        })
-    }
-}
 
 export const offerAcceptAction = (application_id) => async(dispatch) => {
     console.log("EE offer Accept")
     try {
         const authAxiosConfig = await authAxios();
-        await authAxiosConfig.post(`/employee/offer/accept/{application_id}`).then(res => {
-            dispatch(loadOfferSuccessAction(res.data))
+        await authAxiosConfig.post(`/employee/offer/accept/${application_id}`).then(res => {
+            dispatch(loadOfferThunkAction())
+        }).catch(err => {
+            console.log("Update fail err res", err.response)
+            dispatch(loadOfferFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+
+export const offerDeclineAction = (application_id) => async(dispatch) => {
+    console.log("EE offer Decline")
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.post(`/employee/offer/decline/${application_id}`).then(res => {
+            dispatch(loadOfferThunkAction())
         }).catch(err => {
             console.log("Update fail err res", err.response)
             dispatch(loadOfferFailAction())
