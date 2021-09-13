@@ -188,7 +188,7 @@ const ApplicantJobSearch = () => {
                   </FormGroup>
                   <FormGroup>
                     <Label for="JobType" style={{ color: 'white' }}>Job Type</Label>
-                    <Input type="select" name="JobType" id="JobType" value={'PartTime'} onChange={(e) => setJobType(e.target.value)}>
+                    <Input type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
                       <option value={'PartTime'} selected>Part Time</option>
                       <option value={'Freelance'}>Freelance</option>
                     </Input>
