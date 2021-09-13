@@ -45,9 +45,9 @@ exports.seed = async function(knex) {
                 ])
             }).then(() => {
                 return knex('job').insert([
-                    { employer_id: 1, job_title: 'Designer', job_function: 'Media & Advertising', job_type: 'PT', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', status: true, job_location: 'tst', job_type: 'Part Time', job_salary_type: 'perJob' },
-                    { employer_id: 2, job_title: 'Freelance HR & Administrative Officer', job_function: 'Media & Advertising', job_type: 'PT', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', status: true, job_location: 'tst', job_type: 'Part Time', job_salary_type: 'perJob' },
-                    { employer_id: 3, job_title: 'Freelance Photographer', job_function: 'Photography / Video', job_type: 'PT', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', status: true, job_location: 'tst', job_type: 'Part Time', job_salary_type: 'perJob' },
+                    { employer_id: 1, job_title: 'Designer', job_function: 'Media & Advertising', job_type: 'PT', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', expiry_date:'2022-09-13T02:44:47.173Z',status: true, job_location: 'North', job_type: 'Part Time', job_salary_type: 'perJob' },
+                    { employer_id: 2, job_title: 'Freelance HR & Administrative Officer', job_function: 'Media & Advertising', job_type: 'PT', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', expiry_date:'2022-09-13T02:44:47.173Z',status: true, job_location: 'Tai Po', job_type: 'Freelance', job_salary_type: 'perJob' },
+                    { employer_id: 3, job_title: 'Freelance Photographer', job_function: 'Photography / Video', job_type: 'PT', req_exp: 2, expect_salary: 17000, job_description: 'Design and create attractive flyers and leaflets for education business promotion', work_period: 'Flexible', expiry_date:'2022-09-13T02:44:47.173Z',status: true, job_location: 'Islands', job_type: 'Part Time', job_salary_type: 'perJob' },
 
                 ])
             })

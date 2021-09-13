@@ -35,11 +35,11 @@ const EmployerEditPost = () => {
     const industryState = useSelector((state) => state.industry);
     console.log("industry", industryState)
     
-    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type } = indJobState[0] || {}
+    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type, reply } = indJobState[0] || {}
 
     const history = useHistory();
 
-    console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period)
+    console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, reply)
 
     const [salary, setSalary] = useState(expect_salary );
     const [jobTitle, setJobTitle] = useState(job_title);
@@ -113,6 +113,7 @@ const EmployerEditPost = () => {
         .then(res => {
             offerToast()
            console.log(res)
+           setModal(!modal);
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
         })
@@ -222,6 +223,7 @@ const EmployerEditPost = () => {
                             <th>Name</th>
                             <th>Date of Application</th>
                             <th>Offer</th>
+                            <th>Reply</th>
                         </tr>
                     </thead>
 
@@ -235,7 +237,8 @@ const EmployerEditPost = () => {
                             
                                 <td>{job.ee_name}</td>
                                 <td>{job.created_at}</td>
-                                <td>{job.offer}</td>
+                                {job.offer? <td> Offer Sent</td> : <td> No Offer</td>}
+                                {job.reply === true? <td>Accepted </td> : (job.reply === false ?<td>Declined</td> : <td> No Reply</td>)} 
                             </tr>
 
                         )) : "Waiting for Applicant Apply"}
