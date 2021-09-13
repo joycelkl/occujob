@@ -8,7 +8,6 @@ import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const EmployerEditPost = () => {
