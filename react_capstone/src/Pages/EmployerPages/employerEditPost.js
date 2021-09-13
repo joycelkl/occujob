@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const EmployerEditPost = () => {
     
+    const offerToast = () => toast("An Offer Has Been Made")
     const fillInfoToast = () => toast("Please Fill In All Information")
     const indJobState = useSelector((state) => state.individualJob)
 
@@ -110,6 +111,7 @@ const EmployerEditPost = () => {
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employer/job/candidate/offer/${application_id}`)
         .then(res => {
+            offerToast()
            console.log(res)
            setModal(!modal);
         }).catch(err => {
@@ -124,6 +126,17 @@ const EmployerEditPost = () => {
         console.log("status:", jobStatus)
     }
 
+
+    //date format
+    let date = new Date(expiry_date)
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let createDate = new Date(jobCreate)
+    let createDay = date.getDate();
+    let createMonth = date.getMonth() + 1;
+    let createYear = date.getFullYear();
     return (
         <div>
             <EmployerNavbar />
@@ -131,8 +144,8 @@ const EmployerEditPost = () => {
                 <h2>Job Detail</h2>
                 <div className="col-6">
                     <div className='row'>
-                        <h5>Create Date: {jobCreate}</h5>
-                        <h5>Expiry Date: {expiry_date}</h5>
+                        <h5>Create Date: {createDay + "/" + createMonth + "/" + createYear}</h5>
+                        <h5>Expiry Date: {day + "/" + month + "/" + year}</h5>
                         <div>
                             <h5>Job Status: {status ? 'Active' : 'Inactive'}</h5>
                             {status? (<FormGroup check>

@@ -2,20 +2,22 @@ import React , {useEffect}from "react";
 import authAxios from '../../Redux/authAxios';
 import {Card, Badge} from 'react-bootstrap';
 import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { useDispatch} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-
 const ApplicantOfferCard = (props)=>{
-    const dispatch = useDispatch();
-    const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
-    
-    
-    const {offerCard, key} = props;
-    console.log(key)
+     //toast
+  const acceptToast = () => toast("You Have Accepted This Offer")
+  const declineToast = () => toast("You Have Declined This Offer")
 
+  const dispatch = useDispatch();
+  const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
+
+    const {offerCard} = props;
     const {reply,job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
     console.log("testoffer",offer)
     console.log('data', job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id)
@@ -39,6 +41,7 @@ const ApplicantOfferCard = (props)=>{
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employee/offer/decline/${application_id}`)
         .then(res => {
+            declineToast();
            console.log(res)
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
@@ -85,6 +88,7 @@ const ApplicantOfferCard = (props)=>{
             {reply === null ? <Button color="primary" onClick={()=>declineoffer(application_id)}>decline</Button> : null }
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
+        <ToastContainer />
       </Modal>
     </div>
 </Card>)
