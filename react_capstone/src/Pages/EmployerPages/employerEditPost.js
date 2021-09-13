@@ -227,6 +227,7 @@ const EmployerEditPost = () => {
 
                         )) : "Waiting for Applicant Apply"}
                         <Modal isOpen={modal} toggle={toggle} fade={false}>
+
                                     <ModalHeader>{modalJob.ee_name} {console.log('nametest', modalJob.ee_name)} 
                                     <img src={modalJob.ee_img_data} width="200px" height="200x" alt=''/>
                                     </ModalHeader>
