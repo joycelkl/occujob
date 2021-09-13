@@ -60,13 +60,7 @@ return(
         </FormGroup>
         <FormGroup>
             <Label for="preferworklocation">Work Location</Label>
-            <Input type="select" name="select" id="preferworklocation" value={job_location} disabled>
-                <option>Islands</option>
-                <option>Kwai Tsing</option>
-                <option>North</option>
-                <option>Sai Kung</option>
-                <option>Sha Tin</option>
-            </Input>
+            <Input type="text" name="select" id="preferworklocation" value={job_location} disabled />
         </FormGroup>
         <Button onClick={()=>applyJob(job_id)}>Apply</Button>
         <Button>Message</Button>
