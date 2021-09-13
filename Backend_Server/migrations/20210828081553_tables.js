@@ -79,6 +79,8 @@ exports.up = function(knex) {
                 table.foreign("employee_id").references("employee.ee_id");
                 table.boolean("offer");
                 table.boolean("reply");
+                table.date('enable_rating');
+                table.boolean('rating');
                 table.timestamps(false, true);
             });
         });

@@ -13,24 +13,38 @@ const ApplicantOfferCard = (props)=>{
 
     const {offerCard} = props;
     const {job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
+import { useDispatch} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
+
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+
+const ApplicantOfferCard = (props)=>{
+    const dispatch = useDispatch();
+    const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
+    
+    
+    const {offerCard, key} = props;
+    console.log(key)
+
+    const {reply,job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id} = offerCard;
     console.log("testoffer",offer)
     console.log('data', job_title,job_id, er_name, created_at, job_type, job_location, er_img_data,offer,job_description,work_period, expect_salary, req_exp, application_id)
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
-    const [post, setPost] = useState(null);
+    // const [post, setPost] = useState(null);
 
 //offer accept reject
-    async function acceptoffer(application_id){
-        console.log("offer app ID",application_id)
-        const authAxiosConfig = await authAxios();
-        return await authAxiosConfig.post(`/employee/offer/accept/${application_id}`)
-        .then(res => {
-            acceptToast();
-           console.log(res)
-        }).catch(err => {
-            console.log("pubulic job load err res", err.response)
-        })
-    }
+    // async function acceptoffer(application_id){
+    //     console.log("offer app ID",application_id)
+    //     const authAxiosConfig = await authAxios();
+    //     return await authAxiosConfig.post(`/employee/offer/accept/${application_id}`)
+    //     .then(res => {
+    //        console.log(res)
+    //     }).catch(err => {
+    //         console.log("pubulic job load err res", err.response)
+    //     })
+    // }
     async function declineoffer(application_id){
         console.log("offer app ID",application_id)
         const authAxiosConfig = await authAxios();
@@ -79,8 +93,8 @@ const ApplicantOfferCard = (props)=>{
         Required Exp: {req_exp}<br/>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={()=>acceptoffer(application_id)}>accept</Button>{' '}
-          <Button color="primary" onClick={()=>declineoffer(application_id)}>decline</Button>{' '}
+            {reply === null ? <Button color="primary" onClick={()=>offerAcceptAction(application_id)}>accept</Button> : null }
+            {reply === null ? <Button color="primary" onClick={()=>declineoffer(application_id)}>decline</Button> : null }
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
         <ToastContainer />
