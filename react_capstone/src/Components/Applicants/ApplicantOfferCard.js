@@ -56,7 +56,7 @@ const ApplicantOfferCard = (props)=>{
         </div>
     </Card.Body>
     <div>
-      <Modal isOpen={modal} toggle={toggle} >
+      <Modal isOpen={modal} toggle={toggle} fade={false}>
         <ModalHeader toggle={toggle}>{job_title}{er_name} ID:{job_id} </ModalHeader>
         <ModalBody>
         Type: {job_type}<br/>
