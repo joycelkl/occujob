@@ -26,7 +26,7 @@ const ApplicantEmployerDetails = () => {
                     <div class="row">
                         <div class="col-md-4">
                             <div class="profile-img">
-
+                                <img src={er_img_data} width="200px" height="200x" alt='' />
                             </div>
                         </div>
 
@@ -65,43 +65,43 @@ const ApplicantEmployerDetails = () => {
 
                         <div class="col-md-8">
                             <div class="tab-content profile-tab" id="myTabContent">
-                               
-                                    <div class="row">
-                                        <FormGroup>
-                                            <div class="col-md-6">
-                                                <Label for="Text">Company Description</Label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <Input type="textarea" name="text" value={comp_description}id="des" disabled/>
-                                            </div>
-                                        </FormGroup>
-                                    </div>
-                                    <div class="row">
-                                        <FormGroup>
-                                            <div class="col-md-6">
-                                                <Label for="Industry">Industry</Label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <Input type="textarea" name="text" value={er_industry} id="des" disabled/>
-                                            </div>
-                                        </FormGroup>
 
-                                    </div>
-                                    <div class="row">
-                                        <FormGroup>
-                                            <div class="col-md-6">
-                                                <Label for="Location">Location</Label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <Input type="text" name="skill" id="Skill" placeholder={er_location} disabled/>
-                                            </div>
-                                        </FormGroup>
-                                    </div>
+                                <div class="row">
+                                    <FormGroup>
+                                        <div class="col-md-6">
+                                            <Label for="Text">Company Description</Label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <Input type="textarea" name="text" value={comp_description} id="des" disabled />
+                                        </div>
+                                    </FormGroup>
+                                </div>
+                                <div class="row">
+                                    <FormGroup>
+                                        <div class="col-md-6">
+                                            <Label for="Industry">Industry</Label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <Input type="textarea" name="text" value={er_industry} id="des" disabled />
+                                        </div>
+                                    </FormGroup>
 
-                                    
+                                </div>
+                                <div class="row">
+                                    <FormGroup>
+                                        <div class="col-md-6">
+                                            <Label for="Location">Location</Label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <Input type="text" name="skill" id="Skill" placeholder={er_location} disabled />
+                                        </div>
+                                    </FormGroup>
+                                </div>
 
 
-                                
+
+
+
                             </div>
                         </div>
                     </div>

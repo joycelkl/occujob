@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../Redux';
 import { useHistory } from 'react-router';
+import "../Pages/EmployerPages/employerProfilePage.css"
 
 const JobDetail = (props) => {
     const { indJob } = props;

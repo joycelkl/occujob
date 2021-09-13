@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const EmployerEditPost = () => {
     
+    const offerToast = () => toast("An Offer Has Been Made")
     const fillInfoToast = () => toast("Please Fill In All Information")
     const indJobState = useSelector((state) => state.individualJob)
 
@@ -34,11 +35,11 @@ const EmployerEditPost = () => {
     const industryState = useSelector((state) => state.industry);
     console.log("industry", industryState)
     
-    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type } = indJobState[0] || {}
+    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type, reply } = indJobState[0] || {}
 
     const history = useHistory();
 
-    console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period)
+    console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, reply)
 
     const [salary, setSalary] = useState(expect_salary );
     const [jobTitle, setJobTitle] = useState(job_title);
@@ -110,7 +111,9 @@ const EmployerEditPost = () => {
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employer/job/candidate/offer/${application_id}`)
         .then(res => {
+            offerToast()
            console.log(res)
+           setModal(!modal);
         }).catch(err => {
             console.log("pubulic job load err res", err.response)
         })
@@ -123,6 +126,17 @@ const EmployerEditPost = () => {
         console.log("status:", jobStatus)
     }
 
+
+    //date format
+    let date = new Date(expiry_date)
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let createDate = new Date(jobCreate)
+    let createDay = date.getDate();
+    let createMonth = date.getMonth() + 1;
+    let createYear = date.getFullYear();
     return (
         <div>
             <EmployerNavbar />
@@ -130,8 +144,8 @@ const EmployerEditPost = () => {
                 <h2>Job Detail</h2>
                 <div className="col-6">
                     <div className='row'>
-                        <h5>Create Date: {jobCreate}</h5>
-                        <h5>Expiry Date: {expiry_date}</h5>
+                        <h5>Create Date: {createDay + "/" + createMonth + "/" + createYear}</h5>
+                        <h5>Expiry Date: {day + "/" + month + "/" + year}</h5>
                         <div>
                             <h5>Job Status: {status ? 'Active' : 'Inactive'}</h5>
                             {status? (<FormGroup check>
@@ -209,6 +223,7 @@ const EmployerEditPost = () => {
                             <th>Name</th>
                             <th>Date of Application</th>
                             <th>Offer</th>
+                            <th>Reply</th>
                         </tr>
                     </thead>
 
@@ -222,7 +237,8 @@ const EmployerEditPost = () => {
                             
                                 <td>{job.ee_name}</td>
                                 <td>{job.created_at}</td>
-                                <td>{job.offer}</td>
+                                {job.offer? <td> Offer Sent</td> : <td> No Offer</td>}
+                                {job.reply === true? <td>Accepted </td> : (job.reply === false ?<td>Declined</td> : <td> No Reply</td>)} 
                             </tr>
 
                         )) : "Waiting for Applicant Apply"}

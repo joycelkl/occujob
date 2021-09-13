@@ -11,6 +11,7 @@ import "../EmployerPages/employerProfilePage.css"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PortfolioTable from "../../Components/Applicants/PortfolioTable";
+import ApplicantPortfolioTable from "../../Components/PortfolioTable";
 
 const ApplicantProfile = () => {
 
@@ -292,9 +293,10 @@ const ApplicantProfile = () => {
                   <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
                 <p class="proile-rating">Ratings : <span>8/10</span></p>
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} />  
+                {/* <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
-                    {/* {show ? <h1>Hello World </h1> : null} */}
+                    
                     <a class="nav-link active" id="home-tab" onClick={aboutHandler}>About</a>
                   </li>
                   <li class="nav-item">
@@ -307,7 +309,7 @@ const ApplicantProfile = () => {
                     <a class="nav-link active" id="home-tab" data-toggle="tab" onClick={portfolioHandler}>Portfolio</a>
                   </li>
 
-                </ul>
+                </ul> */}
               </div>
             </div>
           </div>

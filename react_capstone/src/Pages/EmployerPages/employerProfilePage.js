@@ -9,6 +9,7 @@ import S3 from 'react-aws-s3';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./employerProfilePage.css";
+import EmployerPortfolioTable from '../../Components/EmployerPortfolioTable';
 
 const EmployerProfilePage = () => {
   const updateToast = () => toast("Profile Updated");
@@ -140,16 +141,7 @@ const EmployerProfilePage = () => {
                   Web Developer and Designer
                 </h6> */}
                 <p class="proile-rating">Ratings : <span>8/10</span></p>
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" onClick={aboutHandler}>About</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" onClick={contactHandler}>Contact</a>
-                  </li>
-                  
-
-                </ul>
+                <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} />
               </div>
             </div>
 
