@@ -24,14 +24,19 @@ const schedule = require('node-schedule');
 const rule = new schedule.RecurrenceRule()
 rule.hour = 0;
 rule.tz = 'Etc/GMT-8';
-// const job = schedule.scheduleJob(rule, function() {
-//     jobServices.updateJobStatus();
-// })
+const job = schedule.scheduleJob(rule, function() {
+    jobServices.updateJobStatus();
+})
+const rate = schedule.scheduleJob(rule, function() {
+    ratingServices.updateRatingStatus();
+})
 
 const RegLoginRouter = require('./routers/regLoginRouter')
 const regLoginRouter = new RegLoginRouter().router();
 app.use('/', regLoginRouter)
 
+const RatingServices = require('./services/ratingServices');
+const ratingServices = new RatingServices(knex);
 const JobServices = require('./services/jobServices');
 const jobServices = new JobServices(knex);
 const PublicRouter = require('./routers/publicRouter');
