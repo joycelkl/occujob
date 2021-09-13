@@ -47,7 +47,7 @@ const ApplicantOfferCard = (props)=>{
                 <Card.Subtitle className="text-muted mb-2">
                     {created_at}
                 </Card.Subtitle>
-                {offer? <p className="flex" style={{backgroundColor:"green"}}>0</p>: <p></p>}
+                {offer? <p className="flex" style={{backgroundColor:"green"}}>{String(offer)}</p>: <p></p>}
                 <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
                 <Badge className="job-list-badge" variant="secondary">{job_location}</Badge>
 
