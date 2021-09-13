@@ -27,11 +27,11 @@ const EmployerApplicantSearchList = () => {
     return (
         <div>
             <EmployerNavbar />
-            <h1>Apllicants Search Result</h1>
-            <div className="row">
+            <h1 style={{textAlign:'center', textDecoration:'underline', marginBottom:'20px', marginTop:'20px'}}>Applicant Search Result</h1>
+            <div className="row" style={{ display: "flex", justifyContent: "center" }}>
 
 
-                <Table striped>
+                <Table striped style={{width:"90%", }}> 
                     <thead>
                         <tr>
                             <th>Applicant's Name</th>

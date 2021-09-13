@@ -170,11 +170,11 @@ const ApplicantJobSearch = () => {
       <ApplicantNavbar />
       <div className="searchHeader">
         <Container>
-          <h1 style={{color:'white'}}>Job Search</h1>
+          <h1 style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline'}}>Job Search</h1>
           <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
             <div className="mb-3 search-text-box" id="home">
-              <Row form>
-                <Col md={12}>
+              <Row>
+                <Col md={6}>
                   <FormGroup>
                     <Label for="JobTitle" style={{ color: 'white' }}>Job Title</Label>
                     <ReactTagInput
@@ -195,7 +195,7 @@ const ApplicantJobSearch = () => {
                   </FormGroup>
 
                 </Col>
-                <Col lg={12}>
+                <Col lg={6}>
                   <FormGroup>
                     <FormGroup>
                       <Label for="salaryType" style={{ color: 'white' }}>Expected Salary Type</Label>
@@ -228,20 +228,20 @@ const ApplicantJobSearch = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Row form>
-                <Col md={12}>
+              <Row>
+                <Col md={6}>
                   <FormGroup>
                     <Label for="Job Function" style={{ color: 'white' }}>Job Function</Label>
                     <IndustryTag />
                   </FormGroup>
                 </Col>
-                <Col md={12}>
-                  <Col md={12}>
+                <Col md={6}>
+                  
                     <FormGroup>
                       <Label for="Working Location" style={{ color: 'white' }}>Work Location</Label>
                       <LocationTag />
                     </FormGroup>
-                  </Col>
+                  
                 </Col>
               </Row>
               <Button type='submit' className="search-Homebtn">

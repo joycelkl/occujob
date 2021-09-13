@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import EmployerJobRecordCard from '../../Components/Employer/EmployerJobRecordCard';
-
+import './employerJobRecord.css';
 
 const EmployerJobRecordsList = () => {
 
@@ -22,13 +22,21 @@ const EmployerJobRecordsList = () => {
 
 
     return (
-    
+
         <div>
-            
+
             <EmployerNavbar />
-            <h1> Job Record </h1>
+            <section className="jobListHeader">
+
+
+                <div className="jobListText-box" id="home">
+                    <h1>Job Records</h1>
+                    <p>Manage Your Applicants!</p>
+                    <a href="/employerApplicantSearch" className="Homebtn">Search Jobs</a>
+                </div>
+            </section>
             <div className="jobCard">
-                {employerJobState.length>0?employerJobState.map(job => <EmployerJobRecordCard key={job.job_id} job={job}/>):<p>Loading...</p>}
+                {employerJobState.length > 0 ? employerJobState.map(job => <EmployerJobRecordCard key={job.job_id} job={job} />) : <p>Loading...</p>}
             </div>
         </div>
     )

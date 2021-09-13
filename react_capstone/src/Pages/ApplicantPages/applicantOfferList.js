@@ -6,7 +6,9 @@ import { actionCreators } from '../../Redux';
 import ApplicantOfferCard from "../../Components/Applicants/ApplicantOfferCard";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './applicantOfferList.css';
 import "../EmployerPages/modalFullPage.css";
+
 const ApplicantOfferList = ()=>{
   
 
@@ -30,7 +32,15 @@ console.log('Offer', EEOfferState)
 return(
 <div>
 <ApplicantNavbar />
-  <h1>Application Record</h1>
+<section className="offerListHeader">
+
+
+<div className="offerListText-box" id="home">
+    <h1>Job Records</h1>
+    <p>Apply For Your Job!</p>
+    <a href="/applicantJobSearch" className="Homebtn">Search Jobs</a>
+</div>
+</section>
   <div className="jobCard">
                 {EEOfferState.length > 0 ? EEOfferState.map((EEOffer, index) => (
                     <ApplicantOfferCard

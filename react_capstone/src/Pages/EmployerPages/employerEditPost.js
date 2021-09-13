@@ -141,7 +141,7 @@ const EmployerEditPost = () => {
     return (
         <div>
             <EmployerNavbar />
-            <div className="Container">
+            <div className="Container" style={{ display: "flex", justifyContent: "center" }}>
                 <h2>Job Detail</h2>
                 <div className="col-6">
                     <div className='row'>
