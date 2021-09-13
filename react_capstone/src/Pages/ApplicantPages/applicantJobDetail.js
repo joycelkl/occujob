@@ -14,8 +14,8 @@ const ApplicantJobDetail = () => {
       <ApplicantNavbar />
       <div>
         <JobDetail />
-        <Button>Message</Button>
-        <Button>Apply</Button>
+        {/* <Button>Message</Button>
+        <Button>Apply</Button> */}
       </div>
     </div>
   );

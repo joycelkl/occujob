@@ -26,7 +26,12 @@ const Job= (props)=>{
         history.push('/applicantJobDetail')
       })
     }
-
+    
+    //date format
+    let date = new Date(created_at)
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
     return(
     <Card className='my-4'>
     <Card.Body onClick={handleOnClick}>
@@ -36,7 +41,7 @@ const Job= (props)=>{
                     {job_title} - <span className="text-muted font-weight-light">{er_name}</span>
                 </Card.Title>
                 <Card.Subtitle className="text-muted mb-2">
-                    Posted on {created_at}
+                    Posted on {day + "/" + month + "/" + year}
                 </Card.Subtitle>
                 
                 <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
