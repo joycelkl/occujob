@@ -35,8 +35,9 @@ class JobServices {
         console.log('public job knex')
         return this.knex('job')
             .join('employer', 'employer.er_id', '=', 'job.employer_id')
-            .where('job.expiry_date', '>', new Date())
+            .where('job.status', true)
             .select('job.job_type', 'job.job_title', 'employer.er_name', 'job.created_at', 'employer.er_img_data', 'job.expect_salary')
+            .orderBy('job.updated_at', 'desc')
             .then((jobDetail) => {
                 console.log('public', jobDetail)
                 return jobDetail

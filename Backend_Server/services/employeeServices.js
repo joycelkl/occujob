@@ -166,9 +166,10 @@ class EmployeeService {
         if (jobTitle.length === 0 && company === null && jobType === null && salaryType === null && salary === null && jobFunction === null && location === null) {
             return this.knex('job')
                 .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                .where('job.status', true)
                 .select('job.*', 'employer.er_name', 'employer.er_img_data')
                 .andWhere('job.expiry_date', '>', new Date())
-                .orderBy('updated_at', 'desc')
+                .orderBy('job.updated_at', 'desc')
                 .then((jobList) => {
                     console.log('all null', jobList)
                     return jobList
@@ -179,6 +180,7 @@ class EmployeeService {
             return this.knex('job')
                 .join('employer', 'job.employer_id', '=', 'employer.er_id')
                 .select('job.*', 'employer.er_name', 'employer.er_img_data')
+                .where('job.status', true)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
@@ -193,7 +195,7 @@ class EmployeeService {
                 .orWhere('job.job_location', locationArr[2])
                 .andWhere('job.job_type', jobType)
                 .andWhere('job.expiry_date', '>', new Date())
-                .orderBy('updated_at', 'desc')
+                .orderBy('job.updated_at', 'desc')
                 .then((jobList) => {
                     console.log('no salaryType', jobList)
                     return jobList
@@ -202,6 +204,7 @@ class EmployeeService {
             return this.knex('job')
                 .join('employer', 'job.employer_id', '=', 'employer.er_id')
                 .select('job.*', 'employer.er_name', 'employer.er_img_data')
+                .where('job.status', true)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
@@ -218,7 +221,7 @@ class EmployeeService {
                 .andWhere('job.job_salary_type', salaryType)
                 .andWhere('job.expect_salary', '>=', salary)
                 .andWhere('job.expiry_date', '>', new Date())
-                .orderBy('updated_at', 'desc')
+                .orderBy('job.updated_at', 'desc')
                 .then((jobList) => {
                     console.log('with SalaryType', jobList)
                     return jobList
@@ -236,6 +239,7 @@ class EmployeeService {
             .join('job', 'application.job_id', '=', 'job.job_id')
             .join('employer', 'job.employer_id', '=', 'employer.er_id')
             .where('employee.ee_id', userId)
+            .orderBy('application.created_at', 'desc')
             .then((job) => {
                 return job;
             })
@@ -341,7 +345,8 @@ class EmployeeService {
 
         return this.knex('job')
             .join('employer', 'employer.er_id', '=', 'job.employer_id')
-            .where('job.expiry_date', '>', new Date())
+            .where('job.status', true)
+            .orderBy('job.updated_at', 'desc')
             .select('job.job_title', 'employer.er_name', 'job.job_location', 'job.created_at', 'employer.er_img_data', 'job.job_id', 'job.job_type')
             .then((jobDetail) => {
                 console.log('public', jobDetail)
@@ -418,6 +423,21 @@ class EmployeeService {
                 console.error(err)
                 throw new Error(err)
             })
+    }
+
+    loadErProfile(erId) {
+        console.log('erId', erId)
+        return this.knex('employer')
+            .where({
+                er_id: erId
+            })
+            .then((profile) => {
+                console.log("employer", profile)
+                return profile;
+            })
+            .catch((err) => {
+                throw new Error(err)
+            });
     }
 }
 

@@ -20,8 +20,16 @@ const PortfolioTable = props => {
 
     useEffect(() => {
         loadAppPortfolioThunkAction()
+        setFileName(portfolioState.length+1)
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+    useEffect(() => {
+      setFileName(portfolioState.length+1)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[portfolioState])
+
+
 
     const [portName, setPortName] = useState(null);
     const [portDes, setPortDes] = useState(null);
@@ -52,7 +60,6 @@ const PortfolioTable = props => {
           return
         }
         setFileData(e.target.files[0])
-        setFileName(e.target.files[0].name)
        
       }
 

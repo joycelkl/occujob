@@ -13,7 +13,8 @@ const ApplicantHomePage = () => {
     const applicantJobState = useSelector((state) => state.applicantJob)
     const dispatch = useDispatch();
 
-    const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch);
+const [ userName, setUserName] = useState(null)    
+const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispatch);
 
     let pageSize = 6;
     let pagesCount = applicantJobState.length > 0 && Math.ceil(applicantJobState.length / pageSize);
@@ -35,6 +36,16 @@ const ApplicantHomePage = () => {
     }, [])
 
     console.log('ApplicantJob Data', applicantJobState)
+
+    useEffect(() => {
+        if(applicantJobState.length > 0) {
+            setUserName (applicantJobState.pop())
+        }  
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [applicantJobState])
+
+    console.log('poped', userName)
+
     return (
         <div>
             <ApplicantNavbar />
@@ -43,7 +54,7 @@ const ApplicantHomePage = () => {
 
                 <div className="text-box" id="home">
                     <h1>HKFreelancer</h1>
-                    <p>Welcome User</p>
+                    <p>Welcome {userName}</p>
                     <a href="/applicantJobSearch" className="Homebtn">Search Jobs</a>
                 </div>
             </section>

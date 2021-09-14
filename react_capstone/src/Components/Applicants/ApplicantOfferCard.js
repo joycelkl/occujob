@@ -18,7 +18,7 @@ const ApplicantOfferCard = (props) => {
         const dispatch = useDispatch();
         const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
         const { offerDeclineAction } = bindActionCreators(actionCreators, dispatch)
-        const { loadErProfileThunkAction } = bindActionCreators(actionCreators, dispatch)
+        const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
 
 
         const { offerCard } = props;
@@ -33,7 +33,8 @@ const ApplicantOfferCard = (props) => {
 //to employer profile page
         const history = useHistory();
         function handleOnClick() {
-            loadErProfileThunkAction(er_id).then(() => {
+            console.log('this is for applicant')
+           loadErProfileforAppThunkAction(er_id).then(() => {
                 history.push('/applicantEmployerDetails')
             })
         }

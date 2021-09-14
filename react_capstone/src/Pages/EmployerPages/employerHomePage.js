@@ -14,7 +14,7 @@ const EmployerHomePage = () => {
     const dispatch = useDispatch();
 
     const { loadEmployerJobThunkAction } = bindActionCreators(actionCreators, dispatch)
-   
+const [ userName, setUserName] = useState(null)
     let pageSize = 6;
     let pagesCount = employerJobState.length > 0 && Math.ceil(employerJobState.length / pageSize);
 
@@ -35,6 +35,15 @@ const EmployerHomePage = () => {
 
     console.log('employer Job', employerJobState)
 
+    useEffect(() => {
+        if(employerJobState.length > 0) {
+            setUserName (employerJobState.pop())
+        }  
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [employerJobState])
+   
+
+    console.log('poped', userName)
 
     return (
         <div>
@@ -44,7 +53,7 @@ const EmployerHomePage = () => {
 
                 <div className="text-box" id="home">
                     <h1>HKFreelancer</h1>
-                    <p>Welcome User</p>
+                    <p>Welcome {userName}</p>
                     <a href="/employerCreateJobPage" className="Homebtn">Post A Job</a>
                 </div>
             </section>
