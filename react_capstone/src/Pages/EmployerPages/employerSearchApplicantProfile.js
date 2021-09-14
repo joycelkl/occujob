@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
@@ -7,7 +7,7 @@ import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
-import { useHistory } from 'react-router';
+
 
 const EmployerSearchApplicantProfile = () => {
     const profile = useSelector((state) => state.profile)
@@ -15,10 +15,16 @@ const EmployerSearchApplicantProfile = () => {
     console.log("individual job", profile)
 
     const dispatch = useDispatch()
-    const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = profile
+    const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators,dispatch);
+
+    const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill} = profile
 
 
 
+    useEffect(()=>{
+        loadApplicantSearchProfileThunkAction(ee_id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     return (
         <div>
@@ -87,7 +93,16 @@ const EmployerSearchApplicantProfile = () => {
                                                 <h6 style={{marginTop:"10px"}}>{ee_skill}</h6>
                                             </div>
                                         </FormGroup>
-
+                                    </div>
+                                    <div class="row">
+                                        <FormGroup>
+                                            <div class="col-md-6">
+                                                <Label for="Text">Job Function</Label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 style={{marginTop:"10px"}}>{ee_industry}</h6>
+                                            </div>
+                                        </FormGroup>
                                     </div>
                                     <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
@@ -112,8 +127,6 @@ const EmployerSearchApplicantProfile = () => {
                                                 <h6 style={{marginTop:"10px"}}>{availability}</h6>
                                             </div>
                                         </FormGroup>
-                                        
-
                                     </div>
                                     <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
@@ -128,12 +141,6 @@ const EmployerSearchApplicantProfile = () => {
                                         </FormGroup>
 
                                     </div>
-
-
-
-
-
-                                
                             </div>
                         </div>
                     </div>
