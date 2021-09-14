@@ -37,7 +37,7 @@ class JobServices {
             .join('employer', 'employer.er_id', '=', 'job.employer_id')
             .where('job.status', true)
             .select('job.job_type', 'job.job_title', 'employer.er_name', 'job.created_at', 'employer.er_img_data', 'job.expect_salary')
-            .orderBy('updated_at', 'desc')
+            .orderBy('job.updated_at', 'desc')
             .then((jobDetail) => {
                 console.log('public', jobDetail)
                 return jobDetail
