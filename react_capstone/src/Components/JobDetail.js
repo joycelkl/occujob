@@ -86,12 +86,12 @@ const JobDetail = (props) => {
                         <h5>{job_function}</h5>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Work Period</Label>
-                        <Input type="text" name="select" id="preferworklocation" value={work_period} disabled />
+                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px", fontSize: "20px" }}>Work Period</Label>
+                        <h5>{work_period}</h5>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Work Location</Label>
-                        <Input type="text" name="select" id="preferworklocation" value={job_location} disabled />
+                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px", fontSize: "20px" }}>Work Location</Label>
+                        <h5>{job_location}</h5>
                     </FormGroup>
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>
