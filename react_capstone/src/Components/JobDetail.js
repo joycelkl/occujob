@@ -11,11 +11,10 @@ import "../Pages/EmployerPages/employerProfilePage.css"
 
 const JobDetail = (props) => {
     const applyToast = () => toast("You Have Applied this Job")
+    const dispatch = useDispatch();
     const { indJob } = props;
     const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
-    console.log("???", job_id, job_title)
-
-    const dispatch = useDispatch();
+ 
 
     const { loadErProfileThunkAction } = bindActionCreators(actionCreators, dispatch)
 
@@ -34,7 +33,6 @@ const JobDetail = (props) => {
     const history = useHistory();
 
     function handleOnClick() {
-        applyToast()
         loadErProfileThunkAction(er_id).then(() => {
             history.push('/applicantEmployerDetails')
         })
@@ -59,7 +57,7 @@ const JobDetail = (props) => {
                         <div class="col-md-6">
                             <div class="profile-head" style={{ marginTop: "25px" }}>
                                 <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Company Name</Label>
-                                <h4>{er_name}</h4>
+                                <h4>{er_name} ID{er_id}</h4>
                                 <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Job Title</Label>
                                 <h4>{job_title}</h4>
                             </div>
