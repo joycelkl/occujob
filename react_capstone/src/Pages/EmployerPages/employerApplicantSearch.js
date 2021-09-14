@@ -225,6 +225,10 @@ const EmployerApplicantSearch = () => {
   
     console.log('submitted', availableArr, jobFunctionArr, expSalary, locationArr, skillsArr, salaryType, workExp)
 
+    const searchObject = {available, jobFunction, expSalary, location, skills, salaryType, workExp}
+    
+    localStorage.setItem('appSearch', JSON.stringify(searchObject))
+
     erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
       .then(() => {
         history.push('/employerApplicantSearchList')
