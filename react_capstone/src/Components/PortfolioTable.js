@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Form, FormGroup, Label, Input, Table, Button } from 'reactstrap';
+import React from "react";
 import "../Pages/EmployerPages/employerProfilePage.css"
 
 

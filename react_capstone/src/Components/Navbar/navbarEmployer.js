@@ -25,7 +25,7 @@ const EmployerNavbar = () => {
         <nav className="mainNav">
             <div className="logo">
             <a href="/employerHomePage">
-            <img src={logo} width="240" height="100" />
+            <img src={logo} alt='' width="240" height="100" />
             </a>
             </div>
             <div className="navMenuIcon" onClick={handleClick}>

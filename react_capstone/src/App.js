@@ -24,8 +24,6 @@ import EmployerApplicantSearchList from './Pages/EmployerPages/employerApplicant
 import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearchApplicantProfile';
 import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
 import EmployerSignUp from './Pages/EmployerPages/employerSignup';
-import EmployerProfilePageR from './Pages/EmployerPages/employerProfilePage_r';
-import EmployerProfilePageStyle from './Pages/EmployerPages/employerProfilePageWithStyle';
 import ApplicantEmployerDetails from './Pages/ApplicantPages/applicantEmployerDetails';
 
 const PublicRoute = ({component, ...rest}) => {
@@ -109,8 +107,6 @@ function App() {
         <PrivateRoute path = "/applicantOfferDetail" component = { ApplicantOfferDetail }/> 
         <PrivateRoute path = "/applicantHomePage" component = { ApplicantHomePage } />
         <PrivateRoute path = "/applicantEmployerDetails" component = { ApplicantEmployerDetails } />
-        <PrivateRoute path = "/employerProfilePager" component = { EmployerProfilePageR } /> 
-        <PrivateRoute path = "/employerProfilePageStyle" component = { EmployerProfilePageStyle } /> 
         </Switch>
         </ Router>
 

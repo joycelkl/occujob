@@ -8,7 +8,6 @@ import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import logoBackground from '../../Images/logoBackground.png';
 import "../Applicant CSS/applicantLogin.css"
 
 
@@ -40,8 +39,8 @@ const EmployerLogin = () => {
         if (error) {
             invalidToast()
             errorValueAction()
-
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error]);
 
     function validEmail(email) {

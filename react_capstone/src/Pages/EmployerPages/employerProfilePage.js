@@ -42,7 +42,7 @@ const EmployerProfilePage = () => {
   const [email, setEmail] = useState(er_email)
   const [toggleAbout, setToggleAbout] = useState(true);
   const [toggleContact, setToggleContact] = useState(false);
-  const [toggleJobPreference, setToggleJobPreference] = useState(false);
+  
 
   useEffect(() => {
     loadErProfileThunkAction();
