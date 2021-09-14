@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, FormGroup, Label, Input } from 'reactstrap';
-import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
+import ApplicantNavbar from '../../Components/Navbar/navbarApplicant';
 import '../EmployerPages/employerProfilePage.css'
 import {useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ const ApplicantEmployerDetails = () => {
     const {comp_description, er_img_data, er_industry, er_location, er_name} = erProfile
     return (
         <div>
-            <EmployerNavbar />
+            <ApplicantNavbar />
             <div class="container emp-profile">
                 <Form className='form-group' >
                     <div class="row">

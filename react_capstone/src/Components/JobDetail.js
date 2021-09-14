@@ -5,9 +5,12 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../Redux';
 import { useHistory } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../Pages/EmployerPages/employerProfilePage.css"
 
 const JobDetail = (props) => {
+    const applyToast = () => toast("You Have Applied this Job")
     const { indJob } = props;
     const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
     console.log("???", job_id, job_title)
@@ -30,6 +33,7 @@ const JobDetail = (props) => {
     const history = useHistory();
 
     function handleOnClick() {
+        applyToast()
         loadErProfileThunkAction(er_id).then(() => {
             history.push('/applicantEmployerDetails')
         })
@@ -101,6 +105,7 @@ const JobDetail = (props) => {
                     </div>
                 </Form>
             </div>
+            <ToastContainer />
         </div >
     )
 }
