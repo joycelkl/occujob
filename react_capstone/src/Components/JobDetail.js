@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import authAxios from '../Redux/authAxios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../Redux';
 import { useHistory } from 'react-router';
@@ -9,7 +9,7 @@ import "../Pages/EmployerPages/employerProfilePage.css"
 
 const JobDetail = (props) => {
     const { indJob } = props;
-    const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp } = indJob[0];
+    const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
     console.log("???", job_id, job_title)
 
     const dispatch = useDispatch();
@@ -86,8 +86,12 @@ const JobDetail = (props) => {
                         <h5>{job_function}</h5>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="preferworklocation" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Work Location</Label>
-                        <h5>{job_location}</h5>
+                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Work Period</Label>
+                        <Input type="text" name="select" id="preferworklocation" value={work_period} disabled />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Work Location</Label>
+                        <Input type="text" name="select" id="preferworklocation" value={job_location} disabled />
                     </FormGroup>
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>

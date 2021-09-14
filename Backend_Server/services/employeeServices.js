@@ -95,7 +95,7 @@ class EmployeeService {
 
         let jobTitleArr = []
         if (jobTitle.length == 0) {
-            jobTitleArr = ['default', 'default', 'default']
+            jobTitleArr = ['', '', '']
         } else {
             jobTitleArr = jobTitle.map((tag) => {
                 return tag.toUpperCase();
@@ -111,7 +111,7 @@ class EmployeeService {
 
         let companyArr = []
         if (company == null) {
-            companyArr = ['default', 'default', 'default']
+            companyArr = ['', '', '']
         } else {
             if (!Array.isArray(company)) {
                 companyArr.push(company)
@@ -129,7 +129,7 @@ class EmployeeService {
 
         let jobFunctionArr = []
         if (jobFunction == null) {
-            jobFunctionArr = ['default', 'default', 'default']
+            jobFunctionArr = ['', '', '']
         } else {
             if (!Array.isArray(jobFunction)) {
                 jobFunctionArr.push(jobFunction)
@@ -147,7 +147,7 @@ class EmployeeService {
 
         let locationArr = []
         if (location == null) {
-            locationArr = ['default', 'default', 'default']
+            locationArr = ['', '', '']
         } else {
             if (!Array.isArray(location)) {
                 locationArr.push(location)
@@ -182,9 +182,9 @@ class EmployeeService {
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
-                .orWhere('employer.er_name', companyArr[0])
-                .orWhere('employer.er_name', companyArr[1])
-                .orWhere('employer.er_name', companyArr[2])
+                .andWhere('employer.er_name', companyArr[0])
+                .andWhere('employer.er_name', companyArr[1])
+                .andWhere('employer.er_name', companyArr[2])
                 .orWhere('job.job_function', jobFunctionArr[0])
                 .orWhere('job.job_function', jobFunctionArr[1])
                 .orWhere('job.job_function', jobFunctionArr[2])

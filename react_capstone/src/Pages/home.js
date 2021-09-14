@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { Card, Badge } from 'react-bootstrap';
 import Navbar from '../Components/Navbar/navbarLogin';
 import "./homePage.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../Redux';
 import HomeCard from '../Components/HomeCard';
-import { FaTruckLoading } from 'react-icons/fa';
+
 
 const Home = () => {
 

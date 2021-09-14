@@ -135,9 +135,9 @@ const EmployerEditPost = () => {
     let year = date.getFullYear();
 
     let createDate = new Date(jobCreate)
-    let createDay = date.getDate();
-    let createMonth = date.getMonth() + 1;
-    let createYear = date.getFullYear();
+    let createDay = createDate.getDate();
+    let createMonth = createDate.getMonth() + 1;
+    let createYear = createDate.getFullYear();
     return (
         <div>
             <EmployerNavbar />

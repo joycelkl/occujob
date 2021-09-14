@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Card, Badge } from 'react-bootstrap';
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -30,12 +30,16 @@ const ApplicantOfferCard = (props) => {
 
         function handleAccept() {
             console.log('application id', application_id)
+            acceptToast()
             offerAcceptAction(application_id)
+            setModal(false)
         }
 
         function handleDecline() {
             console.log('application id', application_id)
+            declineToast()
             offerDeclineAction(application_id)
+            setModal(false)
         }
 
 
@@ -57,7 +61,8 @@ const ApplicantOfferCard = (props) => {
                 <Card.Subtitle className="text-muted mb-2">
                     {day + "/" + month + "/" + year}
                 </Card.Subtitle>
-                {offer? <p className="flex" style={{backgroundColor:"green"}}>{String(offer)}</p>: <p></p>}
+                {offer && reply === null? <p className="flex" style={{color:"tomato"}}>Congration!! You have an offer!</p>: <p></p>}
+                {offer && reply !== null ? <p className="flex" style={{color:"tomato"}}>You have {reply ? "accepted" : "declined" } the offer</p>: <p></p>}
                 <Badge className="job-list-badge" variant="secondary" style={{marginRight:'5px'}}>{job_type}</Badge>
                 <Badge className="job-list-badge" variant="secondary">{job_location}</Badge>
                 </div>
@@ -76,8 +81,8 @@ const ApplicantOfferCard = (props) => {
         Required Exp: {req_exp}<br/>
         </ModalBody>
         <ModalFooter>
-            {reply === null ? <Button color="primary" onClick={()=>handleAccept()}>accept</Button> : null }
-            {reply === null ? <Button color="primary" onClick={()=>handleDecline()}>decline</Button> : null }
+            {reply === null && offer ? <Button color="primary" onClick={()=>handleAccept()}>accept</Button> : null }
+            {reply === null  && offer ? <Button color="primary" onClick={()=>handleDecline()}>decline</Button> : null }
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
         <ToastContainer />
