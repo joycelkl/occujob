@@ -67,7 +67,7 @@ const EmployerApplicantSearchList = () => {
                             <tr onClick={() => handleOnclick(result.ee_id)} key={result.ee_id} value={result.ee_id} style={{ cursor: "pointer" }} >
                                 <td>{result.ee_name}</td>
                                 <td>{result.ee_industry}</td>
-                                <td>{result.expected_Salary}</td>
+                                <td>{result.expected_salary} {result.ee_salary_type}</td>
                                 <td>{result.availability}</td>
                             </tr>
 
