@@ -47,7 +47,7 @@ const Job= (props)=>{
                 <Badge className="job-list-badge2" variant="secondary">{job_location}</Badge>
                 
             </div>
-        <img className="d-none d-md-block" height="100" src={er_img_data} alt="test"/>
+            {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test" /> : <p></p>}
         </div>
     </Card.Body>
 </Card>)
