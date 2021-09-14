@@ -2,11 +2,11 @@ import authAxios from '../authAxios'
 
 export const LOAD_APP_PORTFOLIO_SUCCESS_ACTION = 'LOAD_APP_PORTFOLIO_SUCCESS';
 
-export const loadAppPortfolioSuccessAction = (profile) => {
+export const loadAppPortfolioSuccessAction = (portfolio) => {
     return (dispatch) => {
         dispatch({
             type: LOAD_APP_PORTFOLIO_SUCCESS_ACTION,
-            payload: profile
+            payload: portfolio
         })
     }
 }
@@ -27,6 +27,7 @@ export const loadAppPortfolioThunkAction = () => async(dispatch) => {
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employee/portfolio').then(res => {
+            console.log('res in getting port', res)
             dispatch(loadAppPortfolioSuccessAction(res.data))
         }).catch(err => {
             console.log("applicant portfolio load err res", err.response)
@@ -47,6 +48,7 @@ export const addAppPortfolioThunkAction = (pName, pDes, purl) => async(dispatch)
             pDes: pDes,
             purl: purl
         }).then(res => {
+            console.log('res in adding p', res)
             dispatch(loadAppPortfolioSuccessAction(res.data))
         }).catch(err => {
             console.log("applicant portfolio add err res", err.response)
@@ -79,6 +81,17 @@ export const updateAppPortfolioThunkAction = (p_id, pName, pDes, purl) => async(
     }
 }
 
+export const DELETE_APP_PORTFOLIO_SUCCESS_ACTION = 'DELETE_APP_PORTFOLIO_SUCCESS';
+
+export const deleteAppPortfolioSuccessAction = (portfolio) => {
+    return (dispatch) => {
+        dispatch({
+            type: DELETE_APP_PORTFOLIO_SUCCESS_ACTION,
+            payload: portfolio
+        })
+    }
+}
+
 //delete portfolio
 export const deleteAppPortfolioThunkAction = (p_id) => async(dispatch) => {
     console.log("ER Profile Load")
@@ -87,7 +100,7 @@ export const deleteAppPortfolioThunkAction = (p_id) => async(dispatch) => {
         await authAxiosConfig.post('/employee/portfolio/delete', {
             p_id: p_id
         }).then(res => {
-            dispatch(loadAppPortfolioSuccessAction(res.data))
+            dispatch(deleteAppPortfolioSuccessAction(res.data))
         }).catch(err => {
             console.log("applicant portfolio delete err res", err.response)
             dispatch(loadAppPortfolioFailAction())

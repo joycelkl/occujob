@@ -13,7 +13,6 @@ const PortfolioTable = props => {
 
     const { loadAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { addAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
-    // const { updateAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { deleteAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     const portfolioState = useSelector((state) => state.appPortfolio);
@@ -27,25 +26,9 @@ const PortfolioTable = props => {
     const [portName, setPortName] = useState(null);
     const [portDes, setPortDes] = useState(null);
     const [fileData, setFileData] = useState(null);
-    const [fileNum, setFileNum] = useState(0)
+    const [fileName, setFileName] = useState(null)
+    console.log('fileName', fileName)
     
-
-  
-    // const [pUrl1, setPurl1] = useState(null)
-    // const [portName2, setPortName2] = useState(null)
-    // const [portDes2, setPortDes2] = useState(null)
-    // const [portName3, setPortName3] = useState(null)
-    // const [portDes3, setPortDes3] = useState(null)
-
-    useEffect(() => {
-        setFileNum(portfolioState.length+1)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[portfolioState])
-
-   
-
-
-
      //****************DONOT CHANGE THE SETTING HERE*****************************/
   // S3 setup
   const cvConfig = {
@@ -59,7 +42,7 @@ const PortfolioTable = props => {
   const ReactCV = new S3(cvConfig);
 
   //the file name should be the user ID and will change later
-  const newFileCVName = `${eeId}_protfolio_${fileNum}`
+  const newFileCVName = `${eeId}_protfolio_${fileName}`
 
   //***************************************************** */
     function uploadCV(e) {
@@ -69,10 +52,15 @@ const PortfolioTable = props => {
           return
         }
         setFileData(e.target.files[0])
+        setFileName(e.target.files[0].name)
        
       }
 
       function handleOnSave() {
+        if(!portName || !portDes || !fileData){
+          alert('please fill in data for upload')
+          return;
+        }
 
         console.log('dataFile', fileData)
         ReactCV
@@ -81,7 +69,14 @@ const PortfolioTable = props => {
         console.log(data)
         addAppPortfolioThunkAction(portName, portDes, data.location) 
         }).catch(err => console.error(err))
- 
+        reset()
+    }
+
+    function reset() {
+      setPortName(null);
+      setPortDes(null);
+     setFileData(null);
+     setFileName(null)
     }
 
     function handleDelete(id){
@@ -134,7 +129,7 @@ const PortfolioTable = props => {
                 <td><Input type="text" value={portfolio.portfolio_name} disabled /></td>
                 <td><Input type="text" value={portfolio.portfolio_description} disabled/></td>
                 <td><a href={portfolio.portfolio_url}>Download</a></td>
-                <td><p onClick={handleDelete(portfolio.portfolio_id)}>Delete</p></td>
+                <td><p onClick={()=>handleDelete(portfolio.portfolio_id)}>Delete</p></td>
                 </tr>)
             })  
              : <p>Waiting for upload</p>}
