@@ -45,12 +45,12 @@ exports.seed = async function(knex) {
 
             ]).then(() => {
                 return knex('employee').insert([
-                    { ee_name: 'ee1', ee_email: 'ee1@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000, availability: '{monday,sunday}' },
-                    { ee_name: 'ee2', ee_email: 'ee2@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 10000, availability: '{tuesday,friday}' },
-                    { ee_name: 'ee3', ee_email: 'ee3@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 15000, availability: '{tuesday,friday}' },
-                    { ee_name: 'ee4', ee_email: 'ee4@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000, availability: '{monday,sunday}' },
-                    { ee_name: 'ee5', ee_email: 'ee5@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 10000, availability: '{tuesday,friday}' },
-                    { ee_name: 'ee6', ee_email: 'ee6@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 15000, availability: '{tuesday,friday}' }
+                    { ee_name: 'ee1', ee_email: 'ee1@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000, ee_salary_type: 'Per Job',availability: '{monday,sunday}' },
+                    { ee_name: 'ee2', ee_email: 'ee2@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 10000, ee_salary_type: 'Per Job', availability: '{tuesday,friday}' },
+                    { ee_name: 'ee3', ee_email: 'ee3@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 15000, ee_salary_type: 'Per Job',availability: '{tuesday,friday}' },
+                    { ee_name: 'ee4', ee_email: 'ee4@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000, ee_salary_type: 'Per Job',availability: '{monday,sunday}' },
+                    { ee_name: 'ee5', ee_email: 'ee5@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 70, ee_salary_type: 'Per Hour',availability: '{tuesday,friday}' },
+                    { ee_name: 'ee6', ee_email: 'ee6@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 150, ee_salary_type: 'Per Hour',availability: '{tuesday,friday}' }
 
                 ])
             }).then(() => {
