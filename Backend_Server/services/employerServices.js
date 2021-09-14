@@ -68,7 +68,7 @@ class EmployerServices {
             .join('employer', 'employer.er_id', '=', 'job.employer_id')
             .where('job.employer_id', userId)
             .select("job.*", 'employer.er_img_data')
-            .orderBy('created_at', 'dsec')
+            .orderBy('job.created_at', 'dsec')
             .then((jobList) => {
                 // jobList.map(jobObj => {
                 //     console.log("id in obj", jobObj.id)
@@ -133,6 +133,7 @@ class EmployerServices {
                         .select({ jobCreate: 'job.created_at' }, 'job.*', 'application.*', 'employee.*')
                         .join('application', 'application.job_id', '=', 'job.job_id')
                         .join('employee', 'employee.ee_id', '=', 'application.employee_id')
+                        .orderBy('application.created_at', 'asc')
                         .where('job.job_id', jobId)
                         .then((jobList_applyDetail) => {
                             console.log('jobList_applyDetail', jobList_applyDetail)
@@ -681,7 +682,8 @@ class EmployerServices {
 
         return this.knex('job')
             .join('employer', 'employer.er_id', '=', 'job.employer_id')
-            .where('job.expiry_date', '>', new Date())
+            .where('job.status', true)
+            .orderBy('job.updated_at', 'desc')
             .select('job.job_title', 'employer.er_name', 'job.created_at', 'employer.er_img_data', 'job.job_id', 'job.job_type')
             .then((jobDetail) => {
                 console.log('public', jobDetail)

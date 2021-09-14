@@ -15,10 +15,9 @@ const ApplicantOfferList = ()=>{
   const dispatch = useDispatch();
 
 const { loadOfferThunkAction } = bindActionCreators(actionCreators, dispatch)
-const {offerAcceptAction} = bindActionCreators(actionCreators, dispatch)
+
 useEffect(() => {
   loadOfferThunkAction();
-  offerAcceptAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
 console.log('Offer', EEOfferState)

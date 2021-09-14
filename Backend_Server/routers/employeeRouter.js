@@ -248,6 +248,19 @@ class EmployeeRouter {
                 })
         })
 
+        router.get('/employerDetail/:er_id', (req, res) => {
+
+            return this.employeeService
+                .loadErProfile(req.params.er_id)
+                .then((data) => {
+                    return res.json(data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    res.status(500).json(err)
+                })
+        })
+
         return router;
     }
 
