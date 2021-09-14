@@ -21,6 +21,7 @@ const JobDetail = (props) => {
 
     async function applyJob(job_id) {
         console.log("offer app ID", job_id)
+        applyToast()
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employee/search/result/${job_id}`)
             .then(res => {

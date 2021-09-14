@@ -1,10 +1,25 @@
 import React from "react";
 import { Card, Badge } from 'react-bootstrap';
 
-const ApplicantHomeCard = (props) => {
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
+const ApplicantHomeCard = (props) => {
+    const dispatch = useDispatch();
     const { applicantJob } = props;
-    const { job_title, er_name, created_at, job_type, job_location, er_img_data } = applicantJob;
+    const { job_id,job_title, er_name, created_at, job_type, job_location, er_img_data } = applicantJob;
+    const { loadSearchIndJobThunkAction } = bindActionCreators(actionCreators, dispatch)
+   
+    const history = useHistory();
+    function handleOnClick () {
+ 
+        console.log('clicked', job_id)
+      loadSearchIndJobThunkAction(job_id).then(()=>{
+        history.push('/applicantJobDetail')
+      })
+    }
 
     //date format
     let date = new Date(created_at)
@@ -13,7 +28,7 @@ const ApplicantHomeCard = (props) => {
     let year = date.getFullYear();
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <Card className='my-4' style={{ width: "70%" }}>
+            <Card className='my-4' style={{ width: "70%" }} onClick={handleOnClick}>
                 <Card.Body>
                     <div className="d-flex justify-content-between">
                         <div>
