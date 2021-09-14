@@ -24,7 +24,7 @@ const ApplicantEmployerDetails = () => {
                             <div class="profile-head">
                                 <FormGroup>
                                     <Label for="Name"><h1>Employer's Name</h1></Label>
-                                    <Input type="text" name="name" value={er_name} id="name" disabled />
+                                    <h3>{er_name}</h3>
                                 </FormGroup>
 
                                 <p class="proile-rating">Ratings : <span>8/10</span></p>
@@ -39,7 +39,7 @@ const ApplicantEmployerDetails = () => {
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="profile-work">
+                            {/* <div class="profile-work">
                                 <p>WORK LINK</p>
                                 <a href="*">Website Link</a><br />
                                 <a href="*">Bootsnipp Profile</a><br />
@@ -50,7 +50,7 @@ const ApplicantEmployerDetails = () => {
                                 <a href="*">WordPress</a><br />
                                 <a href="*">WooCommerce</a><br />
                                 <a href="*">PHP, .Net</a><br />
-                            </div>
+                            </div> */}
                         </div>
 
                         <div class="col-md-8">
@@ -62,28 +62,28 @@ const ApplicantEmployerDetails = () => {
                                             <Label for="Text">Company Description</Label>
                                         </div>
                                         <div class="col-md-6">
-                                            <Input type="textarea" name="text" value={comp_description} id="des" disabled />
+                                            <h6 style={{marginTop:"10px"}}>{comp_description}</h6>
                                         </div>
                                     </FormGroup>
                                 </div>
-                                <div class="row">
+                                <div class="row" style={{marginTop:"20px"}}>
                                     <FormGroup>
                                         <div class="col-md-6">
                                             <Label for="Industry">Industry</Label>
                                         </div>
                                         <div class="col-md-6">
-                                            <Input type="textarea" name="text" value={er_industry} id="des" disabled />
+                                        <h6 style={{marginTop:"10px"}}>{er_industry}</h6>
                                         </div>
                                     </FormGroup>
 
                                 </div>
-                                <div class="row">
+                                <div class="row" style={{marginTop:"20px"}}>
                                     <FormGroup>
                                         <div class="col-md-6">
                                             <Label for="Location">Location</Label>
                                         </div>
                                         <div class="col-md-6">
-                                            <Input type="text" name="skill" id="Skill" placeholder={er_location} disabled />
+                                        <h6 style={{marginTop:"10px"}}>{er_location}</h6>
                                         </div>
                                     </FormGroup>
                                 </div>
