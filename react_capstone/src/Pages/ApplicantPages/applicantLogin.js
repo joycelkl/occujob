@@ -42,8 +42,8 @@ const ApplicantLogin = () => {
         if (error) {
             invalidToast()
             errorValueAction()
-
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error]);
 
     

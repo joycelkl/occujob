@@ -10,10 +10,9 @@ import "../EmployerPages/modalFullPage.css";
 
 const ApplicantOfferList = ()=>{
   
-  const EEOfferState = useSelector((state) => {
-    return state.EEOffer
-})
-const dispatch = useDispatch();
+
+  const EEOfferState = useSelector((state) => state.EEOffer)
+  const dispatch = useDispatch();
 
 const { loadOfferThunkAction } = bindActionCreators(actionCreators, dispatch)
 const {offerAcceptAction} = bindActionCreators(actionCreators, dispatch)

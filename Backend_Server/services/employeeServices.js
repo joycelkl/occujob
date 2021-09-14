@@ -95,7 +95,7 @@ class EmployeeService {
 
         let jobTitleArr = []
         if (jobTitle.length == 0) {
-            jobTitleArr = ['default', 'default', 'default']
+            jobTitleArr = ['', '', '']
         } else {
             jobTitleArr = jobTitle.map((tag) => {
                 return tag.toUpperCase();
@@ -111,7 +111,7 @@ class EmployeeService {
 
         let companyArr = []
         if (company == null) {
-            companyArr = ['default', 'default', 'default']
+            companyArr = ['', '', '']
         } else {
             if (!Array.isArray(company)) {
                 companyArr.push(company)
@@ -129,7 +129,7 @@ class EmployeeService {
 
         let jobFunctionArr = []
         if (jobFunction == null) {
-            jobFunctionArr = ['default', 'default', 'default']
+            jobFunctionArr = ['', '', '']
         } else {
             if (!Array.isArray(jobFunction)) {
                 jobFunctionArr.push(jobFunction)
@@ -147,7 +147,7 @@ class EmployeeService {
 
         let locationArr = []
         if (location == null) {
-            locationArr = ['default', 'default', 'default']
+            locationArr = ['', '', '']
         } else {
             if (!Array.isArray(location)) {
                 locationArr.push(location)
@@ -166,7 +166,7 @@ class EmployeeService {
         if (jobTitle.length === 0 && company === null && jobType === null && salaryType === null && salary === null && jobFunction === null && location === null) {
             return this.knex('job')
                 .join('employer', 'job.employer_id', '=', 'employer.er_id')
-                .select('job.*', 'employer.er_name')
+                .select('job.*', 'employer.er_name', 'employer.er_img_data')
                 .andWhere('job.expiry_date', '>', new Date())
                 .orderBy('updated_at', 'desc')
                 .then((jobList) => {
@@ -178,13 +178,13 @@ class EmployeeService {
         if (salaryType == null) {
             return this.knex('job')
                 .join('employer', 'job.employer_id', '=', 'employer.er_id')
-                .select('job.*', 'employer.er_name')
+                .select('job.*', 'employer.er_name', 'employer.er_img_data')
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
-                .orWhere('employer.er_name', companyArr[0])
-                .orWhere('employer.er_name', companyArr[1])
-                .orWhere('employer.er_name', companyArr[2])
+                .andWhere('employer.er_name', companyArr[0])
+                .andWhere('employer.er_name', companyArr[1])
+                .andWhere('employer.er_name', companyArr[2])
                 .orWhere('job.job_function', jobFunctionArr[0])
                 .orWhere('job.job_function', jobFunctionArr[1])
                 .orWhere('job.job_function', jobFunctionArr[2])
@@ -201,7 +201,7 @@ class EmployeeService {
         } else {
             return this.knex('job')
                 .join('employer', 'job.employer_id', '=', 'employer.er_id')
-                .select('job.*', 'employer.er_name')
+                .select('job.*', 'employer.er_name', 'employer.er_img_data')
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
                 .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
@@ -354,15 +354,17 @@ class EmployeeService {
     }
 
     addPortfolio(ee_id, pName, pDes, purl) {
+        console.log('adding portfolio', ee_id, pName, pDes, purl)
         return this.knex('portfolio')
             .insert({
                 employee_id: ee_id,
                 portfolio_url: purl,
                 portfolio_name: pName,
-                protfolio_description: pDes
+                portfolio_description: pDes
             })
             .returning('*')
             .then((portfolio) => {
+                console.log('saved portfolio', portfolio)
                 return portfolio
             })
             .catch((err) => {
@@ -372,9 +374,12 @@ class EmployeeService {
     }
 
     getPortfolio(ee_id) {
+        console.log('ee_id', ee_id)
         return this.knex('portfolio')
             .where('employee_id', ee_id)
+            .returning('*')
             .then((portfolio) => {
+                console.log('getting port in service', portfolio)
                 return portfolio
             })
             .catch((err) => {
@@ -405,8 +410,9 @@ class EmployeeService {
         return this.knex('portfolio')
             .where('portfolio_id', p_id)
             .del()
-            .then(() => {
-                return 'deleted'
+            .returning('*')
+            .then((data) => {
+                return data
             })
             .catch((err) => {
                 console.error(err)

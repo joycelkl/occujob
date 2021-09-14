@@ -39,8 +39,8 @@ const EmployerLogin = () => {
         if (error) {
             invalidToast()
             errorValueAction()
-
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error]);
 
     function validEmail(email) {

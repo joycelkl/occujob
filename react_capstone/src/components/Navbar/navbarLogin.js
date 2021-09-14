@@ -24,7 +24,7 @@ const Navbar = () => {
         <nav className="mainNav">
             <div className="logo">
             <a href="/">
-            <img src={logo} width="240" height="100" alt='logo'/>
+            <img src={logo} alt='' width="240" height="100" />
             </a>
             </div>
             <div className="navMenuIcon" onClick={handleClick}>

@@ -23,6 +23,7 @@ class EmployeeRouter {
 
         //tested ok
         router.post('/profile', (req, res) => {
+
             //should take the form job and 
             const { name, intro, phone, expectedSalary, industry, availability, location, image, exp, skill, salaryType } = req.body
 
@@ -192,11 +193,11 @@ class EmployeeRouter {
 
         //getting portfolio by eeid
         router.get('/portfolio', (req, res) => {
-
+            console.log('getting port', req.user.id)
             return this.employeeService
                 .getPortfolio(req.user.id)
                 .then((portfolio) => {
-                    return portfolio
+                    return res.json(portfolio)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -205,12 +206,13 @@ class EmployeeRouter {
         })
 
         router.post('/portfolio/add', (req, res) => {
-            const { pName, pDes, purl } = res.body
+            const { pName, pDes, purl } = req.body
+            console.log('adding p in router', pName, pDes, purl)
 
             return this.employeeService
                 .addPortfolio(req.user.id, pName, pDes, purl)
                 .then((portfolio) => {
-                    return portfolio
+                    return res.json(portfolio)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -219,12 +221,12 @@ class EmployeeRouter {
         })
 
         router.post('/portfolio/update', (req, res) => {
-            const { p_id, pName, pDes, purl } = res.body
+            const { p_id, pName, pDes, purl } = req.body
 
             return this.employeeService
                 .updatePortfolio(p_id, pName, pDes, purl)
                 .then((updatedP) => {
-                    return updatedP
+                    return res.json(updatedP)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -233,12 +235,12 @@ class EmployeeRouter {
         })
 
         router.post('/portfolio/delete', (req, res) => {
-            const { p_id } = res.body
+            const { p_id } = req.body
 
             return this.employeeService
                 .delPortfolio(p_id)
-                .then(() => {
-                    return 'deleted'
+                .then((data) => {
+                    return res.json(data)
                 })
                 .catch((err) => {
                     console.log(err)
