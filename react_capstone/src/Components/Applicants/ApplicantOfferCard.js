@@ -3,7 +3,7 @@ import { Card, Badge } from 'react-bootstrap';
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button, FormGroup, Label, Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Button, FormGroup, Label, Input, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';

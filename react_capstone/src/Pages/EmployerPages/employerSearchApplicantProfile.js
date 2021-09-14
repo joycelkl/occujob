@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -92,16 +92,6 @@ const EmployerSearchApplicantProfile = () => {
                                             </div>
                                         </FormGroup>
                                     </div>
-                                    <div class="row">
-                                        <FormGroup>
-                                            <div class="col-md-6">
-                                                <Label for="Text">Job Function</Label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6 style={{marginTop:"10px"}}>{ee_industry}</h6>
-                                            </div>
-                                        </FormGroup>
-                                    </div>
                                     <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
                                             <div class="col-md-6">
@@ -113,7 +103,26 @@ const EmployerSearchApplicantProfile = () => {
                                             </div>
                                         </FormGroup>
                                     </div>
-
+                                    <div class="row">
+                                        <FormGroup>
+                                            <div class="col-md-6">
+                                                <Label for="Text">Job Function</Label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 style={{marginTop:"10px"}}>{ee_industry}</h6>
+                                            </div>
+                                        </FormGroup>
+                                    </div>
+                                    <div class="row">
+                                        <FormGroup>
+                                            <div class="col-md-6">
+                                                <Label for="Text">Perferred Location</Label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 style={{marginTop:"10px"}}>{ee_location}</h6>
+                                            </div>
+                                        </FormGroup>
+                                    </div>
                                     <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
 
