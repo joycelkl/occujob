@@ -134,8 +134,8 @@ const EmployerProfilePage = () => {
             <div class="col-md-6">
               <div class="profile-head">
                 <FormGroup>
-                  <Label for="companyName" >Company Name</Label><br></br>
-                  <Input type="text" name="companyName" id="companyName" value={name} onChange={(e) => setName(e.target.value)} disabled />
+                 
+                  <h2>{name}</h2>
                 </FormGroup>
                 {/* <h6>
                   Web Developer and Designer
@@ -174,17 +174,18 @@ const EmployerProfilePage = () => {
                             <Label for="email">Email</Label>
                           </div>
                           <div class="col-md-6">
-                            <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
+                            {/* <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled /> */}
+                            <h6 style={{color:"black", marginTop:"10px"}}> {email} </h6>
                           </div>
                         </FormGroup>
                       </div>
-                      <div class="row">
+                      <div class="row" style={{marginTop:"20px"}}>
                         <FormGroup>
                           <div class="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
                           <div class="col-md-6">
-                            <Input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
+                            <Input style={{marginTop:"10px"}} type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
                           </div>
                         </FormGroup>
                       </div>
@@ -193,36 +194,36 @@ const EmployerProfilePage = () => {
 
                   {toggleAbout &&
                   <div>
-                  <div class="row">
+                  <div class="row" >
                     <FormGroup>
 
                       <div class="col-md-6">
                         <Label for="compDes">Company Description</Label><br></br>
                       </div>
                       <div class="col-md-6">
-                        <Input type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
+                        <Input style={{marginTop:"10px"}} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
                       </div>
                     </FormGroup>
                   </div>
-                  <div class="row">
+                  <div class="row" style={{marginTop:"20px"}}>
                     <FormGroup>
                       <div class="col-md-6">
                         <Label for="industry">Industry</Label>
                       </div>
                       <div class="col-md-6">
-                        <Input type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
+                        <Input style={{marginTop:"10px"}} type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
                       </div>
                     </FormGroup>
 
                   </div>
-                  <div class="row">
+                  <div class="row" style={{marginTop:"20px"}}>
                     <FormGroup>
 
                       <div class="col-md-6">
                         <Label for="location">Location</Label>
                       </div>
                       <div class="col-md-6">
-                        <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                        <Input style={{marginTop:"10px"}} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                           <option value={null} selected>Please select</option>
                           {locationState.length > 0 ? locationState.map((location, i) => (
                             <option key={i} value={location.location}>{location.location}</option>

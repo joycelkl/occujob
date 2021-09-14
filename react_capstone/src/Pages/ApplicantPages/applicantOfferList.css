@@ -44,7 +44,7 @@
   
   .Homebtn:hover {
     border: 1px solid black;
-    background: rgb(0, 180, 216);
+    background: rgb(59, 105, 121);
     transition: 1s;
     text-decoration: none;
     color: white;
@@ -65,7 +65,7 @@
   
   .offerListHomebtn2:hover {
     border: 1px solid black;
-    background: rgb(0, 180, 216);
+    background: rgb(59, 105, 121);
     transition: 1s;
     text-decoration: none;
     color: white;

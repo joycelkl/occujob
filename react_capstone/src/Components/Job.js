@@ -10,7 +10,7 @@ import { useHistory } from 'react-router';
 
 const Job= (props)=>{
 
-    const {job_id, job_title, er_name, created_at, job_type, job_location} = props.job
+    const {job_id, job_title, er_name, created_at, job_type, job_location, er_img_data} = props.job
  
     
     const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const Job= (props)=>{
                 <Badge className="job-list-badge2" variant="secondary">{job_location}</Badge>
                 
             </div>
-        <img className="d-none d-md-block" height="100" src="https://winmagictoys.com/wp-content/uploads/2018/09/dummy-logo.png" alt="test"/>
+            {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test" /> : <p></p>}
         </div>
     </Card.Body>
 </Card>)

@@ -1,5 +1,5 @@
 .mainNav{
-    background:rgb(0, 119, 182);
+    background:rgb(59, 105, 121);
     /* padding: 20px; */
     display:flex;
     justify-content: space-between;
@@ -17,9 +17,6 @@
 
 
 
-.navLogo font {
-    color: #fff;
-}
 
 .navMenuList {
     list-style-type: none;
@@ -29,6 +26,7 @@
     cursor: pointer;
     margin-top: 10px;
     
+    
 }
 
 .navMenuList li a {
@@ -37,7 +35,8 @@
     font-weight: 300;
     padding: 5px 10px;
     margin-left: 20px;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .navMenuList li a:hover {
