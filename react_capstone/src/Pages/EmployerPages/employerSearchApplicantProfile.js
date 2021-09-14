@@ -113,7 +113,7 @@ const EmployerSearchApplicantProfile = () => {
                                         </div>
                                     </FormGroup>
                                 </div>
-                                <div class="row">
+                                <div class="row" style={{ marginTop: "20px" }}>
                                     <FormGroup>
                                         <div class="col-md-6">
                                             <Label for="Text">Perferred Location</Label>
