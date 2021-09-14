@@ -497,7 +497,7 @@ const ApplicantProfile = () => {
 
         {/* <div className="row">
 
-                      <Form classNameName="form-group" onSubmit={(e)=>uploadCV(e)}>
+                      <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>
                       <FormGroup>
                         <div className="col-md-6">
                           <Label for="uploadCV">Upload CV </Label>
