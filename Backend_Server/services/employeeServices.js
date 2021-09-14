@@ -354,15 +354,17 @@ class EmployeeService {
     }
 
     addPortfolio(ee_id, pName, pDes, purl) {
+        console.log('adding portfolio', ee_id, pName, pDes, purl)
         return this.knex('portfolio')
             .insert({
                 employee_id: ee_id,
                 portfolio_url: purl,
                 portfolio_name: pName,
-                protfolio_description: pDes
+                portfolio_description: pDes
             })
             .returning('*')
             .then((portfolio) => {
+                console.log('saved portfolio', portfolio)
                 return portfolio
             })
             .catch((err) => {
@@ -372,9 +374,12 @@ class EmployeeService {
     }
 
     getPortfolio(ee_id) {
+        console.log('ee_id', ee_id)
         return this.knex('portfolio')
             .where('employee_id', ee_id)
+            .returning('*')
             .then((portfolio) => {
+                console.log('getting port in service', portfolio)
                 return portfolio
             })
             .catch((err) => {
@@ -405,8 +410,9 @@ class EmployeeService {
         return this.knex('portfolio')
             .where('portfolio_id', p_id)
             .del()
-            .then(() => {
-                return 'deleted'
+            .returning('*')
+            .then((data) => {
+                return data
             })
             .catch((err) => {
                 console.error(err)
