@@ -174,8 +174,8 @@ const ApplicantProfile = () => {
       isMulti
       name="availability"
       options={avaData}
-      classNameName="basic-multi-select"
-      classNameNamePrefix="select"
+      className="basic-multi-select"
+      classNamePrefix="select"
     />
   )
 
