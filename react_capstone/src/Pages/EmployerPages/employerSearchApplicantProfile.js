@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
-import ProfileImage from "../../Components/ProfileImage";
-import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../Redux';
-import { useHistory } from 'react-router';
+
 
 const EmployerSearchApplicantProfile = () => {
     const profile = useSelector((state) => state.profile)
 
     console.log("individual job", profile)
 
-    const dispatch = useDispatch()
-    const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = profile
-
-
-
+    const { ee_name, ee_img_data, self_intro, expected_salary, availability, ee_exp, ee_skill} = profile
 
     return (
         <div>

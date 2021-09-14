@@ -1,5 +1,4 @@
 import React from "react";
-import {Button} from 'reactstrap';
 import JobDetail from "../../Components/JobDetail";
 import ApplicantNavbar
  from "../../Components/Navbar/navbarApplicant";

@@ -9,7 +9,6 @@ import { useHistory } from 'react-router';
 import '../Applicant CSS/applicantLogin.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 
