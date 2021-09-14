@@ -36,7 +36,7 @@ const EmployerSearchApplicantProfile = () => {
                             <div class="profile-head">
                                 <FormGroup>
                                     <Label for="Name"><h1>Applicant's Name</h1></Label>
-                                    <Input type="text" name="name" value={ee_name} id="name" disabled />
+                                    <h4>{ee_name}</h4>
                                 </FormGroup>
 
                                 <p class="proile-rating">Ratings : <span>8/10</span></p>
@@ -74,53 +74,56 @@ const EmployerSearchApplicantProfile = () => {
                                                 <Label for="Text">Self-Introduction</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" value={self_intro}id="intro" disabled/>
+                                                <h6 style={{marginTop:"10px"}}>{self_intro}</h6>
                                             </div>
                                         </FormGroup>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
                                             <div class="col-md-6">
                                                 <Label for="Skill">Skills</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" value={ee_skill}id="skills" disabled/>
+                                                <h6 style={{marginTop:"10px"}}>{ee_skill}</h6>
                                             </div>
                                         </FormGroup>
 
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
                                             <div class="col-md-6">
                                                 <Label for="Skill">No. of Year of Working Experience</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="text" name="skill" id="Skill" placeholder={ee_exp} disabled/>
+                                                
+                                                <h6 style={{marginTop:"10px"}}>{ee_exp}</h6>
                                             </div>
                                         </FormGroup>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
 
                                             <div class="col-md-6">
                                                 <Label for="Availabilty">Availabilty</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" id="availability" value={availability} disabled/>
+                                                
+                                                <h6 style={{marginTop:"10px"}}>{availability}</h6>
                                             </div>
                                         </FormGroup>
                                         
 
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
 
                                             <div class="col-md-6">
                                                 <Label for="Availabilty">Expected Salary</Label>
                                             </div>
                                             <div class="col-md-6">
-                                                <Input type="textarea" name="text" id="expectedSalary" value={expected_salary} disabled/>
+                                                
+                                                <h6 style={{marginTop:"10px"}}>{expected_salary}</h6>
                                             </div>
                                         </FormGroup>
 

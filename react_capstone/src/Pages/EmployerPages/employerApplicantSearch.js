@@ -237,7 +237,7 @@ const EmployerApplicantSearch = () => {
       <EmployerNavbar />
       <div className="searchHeader">
         <Container>
-        <h1 className='mt-5' style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline'}}>Candidate Search</h1>
+        <h1 className='mt-5' style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline'}}>Applicant Search</h1>
           <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
             <div className="mb-3 search-text-box text-start" id="home">
               <Row>
