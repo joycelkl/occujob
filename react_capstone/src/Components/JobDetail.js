@@ -5,9 +5,12 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../Redux';
 import { useHistory } from 'react-router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../Pages/EmployerPages/employerProfilePage.css"
 
 const JobDetail = (props) => {
+    const applyToast = () => toast("You Have Applied this Job")
     const { indJob } = props;
     const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
     console.log("???", job_id, job_title)
@@ -30,6 +33,7 @@ const JobDetail = (props) => {
     const history = useHistory();
 
     function handleOnClick() {
+        applyToast()
         loadErProfileThunkAction(er_id).then(() => {
             history.push('/applicantEmployerDetails')
         })
@@ -47,7 +51,7 @@ const JobDetail = (props) => {
                         {/* <div className="employerDetails" onClick={handleOnClick} style={{ cursor: "pointer" }}> */}
                         <div class="col-md-4">
                             <div class="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
-                                <img src={er_img_data} width="200px" height="200x" alt='' />
+                                <img src={er_img_data} width="200px" height="200x" alt='logo' />
                                 <br />
                             </div>
                         </div>
@@ -99,6 +103,7 @@ const JobDetail = (props) => {
                     </div>
                 </Form>
             </div>
+            <ToastContainer />
         </div >
     )
 }
