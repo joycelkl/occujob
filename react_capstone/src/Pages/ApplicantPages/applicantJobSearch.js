@@ -157,6 +157,10 @@ const ApplicantJobSearch = () => {
     
     console.log('submitted', jobTitleTag, companyNameArr, jobFunctionArr,jobType,worklocationArr, salaryType,expSalary )
 
+    const searchObject = {jobTitleTag, companyNameArr, jobFunctionArr,jobType,worklocationArr, salaryType,expSalary}
+    
+    localStorage.setItem('jobSearch', JSON.stringify(searchObject))
+
     appJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
       .then(() => {
         history.push('/ApplicantJobSearchResult')

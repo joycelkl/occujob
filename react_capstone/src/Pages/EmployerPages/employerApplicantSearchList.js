@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
@@ -7,6 +7,7 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../Redux";
 import '../ApplicantPages/search.css'
 
+
 const EmployerApplicantSearchList = () => {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const EmployerApplicantSearchList = () => {
         actionCreators,
         dispatch
     );
+    const {erAppSearch } = bindActionCreators(actionCreators, dispatch)
+
     const appSearchState = useSelector((state) => state.applicantSearch);
     console.log('applicant search result', appSearchState)
 
@@ -22,6 +25,17 @@ const EmployerApplicantSearchList = () => {
             history.push('/employerSearchApplicantProfile')
         })
     }
+
+    useEffect(()=>{
+ 
+        const retrievedObject = localStorage.getItem('appSearch');
+        const parsed = JSON.parse(retrievedObject)
+        console.log('parsed',parsed)
+        const {available, jobFunction, expSalary, location, skills, salaryType, workExp} = parsed
+        erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
+     
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
 
 

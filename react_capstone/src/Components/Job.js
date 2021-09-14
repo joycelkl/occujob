@@ -43,7 +43,6 @@ const Job= (props)=>{
                 <Card.Subtitle className="text-muted mb-2">
                     Posted on {day + "/" + month + "/" + year}
                 </Card.Subtitle>
-                
                 <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
                 <Badge className="job-list-badge2" variant="secondary">{job_location}</Badge>
                 
