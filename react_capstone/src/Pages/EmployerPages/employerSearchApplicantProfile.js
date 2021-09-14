@@ -28,7 +28,7 @@ const EmployerSearchApplicantProfile = () => {
         <div>
             <EmployerNavbar />
             <div className="container emp-profile">
-                <Form classNameName='form-group' >
+                <Form className='form-group' >
                     <div className="row">
                         <div className="col-md-4">
                             <div className="profile-img">
