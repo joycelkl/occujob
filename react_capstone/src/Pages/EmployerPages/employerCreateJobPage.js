@@ -5,7 +5,7 @@ import authAxios from '../../Redux/authAxios'
 import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../Redux";
 import Select from 'react-select';
@@ -16,15 +16,15 @@ const EmployerCreateJobPage = () => {
     const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
     useEffect(() => {
         loadLocationThunkAction();
-      loadIndustryThunkAction();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        loadIndustryThunkAction();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const locationState = useSelector((state) => state.location);
     console.log("location", locationState)
     const industryState = useSelector((state) => state.industry);
     console.log("industry", industryState)
 
-   
+
 
 
     const fillInfoToast = () => toast("Please Fill In All Information")
@@ -38,7 +38,7 @@ const EmployerCreateJobPage = () => {
     const [location, setLocation] = useState('')
     const [workPeriod, setWorkPeriod] = useState('');
     const [salaryType, setSalaryType] = useState('')
-   
+
 
 
     const history = useHistory();
@@ -46,36 +46,36 @@ const EmployerCreateJobPage = () => {
 
     function handleOnSubmit(e) {
         e.preventDefault();
-        if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunctionArr || !location || !workPeriod ) {
+        if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunctionArr || !location || !workPeriod) {
             fillInfoToast();
             console.log('submitting')
             return;
         }
 
         let jobFunction = jobFunctionArr.value
-       
+
         console.log('data', jobTitle, jobDes, exp, salary, empType, jobFunction, location, workPeriod, salaryType)
 
         erJobCreate(jobTitle, jobFunction, exp, salary,
             jobDes, workPeriod, location, empType, salaryType).then(() => {
                 history.push('/employerJobRecordsList')
             })
-            
-        }
-        
-        function handleReset() {
-            setJobTitle('');
-            setJobDes('');
-            setExp('');
-            setSalary('');
-            setEmpType('');
-            setJobFunctionArr('');
-            setLocation('');
-            setWorkPeriod('');
-            setSalaryType('');
-        }
-        
-        
+
+    }
+
+    function handleReset() {
+        setJobTitle('');
+        setJobDes('');
+        setExp('');
+        setSalary('');
+        setEmpType('');
+        setJobFunctionArr('');
+        setLocation('');
+        setWorkPeriod('');
+        setSalaryType('');
+    }
+
+
 
     async function erJobCreate(jobTitle, jobFunction, reqExp, expectSalary,
         jobDescription, workPeriod, location, jobType, salaryType) {
@@ -97,30 +97,30 @@ const EmployerCreateJobPage = () => {
         })
     }
 
-  
-     //setup industryTag
-  let industryTag = []
-  if (industryState.length > 0) {
-    industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
-  }
-  console.log('industryTag', industryTag)
 
-  const handleOnChangeIndustry = obj => {
-    console.log('setJobFunction', obj)
-    setJobFunctionArr(obj)
-  }
+    //setup industryTag
+    let industryTag = []
+    if (industryState.length > 0) {
+        industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
+    }
+    console.log('industryTag', industryTag)
 
-  const IndustryTag = () => (
-    <Select
-      defaultValue={null}
-      value={jobFunctionArr}
-      onChange={handleOnChangeIndustry}
-      name="industry"
-      options={industryTag}
-      className="basic-multi-select"
-      classNamePrefix="select"
-    />
-  )
+    const handleOnChangeIndustry = obj => {
+        console.log('setJobFunction', obj)
+        setJobFunctionArr(obj)
+    }
+
+    const IndustryTag = () => (
+        <Select
+            defaultValue={null}
+            value={jobFunctionArr}
+            onChange={handleOnChangeIndustry}
+            name="industry"
+            options={industryTag}
+            className="basic-multi-select"
+            classNamePrefix="select"
+        />
+    )
 
 
 
@@ -128,65 +128,67 @@ const EmployerCreateJobPage = () => {
 
         <div>
             <EmployerNavbar />
-            <div className="container mt-2">
-                <h2>Job Create Form</h2>
-                <div className="col-6">
-                    <Form className="form-group" onSubmit={(e) => handleOnSubmit(e)}>
-                        <FormGroup>
-                            <Label for="Job Title">Job Title</Label>
-                            <Input type="text" name="text" id="jobTitle" placeholder="" value={jobTitle} onChange={(e) => setJobTitle(e.target.value.toUpperCase())} />
+            <div >
+                <div className="container-fluid mt-2" style={{ display: "flex", justifyContent: "center" }}>
+                    <div className="col-6">
+                    <h2>Job Create Form</h2>
+                        <Form className="form-group" onSubmit={(e) => handleOnSubmit(e)}>
                             <FormGroup>
-                                <Label for="Text">Job Description</Label>
-                                <Input type="textarea" name="text" id="intro" placeholder="" value={jobDes} onChange={(e) => setJobDes(e.target.value)} />
+                                <Label for="Job Title">Job Title</Label>
+                                <Input type="text" name="text" id="jobTitle" placeholder="" value={jobTitle} onChange={(e) => setJobTitle(e.target.value.toUpperCase())} />
+                                <FormGroup>
+                                    <Label for="Text">Job Description</Label>
+                                    <Input type="textarea" name="text" id="intro" placeholder="" value={jobDes} onChange={(e) => setJobDes(e.target.value)} />
+                                </FormGroup>
                             </FormGroup>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="reqExp">Required Experience</Label>
-                            <Input type="number" name="number" id="reqExp" placeholder="Year of Experience" value={exp} onChange={(e) => setExp(e.target.value)} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="salaryType">Expected Salary Type </Label>
-                            <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
-                                <option value={null} selected>Please select</option>
-                                <option value={'perJob'} selected> Per Job </option>
-                                <option value={'perHour'}> Per Hour</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="Expected Salary">Salary</Label>
-                            <Input type="number" name="number" id="Salary" placeholder="Salary" value={salary} onChange={(e) => setSalary(e.target.value)} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="employmentType">Employment Type</Label>
-                            <Input type="select" name="employmentType" id="employmentType" value={empType} onChange={(e) => setEmpType(e.target.value)}>
-                            <option value={null} selected>Please select</option>
-                                <option selected>Freelance</option>
-                                <option>Part-Time</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="JobFunction">Job Function</Label>
-                            <IndustryTag />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="workPeriod">Work Period</Label>
-                            <Input type="text" name="workPeriod" id="workPeriod" placeholder="" value={workPeriod} onChange={(e) => setWorkPeriod(e.target.value)} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="preferworklocation">Work Location</Label>
-                            <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                          <option value={null} selected>Please select</option>
-                          {locationState.length > 0 ? locationState.map((location, i) => (
-                            <option key={i} value={location.location} selected>{location.location}</option>
-                          )) : "loading..."}
-                            </Input>
-                        </FormGroup>
-                        <Button className="m-2" type="submit">Post</Button>
-                        <Button className="m-2" onClick={() => handleReset()}>Reset</Button>
-                        <ToastContainer />
-                    </Form>
-                </div>
+                            <FormGroup>
+                                <Label for="reqExp">Required Experience</Label>
+                                <Input type="number" name="number" id="reqExp" placeholder="Year of Experience" value={exp} onChange={(e) => setExp(e.target.value)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="salaryType">Expected Salary Type </Label>
+                                <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                                    <option value={null} selected>Please select</option>
+                                    <option value={'perJob'} selected> Per Job </option>
+                                    <option value={'perHour'}> Per Hour</option>
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="Expected Salary">Salary</Label>
+                                <Input type="number" name="number" id="Salary" placeholder="Salary" value={salary} onChange={(e) => setSalary(e.target.value)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="employmentType">Employment Type</Label>
+                                <Input type="select" name="employmentType" id="employmentType" value={empType} onChange={(e) => setEmpType(e.target.value)}>
+                                    <option value={null} selected>Please select</option>
+                                    <option selected>Freelance</option>
+                                    <option>Part-Time</option>
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="JobFunction">Job Function</Label>
+                                <IndustryTag />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="workPeriod">Work Period</Label>
+                                <Input type="text" name="workPeriod" id="workPeriod" placeholder="" value={workPeriod} onChange={(e) => setWorkPeriod(e.target.value)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="preferworklocation">Work Location</Label>
+                                <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                                    <option value={null} selected>Please select</option>
+                                    {locationState.length > 0 ? locationState.map((location, i) => (
+                                        <option key={i} value={location.location} selected>{location.location}</option>
+                                    )) : "loading..."}
+                                </Input>
+                            </FormGroup>
+                            <Button className="m-2" type="submit">Post</Button>
+                            <Button className="m-2" onClick={() => handleReset()}>Reset</Button>
+                            <ToastContainer />
+                        </Form>
+                    </div>
 
+                </div>
             </div>
 
         </div>

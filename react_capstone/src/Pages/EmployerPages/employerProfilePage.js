@@ -123,16 +123,16 @@ const EmployerProfilePage = () => {
   return (
     <div>
       <EmployerNavbar />
-      <div class="container emp-profile">
+      <div className="container emp-profile">
         <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="profile-img">
+          <div className="row">
+            <div className="col-md-4">
+              <div className="profile-img">
                 <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="profile-head">
+            <div className="col-md-6">
+              <div className="profile-head">
                 <FormGroup>
                  
                   <h2>{name}</h2>
@@ -140,16 +140,16 @@ const EmployerProfilePage = () => {
                 {/* <h6>
                   Web Developer and Designer
                 </h6> */}
-                <p class="proile-rating">Ratings : <span>8/10</span></p>
+                <p className="proile-rating">Ratings : <span>8/10</span></p>
                 <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} />
               </div>
             </div>
 
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="profile-work">
-                <p>WORK LINK</p>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="profile-work">
+                {/* <p>WORK LINK</p>
                 <a href="*">Website Link</a><br />
                 <a href="*">Bootsnipp Profile</a><br />
                 <a href="*">Bootply Profile</a>
@@ -158,33 +158,33 @@ const EmployerProfilePage = () => {
                 <a href="*">Web Developer</a><br />
                 <a href="*">WordPress</a><br />
                 <a href="*">WooCommerce</a><br />
-                <a href="*">PHP, .Net</a><br />
+                <a href="*">PHP, .Net</a><br /> */}
               </div>
             </div>
-            <div class="col-md-8">
-              <div class="tab-content profile-tab" id="myTabContent">
+            <div className="col-md-8">
+              <div className="tab-content profile-tab" id="myTabContent">
                 {/* fade cause problem */}
-                {/* <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
-                <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                {/* <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
+                <div className="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                   {toggleContact &&
                     <div>
-                      <div class="row">
+                      <div className="row">
                         <FormGroup>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="email">Email</Label>
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             {/* <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled /> */}
                             <h6 style={{color:"black", marginTop:"10px"}}> {email} </h6>
                           </div>
                         </FormGroup>
                       </div>
-                      <div class="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{marginTop:"20px"}}>
                         <FormGroup>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Input style={{marginTop:"10px"}} type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
                           </div>
                         </FormGroup>
@@ -194,35 +194,35 @@ const EmployerProfilePage = () => {
 
                   {toggleAbout &&
                   <div>
-                  <div class="row" >
+                  <div className="row" >
                     <FormGroup>
 
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <Label for="compDes">Company Description</Label><br></br>
                       </div>
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <Input style={{marginTop:"10px"}} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
                       </div>
                     </FormGroup>
                   </div>
-                  <div class="row" style={{marginTop:"20px"}}>
+                  <div className="row" style={{marginTop:"20px"}}>
                     <FormGroup>
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <Label for="industry">Industry</Label>
                       </div>
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <Input style={{marginTop:"10px"}} type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
                       </div>
                     </FormGroup>
 
                   </div>
-                  <div class="row" style={{marginTop:"20px"}}>
+                  <div className="row" style={{marginTop:"20px"}}>
                     <FormGroup>
 
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <Label for="location">Location</Label>
                       </div>
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <Input style={{marginTop:"10px"}} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                           <option value={null} selected>Please select</option>
                           {locationState.length > 0 ? locationState.map((location, i) => (
@@ -240,8 +240,8 @@ const EmployerProfilePage = () => {
               </div>
             </div>
           </div>
-          <div class="col-md-2">
-            <input type="submit" class="profile-edit-btn" name="btnAddMore" />
+          <div className="col-md-2">
+            <input type="submit" className="profile-edit-btn" name="btnAddMore" />
           </div>
           <ToastContainer />
         </Form>
