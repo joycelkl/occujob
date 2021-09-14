@@ -124,7 +124,7 @@ const EmployerProfilePage = () => {
     <div>
       <EmployerNavbar />
       <div className="container emp-profile">
-        <Form classNameName='form-group' onSubmit={(e) => handleOnSubmit(e)}>
+        <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
           <div className="row">
             <div className="col-md-4">
               <div className="profile-img">
