@@ -120,8 +120,8 @@ const ApplicantProfile = () => {
       isMulti
       name="skills"
       options={skillsTag}
-      classNameName="basic-multi-select"
-      classNameNamePrefix="select"
+      className="basic-multi-select"
+      classNamePrefix="select"
     />
   )
 
@@ -145,8 +145,8 @@ const ApplicantProfile = () => {
       isMulti
       name="industry"
       options={industryTag}
-      classNameName="basic-multi-select"
-      classNameNamePrefix="select"
+      className="basic-multi-select"
+      classNamePrefix="select"
     />
   )
 
