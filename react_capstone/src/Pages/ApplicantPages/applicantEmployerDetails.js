@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
+import React from "react";
+import { Form, FormGroup, Label, Input } from 'reactstrap';
+import ApplicantNavbar from '../../Components/Navbar/navbarApplicant';
 import '../EmployerPages/employerProfilePage.css'
-import ProfileImage from "../../Components/ProfileImage";
-import Select from 'react-select'
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../Redux';
-import { useHistory } from 'react-router';
+import {useSelector } from 'react-redux';
+
 
 const ApplicantEmployerDetails = () => {
     const erProfile = useSelector((state) => state.erProfile)
-
-    console.log("individual job", erProfile)
-
-    const dispatch = useDispatch()
-    const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfile
-
-
+    const {comp_description, er_img_data, er_industry, er_location, er_name} = erProfile
     return (
         <div>
-            <EmployerNavbar />
+            <ApplicantNavbar />
             <div class="container emp-profile">
                 <Form className='form-group' >
                     <div class="row">

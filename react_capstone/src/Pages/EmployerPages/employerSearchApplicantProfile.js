@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
-import ProfileImage from "../../Components/ProfileImage";
-import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';

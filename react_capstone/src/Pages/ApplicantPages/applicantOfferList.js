@@ -11,8 +11,6 @@ import "../EmployerPages/modalFullPage.css";
 const ApplicantOfferList = ()=>{
   
 
- 
-  
   const EEOfferState = useSelector((state) => state.EEOffer)
   const dispatch = useDispatch();
 
@@ -48,9 +46,5 @@ return(
 </div>
   );
  }
-
-
-
-
 
 export default ApplicantOfferList;
