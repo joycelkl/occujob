@@ -36,7 +36,7 @@ const EmployerEditPost = () => {
     const industryState = useSelector((state) => state.industry);
     console.log("industry", industryState)
     
-    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type, reply } = indJobState[0] || {}
+    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type, reply, offer } = indJobState[0] || {}
 
     const history = useHistory();
 
@@ -54,6 +54,8 @@ const EmployerEditPost = () => {
     const[salaryType, setSalaryType] = useState(job_salary_type);
     const [modal, setModal] = useState(false);
     const [modalJob, setModalJob] = useState({});
+    const [offering, setoffering] = useState(offer);
+
 
     function toggle(name) {
         console.log('toggle name', name)
@@ -113,6 +115,7 @@ const EmployerEditPost = () => {
         return await authAxiosConfig.post(`/employer/job/candidate/offer/${application_id}`)
         .then(res => {
             offerToast()
+            setoffering(true)
            console.log(res)
            setModal(!modal);
         }).catch(err => {
@@ -238,7 +241,7 @@ const EmployerEditPost = () => {
                             
                                 <td>{job.ee_name}</td>
                                 <td>{job.created_at}</td>
-                                {job.offer? <td> Offer Sent</td> : <td> No Offer</td>}
+                                {offering? <td> Offer Sent</td> : <td> No Offer</td>}
                                 {job.reply === true? <td>Accepted </td> : (job.reply === false ?<td>Declined</td> : <td> No Reply</td>)} 
                             </tr>
 
