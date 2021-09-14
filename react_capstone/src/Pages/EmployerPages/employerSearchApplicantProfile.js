@@ -23,35 +23,35 @@ const EmployerSearchApplicantProfile = () => {
     return (
         <div>
             <EmployerNavbar />
-            <div class="container emp-profile">
-                <Form className='form-group' >
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="profile-img">
+            <div className="container emp-profile">
+                <Form classNameName='form-group' >
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="profile-img">
                             <img src={ee_img_data} width="200px" height="200x" alt=''/>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="profile-head">
+                        <div className="col-md-6">
+                            <div className="profile-head">
                                 <FormGroup>
                                     <Label for="Name"><h1>Applicant's Name</h1></Label>
                                     <h4>{ee_name}</h4>
                                 </FormGroup>
 
-                                <p class="proile-rating">Ratings : <span>8/10</span></p>
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                <p className="proile-rating">Ratings : <span>8/10</span></p>
+                                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                                    <li className="nav-item">
+                                        <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                                     </li>
 
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="profile-work">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="profile-work">
                                 <p>WORK LINK</p>
                                 <a href="*">Website Link</a><br />
                                 <a href="*">Bootsnipp Profile</a><br />
@@ -65,49 +65,49 @@ const EmployerSearchApplicantProfile = () => {
                             </div>
                         </div>
 
-                        <div class="col-md-8">
-                            <div class="tab-content profile-tab" id="myTabContent">
+                        <div className="col-md-8">
+                            <div className="tab-content profile-tab" id="myTabContent">
                                
-                                    <div class="row">
+                                    <div className="row">
                                         <FormGroup>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 <Label for="Text">Self-Introduction</Label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 <h6 style={{marginTop:"10px"}}>{self_intro}</h6>
                                             </div>
                                         </FormGroup>
                                     </div>
-                                    <div class="row" style={{marginTop:"20px"}}>
+                                    <div className="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 <Label for="Skill">Skills</Label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 <h6 style={{marginTop:"10px"}}>{ee_skill}</h6>
                                             </div>
                                         </FormGroup>
 
                                     </div>
-                                    <div class="row" style={{marginTop:"20px"}}>
+                                    <div className="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 <Label for="Skill">No. of Year of Working Experience</Label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 
                                                 <h6 style={{marginTop:"10px"}}>{ee_exp}</h6>
                                             </div>
                                         </FormGroup>
                                     </div>
 
-                                    <div class="row" style={{marginTop:"20px"}}>
+                                    <div className="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
 
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 <Label for="Availabilty">Availabilty</Label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 
                                                 <h6 style={{marginTop:"10px"}}>{availability}</h6>
                                             </div>
@@ -115,13 +115,13 @@ const EmployerSearchApplicantProfile = () => {
                                         
 
                                     </div>
-                                    <div class="row" style={{marginTop:"20px"}}>
+                                    <div className="row" style={{marginTop:"20px"}}>
                                         <FormGroup>
 
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 <Label for="Availabilty">Expected Salary</Label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div className="col-md-6">
                                                 
                                                 <h6 style={{marginTop:"10px"}}>{expected_salary}</h6>
                                             </div>
@@ -137,7 +137,7 @@ const EmployerSearchApplicantProfile = () => {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div className="col-md-2">
                         <Button>Message</Button>
                     </div>
 

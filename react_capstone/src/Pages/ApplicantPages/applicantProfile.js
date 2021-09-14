@@ -120,8 +120,8 @@ const ApplicantProfile = () => {
       isMulti
       name="skills"
       options={skillsTag}
-      className="basic-multi-select"
-      classNamePrefix="select"
+      classNameName="basic-multi-select"
+      classNameNamePrefix="select"
     />
   )
 
@@ -145,8 +145,8 @@ const ApplicantProfile = () => {
       isMulti
       name="industry"
       options={industryTag}
-      className="basic-multi-select"
-      classNamePrefix="select"
+      classNameName="basic-multi-select"
+      classNameNamePrefix="select"
     />
   )
 
@@ -174,8 +174,8 @@ const ApplicantProfile = () => {
       isMulti
       name="availability"
       options={avaData}
-      className="basic-multi-select"
-      classNamePrefix="select"
+      classNameName="basic-multi-select"
+      classNameNamePrefix="select"
     />
   )
 
@@ -277,46 +277,32 @@ const ApplicantProfile = () => {
   return (
     <div>
       <ApplicantNavbar />
-      <div class="container emp-profile">
-        <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="profile-img">
+      <div className="container emp-profile">
+        <Form classNameName='form-group' onSubmit={(e) => handleOnSubmit(e)}>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="profile-img">
                 <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
               </div>
             </div>
 
-            <div class="col-md-6">
-              <div class="profile-head">
+            <div className="col-md-6">
+              <div className="profile-head">
                 <FormGroup>
                   <Label for="Name"><h1>Applicant's Name</h1></Label>
                   <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
-                <p class="proile-rating">Ratings : <span>8/10</span></p>
+                <p className="proile-rating">Ratings : <span>8/10</span></p>
                 <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} />  
-                {/* <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                    
-                    <a class="nav-link active" id="home-tab" onClick={aboutHandler}>About</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" onClick={contactHandler}>Contact</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" onClick={jobPreferenceHandler}>Job Preferences</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" onClick={portfolioHandler}>Portfolio</a>
-                  </li>
-                </ul> */}
+                
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="profile-work">
-                <p>WORK LINK</p>
-                <a href="*">Website Link</a><br />
+          <div className="row">
+            <div className="col-md-4">
+              <div className="profile-work">
+                {/* <p>WORK LINK</p>
+                <a href="*">Website Links</a><br />
                 <a href="*">Bootsnipp Profile</a><br />
                 <a href="*">Bootply Profile</a>
                 <p>SKILLS</p>
@@ -324,58 +310,58 @@ const ApplicantProfile = () => {
                 <a href="*">Web Developer</a><br />
                 <a href="*">WordPress</a><br />
                 <a href="*">WooCommerce</a><br />
-                <a href="*">PHP, .Net</a><br />
+                <a href="*">PHP, .Net</a><br /> */}
               </div>
             </div>
 
-            <div class="col-md-8">
-              <div class="tab-content profile-tab" id="myTabContent">
+            <div className="col-md-8">
+              <div className="tab-content profile-tab" id="myTabContent">
                 {/* original fade cause all things disapear */}
-                {/* <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
-                <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                {/* <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
+                <div className="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                   {toggleAbout &&
                     <div>
-                      <div class="row">
+                      <div className="row">
                         <FormGroup>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="Text">Self-Introduction</Label>
                           </div>
-                          <div class="col-md-6">
-                            <Input type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
+                          <div className="col-md-6">
+                            <Input style={{marginTop:"10px"}} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
                           </div>
                         </FormGroup>
                       </div>
-                      <div class="row">
+                      <div className="row" style={{marginTop:"20px"}}>
                         <FormGroup>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="Skill">Skills</Label>
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6" style={{marginTop:"10px"}}>
                             <SkillsTag />
                           </div>
                         </FormGroup>
 
                       </div>
-                      <div class="row">
+                      <div className="row" style={{marginTop:"20px"}}>
                         <FormGroup>
 
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="industry">Job Function</Label>
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6" style={{marginTop:"10px"}}>
                             <IndustryTag />
                           </div>
                         </FormGroup>
 
                       </div>
-                      <div class="row">
+                      <div className="row" style={{marginTop:"20px"}}>
                         <FormGroup>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="Skill">No. of Year of Working Experience</Label>
                           </div>
-                          <div class="col-md-6">
-                            <Input type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
+                          <div className="col-md-6">
+                            <Input  style={{marginTop:"10px"}}type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
                           </div>
                         </FormGroup>
                       </div>
@@ -383,24 +369,23 @@ const ApplicantProfile = () => {
                   }
                   {toggleContact &&
                     <div>
-                      <div class="row">
+                      <div className="row">
 
                         <FormGroup>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="email">Email </Label>
                           </div>
-                          <div class="col-md-6">
-                            <Input type="email" name="email" id="email" value={ee_email} disabled />
-                          </div>
+                          <div className="col-md-6">
+                          <h6 style={{color:"black", marginTop:"10px"}}> {ee_email} </h6>                          </div>
                         </FormGroup>
                       </div>
-                      <div class="row">
+                      <div className="row" style={{marginTop:"20px"}}>
                         <FormGroup>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
-                          <div class="col-md-6">
-                            <Input type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                          <div className="col-md-6">
+                            <Input  style={{marginTop:"10px"}} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                           </div>
                         </FormGroup>
                       </div>
@@ -409,13 +394,13 @@ const ApplicantProfile = () => {
 
                   {toggleJobPreference &&
                     <div>
-                      <div class="row">
+                      <div className="row">
                         <FormGroup>
 
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <Label for="Availabilty">Availabilty</Label>
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6" style={{marginTop:"10px"}}>
                             <AvailabilityTag />
                           </div>
                         </FormGroup>
@@ -424,17 +409,17 @@ const ApplicantProfile = () => {
 
 
 
-                      <div class="col-md-6">
-                        <Label for="preferworklocation">Expected Salary</Label>
+                      <div className="col-md-6">
+                        {/* <Label style={{marginTop:"10px"}} for="preferworklocation">Expected Salary</Label> */}
                       </div>
-                      <div class="row">
+                      <div className="row">
                         <FormGroup>
 
-                          <div class="col-md-6">
-                            <Label for="salaryType">Salary Type</Label>
+                          <div className="col-md-6">
+                            <Label style={{marginTop:"20px"}} for="salaryType">Salary Type</Label>
                           </div>
-                          <div class="col-md-6">
-                            <Input type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                          <div className="col-md-6">
+                            <Input style={{marginTop:"10px"}} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               <option value={'perJob'}>Per Job</option>
                               <option value={'perHour'}>Per Hour</option>
@@ -445,26 +430,26 @@ const ApplicantProfile = () => {
                       </div>
 
                       {ee_salary_type ? (
-                        <div class="row">
+                        <div className="row"  style={{marginTop:"20px"}}>
                           <FormGroup>
 
-                            <div class="col-md-6">
+                            <div className="col-md-6">
                               <Label for="Expected Salary">Expected Salary</Label>
                             </div>
-                            <div class="col-md-6">
-                              <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+                            <div className="col-md-6">
+                              <Input style={{marginTop:"10px"}} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
                             </div>
                           </FormGroup>
 
                         </div>
                       ) : (salaryType ? (
-                        <div class="row">
+                        <div className="row" style={{marginTop:"20px"}}>
                           <FormGroup>
 
-                            <div class="col-md-6">
+                            <div className="col-md-6">
                               <Label for="Expected Salary">Expected Salary</Label>
                             </div>
-                            <div class="col-md-6">
+                            <div className="col-md-6">
                               <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
                             </div>
                           </FormGroup>
@@ -472,14 +457,14 @@ const ApplicantProfile = () => {
                         </div>
                       ) : null)}
 
-                      <div class="row">
+                      <div className="row">
                         <FormGroup>
 
-                          <div class="col-md-6">
+                          <div className="col-md-6" style={{marginTop:"20px"}}>
                             <Label for="preferworklocation">Prefered Work Location</Label>
                           </div>
-                          <div class="col-md-6">
-                            <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                          <div className="col-md-6">
+                            <Input  style={{marginTop:"10px"}} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               {locationState.length > 0 ? locationState.map((location, i) => (
                                 <option key={i} value={location.location}>{location.location}</option>
@@ -494,7 +479,7 @@ const ApplicantProfile = () => {
                   }
                   {togglePortfolio &&
                     <div>
-                      <div class="row">
+                      <div classNameName="row">
                         <PortfolioTable eeId={ee_id} />
                       </div>
                     </div>
@@ -503,51 +488,51 @@ const ApplicantProfile = () => {
               </div>
             </div>
           </div>
-          <div class="col-md-2">
-            <input type="submit" class="profile-edit-btn" name="btnAddMore" />
+          <div className="col-md-2">
+            <input type="submit" className="profile-edit-btn" name="btnAddMore" style={{float:"right"}}/>
           </div>
           <ToastContainer />
         </Form>
 
 
-        {/* <div class="row">
+        {/* <div className="row">
 
-                      <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>
+                      <Form classNameName="form-group" onSubmit={(e)=>uploadCV(e)}>
                       <FormGroup>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <Label for="uploadCV">Upload CV </Label>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <Input type="file" name="uploadCV" />
                         <button type="submit">Upload</button>
                         </div>
                       </FormGroup>
                       </Form>
                     </div> */}
-        {/* <div class="row">
+        {/* <div className="row">
                       <FormGroup>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <Label for="uploadCV">Upload CV </Label>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <Input type="file" name="uploadCV" />
                         <button>Upload</button>
                         </div>
                       </FormGroup>
                     </div>
-                    <div class="row">
+                    <div className="row">
                       <FormGroup>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <Label for="uploadCV">Upload CV </Label>
                         </div>
-                        <div class="col-md-6">
+                        <div className="col-md-6">
                           <Input type="file" name="uploadCV" />
                         <button>Upload</button>
                         </div>
                       </FormGroup>
                     </div> */}
 
-        {/* <div className="col-4">
+        {/* <div classNameName="col-">
           <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
         </div> */}
       </div>
