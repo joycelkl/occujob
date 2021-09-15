@@ -5,6 +5,26 @@ class RatingServices {
         this.knex = knex;
     }
 
+    listAplicantsOwnRating(userId) {
+        console.log('list user Rating')
+        return this.knex('rating')
+            .where("rating_employee_id", userId)
+            .then((data) => {
+                console.log('listUserRating', data)
+                return data
+            })
+    }
+
+    listCompanyOwnRating(userId) {
+        console.log('list user Rating')
+        return this.knex('rating')
+            .where("rating_employer_id", userId)
+            .then((data) => {
+                console.log('listUserRating', data)
+                return data
+            })
+    }
+
     //please do not amend this
     updateRatingStatus() {
         console.log('schedule running')

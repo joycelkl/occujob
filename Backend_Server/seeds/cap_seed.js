@@ -15,7 +15,7 @@ let hashedpassword = (password) => {
 exports.seed = async function(knex) {
     // Deletes ALL existing entries
     const erPW1 = await hashedpassword('1234');
-
+return knex('rating').del().then(() => {
     return knex('skills').del().then(() => {
         return knex('industry').del().then(() => {
             return knex('location').del().then(() => {
@@ -29,7 +29,7 @@ exports.seed = async function(knex) {
             })
         })
     })
-
+})
 
     .then(function() {
         // Inserts seed entries
@@ -193,5 +193,10 @@ exports.seed = async function(knex) {
 
                 ])
             })
-    });
+            .then(() => {
+                return knex('rating').insert([
+                    {rating_employee_id:1,rating_application_id:1, rate:5,comment:'testing'}
+                ])
+    })
+    })
 };
