@@ -30,18 +30,12 @@ const EmployerHomePage = () => {
     }
     useEffect(() => {
         loadEmployerJobThunkAction();   
+         const name = localStorage.getItem('UserName')
+        setUserName(name)   
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log('employer Job', employerJobState)
-
-    useEffect(() => {
-        if(employerJobState.length > 0) {
-            setUserName (employerJobState.pop())
-        }  
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [employerJobState])
-   
+    console.log('employer Job', employerJobState)  
 
     console.log('poped', userName)
 
