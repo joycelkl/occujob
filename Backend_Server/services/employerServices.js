@@ -307,7 +307,7 @@ class EmployerServices {
         }
         console.log('locationArr', locationArr)
 
-        if (available == null && jobFunction == null && skills == null && location == null && salaryType == null && workExp == null) {
+        if (available == null && jobFunction == null && skills == null && location == null && salaryType == '' && workExp == '') {
             return this.knex('employee')
                 .orderBy('updated_at', 'desc')
                 .then((candidateList) => {
@@ -316,8 +316,8 @@ class EmployerServices {
                 }).catch(err => console.log(err))
         }
 
-        if (salaryType == null) {
-            if (workExp == null) {
+        if (salaryType == '') {
+            if (workExp == '') {
                 return this.knex('employee')
                     .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
                     .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
@@ -382,7 +382,7 @@ class EmployerServices {
         } else {
             if (salaryType == 'perJob') {
                 if (expSalary < 7501) {
-                    if (workExp == null) {
+                    if (workExp == '') {
                         return this.knex('employee')
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
@@ -451,7 +451,7 @@ class EmployerServices {
                         }
                     }
                 } else {
-                    if (workExp == null) {
+                    if (workExp == '') {
                         return this.knex('employee')
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
@@ -522,7 +522,7 @@ class EmployerServices {
                 }
             } else {
                 if (expSalary < 201) {
-                    if (workExp == null) {
+                    if (workExp == '') {
                         return this.knex('employee')
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
@@ -591,7 +591,7 @@ class EmployerServices {
                         }
                     }
                 } else {
-                    if (workExp == null) {
+                    if (workExp == '') {
                         return this.knex('employee')
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
                             .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))

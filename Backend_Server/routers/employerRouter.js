@@ -195,6 +195,9 @@ class EmployerRouter {
         //to be rewrited?????
         router.post('/candidateSearch', (req, res) => {
             //req.body = expectedSalary, jobFunction
+
+            console.log('search', req.body)
+
             return this.employerServices.candidateFilter(req.body)
                 .then((candidateList) => {
                     console.log('candidateList in post', candidateList)
