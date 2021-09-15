@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, FormGroup, Label, Input} from 'reactstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -12,7 +12,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 import ApplicantPortfolioTable from "../../Components/PortfolioTable";
-
+import DisabledRating from "../../Components/Rating/DisabledRating";
+import { applicantGetRatingThunkAction } from "../../Redux/action-creators";
 const ApplicantProfile = () => {
 
   //toggler
@@ -24,7 +25,10 @@ const ApplicantProfile = () => {
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { applicantGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
+  const applicantRatingState = useSelector((state) => state.applicantRating)
+  console.log('applicantRating', applicantRatingState)
 
   const EEProfileState = useSelector((state) => state.EEProfile);
   console.log('EEprofile', EEProfileState)
@@ -39,6 +43,10 @@ const ApplicantProfile = () => {
   console.log("industry", industryState)
 
   const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
+
+  // Rating
+const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
+console.log("Average",averageRating)
 
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
@@ -55,14 +63,15 @@ const ApplicantProfile = () => {
   const [toggleContact, setToggleContact] = useState(false);
   const [toggleJobPreference, setToggleJobPreference] = useState(false);
   const [togglePortfolio, setTogglePortfolio] = useState(false);
+  const [rate, setRate] = useState('');
 
   useEffect(() => {
     loadEEProfileThunkAction();
     setName(ee_name);
-    
+
     ee_phone !== null && setPhone(ee_phone);
-    ee_location !== null &&setLocation(ee_location);
-    ee_img_data !== null &&setImage(ee_img_data)
+    ee_location !== null && setLocation(ee_location);
+    ee_img_data !== null && setImage(ee_img_data)
     self_intro !== null && setIntro(self_intro);
     ee_salary_type !== null && setSalaryType(ee_salary_type)
     expected_salary !== null && setExpectedSalary(expected_salary);
@@ -95,6 +104,7 @@ const ApplicantProfile = () => {
     loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
+    applicantGetRatingThunkAction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -228,7 +238,7 @@ const ApplicantProfile = () => {
   //upload image setup ***DONT MODIFY THIS PART***
   function upload(e) {
     console.log("data", e.target.files[0])
-    if (e.target.files[0].size>1024*1024) {
+    if (e.target.files[0].size > 1024 * 1024) {
       alert('Please upload image 1MB or below')
       return
     }
@@ -293,8 +303,12 @@ const ApplicantProfile = () => {
                   <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
                 <p className="proile-rating">Ratings : <span>8/10</span></p>
-                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} />  
-                
+               
+                <DisabledRating
+                  rating={averageRating}
+                />
+                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} />
+
               </div>
             </div>
           </div>
@@ -328,40 +342,40 @@ const ApplicantProfile = () => {
                             <Label for="Text">Self-Introduction</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input style={{marginTop:"10px"}} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
+                            <Input style={{ marginTop: "10px" }} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
                           </div>
                         </FormGroup>
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
                           <div className="col-md-6">
                             <Label for="Skill">Skills</Label>
                           </div>
-                          <div className="col-md-6" style={{marginTop:"10px"}}>
+                          <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <SkillsTag />
                           </div>
                         </FormGroup>
 
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
 
                           <div className="col-md-6">
                             <Label for="industry">Job Function</Label>
                           </div>
-                          <div className="col-md-6" style={{marginTop:"10px"}}>
+                          <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <IndustryTag />
                           </div>
                         </FormGroup>
 
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
                           <div className="col-md-6">
                             <Label for="Skill">No. of Year of Working Experience</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input  style={{marginTop:"10px"}}type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
+                            <Input style={{ marginTop: "10px" }} type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
                           </div>
                         </FormGroup>
                       </div>
@@ -376,16 +390,16 @@ const ApplicantProfile = () => {
                             <Label for="email">Email </Label>
                           </div>
                           <div className="col-md-6">
-                          <h6 style={{color:"black", marginTop:"10px"}}> {ee_email} </h6>                          </div>
+                            <h6 style={{ color: "black", marginTop: "10px" }}> {ee_email} </h6>                          </div>
                         </FormGroup>
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
                           <div className="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input  style={{marginTop:"10px"}} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                            <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                           </div>
                         </FormGroup>
                       </div>
@@ -400,7 +414,7 @@ const ApplicantProfile = () => {
                           <div className="col-md-6">
                             <Label for="Availabilty">Availabilty</Label>
                           </div>
-                          <div className="col-md-6" style={{marginTop:"10px"}}>
+                          <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <AvailabilityTag />
                           </div>
                         </FormGroup>
@@ -416,10 +430,10 @@ const ApplicantProfile = () => {
                         <FormGroup>
 
                           <div className="col-md-6">
-                            <Label style={{marginTop:"20px"}} for="salaryType">Salary Type</Label>
+                            <Label style={{ marginTop: "20px" }} for="salaryType">Salary Type</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input style={{marginTop:"10px"}} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                            <Input style={{ marginTop: "10px" }} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               <option value={'perJob'}>Per Job</option>
                               <option value={'perHour'}>Per Hour</option>
@@ -430,20 +444,20 @@ const ApplicantProfile = () => {
                       </div>
 
                       {ee_salary_type ? (
-                        <div className="row"  style={{marginTop:"20px"}}>
+                        <div className="row" style={{ marginTop: "20px" }}>
                           <FormGroup>
 
                             <div className="col-md-6">
                               <Label for="Expected Salary">Expected Salary</Label>
                             </div>
                             <div className="col-md-6">
-                              <Input style={{marginTop:"10px"}} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+                              <Input style={{ marginTop: "10px" }} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
                             </div>
                           </FormGroup>
 
                         </div>
                       ) : (salaryType ? (
-                        <div className="row" style={{marginTop:"20px"}}>
+                        <div className="row" style={{ marginTop: "20px" }}>
                           <FormGroup>
 
                             <div className="col-md-6">
@@ -460,11 +474,11 @@ const ApplicantProfile = () => {
                       <div className="row">
                         <FormGroup>
 
-                          <div className="col-md-6" style={{marginTop:"20px"}}>
+                          <div className="col-md-6" style={{ marginTop: "20px" }}>
                             <Label for="preferworklocation">Prefered Work Location</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input  style={{marginTop:"10px"}} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                            <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               {locationState.length > 0 ? locationState.map((location, i) => (
                                 <option key={i} value={location.location}>{location.location}</option>
@@ -472,7 +486,7 @@ const ApplicantProfile = () => {
                             </Input>
                           </div>
                         </FormGroup>
-                       
+
                       </div>
 
                     </div>
@@ -489,7 +503,7 @@ const ApplicantProfile = () => {
             </div>
           </div>
           <div className="col-md-2">
-            <input type="submit" className="profile-edit-btn" name="btnAddMore" style={{float:"right"}}/>
+            <input type="submit" className="profile-edit-btn" name="btnAddMore" style={{ float: "right" }} />
           </div>
           <ToastContainer />
         </Form>
