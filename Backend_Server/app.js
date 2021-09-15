@@ -2,6 +2,10 @@
 const express = require('express');
 const app = express();
 
+//set up socketio
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
@@ -63,6 +67,6 @@ app.use(auth.initialize());
 app.use('/employer', auth.authenticate(), employerRouter, ratingRouter)
 app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter)
 
-app.listen(8080, () => {
+server.listen(8080, () => {
     console.log('port is listening to 8080')
 })

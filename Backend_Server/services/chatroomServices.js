@@ -1,6 +1,4 @@
-const schedule = require('node-schedule');
-
-class RatingServices {
+class ChatroomServices {
     constructor(knex) {
         this.knex = knex;
     }
@@ -18,4 +16,4 @@ class RatingServices {
 }
 
 
-module.exports = RatingServices
+module.exports = ChatroomServices
