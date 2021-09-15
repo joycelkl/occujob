@@ -5,6 +5,7 @@ class RatingServices {
         this.knex = knex;
     }
 
+    //please do not amend this
     updateRatingStatus() {
         console.log('schedule running')
         return this.knex('application')
@@ -13,6 +14,8 @@ class RatingServices {
             .then(console.log('status changed'))
 
     }
+
+
 
 }
 
