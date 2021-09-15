@@ -14,7 +14,7 @@ const EmployerHomePage = () => {
     const dispatch = useDispatch();
 
     const { loadEmployerJobThunkAction } = bindActionCreators(actionCreators, dispatch)
-const [ userName, setUserName] = useState(null)
+    const [ userName, setUserName] = useState(null)
     let pageSize = 6;
     let pagesCount = employerJobState.length > 0 && Math.ceil(employerJobState.length / pageSize);
 

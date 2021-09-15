@@ -15,11 +15,12 @@ const EmployerSearchApplicantProfile = () => {
     const dispatch = useDispatch()
     const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
 
-    const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
+    const { ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
 
 
 
     useEffect(() => {
+        let ee_id = localStorage.getItem('applicant')
         loadApplicantSearchProfileThunkAction(ee_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -105,25 +106,25 @@ const EmployerSearchApplicantProfile = () => {
                                 </div>
                                 <div className="row" style={{ marginTop: "20px" }}>
                                     <FormGroup>
-                                        <div class="col-md-6">
+                                        <div className="col-md-6">
                                             <Label for="Text">Job Function</Label>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div className="col-md-6">
                                             <h6 style={{ marginTop: "10px" }}>{ee_industry}</h6>
                                         </div>
                                     </FormGroup>
                                 </div>
-                                <div class="row" style={{ marginTop: "20px" }}>
+                                <div className="row" style={{ marginTop: "20px" }}>
                                     <FormGroup>
-                                        <div class="col-md-6">
+                                        <div className="col-md-6">
                                             <Label for="Text">Perferred Location</Label>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div className="col-md-6">
                                             <h6 style={{ marginTop: "10px" }}>{ee_location}</h6>
                                         </div>
                                     </FormGroup>
                                 </div>
-                                <div class="row" style={{ marginTop: "20px" }}>
+                                <div className="row" style={{ marginTop: "20px" }}>
                                     <FormGroup>
 
                                         <div className="col-md-6">

@@ -33,24 +33,24 @@ const EmployerProfilePage = () => {
 
   const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfileState
 
-  const [industry, setIndustry] = useState(er_industry);
-  const [location, setLocation] = useState(er_location);
-  const [phone, setPhone] = useState(er_phone);
-  const [compDescription, setCompDescription] = useState(comp_description)
-  const [image, setImage] = useState(er_img_data)
-  const [name, setName] = useState(er_name)
-  const [email, setEmail] = useState(er_email)
+  const [industry, setIndustry] = useState('');
+  const [location, setLocation] = useState('');
+  const [phone, setPhone] = useState('');
+  const [compDescription, setCompDescription] = useState('')
+  const [image, setImage] = useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [toggleAbout, setToggleAbout] = useState(true);
   const [toggleContact, setToggleContact] = useState(false);
   
 
   useEffect(() => {
     loadErProfileThunkAction();
-    setIndustry(er_industry)
-    setLocation(er_location)
-    setPhone(er_phone)
-    setCompDescription(comp_description)
-    setImage(er_img_data)
+    er_industry !== null && setIndustry(er_industry)
+    er_location !== null && setLocation(er_location)
+    er_phone !== null && setPhone(er_phone)
+    comp_description !== null && setCompDescription(comp_description)
+    er_img_data !== null && setImage(er_img_data)
     setName(er_name)
     setEmail(er_email)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -224,7 +224,7 @@ const EmployerProfilePage = () => {
                       </div>
                       <div className="col-md-6">
                         <Input style={{marginTop:"10px"}} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                          <option value={null} selected>Please select</option>
+                          <option defaultValue={null}>Please select</option>
                           {locationState.length > 0 ? locationState.map((location, i) => (
                             <option key={i} value={location.location}>{location.location}</option>
                           )) : "loading..."}

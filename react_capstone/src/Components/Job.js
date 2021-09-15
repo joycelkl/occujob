@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, Badge } from 'react-bootstrap';
 //from Arthur to make a Job detail item for home page card, Job search result etc
-
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../Redux';
 import { useDispatch } from 'react-redux';
@@ -20,7 +19,7 @@ const Job= (props)=>{
     const history = useHistory();
 
     function handleOnClick () {
- 
+        localStorage.setItem('job',job_id)
         console.log('clicked', job_id)
       loadSearchIndJobThunkAction(job_id).then(()=>{
         history.push('/applicantJobDetail')

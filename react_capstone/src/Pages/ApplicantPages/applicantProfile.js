@@ -40,17 +40,17 @@ const ApplicantProfile = () => {
 
   const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
 
-  const [name, setName] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [intro, setIntro] = useState(null);
-  const [expectedSalary, setExpectedSalary] = useState(null);
-  const [image, setImage] = useState(null);
-  const [expYr, setExpYr] = useState(null)
-  const [salaryType, setSalaryType] = useState(null);
-  const [availableArr, setAvailableArr] = useState(null);
-  const [industryArr, setIndustryArr] = useState(null);
-  const [skillArr, setSkillArr] = useState(null)
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [phone, setPhone] = useState('');
+  const [intro, setIntro] = useState('');
+  const [expectedSalary, setExpectedSalary] = useState('');
+  const [image, setImage] = useState('');
+  const [expYr, setExpYr] = useState('')
+  const [salaryType, setSalaryType] = useState('');
+  const [availableArr, setAvailableArr] = useState('');
+  const [industryArr, setIndustryArr] = useState('');
+  const [skillArr, setSkillArr] = useState('')
   const [toggleAbout, setToggleAbout] = useState(true);
   const [toggleContact, setToggleContact] = useState(false);
   const [toggleJobPreference, setToggleJobPreference] = useState(false);
@@ -58,15 +58,15 @@ const ApplicantProfile = () => {
 
   useEffect(() => {
     loadEEProfileThunkAction();
-    
     setName(ee_name);
-    setPhone(ee_phone);
-    setLocation(ee_location);
-    setImage(ee_img_data)
-    setIntro(self_intro);
-    setSalaryType(ee_salary_type)
-    setExpectedSalary(expected_salary);
-    setExpYr(ee_exp);
+    
+    ee_phone !== null && setPhone(ee_phone);
+    ee_location !== null &&setLocation(ee_location);
+    ee_img_data !== null &&setImage(ee_img_data)
+    self_intro !== null && setIntro(self_intro);
+    ee_salary_type !== null && setSalaryType(ee_salary_type)
+    expected_salary !== null && setExpectedSalary(expected_salary);
+    ee_exp !== null && setExpYr(ee_exp);
     let avaobj
     if (availability && availability.length > 0) {
       avaobj = availability.map((ava) => {
@@ -278,7 +278,7 @@ const ApplicantProfile = () => {
     <div>
       <ApplicantNavbar />
       <div className="container emp-profile">
-        <Form classNameName='form-group' onSubmit={(e) => handleOnSubmit(e)}>
+        <Form className='form-group' onSubmit={(e) => handleOnSubmit(e)}>
           <div className="row">
             <div className="col-md-4">
               <div className="profile-img">
@@ -479,7 +479,7 @@ const ApplicantProfile = () => {
                   }
                   {togglePortfolio &&
                     <div>
-                      <div classNameName="row">
+                      <div className="row">
                         <PortfolioTable eeId={ee_id} />
                       </div>
                     </div>

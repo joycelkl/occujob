@@ -29,6 +29,9 @@ export const logoutNowAction = () => {
         localStorage.clear('type');
         localStorage.clear('jobSearch');
         localStorage.clear('appSearch');
+        localStorage.clear('applicant');
+        localStorage.clear('job');
+        localStorage.clear('company');
         dispatch({
             type: LOGOUT_NOW_ACTION
         })
