@@ -132,7 +132,7 @@ const EmployerCreateJobPage = () => {
             <EmployerNavbar />
             <div >
                 <div className="container-fluid mt-0" style={{ display: "flex", justifyContent: "center", backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url(${background})`, backgroundPosition:'center', backgroundSize:'cover', marginTop:"0" }}>
-                    <div className="col-6" style={{border:"3px solid black",  borderRadius:"5px", padding:"30px", background:"rgb(59, 105, 121)", marginTop:"50px"}}>
+                    <div className="col-6" style={{border:"3px solid black",  borderRadius:"5px", padding:"30px", background:"linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))", marginTop:"50px"}}>
                     <h2 style={{textAlign:'center', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline', marginBottom:'20px', color:"white"}}>Create A Job</h2>
                         <Form className="form-group" onSubmit={(e) => handleOnSubmit(e)}>
                             <FormGroup>
