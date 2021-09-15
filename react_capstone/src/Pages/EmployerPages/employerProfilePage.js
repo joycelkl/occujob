@@ -62,6 +62,7 @@ const EmployerProfilePage = () => {
 
   useEffect(() => {
     loadErProfileThunkAction();
+    employerGetRatingThunkAction();
     er_industry !== null && setIndustry(er_industry)
     er_location !== null && setLocation(er_location)
     er_phone !== null && setPhone(er_phone)
