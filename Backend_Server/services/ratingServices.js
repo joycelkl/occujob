@@ -44,7 +44,25 @@ class RatingServices {
             });
     }
 
+// company GiveRating to applicants
+companyGiveRating(ee_id, application_id,rate,comment) {
 
+    return this.knex('rating')
+        .insert({
+            rating_employee_id: ee_id,
+            rating_application_id:application_id,
+            rate:rate,
+            comment:comment,
+        })
+        .returning('*')
+        .then((ratedApplicant) => {
+            console.log(ratedApplicant)
+            return ratedApplicant
+        })
+        .catch((err) => {
+            throw new Error(err)
+        });
+}
 
     //please do not amend this
     updateRatingStatus() {

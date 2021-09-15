@@ -33,7 +33,7 @@ class RatingRouter {
                 })
         })
 
-        //post Rating testing out making sideway
+        //post Rating testing out in employee router
         router.post('/applicantsGiveRating', (req, res) => {
             //posting job with jobServices 
             const {
@@ -52,7 +52,24 @@ class RatingRouter {
                 });
         })
 
+//post Rating testing out in employer router
+router.post('/CompanyGiveRating', (req, res) => {
+    //posting job with jobServices 
+    const {
+        ee_id,
+        application_id,
+        rate,
+        comment,
+    } = req.body
 
+    return this.ratingServices.companyGiveRating(ee_id,application_id,rate,comment)
+        .then(() => {
+            return res.json('Rating Created')
+        })
+        .catch((err) => {
+            res.status(500).json(err)
+        });
+})
 
 
 
