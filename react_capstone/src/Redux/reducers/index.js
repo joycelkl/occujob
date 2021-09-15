@@ -15,7 +15,8 @@ import companyNameReducer from './companyNameReducer'
 import employerApplicantSearchProfileReducer from './employerApplicantSearchProfileReducer'
 import applicantJobSearchReducer from './applicantJobSearchReducer'
 import applicantPortfolioReducer from './applicantPortfolioReducer'
-
+import applicantRatingReducer from './applicantRatingReducer'
+import employerRatingReducer from './employerRatingReducer'
 const reducers = combineReducers({
     auth: authReducer,
     publicJob: publicJobReducer,
@@ -33,6 +34,8 @@ const reducers = combineReducers({
     profile: employerApplicantSearchProfileReducer,
     appJobSearch: applicantJobSearchReducer,
     appPortfolio: applicantPortfolioReducer,
+    applicantRating: applicantRatingReducer,
+    employerRating: employerRatingReducer,
 })
 
 export default reducers

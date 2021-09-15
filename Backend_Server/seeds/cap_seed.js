@@ -90,9 +90,9 @@ exports.seed = async function (knex) {
                     return knex('application').insert([
                         { job_id: 1, employee_id: 1, offer: true },
                         { job_id: 2, employee_id: 1, offer: true },
-                        { job_id: 3, employee_id: 3 },
-                        { job_id: 2, employee_id: 2, offer: true, reply: true },
                         { job_id: 3, employee_id: 1 },
+                        { job_id: 4, employee_id: 1, offer: true, reply: true },
+                        { job_id: 5, employee_id: 1 },
                     ])
                 })
                 .then(() => {
@@ -199,7 +199,15 @@ exports.seed = async function (knex) {
                 .then(() => {
                     return knex('rating').insert([
                         { rating_employee_id: 1, rating_application_id: 1, rate: 5, comment: 'testing' },
+                        { rating_employee_id: 1, rating_application_id: 2, rate: 2, comment: 'testing' },
+                        { rating_employee_id: 1, rating_application_id: 3, rate: 1, comment: 'testing' },
+                        { rating_employee_id: 1, rating_application_id: 4, rate: 1, comment: 'testing' },
+                        { rating_employee_id: 1, rating_application_id: 5, rate: 1, comment: 'testing' },
                         { rating_employer_id: 1, rating_application_id: 1, rate: 3, comment: 'new test' },
+                        { rating_employer_id: 1, rating_application_id: 2, rate: 2, comment: 'new test' },
+                        { rating_employer_id: 1, rating_application_id: 3, rate: 5, comment: 'new test' },
+                        { rating_employer_id: 1, rating_application_id: 4, rate: 4, comment: 'new test' },
+                        { rating_employer_id: 1, rating_application_id: 5, rate: 3, comment: 'new test' },
                     ])
                 })
         });

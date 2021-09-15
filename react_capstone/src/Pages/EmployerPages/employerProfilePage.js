@@ -13,8 +13,8 @@ import EmployerPortfolioTable from '../../Components/EmployerPortfolioTable';
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-import ControlledRating from '../../Components/Rating/ControlledRating';
 import DisabledRating from '../../Components/Rating/DisabledRating';
+import { employerGetRatingThunkAction } from '../../Redux/action-creators';
 
 const EmployerProfilePage = () => {
   const updateToast = () => toast("Profile Updated");
@@ -30,13 +30,24 @@ const EmployerProfilePage = () => {
   });
   console.log("location", locationState)
 
+  const employerRatingState = useSelector((state) => state.employerRating)
+  console.log('employer rating', employerRatingState)
+
   const dispatch = useDispatch();
+
+
 
   const { loadErProfileThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { updateErProfileAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
-
+  const { employerGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfileState
+
+
+
+  //rating
+  const averageRating = employerRatingState.length > 0 && employerRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / employerRatingState.length;
+  console.log("Average", averageRating)
 
   const [industry, setIndustry] = useState('');
   const [location, setLocation] = useState('');
@@ -47,7 +58,7 @@ const EmployerProfilePage = () => {
   const [email, setEmail] = useState('')
   const [toggleAbout, setToggleAbout] = useState(true);
   const [toggleContact, setToggleContact] = useState(false);
-  
+
 
   useEffect(() => {
     loadErProfileThunkAction();
@@ -72,36 +83,36 @@ const EmployerProfilePage = () => {
   const aboutHandler = () => {
     setToggleAbout(true);
     setToggleContact(false);
-    
+
 
   };
   const contactHandler = () => {
     setToggleContact(true);
     setToggleAbout(false);
-    
-  };
-  
-//rating
-const labels = {
-  0.5: 'Useless',
-  1: 'Useless+',
-  1.5: 'Poor',
-  2: 'Poor+',
-  2.5: 'Ok',
-  3: 'Ok+',
-  3.5: 'Good',
-  4: 'Good+',
-  4.5: 'Excellent',
-  5: 'Excellent+',
-};
 
-const useStyles = makeStyles({
-  root: {
-    width: 200,
-    display: 'flex',
-    alignItems: 'center',
-  },
-});
+  };
+
+  //rating
+  const labels = {
+    0.5: 'Useless',
+    1: 'Useless+',
+    1.5: 'Poor',
+    2: 'Poor+',
+    2.5: 'Ok',
+    3: 'Ok+',
+    3.5: 'Good',
+    4: 'Good+',
+    4.5: 'Excellent',
+    5: 'Excellent+',
+  };
+
+  const useStyles = makeStyles({
+    root: {
+      width: 200,
+      display: 'flex',
+      alignItems: 'center',
+    },
+  });
 
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
@@ -127,7 +138,7 @@ const useStyles = makeStyles({
   //upload image setup ***DONT MODIFY THIS PART***
   function upload(e) {
     console.log("data", e.target.files[0])
-    if (e.target.files[0].size>1024*1024) {
+    if (e.target.files[0].size > 1024 * 1024) {
       alert('Please upload image 1MB or below')
       return
     }
@@ -163,7 +174,7 @@ const useStyles = makeStyles({
             <div className="col-md-6">
               <div className="profile-head">
                 <FormGroup>
-                 
+
                   <h2>{name}</h2>
                 </FormGroup>
                 {/* <h6>
@@ -172,8 +183,10 @@ const useStyles = makeStyles({
                 <p className="proile-rating">Ratings : </p>
 
 
-    <ControlledRating />
-    <DisabledRating />
+
+                <DisabledRating
+                  rating={averageRating}
+                />
                 <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} />
               </div>
             </div>
@@ -208,17 +221,17 @@ const useStyles = makeStyles({
                           </div>
                           <div className="col-md-6">
                             {/* <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled /> */}
-                            <h6 style={{color:"black", marginTop:"10px"}}> {email} </h6>
+                            <h6 style={{ color: "black", marginTop: "10px" }}> {email} </h6>
                           </div>
                         </FormGroup>
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
                           <div className="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input style={{marginTop:"10px"}} type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
+                            <Input style={{ marginTop: "10px" }} type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
                           </div>
                         </FormGroup>
                       </div>
@@ -226,48 +239,48 @@ const useStyles = makeStyles({
                   }
 
                   {toggleAbout &&
-                  <div>
-                  <div className="row" >
-                    <FormGroup>
+                    <div>
+                      <div className="row" >
+                        <FormGroup>
 
-                      <div className="col-md-6">
-                        <Label for="compDes">Company Description</Label><br></br>
+                          <div className="col-md-6">
+                            <Label for="compDes">Company Description</Label><br></br>
+                          </div>
+                          <div className="col-md-6">
+                            <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
+                          </div>
+                        </FormGroup>
                       </div>
-                      <div className="col-md-6">
-                        <Input style={{marginTop:"10px"}} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
-                      </div>
-                    </FormGroup>
-                  </div>
-                  <div className="row" style={{marginTop:"20px"}}>
-                    <FormGroup>
-                      <div className="col-md-6">
-                        <Label for="industry">Industry</Label>
-                      </div>
-                      <div className="col-md-6">
-                        <Input style={{marginTop:"10px"}} type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
-                      </div>
-                    </FormGroup>
+                      <div className="row" style={{ marginTop: "20px" }}>
+                        <FormGroup>
+                          <div className="col-md-6">
+                            <Label for="industry">Industry</Label>
+                          </div>
+                          <div className="col-md-6">
+                            <Input style={{ marginTop: "10px" }} type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
+                          </div>
+                        </FormGroup>
 
-                  </div>
-                  <div className="row" style={{marginTop:"20px"}}>
-                    <FormGroup>
-
-                      <div className="col-md-6">
-                        <Label for="location">Location</Label>
                       </div>
-                      <div className="col-md-6">
-                        <Input style={{marginTop:"10px"}} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                          <option defaultValue={null}>Please select</option>
-                          {locationState.length > 0 ? locationState.map((location, i) => (
-                            <option key={i} value={location.location}>{location.location}</option>
-                          )) : "loading..."}
-                        </Input>
-                      </div>
-                    </FormGroup>
+                      <div className="row" style={{ marginTop: "20px" }}>
+                        <FormGroup>
 
-                  </div>
-                  </div>
-}
+                          <div className="col-md-6">
+                            <Label for="location">Location</Label>
+                          </div>
+                          <div className="col-md-6">
+                            <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                              <option defaultValue={null}>Please select</option>
+                              {locationState.length > 0 ? locationState.map((location, i) => (
+                                <option key={i} value={location.location}>{location.location}</option>
+                              )) : "loading..."}
+                            </Input>
+                          </div>
+                        </FormGroup>
+
+                      </div>
+                    </div>
+                  }
                 </div>
 
               </div>
