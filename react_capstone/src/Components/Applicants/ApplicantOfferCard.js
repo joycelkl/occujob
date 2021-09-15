@@ -107,17 +107,17 @@ const ApplicantOfferCard = (props) => {
                     </div>
 </ModalHeader>   */}
         <ModalBody style={{width:"100%", height:"100%"}}>
-        <div class="container emp-profile">
-            <div class="container emp-profile">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
+        <div className="container emp-profile">
+            <div className="container emp-profile">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
                                 <img src={er_img_data} width="200px" height="200x" alt='' />
                                 <br />
                             </div>
                         </div>
-                        <div class="col-md-4 offset-md-4">
-                            <div class="profile-head" style={{marginTop:"25px"}}>
+                        <div className="col-md-4 offset-md-4">
+                            <div className="profile-head" style={{marginTop:"25px"}}>
                                 <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Company Name</Label>
                                 <Input type="text" name="text" id="CompanyName" placeholder="" value={er_name} disabled style={{marginBottom:"10px"}}/>
                                 <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Job Title</Label>

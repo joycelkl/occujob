@@ -35,8 +35,7 @@ const RegLoginRouter = require('./routers/regLoginRouter')
 const regLoginRouter = new RegLoginRouter().router();
 app.use('/', regLoginRouter)
 
-const RatingServices = require('./services/ratingServices');
-const ratingServices = new RatingServices(knex);
+
 const JobServices = require('./services/jobServices');
 const jobServices = new JobServices(knex);
 const PublicRouter = require('./routers/publicRouter');
@@ -53,13 +52,16 @@ const employeeService = new EmployeeService(knex);
 const EmployeeRouter = require('./routers/employeeRouter')
 const employeeRouter = new EmployeeRouter(employeeService, jobServices).router();
 
-
+const RatingServices = require('./services/ratingServices');
+const ratingServices = new RatingServices(knex);
+const RatingRouter = require('./routers/ratingRouter')
+const ratingRouter = new RatingRouter(ratingServices).router();
 
 const auth = require('./Auth/auth')(knex);
 app.use(auth.initialize());
 
-app.use('/employer', auth.authenticate(), employerRouter)
-app.use('/employee', auth.authenticate(), employeeRouter)
+app.use('/employer', auth.authenticate(), employerRouter, ratingRouter)
+app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter)
 
 app.listen(8080, () => {
     console.log('port is listening to 8080')
