@@ -37,6 +37,7 @@ const ApplicantOfferCard = (props) => {
     const [closeAll, setCloseAll] = useState(false);
     const [rating, setRating] = useState(0)
     const toggle = () => setModal(!modal);
+    const comment = ""
 
     console.log("RATING PASSED FROM CHILD", rating)
     const toggleNested = () => {
@@ -79,15 +80,16 @@ const ApplicantOfferCard = (props) => {
     let year = date.getFullYear();
 
 
-    async function employerRating(rating_employer_id, rating_application_id, rate, comment) {
+    async function employerRating(er_id, application_id, rating, comment) {
         const authAxiosConfig = await authAxios();
-        return await authAxiosConfig.post('/employer/companyRatingView', {
-            rating_employer_id: employer_id,
-            rating_application_id: application_id,
+        return await authAxiosConfig.post('/employee/applicantsGiveRating', {
+            er_id: er_id,
+            application_id: application_id,
             rate: rating,
             comment: comment,
 
         }).then(res => {
+            console.log("POST SUCCESS", res)
         }).catch(err => {
             console.log("job posting err res", err.response)
         })
@@ -205,8 +207,8 @@ const ApplicantOfferCard = (props) => {
                                     <Input type="textarea" />
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" onClick={toggleNested}>Done</Button>{' '}
-                                    <Button color="secondary" onClick={toggleAll}>All Done</Button>
+                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment)}>Rate</Button>{' '}
+                                    <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                 </ModalFooter>
                             </Modal>
                             <Button color="secondary" onClick={toggle}>Cancel</Button>
