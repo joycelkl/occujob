@@ -60,7 +60,8 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
             }).then(res => {
                 console.log("ER User login success")
                 localStorage.setItem('type', 'er')
-                localStorage.setItem("token", res.data)
+                localStorage.setItem('UserName', res.data.username)
+                localStorage.setItem("token", res.data.token);
             })
             .then(() => {
                 dispatch(regLoginSuccessAction())
@@ -83,9 +84,10 @@ export const loginEEuserThunkAction = (email, password) => async(dispatch) => {
             email: email,
             password: password
         }).then(res => {
-            console.log("EE User login success")
+            console.log("EE User login success", res.data)
             localStorage.setItem('type', 'ee')
-            localStorage.setItem("token", res.data);
+            localStorage.setItem('UserName', res.data.username)
+            localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
             console.log("err res", err.response)
@@ -107,7 +109,8 @@ export const registerERuserThunkAction = (name, email, password) => async(dispat
         }).then(res => {
             console.log("ER User login success")
             localStorage.setItem('type', 'er');
-            localStorage.setItem("token", res.data);
+            localStorage.setItem('UserName', res.data.username)
+            localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
             console.log("err res", err.response)
@@ -129,7 +132,8 @@ export const registerEEuserThunkAction = (name, email, password) => async(dispat
         }).then(res => {
             console.log("EE User login success")
             localStorage.setItem('type', 'ee')
-            localStorage.setItem("token", res.data);
+            localStorage.setItem('UserName', res.data.username)
+            localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
             console.log("err res", err.response)
