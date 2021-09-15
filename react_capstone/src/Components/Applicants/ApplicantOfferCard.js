@@ -37,7 +37,7 @@ const ApplicantOfferCard = (props) => {
     const [closeAll, setCloseAll] = useState(false);
     const [rating, setRating] = useState(0)
     const toggle = () => setModal(!modal);
-    const comment = ""
+    const [comment, setComment] = useState('')
 
     console.log("RATING PASSED FROM CHILD", rating)
     const toggleNested = () => {
@@ -119,29 +119,6 @@ const ApplicantOfferCard = (props) => {
                 </Card.Body>
                 <div>
                     <Modal isOpen={modal} toggle={toggle} fade={false} >
-                        {/* <ModalHeader toggle={toggle}>
-            <div class="container emp-profile">
-            <div class="container emp-profile">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
-                                <img src={er_img_data} width="200px" height="200x" alt='' />
-                                <br />
-                            </div>
-                        </div>
-                        <div class="col-md-4 offset-md-4">
-                            <div class="profile-head" style={{marginTop:"25px"}}>
-                                <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Company Name</Label>
-                                <Input type="text" name="text" id="CompanyName" placeholder="" value={er_name} disabled style={{marginBottom:"10px"}}/>
-                                <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight:"bold", textDecoration:"underline", marginBottom:"5px"}}>Job Title</Label>
-                                <Input type="text" name="text" id="jobTitle" placeholder="" value={job_title} disabled />
-                            </div>
-                        </div>
-                        <div className="nav nav-tabs" style={{ marginTop: "10px", marginBottom:"30px" }}></div>
-                    </div>
-                    </div>
-                    </div>
-</ModalHeader>   */}
                         <ModalBody style={{ width: "100%", height: "100%" }}>
                             <div className="container emp-profile">
                                 <div className="container emp-profile">
@@ -204,7 +181,7 @@ const ApplicantOfferCard = (props) => {
                                 </ModalBody>
                                 <ModalBody>
                                     <h1>Comments:</h1>
-                                    <Input type="textarea" />
+                                    <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment)}>Rate</Button>{' '}
