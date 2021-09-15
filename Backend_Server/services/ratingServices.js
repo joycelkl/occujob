@@ -24,6 +24,27 @@ class RatingServices {
                 return data
             })
     }
+//applicantsGiveRating to company
+    applicantsGiveRating(er_id, application_id,rate,comment) {
+
+        return this.knex('rating')
+            .insert({
+                rating_employer_id: er_id,
+                rating_application_id:application_id,
+                rate:rate,
+                comment:comment,
+            })
+            .returning('*')
+            .then((ratedCompany) => {
+                console.log(ratedCompany)
+                return ratedCompany
+            })
+            .catch((err) => {
+                throw new Error(err)
+            });
+    }
+
+
 
     //please do not amend this
     updateRatingStatus() {

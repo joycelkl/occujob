@@ -32,6 +32,41 @@ class RatingRouter {
                     res.status(500).json(err)
                 })
         })
+
+        //post Rating testing out making sideway
+        router.post('/applicantsGiveRating', (req, res) => {
+            //posting job with jobServices 
+            const {
+                er_id,
+                application_id,
+                rate,
+                comment,
+            } = req.body
+
+            return this.ratingServices.applicantsGiveRating(er_id,application_id,rate,comment)
+                .then(() => {
+                    return res.json('Rating Created')
+                })
+                .catch((err) => {
+                    res.status(500).json(err)
+                });
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return router;
     }
 
