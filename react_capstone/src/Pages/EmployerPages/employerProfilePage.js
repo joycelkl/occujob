@@ -13,6 +13,8 @@ import EmployerPortfolioTable from '../../Components/EmployerPortfolioTable';
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+import ControlledRating from '../../Components/Rating/ControlledRating';
+import DisabledRating from '../../Components/Rating/DisabledRating';
 
 const EmployerProfilePage = () => {
   const updateToast = () => toast("Profile Updated");
@@ -168,20 +170,10 @@ const useStyles = makeStyles({
                   Web Developer and Designer
                 </h6> */}
                 <p className="proile-rating">Ratings : </p>
-                <div className={classes.root}>
-      <Rating
-        name="hover-feedback"
-        value={value}
-        precision={0.5}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        onChangeActive={(event, newHover) => {
-          setHover(newHover);
-        }}
-      />
-      {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
-    </div>
+
+
+    <ControlledRating />
+    <DisabledRating />
                 <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} />
               </div>
             </div>
