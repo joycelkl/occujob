@@ -21,6 +21,7 @@ const EmployerApplicantSearchList = () => {
     console.log('applicant search result', appSearchState)
 
     function handleOnclick(Id) {
+        localStorage.setItem('applicant', Id)
         loadApplicantSearchProfileThunkAction(Id).then(() => {
             history.push('/employerSearchApplicantProfile')
         })

@@ -11,12 +11,12 @@ import "../Pages/EmployerPages/employerProfilePage.css"
 
 const JobDetail = (props) => {
     const applyToast = () => toast("You Have Applied this Job")
-    const dispatch = useDispatch();
+    
     const { indJob } = props;
     const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
  
-
-    const { loadErProfileThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const dispatch = useDispatch();
+    const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     async function applyJob(job_id) {
         console.log("offer app ID", job_id)
@@ -33,7 +33,8 @@ const JobDetail = (props) => {
     const history = useHistory();
 
     function handleOnClick() {
-        loadErProfileThunkAction(er_id).then(() => {
+        localStorage.setItem('company', er_id)
+        loadErProfileforAppThunkAction(er_id).then(() => {
             history.push('/applicantEmployerDetails')
         })
     }
@@ -43,19 +44,19 @@ const JobDetail = (props) => {
 
     return (
 
-        <div class="container emp-profile">
-            <div class="container emp-profile">
+        <div className="container emp-profile">
+            <div className="container emp-profile">
                 <Form className="form-group" >
-                    <div class="row">
+                    <div className="row">
                         {/* <div className="employerDetails" onClick={handleOnClick} style={{ cursor: "pointer" }}> */}
-                        <div class="col-md-4">
-                            <div class="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
+                        <div className="col-md-4">
+                            <div className="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
                                 <img src={er_img_data} width="200px" height="200x" alt='logo' />
                                 <br />
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="profile-head" style={{ marginTop: "25px" }}>
+                        <div className="col-md-6">
+                            <div className="profile-head" style={{ marginTop: "25px" }}>
                                 <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Company Name</Label>
                                 <h4>{er_name} ID{er_id}</h4>
                                 <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Job Title</Label>

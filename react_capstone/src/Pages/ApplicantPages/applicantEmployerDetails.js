@@ -1,13 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Form, FormGroup, Label} from 'reactstrap';
 import ApplicantNavbar from '../../Components/Navbar/navbarApplicant';
 import '../EmployerPages/employerProfilePage.css'
 import {useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../Redux';
 
 
 const ApplicantEmployerDetails = () => {
     const erProfile = useSelector((state) => state.erProfile)
     const {comp_description, er_img_data, er_industry, er_location, er_name} = erProfile
+
+    const dispatch = useDispatch();
+    const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
+
+    useEffect(()=>{
+        const er_id = localStorage.getItem('company')
+        loadErProfileforAppThunkAction(er_id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
     return (
         <div>
             <ApplicantNavbar />

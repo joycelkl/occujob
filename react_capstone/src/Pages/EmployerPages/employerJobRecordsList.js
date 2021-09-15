@@ -32,7 +32,7 @@ const EmployerJobRecordsList = () => {
                 <div className="jobListText-box" id="home">
                     <h1>Job Records</h1>
                     <p>Manage Your Applicants!</p>
-                    <a href="/employerApplicantSearch" className="Homebtn">Search Jobs</a>
+                    <a href="/employerApplicantSearch" className="Homebtn">Search Applicants</a>
                 </div>
             </section>
             <div className="jobCard">
