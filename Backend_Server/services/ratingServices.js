@@ -5,8 +5,8 @@ class RatingServices {
         this.knex = knex;
     }
 
-    listAplicantsOwnRating(userId) {
-        console.log('list user Rating')
+    listApplicantsOwnRating(userId) {
+        console.log('list ee Rating',userId)
         return this.knex('rating')
             .where("rating_employee_id", userId)
             .then((data) => {
@@ -16,7 +16,7 @@ class RatingServices {
     }
 
     listCompanyOwnRating(userId) {
-        console.log('list user Rating')
+        console.log('list er Rating')
         return this.knex('rating')
             .where("rating_employer_id", userId)
             .then((data) => {
