@@ -4,14 +4,14 @@ class ChatroomServices {
     }
 
     //please do not amend this
-    updateRatingStatus() {
-        console.log('schedule running')
-        return this.knex('application')
-            .where('enable_rating', '<', new Date())
-            .update('rating', true)
-            .then(console.log('status changed'))
+    // updateRatingStatus() {
+    //     console.log('schedule running')
+    //     return this.knex('application')
+    //         .where('enable_rating', '<', new Date())
+    //         .update('rating', true)
+    //         .then(console.log('status changed'))
 
-    }
+    // }
 
 }
 

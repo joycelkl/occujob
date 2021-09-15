@@ -7,6 +7,9 @@ class ChatroomRouter {
     router = () => {
         const router = express.Router();
 
+        router.get('/chatroom', (req, res) => {
+            res.send('chatroom server is running')
+        })
 
 
         return router;

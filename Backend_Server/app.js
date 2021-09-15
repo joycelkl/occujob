@@ -5,6 +5,14 @@ const app = express();
 //set up socketio
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
+io.on('connection', (socket) => {
+    console.log('we have a new connection!!')
+
+    socket.on('disconnect', () => {
+        console.log('User has left!!!')
+    })
+})
+
 
 //middleware
 app.use(express.json());
@@ -61,11 +69,16 @@ const ratingServices = new RatingServices(knex);
 const RatingRouter = require('./routers/ratingRouter')
 const ratingRouter = new RatingRouter(ratingServices).router();
 
+const ChatroomServices = require('./services/chatroomServices');
+const chatroomServices = new ChatroomServices(knex);
+const ChatroomRouter = require('./routers/chatroomRouter')
+const chatroomRouter = new ChatroomRouter(chatroomServices).router();
+
 const auth = require('./Auth/auth')(knex);
 app.use(auth.initialize());
 
-app.use('/employer', auth.authenticate(), employerRouter, ratingRouter)
-app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter)
+app.use('/employer', auth.authenticate(), employerRouter, ratingRouter, chatroomRouter)
+app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter, chatroomRouter)
 
 server.listen(8080, () => {
     console.log('port is listening to 8080')
