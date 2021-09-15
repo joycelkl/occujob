@@ -64,6 +64,31 @@ companyGiveRating(ee_id, application_id,rate,comment) {
         });
 }
 
+jobUpdating(rating_id,comment) {
+    console.log('Rating updating', rating_id)
+
+    return this.knex('rating')
+        .where({
+            rating_id: rating_id
+        })
+        .update({
+            rating :rating,
+            comment:comment,
+        })
+        .returning('*')
+        .then((updatedJob) => {
+            // id = encryptFunction.encryptString(id)
+            console.log('upatedjob', updatedJob)
+            return updatedJob;
+        })
+        .catch((err) => {
+            throw new Error(err)
+        });
+}
+
+
+
+
     //please do not amend this
     updateRatingStatus() {
         console.log('schedule running')
