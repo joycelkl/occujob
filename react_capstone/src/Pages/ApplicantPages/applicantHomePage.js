@@ -32,17 +32,12 @@ const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispa
 
     useEffect(() => {
         loadApplicantJobThunkAction();
+        const name = localStorage.getItem('UserName')
+        setUserName(name)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     console.log('ApplicantJob Data', applicantJobState)
-
-    useEffect(() => {
-        if(applicantJobState.length > 0) {
-            setUserName (applicantJobState.pop())
-        }  
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [applicantJobState])
 
     console.log('poped', userName)
 
