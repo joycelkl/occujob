@@ -14,10 +14,19 @@ import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 import ApplicantPortfolioTable from "../../Components/PortfolioTable";
 import DisabledRating from "../../Components/Rating/DisabledRating";
 import { applicantGetRatingThunkAction } from "../../Redux/action-creators";
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+
 const ApplicantProfile = () => {
 
-  //toggler
+ 
 
+  const [currentPage, setCurrentPage] = useState(0);
+  function handleClick(e, index) {
+
+    e.preventDefault();
+    setCurrentPage(index)
+
+  }
 
   const dispatch = useDispatch();
   const { loadEEProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
@@ -44,10 +53,14 @@ const ApplicantProfile = () => {
 
   const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
 
-  // Rating
-const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
-console.log("Average",averageRating)
 
+
+  // Rating
+  const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
+  console.log("Average", averageRating)
+  
+  let pageSize = 6;
+  let pagesCount = applicantRatingState.length > 0 && Math.ceil(applicantRatingState.length / pageSize);
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [phone, setPhone] = useState('');
@@ -63,7 +76,9 @@ console.log("Average",averageRating)
   const [toggleContact, setToggleContact] = useState(false);
   const [toggleJobPreference, setToggleJobPreference] = useState(false);
   const [togglePortfolio, setTogglePortfolio] = useState(false);
+  const [toggleComments, setToggleComments] = useState(false);
   const [rate, setRate] = useState('');
+  const [commentArr, setCommentArr] = useState('');
 
   useEffect(() => {
     loadEEProfileThunkAction();
@@ -196,6 +211,7 @@ console.log("Average",averageRating)
     setTogglePortfolio(false);
     setToggleContact(false);
     setToggleJobPreference(false);
+    setToggleComments(false);
 
   };
   const contactHandler = () => {
@@ -203,18 +219,29 @@ console.log("Average",averageRating)
     setTogglePortfolio(false);
     setToggleAbout(false);
     setToggleJobPreference(false);
+    setToggleComments(false);
   };
   const jobPreferenceHandler = () => {
     setToggleJobPreference(true);
     setTogglePortfolio(false);
     setToggleContact(false);
     setToggleAbout(false);
+    setToggleComments(false);
   };
   const portfolioHandler = () => {
     setTogglePortfolio(true);
     setToggleContact(false);
     setToggleAbout(false);
     setToggleJobPreference(false);
+    setToggleComments(false);
+
+  };
+  const commentsHandler = () => {
+    setToggleComments(true);
+    setToggleContact(false);
+    setToggleAbout(false);
+    setToggleJobPreference(false);
+    setTogglePortfolio(false);
 
   };
 
@@ -303,11 +330,11 @@ console.log("Average",averageRating)
                   <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
                 <p className="proile-rating">Ratings : <span>8/10</span></p>
-               
+
                 <DisabledRating
                   rating={averageRating}
                 />
-                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} />
+                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} commentsHandler={commentsHandler} />
 
               </div>
             </div>
@@ -403,6 +430,71 @@ console.log("Average",averageRating)
                           </div>
                         </FormGroup>
                       </div>
+                    </div>
+                  }
+                  {toggleComments &&
+                    <div>
+                      <div className="row">
+                        {applicantRatingState.length > 0 && applicantRatingState
+                          .slice(
+                            currentPage * pageSize,
+                            (currentPage + 1) * pageSize
+                          )
+                          .map((eachData, index) =>
+                            <FormGroup key={index} >
+                              <div className="col-md-6">
+                                <Label for="comment"> Review: </Label>
+                              </div>
+                              <div className="col-md-6">
+                                <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
+                              </div>
+
+                            </FormGroup>
+
+                          )}
+                        <div style={{ overflowX: "auto", justifyContent: "center", display: "flex", }}>
+                          <Pagination>
+
+                            <PaginationItem disabled={currentPage <= 0}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage - 1)}
+                                previous
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                            {/* 
+            {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
+                    <ApplicantHomeCard
+                        key={index}
+                        applicantJob={applicantJob}
+                    />
+                )) : "loading..."} */}
+                            {[...Array(pagesCount)].map((page, i) =>
+                              <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                  {i + 1}
+                                </PaginationLink>
+                              </PaginationItem>
+                            )}
+
+                            <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage + 1)}
+                                next
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                          </Pagination>
+                        </div>
+
+                      </div>
+
                     </div>
                   }
 
