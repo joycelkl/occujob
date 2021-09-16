@@ -1,26 +1,35 @@
 //set up express services
 const express = require('express');
+const router = express.Router()
 const app = express();
+
+//set up cors
+const cors = require('cors');
+app.use(cors());
 
 //set up socketio
 const server = require('http').createServer(app)
-const io = require('socket.io')(server)
-io.on('connection', (socket) => {
-    console.log('we have a new connection!!')
+    // const io = require('socket.io')(server)
 
-    socket.on('disconnect', () => {
-        console.log('User has left!!!')
-    })
+const io = require('socket.io')(server, {
+    cors: {
+        origin: 'http//localhost:3000',
+        methods: ['GET', 'POST']
+    }
 })
 
+// io.on('connection', (socket) => {
+//     console.log('we have a new connection!!')
+
+//     socket.on('disconnect', () => {
+//         console.log('User has left!!!')
+//     })
+// })
 
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-//set up cors
-const cors = require('cors');
-app.use(cors());
 
 //fileupload setup
 const fileupload = require('express-fileupload');
@@ -69,16 +78,17 @@ const ratingServices = new RatingServices(knex);
 const RatingRouter = require('./routers/ratingRouter')
 const ratingRouter = new RatingRouter(ratingServices).router();
 
-const ChatroomServices = require('./services/chatroomServices');
-const chatroomServices = new ChatroomServices(knex);
+// const ChatroomServices = require('./services/chatroomServices');
+// const chatroomServices = new ChatroomServices(knex);
 const ChatroomRouter = require('./routers/chatroomRouter')
-const chatroomRouter = new ChatroomRouter(chatroomServices).router();
+const chatroomRouter = new ChatroomRouter(knex, io, router).router();
 
 const auth = require('./Auth/auth')(knex);
 app.use(auth.initialize());
 
-app.use('/employer', auth.authenticate(), employerRouter, ratingRouter, chatroomRouter)
-app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter, chatroomRouter)
+app.use('/employer', auth.authenticate(), employerRouter, ratingRouter)
+app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter)
+app.use('/chat', chatroomRouter)
 
 server.listen(8080, () => {
     console.log('port is listening to 8080')

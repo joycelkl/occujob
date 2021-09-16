@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Button, Form, FormGroup, Label} from 'reactstrap';
 import authAxios from '../Redux/authAxios';
 import { useDispatch } from 'react-redux';
@@ -8,9 +8,13 @@ import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Pages/EmployerPages/employerProfilePage.css"
+import Join from "./Chatroom/Join";
 
 const JobDetail = (props) => {
     const applyToast = () => toast("You Have Applied this Job")
+
+    const [employer, setEmployer] = useState('')
+    const [applicant, setApplicant] = useState('')
     
     const { indJob } = props;
     const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
@@ -39,7 +43,12 @@ const JobDetail = (props) => {
         })
     }
 
-
+    useEffect(()=>{
+        const name = localStorage.getItem('UserName')
+        setApplicant(name)
+        setEmployer(er_name)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[er_name])
 
 
     return (
@@ -99,7 +108,8 @@ const JobDetail = (props) => {
                     </FormGroup>
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>
-                        <Button>Message</Button>
+                        {/* <Button>Message</Button> */}
+                        <Join erName={employer} eeName={applicant}/>
                     </div>
                 </Form>
             </div>

@@ -124,31 +124,18 @@ class EmployeeRouter {
         })
 
         router.get('/home', (req, res) => {
-            console.log('home run')
+
+            console.log('home run', req.user)
                 //list job details via application id 
-            let data = [];
+
             return this.employeeService
                 .homeJobList()
                 .then((jobDetail) => {
-                    return data = [...jobDetail]
-                })
-                .then(() => {
-                    return this.employeeService.listUserInfo(req.user.id)
-                })
-                .then((userp) => {
-                    console.log('userp', userp)
-                    const { ee_name } = userp[0];
-                    data = data.concat(ee_name)
-                    console.log('data in return', data)
-                })
-                .then(() => {
-                    console.log('new data', data)
-                    return res.json(data)
+                    return res.json(jobDetail)
                 })
                 .catch((err) => {
                     res.status(500).json(err)
                 })
-
         })
 
         //tested

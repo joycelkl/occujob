@@ -25,8 +25,11 @@ import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearch
 import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
 import EmployerSignUp from './Pages/EmployerPages/employerSignup';
 import ApplicantEmployerDetails from './Pages/ApplicantPages/applicantEmployerDetails';
+import Chat from './Components/Chatroom/Chat';
+
 
 const PublicRoute = ({component, ...rest}) => {
+
   const {isAuthenticated, user} = useSelector((state) => state.auth)
   const Component = component;
   console.log('user', user)
@@ -107,6 +110,7 @@ function App() {
         <PrivateRoute path = "/applicantOfferDetail" component = { ApplicantOfferDetail }/> 
         <PrivateRoute path = "/applicantHomePage" component = { ApplicantHomePage } />
         <PrivateRoute path = "/applicantEmployerDetails" component = { ApplicantEmployerDetails } />
+        <PrivateRoute path = "/chat" component={Chat} />
         </Switch>
         </ Router>
 
