@@ -21,22 +21,24 @@ module.exports = (knex) => {
             switch (payload.type) {
                 case 'er':
                     query = await knex('employer').where({ er_id: payload.id });
-                    user = { id: query[0].er_id };
+                    user = { id: query[0].er_id, type: query[0].er_type };
                     break;
                 case 'ee':
                     query = await knex('employee').where({ ee_id: payload.id });
-                    user = { id: query[0].ee_id };
+                    user = { id: query[0].ee_id, type: query[0].ee_type };
                     break;
                 case 'admin':
                     query = await knex('admin').where({ admin_id: payload.id });
-                    user = { id: query[0].admin_id };
+                    user = { id: query[0].admin_id, type: query[0].type };
                     break;
                 default:
                     return;
             }
 
             if (user) {
-                return done(null, { id: user.id })
+                console.log('user in auth', user)
+
+                return done(null, { id: user.id, type: user.type })
             } else {
                 return done(new Error("User Not Found", null));
             }
