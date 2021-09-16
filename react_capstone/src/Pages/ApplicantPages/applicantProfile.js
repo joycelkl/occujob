@@ -102,6 +102,7 @@ const ApplicantProfile = () => {
   const [toggleJobPreference, setToggleJobPreference] = useState(false);
   const [togglePortfolio, setTogglePortfolio] = useState(false);
   const [toggleComments, setToggleComments] = useState(false);
+  const [toggleApplicantReviews, setToggleApplicantReviews] = useState(false);
   const [rate, setRate] = useState('');
   const [commentArr, setCommentArr] = useState('');
 
@@ -239,6 +240,8 @@ const ApplicantProfile = () => {
     setToggleContact(false);
     setToggleJobPreference(false);
     setToggleComments(false);
+    setToggleApplicantReviews(false);
+
 
   };
   const contactHandler = () => {
@@ -247,6 +250,8 @@ const ApplicantProfile = () => {
     setToggleAbout(false);
     setToggleJobPreference(false);
     setToggleComments(false);
+    setToggleApplicantReviews(false);
+
   };
   const jobPreferenceHandler = () => {
     setToggleJobPreference(true);
@@ -254,6 +259,8 @@ const ApplicantProfile = () => {
     setToggleContact(false);
     setToggleAbout(false);
     setToggleComments(false);
+    setToggleApplicantReviews(false);
+
   };
   const portfolioHandler = () => {
     setTogglePortfolio(true);
@@ -261,10 +268,23 @@ const ApplicantProfile = () => {
     setToggleAbout(false);
     setToggleJobPreference(false);
     setToggleComments(false);
+    setToggleApplicantReviews(false);
+
 
   };
   const commentsHandler = () => {
     setToggleComments(true);
+    setToggleContact(false);
+    setToggleAbout(false);
+    setToggleJobPreference(false);
+    setTogglePortfolio(false);
+    setToggleApplicantReviews(false);
+
+
+  };
+  const applicantReviewsHandler = () => {
+    setToggleApplicantReviews(true);
+    setToggleComments(false);
     setToggleContact(false);
     setToggleAbout(false);
     setToggleJobPreference(false);
@@ -361,7 +381,7 @@ const ApplicantProfile = () => {
                 <DisabledRating
                   rating={averageRating}
                 />
-                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} commentsHandler={commentsHandler} />
+                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} commentsHandler={commentsHandler} applicantReviewsHandler={applicantReviewsHandler}/>
 
               </div>
             </div>
@@ -460,6 +480,96 @@ const ApplicantProfile = () => {
                       </div>
                     </div>
                   }
+                  {toggleApplicantReviews &&
+                    <div>
+                    <div className="row">
+                      {applicantCreatedRatingState.length > 0 && applicantCreatedRatingState
+                        .slice(
+                          currentPage * pageSize,
+                          (currentPage + 1) * pageSize
+                        )
+                        .map((eachCreatedData, index) =>
+                          <FormGroup key={index} >
+                            {/* <div className="col-md-6">
+                              <Label for="comment"> Review: </Label>
+                            </div>
+                            <div className="col-md-6">
+                              <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
+                            </div> */}
+                            <Card className={classes.root} style={{width:"600px", marginBottom:"30px"}}>
+                <CardActionArea>
+                  
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Review:
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary" component="p" style={{color:"black"}}>
+                    {eachCreatedData.comment}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
+                    {eachCreatedData.updated_at}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                {/* <CardActions>
+                  <Button size="small" color="primary">
+                    Share
+                  </Button>
+                  <Button size="small" color="primary">
+                    Learn More
+                  </Button>
+                </CardActions> */}
+              </Card>
+                          </FormGroup>
+                          
+
+                        )}
+                      <div style={{ overflowX: "auto", justifyContent: "center", display: "flex", }}>
+                        <Pagination>
+
+                          <PaginationItem disabled={currentPage <= 0}>
+
+                            <PaginationLink
+                              onClick={e => handleClick(e, currentPage - 1)}
+                              previous
+                              href="#"
+                            />
+
+                          </PaginationItem>
+
+                          {/* 
+          {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
+                  <ApplicantHomeCard
+                      key={index}
+                      applicantJob={applicantJob}
+                  />
+              )) : "loading..."} */}
+                          {[...Array(pagesCount)].map((page, i) =>
+                            <PaginationItem active={i === currentPage} key={i}>
+                              <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                {i + 1}
+                              </PaginationLink>
+                            </PaginationItem>
+                          )}
+
+                          <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                            <PaginationLink
+                              onClick={e => handleClick(e, currentPage + 1)}
+                              next
+                              href="#"
+                            />
+
+                          </PaginationItem>
+
+                        </Pagination>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  }
+
                   {toggleComments &&
                     <div>
                       <div className="row">
