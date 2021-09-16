@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 const ControlledRating = (props) => {
-    const [ratingValue, setRatingValue] = useState(0);
+    const [ratingValue, setRatingValue] = useState(rating);
     props.ratingValue(ratingValue)
     return (
         <div>
