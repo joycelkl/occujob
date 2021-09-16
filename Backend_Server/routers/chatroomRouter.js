@@ -1,11 +1,9 @@
 const express = require('express');
 
-// const { io } = require('../app')
 
 class ChatroomRouter {
-    constructor(knex, io, ) {
-        // this.chatroomServices = chatroomServices;
-        this.knex = knex;
+    constructor(chatroomServices, io) {
+        this.chatroomServices = chatroomServices;
         this.io = io;
         this.io.on('connection', (socket) => {
             console.log('we have a new connection!!')
@@ -16,16 +14,15 @@ class ChatroomRouter {
         })
     }
 
-
-
     router = () => {
         const router = express.Router();
 
         router.get('/testingChat', (req, res) => {
-            return this.knex('job')
+            console.log('route is okay')
+            return this.chatroomServices.testing()
                 .then((data) => {
-                    console.log(data)
-                    res.json(data)
+
+                    return res.json(data)
                 })
                 .catch((err) => {
                     console.log(err)

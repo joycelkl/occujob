@@ -9,22 +9,12 @@ app.use(cors());
 
 //set up socketio
 const server = require('http').createServer(app)
-    // const io = require('socket.io')(server)
-
 const io = require('socket.io')(server, {
     cors: {
         origin: 'http//localhost:3000',
         methods: ['GET', 'POST']
     }
 })
-
-// io.on('connection', (socket) => {
-//     console.log('we have a new connection!!')
-
-//     socket.on('disconnect', () => {
-//         console.log('User has left!!!')
-//     })
-// })
 
 //middleware
 app.use(express.json());
@@ -78,10 +68,10 @@ const ratingServices = new RatingServices(knex);
 const RatingRouter = require('./routers/ratingRouter')
 const ratingRouter = new RatingRouter(ratingServices).router();
 
-// const ChatroomServices = require('./services/chatroomServices');
-// const chatroomServices = new ChatroomServices(knex);
+const ChatroomServices = require('./services/chatroomServices');
+const chatroomServices = new ChatroomServices(knex);
 const ChatroomRouter = require('./routers/chatroomRouter')
-const chatroomRouter = new ChatroomRouter(knex, io, router).router();
+const chatroomRouter = new ChatroomRouter(chatroomServices, io).router();
 
 const auth = require('./Auth/auth')(knex);
 app.use(auth.initialize());

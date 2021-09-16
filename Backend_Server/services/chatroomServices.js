@@ -3,15 +3,18 @@ class ChatroomServices {
         this.knex = knex;
     }
 
-    //please do not amend this
-    // updateRatingStatus() {
-    //     console.log('schedule running')
-    //     return this.knex('application')
-    //         .where('enable_rating', '<', new Date())
-    //         .update('rating', true)
-    //         .then(console.log('status changed'))
+    testing() {
+        console.log('testing running')
+        return this.knex('employer')
+            .then((data) => {
+                return data
+            })
+            .catch((err) => {
+                console.error(err)
+                throw new Error(err)
+            });
 
-    // }
+    }
 
 }
 
