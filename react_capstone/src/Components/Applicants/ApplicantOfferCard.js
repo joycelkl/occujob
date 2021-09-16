@@ -20,7 +20,7 @@ const ApplicantOfferCard = (props) => {
     //toast
     const acceptToast = () => toast("You Have Accepted This Offer")
     const declineToast = () => toast("You Have Declined This Offer")
-
+    const rateToast = () => alert("You Have Rated this Company")
     const dispatch = useDispatch();
     const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
     const { offerDeclineAction } = bindActionCreators(actionCreators, dispatch)
@@ -38,7 +38,6 @@ const ApplicantOfferCard = (props) => {
     const [rating, setRating] = useState(0)
     const toggle = () => setModal(!modal);
     const [comment, setComment] = useState('')
-    const [rated,setRated] = useState(null)
 
     console.log("RATING PASSED FROM CHILD", rating)
     const toggleNested = () => {
@@ -91,7 +90,7 @@ const ApplicantOfferCard = (props) => {
 
         }).then(res => {
             console.log("POST SUCCESS", res)
-            setRated(true)
+            rateToast()
         }).catch(err => {
             console.log("rate post err res", err.response)
         })
@@ -183,10 +182,10 @@ const ApplicantOfferCard = (props) => {
                                 </ModalBody>
                                 <ModalBody>
                                     <h1>Comments:</h1>
-                                    <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
+                                    <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Please Give Your Comment Here " value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment)}>Rate</Button>{' '}
+                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment),toggleNested}>Rate</Button>{' '}
                                     <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                 </ModalFooter>
                             </Modal>
