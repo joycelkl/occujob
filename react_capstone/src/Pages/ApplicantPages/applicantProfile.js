@@ -503,22 +503,19 @@ const ApplicantProfile = () => {
                     <Typography gutterBottom variant="h5" component="h2">
                       Review:
                     </Typography>
-                    <Typography variant="body1" color="textSecondary" component="p" style={{color:"black"}}>
-                    {eachCreatedData.comment}
-                    </Typography>
+                   <Input type="textarea" value={eachCreatedData.comment}/>
+                    
+                   
                     <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
                     {eachCreatedData.updated_at}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
-                {/* <CardActions>
+                <CardActions>
                   <Button size="small" color="primary">
-                    Share
+                    Update Post
                   </Button>
-                  <Button size="small" color="primary">
-                    Learn More
-                  </Button>
-                </CardActions> */}
+                </CardActions>
               </Card>
                           </FormGroup>
                           
