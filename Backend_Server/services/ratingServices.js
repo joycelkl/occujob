@@ -4,7 +4,7 @@ class RatingServices {
     constructor(knex) {
         this.knex = knex;
     }
-
+//list how other rate the Applicant
     listApplicantsOwnRating(userId) {
         console.log('list ee Rating',userId)
         return this.knex('rating')
@@ -14,7 +14,7 @@ class RatingServices {
                 return data
             })
     }
-
+//list how other rate this company
     listCompanyOwnRating(userId) {
         console.log('list er Rating')
         return this.knex('rating')
@@ -24,6 +24,25 @@ class RatingServices {
                 return data
             })
     }
+
+//list how this applicant rate other company
+listWhatAplicantWrote(userId) {
+    console.log('list er Rating')
+    return this.knex('rating')
+        .join('application', 'application_id', '=', 'rating.rating_application_id')
+              .where('application.employee_id', userId)
+             .whereNull('rating.rating_employee_id')
+            // .orderBy('application.created_at', 'desc')
+        .then((data) => {
+            console.log('listUserRating', data)
+            return data
+        })
+}
+
+
+
+
+
 //list Applicant rating in Serach Applicant Profile
 
     listApplicantsRating(ee_id) {

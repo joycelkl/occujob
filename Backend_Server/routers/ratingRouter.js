@@ -8,6 +8,21 @@ class RatingRouter {
     router = () => {
         const router = express.Router();
         
+ // start with /employee check what himself wrote
+ router.get('/applicantCreatedRating', (req, res) => {
+    return this.ratingServices
+        .listWhatAplicantWrote(req.user.id)
+        .then((rating) => {
+           return res.json(rating)
+        })
+        .catch((err) => {
+            console.error(err)
+            res.status(500).json(err)
+        })
+})
+
+
+
         // start with /employee since it need user id from employee router
         router.get('/applicantRatingView', (req, res) => {
             return this.ratingServices
@@ -96,6 +111,8 @@ router.post('/CompanyGiveRating', (req, res) => {
             res.status(500).json(err)
         });
 })
+
+
 
 
         return router;
