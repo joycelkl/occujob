@@ -39,7 +39,20 @@ listWhatAplicantWrote(userId) {
         })
 }
 
-
+//list how this company rate its employee
+listWhatCompanyWrote(userId) {
+    console.log('list er Rating')
+    return this.knex('rating')
+        .join('application', 'application_id', '=', 'rating.rating_application_id')
+        .join('job', 'application.job_id', '=', 'job.job_id')
+              .where('job.employer_id', userId)
+             .whereNull('rating.rating_employer_id')
+            // .orderBy('application.created_at', 'desc')
+        .then((data) => {
+            console.log('listUserRating', data)
+            return data
+        })
+}
 
 
 

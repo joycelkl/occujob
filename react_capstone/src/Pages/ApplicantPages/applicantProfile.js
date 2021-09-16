@@ -55,6 +55,11 @@ const ApplicantProfile = () => {
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { applicantGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { applicantCreatedRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+
+
+  const applicantCreatedRatingState = useSelector((state) => state.applicantCreatedRating)
+  console.log('applicantCreatedRating', applicantCreatedRatingState)
 
   const applicantRatingState = useSelector((state) => state.applicantRating)
   console.log('applicantRating', applicantRatingState)
@@ -140,6 +145,8 @@ const ApplicantProfile = () => {
     loadLocationThunkAction();
     loadIndustryThunkAction();
     applicantGetRatingThunkAction();
+    applicantCreatedRatingThunkAction();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
