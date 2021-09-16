@@ -24,7 +24,30 @@ class RatingServices {
                 return data
             })
     }
-//applicantsGiveRating to company
+//list Applicant rating in Serach Applicant Profile
+
+    listApplicantsRating(ee_id) {
+        console.log('list ee Rating',ee_id)
+        return this.knex('rating')
+            .where("rating_employee_id", ee_id)
+            .then((data) => {
+                console.log('listUserRating', data)
+                return data
+            })
+    }
+//list company rating in Applicant Employer Detail
+    listCompanyRating(er_id) {
+        console.log('list er Rating')
+        return this.knex('rating')
+            .where("rating_employer_id", er_id)
+            .then((data) => {
+                console.log('listCompanyRating', data)
+                return data
+            })
+    }
+
+
+//applicantsGiveRating to company will auto del previous rating as a update method n prevent double rate
     applicantsGiveRating(er_id, application_id,rate,comment) {
 
         return this.knex('rating')
@@ -46,15 +69,15 @@ class RatingServices {
             });
     }
 
-// company GiveRating to applicants
+// company GiveRating to applicants will auto del previous rating as a update method n prevent double rate employerService
 companyGiveRating(ee_id, application_id,rate,comment) {
 
     return this.knex('rating')
-        .where({rating_employer_id: er_id,
+        .where({rating_employee_id: ee_id,
             rating_application_id:application_id,})
             .del()
             .then(() => this.knex('rating').insert({
-                rating_employer_id: er_id,
+                rating_employee_id: ee_id,
                 rating_application_id:application_id,
                 rate:rate,
                 comment:comment,
