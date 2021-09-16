@@ -30,6 +30,8 @@ listWhatAplicantWrote(userId) {
     console.log('list er Rating')
     return this.knex('rating')
         .join('application', 'application_id', '=', 'rating.rating_application_id')
+        .join('job', 'application.job_id', '=', 'job.job_id')
+        .join('employer', 'job.employer_id', '=', 'employer.er_id')
               .where('application.employee_id', userId)
              .whereNull('rating.rating_employee_id')
             // .orderBy('application.created_at', 'desc')

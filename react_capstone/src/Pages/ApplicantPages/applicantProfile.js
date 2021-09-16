@@ -501,7 +501,7 @@ const ApplicantProfile = () => {
                   
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Review:
+                      Review: {eachCreatedData.er_name}
                     </Typography>
                    <Input type="textarea" value={eachCreatedData.comment}/>
                     
