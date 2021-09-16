@@ -15,10 +15,30 @@ import ApplicantPortfolioTable from "../../Components/PortfolioTable";
 import DisabledRating from "../../Components/Rating/DisabledRating";
 import { applicantGetRatingThunkAction } from "../../Redux/action-creators";
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import logo from '../../Images/logoBackground.png'
 
 const ApplicantProfile = () => {
 
- 
+  //comment card
+  const useStyles = makeStyles({
+    root: {
+      maxWidth: 1000,
+    },
+    media: {
+      height: 170,
+    },
+  });
+
+  const classes = useStyles();
+
 
   const [currentPage, setCurrentPage] = useState(0);
   function handleClick(e, index) {
@@ -58,8 +78,8 @@ const ApplicantProfile = () => {
   // Rating
   const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
   console.log("Average", averageRating)
-  
-  let pageSize = 6;
+
+  let pageSize = 5;
   let pagesCount = applicantRatingState.length > 0 && Math.ceil(applicantRatingState.length / pageSize);
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
@@ -342,6 +362,7 @@ const ApplicantProfile = () => {
           <div className="row">
             <div className="col-md-4">
               <div className="profile-work">
+                
                 {/* <p>WORK LINK</p>
                 <a href="*">Website Links</a><br />
                 <a href="*">Bootsnipp Profile</a><br />
@@ -442,14 +463,35 @@ const ApplicantProfile = () => {
                           )
                           .map((eachData, index) =>
                             <FormGroup key={index} >
-                              <div className="col-md-6">
+                              {/* <div className="col-md-6">
                                 <Label for="comment"> Review: </Label>
                               </div>
                               <div className="col-md-6">
                                 <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
-                              </div>
-
+                              </div> */}
+                              <Card className={classes.root} style={{width:"600px", marginBottom:"30px"}}>
+                  <CardActionArea>
+                    
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Review:
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
+                      {eachData.comment}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  {/* <CardActions>
+                    <Button size="small" color="primary">
+                      Share
+                    </Button>
+                    <Button size="small" color="primary">
+                      Learn More
+                    </Button>
+                  </CardActions> */}
+                </Card>
                             </FormGroup>
+                            
 
                           )}
                         <div style={{ overflowX: "auto", justifyContent: "center", display: "flex", }}>
