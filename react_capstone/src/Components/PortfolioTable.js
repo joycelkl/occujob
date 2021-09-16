@@ -21,7 +21,7 @@ const ApplicantPortfolioTable = (props) => {
                     <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={props.portfolioHandler} style={{cursor:"pointer"}}>Portfolio</p>
                   </li>
                   <li className="nav-item">
-                    <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={props.commentsHandler} style={{cursor:"pointer"}}>Applicant's Reivews</p>
+                    <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={props.commentsHandler} style={{cursor:"pointer"}}>Your Reivews</p>
                   </li>
                   <li className="nav-item">
                     <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={props.applicantReviewsHandler} style={{cursor:"pointer"}}>Your Posts</p>
