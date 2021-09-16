@@ -28,13 +28,15 @@ class RatingServices {
     applicantsGiveRating(er_id, application_id,rate,comment) {
 
         return this.knex('rating')
-            .insert({
+        .where({rating_employer_id: er_id,
+            rating_application_id:application_id,})
+            .del()
+            .then(() => this.knex('rating').insert({
                 rating_employer_id: er_id,
                 rating_application_id:application_id,
                 rate:rate,
                 comment:comment,
-            })
-            .returning('*')
+            }).returning('*'))
             .then((ratedCompany) => {
                 console.log(ratedCompany)
                 return ratedCompany
@@ -48,13 +50,15 @@ class RatingServices {
 companyGiveRating(ee_id, application_id,rate,comment) {
 
     return this.knex('rating')
-        .insert({
-            rating_employee_id: ee_id,
-            rating_application_id:application_id,
-            rate:rate,
-            comment:comment,
-        })
-        .returning('*')
+        .where({rating_employer_id: er_id,
+            rating_application_id:application_id,})
+            .del()
+            .then(() => this.knex('rating').insert({
+                rating_employer_id: er_id,
+                rating_application_id:application_id,
+                rate:rate,
+                comment:comment,
+            }).returning('*'))
         .then((ratedApplicant) => {
             console.log(ratedApplicant)
             return ratedApplicant

@@ -38,6 +38,7 @@ const ApplicantOfferCard = (props) => {
     const [rating, setRating] = useState(0)
     const toggle = () => setModal(!modal);
     const [comment, setComment] = useState('')
+    const [rated,setRated] = useState(null)
 
     console.log("RATING PASSED FROM CHILD", rating)
     const toggleNested = () => {
@@ -90,8 +91,9 @@ const ApplicantOfferCard = (props) => {
 
         }).then(res => {
             console.log("POST SUCCESS", res)
+            setRated(true)
         }).catch(err => {
-            console.log("job posting err res", err.response)
+            console.log("rate post err res", err.response)
         })
     }
 
