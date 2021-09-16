@@ -17,6 +17,8 @@ import applicantJobSearchReducer from './applicantJobSearchReducer'
 import applicantPortfolioReducer from './applicantPortfolioReducer'
 import applicantRatingReducer from './applicantRatingReducer'
 import employerRatingReducer from './employerRatingReducer'
+import applicantCreatedRatingReducer from './applicantCreatedRatingReducer'
+
 const reducers = combineReducers({
     auth: authReducer,
     publicJob: publicJobReducer,
@@ -36,6 +38,7 @@ const reducers = combineReducers({
     appPortfolio: applicantPortfolioReducer,
     applicantRating: applicantRatingReducer,
     employerRating: employerRatingReducer,
+    applicantCreatedRating: applicantCreatedRatingReducer,
 })
 
 export default reducers
