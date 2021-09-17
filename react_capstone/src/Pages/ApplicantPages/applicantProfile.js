@@ -389,6 +389,7 @@ const ApplicantProfile = () => {
     setInputBoxID(id)
   }
 
+  
   return (
     <div>
       <ApplicantNavbar />

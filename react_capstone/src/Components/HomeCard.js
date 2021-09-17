@@ -6,6 +6,8 @@ const HomeCard = (props) => {
     const { publicJob } = props;
     const { job_title, er_name, created_at, er_img_data } = publicJob;
 
+
+    //date format
     let date = new Date(created_at)
     let day = date.getDate();
     let month = date.getMonth() + 1;
