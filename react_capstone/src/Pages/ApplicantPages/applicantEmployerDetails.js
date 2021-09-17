@@ -15,6 +15,11 @@ const ApplicantEmployerDetails = () => {
     const dispatch = useDispatch();
     const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
 
+//     const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
+//     console.log("Average", averageRating)
+// <DisabledRating
+//                   rating={averageRating}
+                // />
     useEffect(()=>{
         const er_id = localStorage.getItem('company')
         loadErProfileforAppThunkAction(er_id)
