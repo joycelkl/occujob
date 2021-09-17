@@ -5,6 +5,7 @@ import './employerProfilePage.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
+import DisabledRating from "../../Components/Rating/DisabledRating";
 
 
 const EmployerSearchApplicantProfile = () => {
@@ -14,14 +15,19 @@ const EmployerSearchApplicantProfile = () => {
 
     const dispatch = useDispatch()
     const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
+    const { applicantGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     const { ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
 
-
-
+    const applicantRatingState = useSelector((state) => state.applicantRating)
+    console.log('applicantRating', applicantRatingState)
+    const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
+    console.log("Average", averageRating)
+  
     useEffect(() => {
         let ee_id = localStorage.getItem('applicant')
         loadApplicantSearchProfileThunkAction(ee_id)
+        applicantGetRatingThunkAction(ee_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -43,8 +49,7 @@ const EmployerSearchApplicantProfile = () => {
                                     <Label for="Name"><h1>Applicant's Name</h1></Label>
                                     <h4>{ee_name}</h4>
                                 </FormGroup>
-
-                                <p className="proile-rating">Ratings : <span>8/10</span></p>
+                                <DisabledRating rating={averageRating}/>
                                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                                     <li className="nav-item">
                                         <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>

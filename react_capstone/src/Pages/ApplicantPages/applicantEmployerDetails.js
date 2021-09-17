@@ -6,23 +6,23 @@ import {useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
+import DisabledRating from "../../Components/Rating/DisabledRating";
 
 
 const ApplicantEmployerDetails = () => {
     const erProfile = useSelector((state) => state.erProfile)
     const {comp_description, er_img_data, er_industry, er_location, er_name} = erProfile
-
+    const employerRatingState = useSelector((state) => state.employerRating)
     const dispatch = useDispatch();
     const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { employerGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const averageRating = employerRatingState.length > 0 && employerRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / employerRatingState.length;
+    console.log("Average", averageRating,employerRatingState)
 
-//     const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
-//     console.log("Average", averageRating)
-// <DisabledRating
-//                   rating={averageRating}
-                // />
     useEffect(()=>{
         const er_id = localStorage.getItem('company')
         loadErProfileforAppThunkAction(er_id)
+        employerGetRatingThunkAction(er_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -43,9 +43,8 @@ const ApplicantEmployerDetails = () => {
                                 <FormGroup>
                                     <Label for="Name"><h1>Employer's Name</h1></Label>
                                     <h3>{er_name}</h3>
+                                    <DisabledRating rating={averageRating}/>
                                 </FormGroup>
-
-                                <p class="proile-rating">Ratings : <span>8/10</span></p>
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
