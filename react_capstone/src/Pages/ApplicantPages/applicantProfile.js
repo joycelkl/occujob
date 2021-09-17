@@ -636,7 +636,7 @@ const ApplicantProfile = () => {
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
                                     <h1>{eachData.comment}</h1><br/>
-                                    {eachData.update}
+                                    {eachData.updated_at}
 
                                     </Typography>
                                   </CardContent>
