@@ -354,8 +354,7 @@ function handleClick(e, index) {
 
 
                                     <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
-                                      {eachCreatedData.updated_at}
-                                    </Typography>
+                                    {new Date(eachCreatedData.updated_at).toLocaleString()}                                    </Typography>
                                   </CardContent>
                                 </CardActionArea>
                                 <CardActions>
@@ -446,8 +445,7 @@ function handleClick(e, index) {
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
                                     <h1>{eachData.comment}</h1><br/>
-                                    {eachData.updated_at}
-
+                                    {new Date(eachData.updated_at).toLocaleString()}
                                     </Typography>
                                   </CardContent>
                                 </CardActionArea>

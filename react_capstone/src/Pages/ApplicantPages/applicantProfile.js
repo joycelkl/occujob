@@ -29,6 +29,7 @@ import authAxios from '../../Redux/authAxios';
 const ApplicantProfile = () => {
 
 
+
   //edit comment modal
   const [modal, setModal] = useState(false);
 
@@ -392,7 +393,7 @@ const ApplicantProfile = () => {
     setInputBoxID(id)
   }
 
-  
+
   return (
     <div>
       <ApplicantNavbar />
@@ -537,8 +538,8 @@ const ApplicantProfile = () => {
 
                                   <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                     Company Name: {eachCreatedData.er_name} <br></br>
-                                     Job Title: {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate} />
+                                      Company Name: {eachCreatedData.er_name} <br></br>
+                                      Job Title: {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate} />
                                     </Typography>
                                     <p>{eachCreatedData.comment}</p>
                                     {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
@@ -546,7 +547,7 @@ const ApplicantProfile = () => {
 
 
                                     <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
-                                      {eachCreatedData.updated_at}
+                                    {new Date(eachCreatedData.updated_at).toLocaleString()}
                                     </Typography>
                                   </CardContent>
                                 </CardActionArea>
@@ -634,11 +635,11 @@ const ApplicantProfile = () => {
 
                                   <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                    Review: <DisabledRating rating={eachData.rate}/>
+                                      Review: <DisabledRating rating={eachData.rate} />
                                     </Typography>
-                                    <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
-                                    <h1>{eachData.comment}</h1><br/>
-                                    {eachData.updated_at}
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
+                                      <h5>{eachData.comment}</h5><br />
+                                      {new Date(eachData.updated_at).toLocaleString()}
 
                                     </Typography>
                                   </CardContent>
