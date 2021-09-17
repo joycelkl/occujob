@@ -31,7 +31,7 @@ const ApplicantOfferCard = (props) => {
     const { job_function, reply, job_title, job_id, er_id, er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id } = offerCard;
 
     console.log("testoffer", offer)
-    console.log('data', job_title, job_id, er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id)
+    console.log('data', job_title, job_id, er_id,er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id)
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
     const [closeAll, setCloseAll] = useState(false);
@@ -80,6 +80,21 @@ const ApplicantOfferCard = (props) => {
     let year = date.getFullYear();
 
 
+    // async function employerRating(er_id, application_id, rating, comment) {
+    //     const authAxiosConfig = await authAxios();
+    //     return await authAxiosConfig.post('/employee/applicantsGiveRating', {
+    //         er_id: er_id,
+    //         application_id: application_id,
+    //         rate: rating,
+    //         comment: comment,
+
+    //     }).then(res => {
+    //         console.log("POST SUCCESS", res)
+    //     }).catch(err => {
+    //         console.log("rate post err res", err.response)
+    //     })
+    // }
+
     async function employerRating(er_id, application_id, rating, comment) {
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post('/employee/applicantsGiveRating', {
@@ -90,9 +105,8 @@ const ApplicantOfferCard = (props) => {
 
         }).then(res => {
             console.log("POST SUCCESS", res)
-            rateToast()
         }).catch(err => {
-            console.log("rate post err res", err.response)
+            console.log("job posting err res", err.response)
         })
     }
 
@@ -185,7 +199,7 @@ const ApplicantOfferCard = (props) => {
                                     <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Please Give Your Comment Here " value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment),toggleNested}>Rate</Button>{' '}
+                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment)}>Rate</Button>{' '}
                                     <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                 </ModalFooter>
                             </Modal>
