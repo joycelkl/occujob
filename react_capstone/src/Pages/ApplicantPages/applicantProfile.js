@@ -391,8 +391,6 @@ async function employerRating(er_id, application_id, rating, comments) {
                   <Label for="Name"><h1>Applicant's Name</h1></Label>
                   <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
-                <p className="proile-rating">Ratings : <span>8/10</span></p>
-
                 <DisabledRating
                   rating={averageRating}
                 />
@@ -516,7 +514,7 @@ async function employerRating(er_id, application_id, rating, comments) {
                   
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Review: {eachCreatedData.er_name} {eachCreatedData.job_title}{eachCreatedData.rate}
+                      Review: {eachCreatedData.er_name} {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate}/>
                     </Typography>
                    <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)}/>
                     
