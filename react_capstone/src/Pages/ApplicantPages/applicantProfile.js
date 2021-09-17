@@ -24,6 +24,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import logo from '../../Images/logoBackground.png'
+import authAxios from '../../Redux/authAxios';
 
 const ApplicantProfile = () => {
 
@@ -78,11 +79,25 @@ const ApplicantProfile = () => {
 
   const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
 
-
-
   // Rating
   const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
   console.log("Average", averageRating)
+//update
+async function employerRating(er_id, application_id, rating, comments) {
+  console.log("???",er_id, application_id, rating, comments)
+  const authAxiosConfig = await authAxios();
+  return await authAxiosConfig.post('/employee/applicantsGiveRating', {
+      er_id: er_id,
+      application_id: application_id,
+      rate: rating,
+      comment: comments,
+
+  }).then(res => {
+      console.log("POST SUCCESS", res)
+  }).catch(err => {
+      console.log("job posting err res", err.response)
+  })
+}
 
   let pageSize = 5;
   let pagesCount = applicantRatingState.length > 0 && Math.ceil(applicantRatingState.length / pageSize);
@@ -104,7 +119,7 @@ const ApplicantProfile = () => {
   const [toggleComments, setToggleComments] = useState(false);
   const [toggleApplicantReviews, setToggleApplicantReviews] = useState(false);
   const [rate, setRate] = useState('');
-  const [commentArr, setCommentArr] = useState('');
+  const [comments, setComment] = useState('');
 
   useEffect(() => {
     loadEEProfileThunkAction();
@@ -376,8 +391,6 @@ const ApplicantProfile = () => {
                   <Label for="Name"><h1>Applicant's Name</h1></Label>
                   <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
-                <p className="proile-rating">Ratings : <span>8/10</span></p>
-
                 <DisabledRating
                   rating={averageRating}
                 />
@@ -488,8 +501,8 @@ const ApplicantProfile = () => {
                           currentPage * pageSize,
                           (currentPage + 1) * pageSize
                         )
-                        .map((eachCreatedData, index) =>
-                          <FormGroup key={index} >
+                        .map((eachCreatedData) =>
+                          <FormGroup key={eachCreatedData.id} >
                             {/* <div className="col-md-6">
                               <Label for="comment"> Review: </Label>
                             </div>
@@ -501,9 +514,9 @@ const ApplicantProfile = () => {
                   
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Review: {eachCreatedData.er_name}
+                      Review: {eachCreatedData.er_name} {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate}/>
                     </Typography>
-                   <Input type="textarea" value={eachCreatedData.comment}/>
+                   <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)}/>
                     
                    
                     <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
@@ -512,7 +525,7 @@ const ApplicantProfile = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button size="small" color="primary" onClick={()=>employerRating(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments)}>
                     Update Post
                   </Button>
                 </CardActions>

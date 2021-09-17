@@ -85,11 +85,11 @@ listWhatCompanyWrote(userId) {
     applicantsGiveRating(er_id, application_id,rate,comment) {
 
         return this.knex('rating')
-        .where({rating_employer_id: er_id,
+        .where({rating_employer_id:er_id,
             rating_application_id:application_id,})
             .del()
             .then(() => this.knex('rating').insert({
-                rating_employer_id: er_id,
+                rating_employer_id:er_id,
                 rating_application_id:application_id,
                 rate:rate,
                 comment:comment,
