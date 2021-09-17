@@ -25,7 +25,7 @@ import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearch
 import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
 import EmployerSignUp from './Pages/EmployerPages/employerSignup';
 import ApplicantEmployerDetails from './Pages/ApplicantPages/applicantEmployerDetails';
-import Chat from './Components/Chatroom/Chat';
+import Chatroom from './Components/Chatroom/Chatroom';
 
 
 const PublicRoute = ({component, ...rest}) => {
@@ -110,7 +110,7 @@ function App() {
         <PrivateRoute path = "/applicantOfferDetail" component = { ApplicantOfferDetail }/> 
         <PrivateRoute path = "/applicantHomePage" component = { ApplicantHomePage } />
         <PrivateRoute path = "/applicantEmployerDetails" component = { ApplicantEmployerDetails } />
-        <PrivateRoute path = "/chat" component={Chat} />
+        <PrivateRoute path = "/chat" component={Chatroom} />
         </Switch>
         </ Router>
 

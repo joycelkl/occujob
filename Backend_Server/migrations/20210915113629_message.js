@@ -3,12 +3,13 @@ exports.up = function(knex) {
         message.increments("message_id").primary();
         message.integer("chatroom_id").unsigned();
         message.foreign("chatroom_id").references("chatroom.chatroom_id");
-        message.integer("send_employee_id").unsigned();
-        message.foreign("send_employee_id").references("employee.ee_id");
-        message.integer("send_employer_id").unsigned();
-        message.foreign("send_employer_id").references("employer.er_id");
+        message.string('sender_type');
+        message.integer("sender_employee_id").unsigned();
+        message.foreign("sender_employee_id").references("employee.ee_id");
+        message.integer("sender_employer_id").unsigned();
+        message.foreign("sender_employer_id").references("employer.er_id");
         message.text("content");
-        message.boolean('msgread');
+        message.integer('msgread').defaultTo(1);
         message.timestamps(false, true);
     })
 };

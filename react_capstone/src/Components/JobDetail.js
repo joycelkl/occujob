@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Button, Form, FormGroup, Label} from 'reactstrap';
+import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import authAxios from '../Redux/authAxios';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,13 +8,13 @@ import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Pages/EmployerPages/employerProfilePage.css"
-import Join from "./Chatroom/Join";
+import Chatroom from "./Chatroom/Chatroom";
 
 const JobDetail = (props) => {
     const applyToast = () => toast("You Have Applied this Job")
 
-    const [employer, setEmployer] = useState('')
-    const [applicant, setApplicant] = useState('')
+    const [employerId, setEmployerId] = useState('')
+    const [userId, setUserId] = useState('')
     
     const { indJob } = props;
     const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
@@ -44,11 +44,17 @@ const JobDetail = (props) => {
     }
 
     useEffect(()=>{
-        const name = localStorage.getItem('UserName')
-        setApplicant(name)
-        setEmployer(er_name)
+        const userID = localStorage.getItem('userID')
+        console.log('UserID', userID)
+        setUserId(userID)
+        setEmployerId(er_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[er_name])
+    },[er_id])
+
+    //****************For the Chatroom********************//
+    const [modal, setModal] = useState(false);
+
+     const toggle = () => setModal(!modal);
 
 
     return (
@@ -108,8 +114,19 @@ const JobDetail = (props) => {
                     </FormGroup>
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>
-                        {/* <Button>Message</Button> */}
-                        <Join erName={employer} eeName={applicant}/>
+                         <Button onClick={toggle}>Message</Button>
+
+                        <>
+                        <Modal isOpen={modal} toggle={toggle} fade={false}>
+                            <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
+                            <ModalBody>
+                            <Chatroom erId={employerId} eeId={userId}/>
+                            </ModalBody>
+                            <ModalFooter>
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+                        </>
                     </div>
                 </Form>
             </div>

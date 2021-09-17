@@ -4,14 +4,14 @@ import { Button} from 'reactstrap';
 
 const Join = (props) => {
 
-    const {erName, eeName} = props
+    const {erId, eeId} = props
 
     //still need to think of how to set the chatroom url
 
     return (
         <>
-          {/* <Link to={`/chat?erName=${erName}&eeName=${eeName}`}> */}
-          <Link to={'/chat'}>
+          <Link to={`/chat?erId=${erId}&eeId=${eeId}`}>
+          {/* <Link to={'/chat'}> */}
             <Button type='button'>Message</Button>
           </Link>
         </>

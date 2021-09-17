@@ -59,7 +59,7 @@ class RegLoginRouter {
 
                     console.log(token)
 
-                    let tokenName = { token: token, username: er_name }
+                    let tokenName = { token: token, username: er_name, userID: er_id }
 
                     return res.json(tokenName)
 
@@ -106,7 +106,7 @@ class RegLoginRouter {
                     }
                     let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
-                    let tokenName = { token: token, username: ee_name }
+                    let tokenName = { token: token, username: ee_name, userID: ee_id }
 
                     return res.json(tokenName)
                 } catch (error) {
@@ -154,7 +154,7 @@ class RegLoginRouter {
                         }
                         let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
-                        let tokenName = { token: token, username: er_name }
+                        let tokenName = { token: token, username: er_name, userID: er_id }
 
                         return res.json(tokenName)
                     } else {
@@ -205,7 +205,8 @@ class RegLoginRouter {
                         }
                         let token = await JWT.sign(payload, config, { expiresIn: '1d' })
 
-                        let tokenName = { token: token, username: ee_name }
+                        let tokenName = { token: token, username: ee_name, userID: ee_id }
+                        console.log('usertokennameid', tokenName)
 
                         return res.json(tokenName);
                     } else {

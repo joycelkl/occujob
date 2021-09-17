@@ -78,7 +78,7 @@ app.use(auth.initialize());
 
 app.use('/employer', auth.authenticate(), employerRouter, ratingRouter)
 app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter)
-app.use('/chat', chatroomRouter)
+app.use('/chat', auth.authenticate(), chatroomRouter)
 
 server.listen(8080, () => {
     console.log('port is listening to 8080')
