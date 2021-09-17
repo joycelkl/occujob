@@ -18,6 +18,7 @@ import applicantPortfolioReducer from './applicantPortfolioReducer'
 import applicantRatingReducer from './applicantRatingReducer'
 import employerRatingReducer from './employerRatingReducer'
 import applicantCreatedRatingReducer from './applicantCreatedRatingReducer'
+import employerCreatedRatingReducer from './employerCreatedRatingReducer'
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -39,6 +40,7 @@ const reducers = combineReducers({
     applicantRating: applicantRatingReducer,
     employerRating: employerRatingReducer,
     applicantCreatedRating: applicantCreatedRatingReducer,
+    employerCreatedRating: employerCreatedRatingReducer,
 })
 
 export default reducers

@@ -15,9 +15,44 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import DisabledRating from '../../Components/Rating/DisabledRating';
 import { employerGetRatingThunkAction } from '../../Redux/action-creators';
+import { Pagination, PaginationItem, PaginationLink, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import authAxios from '../../Redux/authAxios';
+
 
 const EmployerProfilePage = () => {
+
+ //comment card
+ const useStyles = makeStyles({
+  root: {
+    maxWidth: 1000,
+  },
+  media: {
+    height: 170,
+  },
+});
+
+
+
+const [currentPage, setCurrentPage] = useState(0);
+function handleClick(e, index) {
+
+  e.preventDefault();
+  setCurrentPage(index)
+
+}
+
+
+  //toast
   const updateToast = () => toast("Profile Updated");
+  const updateReviewToast = () => toast("Review Has Been Updated");
+
   const erProfileState = useSelector((state) => {
     console.log("ER", state.erProfile);
     return state.erProfile
@@ -33,6 +68,9 @@ const EmployerProfilePage = () => {
   const employerRatingState = useSelector((state) => state.employerRating)
   console.log('employer rating', employerRatingState)
 
+  const employerCreatedRatingState = useSelector((state) => state.employerCreatedRating)
+  console.log('employerCreatedRating', employerCreatedRatingState)
+
   const dispatch = useDispatch();
 
 
@@ -41,6 +79,7 @@ const EmployerProfilePage = () => {
   const { updateErProfileAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { employerGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { employerCreatedRatingThunkAction} = bindActionCreators(actionCreators, dispatch)
   const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfileState
 
 
@@ -48,6 +87,27 @@ const EmployerProfilePage = () => {
   //rating
   const averageRating = employerRatingState.length > 0 && employerRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / employerRatingState.length;
   console.log("Average", averageRating)
+
+
+  //update
+  async function employerCreatedRating(ee_id, application_id, rating, comments) {
+    console.log("???", ee_id, application_id, rating, comments)
+    const authAxiosConfig = await authAxios();
+    return await authAxiosConfig.post('/employer/CompanyGiveRating', {
+      ee_id: ee_id,
+      application_id: application_id,
+      rate: rating,
+      comment: comments,
+
+    }).then(res => {
+      console.log("POST SUCCESS", res)
+    }).catch(err => {
+      console.log("job posting err res", err.response)
+    })
+  }
+
+  let pageSize = 3;
+  let pagesCount = employerRatingState.length > 0 && Math.ceil(employerRatingState.length / pageSize);
 
   const [industry, setIndustry] = useState('');
   const [location, setLocation] = useState('');
@@ -58,11 +118,15 @@ const EmployerProfilePage = () => {
   const [email, setEmail] = useState('')
   const [toggleAbout, setToggleAbout] = useState(true);
   const [toggleContact, setToggleContact] = useState(false);
-
+  const [toggleComments, setToggleComments] = useState(false);
+  const [toggleEmployerReviews, setToggleEmployerReviews] = useState(false);
+  const [rate, setRate] = useState('');
+  const [comments, setComment] = useState('');
 
   useEffect(() => {
     loadErProfileThunkAction();
     employerGetRatingThunkAction();
+    employerCreatedRatingThunkAction();
     er_industry !== null && setIndustry(er_industry)
     er_location !== null && setLocation(er_location)
     er_phone !== null && setPhone(er_phone)
@@ -92,6 +156,20 @@ const EmployerProfilePage = () => {
     setToggleAbout(false);
 
   };
+  const commentsHandler = () => {
+    setToggleComments(true);
+    setToggleEmployerReviews(false);
+    setToggleContact(false);
+    setToggleAbout(false);
+
+  };
+  const employerReviewsHandler = () => {
+    setToggleEmployerReviews(true);
+    setToggleComments(false);
+    setToggleContact(false);
+    setToggleAbout(false);
+
+  };
 
   //rating
   const labels = {
@@ -107,13 +185,7 @@ const EmployerProfilePage = () => {
     5: 'Excellent+',
   };
 
-  const useStyles = makeStyles({
-    root: {
-      width: 200,
-      display: 'flex',
-      alignItems: 'center',
-    },
-  });
+  
 
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
@@ -161,6 +233,16 @@ const EmployerProfilePage = () => {
     updateToast()
   }
 
+   //******for input box****** */
+   const [inputBoxID, setInputBoxID] = useState('')
+
+   function changeInputID(id) {
+ 
+     console.log('changing id', id)
+     setInputBoxID(id)
+   }
+ 
+
   return (
     <div>
       <EmployerNavbar />
@@ -188,7 +270,7 @@ const EmployerProfilePage = () => {
                 <DisabledRating
                   rating={averageRating}
                 />
-                <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} />
+                <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} commentsHandler={commentsHandler} employerReviewsHandler={employerReviewsHandler} />
               </div>
             </div>
 
@@ -236,6 +318,195 @@ const EmployerProfilePage = () => {
                           </div>
                         </FormGroup>
                       </div>
+                    </div>
+                  }
+
+{toggleEmployerReviews &&
+                    <div>
+                      <div className="row">
+                        {employerCreatedRatingState.length > 0 && employerCreatedRatingState
+                          .slice(
+                            currentPage * pageSize,
+                            (currentPage + 1) * pageSize
+                          )
+                          .map((eachCreatedData) => {
+
+                            console.log('each', eachCreatedData)
+
+                            return (<FormGroup key={eachCreatedData.rating_id} >
+                              {/* <div className="col-md-6">
+                              <Label for="comment"> Review: </Label>
+                            </div>
+                            <div className="col-md-6">
+                              <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
+                            </div> */}
+                              <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                <CardActionArea>
+
+                                  <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                     Applicant Name: {eachCreatedData.ee_name} <br></br>
+                                     Job Title: {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate} />
+                                    </Typography>
+                                    <p>{eachCreatedData.comment}</p>
+                                    {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
+                                    {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
+
+
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
+                                      {eachCreatedData.updated_at}
+                                    </Typography>
+                                  </CardContent>
+                                </CardActionArea>
+                                <CardActions>
+
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerCreatedRating(eachCreatedData.ee_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast)}>
+                                    Update Post
+                                  </Button> : null}
+                                  <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>
+                                    Edit Post
+                                  </Button>
+
+
+                                </CardActions>
+                              </Card>
+                            </FormGroup>)
+
+
+                          })}
+
+                        <div style={{ overflowX: "auto", justifyContent: "center", display: "flex" }}>
+                          <Pagination>
+
+                            <PaginationItem disabled={currentPage <= 0}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage - 1)}
+                                previous
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                            {/* 
+          {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
+                  <ApplicantHomeCard
+                      key={index}
+                      applicantJob={applicantJob}
+                  />
+              )) : "loading..."} */}
+                            {[...Array(pagesCount)].map((page, i) =>
+                              <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                  {i + 1}
+                                </PaginationLink>
+                              </PaginationItem>
+                            )}
+
+                            <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage + 1)}
+                                next
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                          </Pagination>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  }
+
+                  {toggleComments &&
+                    <div>
+                      <div className="row">
+                        {employerRatingState.length > 0 && employerRatingState
+                          .slice(
+                            currentPage * pageSize,
+                            (currentPage + 1) * pageSize
+                          )
+                          .map((eachData) =>
+                            <FormGroup key={eachData.rating_id} >
+                              {/* <div className="col-md-6">
+                                <Label for="comment"> Review: </Label>
+                              </div>
+                              <div className="col-md-6">
+                                <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
+                              </div> */}
+                              <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                <CardActionArea>
+
+                                  <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                    Review: <DisabledRating rating={eachData.rate}/>
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
+                                    <h1>{eachData.comment}</h1><br/>
+                                    {eachData.updated_at}
+
+                                    </Typography>
+                                  </CardContent>
+                                </CardActionArea>
+                                {/* <CardActions>
+                    <Button size="small" color="primary">
+                      Share
+                    </Button>
+                    <Button size="small" color="primary">
+                      Learn More
+                    </Button>
+                  </CardActions> */}
+                              </Card>
+                            </FormGroup>
+
+
+                          )}
+                        <div style={{ overflowX: "auto", justifyContent: "center", display: "flex", }}>
+                          <Pagination>
+
+                            <PaginationItem disabled={currentPage <= 0}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage - 1)}
+                                previous
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                            {/* 
+            {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
+                    <ApplicantHomeCard
+                        key={index}
+                        applicantJob={applicantJob}
+                    />
+                )) : "loading..."} */}
+                            {[...Array(pagesCount)].map((page, i) =>
+                              <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                  {i + 1}
+                                </PaginationLink>
+                              </PaginationItem>
+                            )}
+
+                            <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage + 1)}
+                                next
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                          </Pagination>
+                        </div>
+
+                      </div>
+
                     </div>
                   }
 

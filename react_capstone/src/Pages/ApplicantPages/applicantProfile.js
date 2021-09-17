@@ -175,6 +175,7 @@ const ApplicantProfile = () => {
 
 
   const updateToast = () => toast("Profile Updated");
+  const updateReviewToast = () => toast("Review Has Been Updated");
 
   //setup skillsTag
   let skillsTag = []
@@ -551,7 +552,7 @@ const ApplicantProfile = () => {
                                 </CardActionArea>
                                 <CardActions>
 
-                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerRating(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments)}>
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerRating(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast)}>
                                     Update Post
                                   </Button> : null}
                                   <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>
