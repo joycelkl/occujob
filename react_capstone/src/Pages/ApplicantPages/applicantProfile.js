@@ -99,6 +99,12 @@ async function employerRating(er_id, application_id, rating, comments) {
   })
 }
 
+let commentData;
+
+applicantCreatedRatingState.length > 0 && applicantCreatedRatingState.map((eachData, index) => {
+  commentData = {...commentData, [index]: eachData.comment}
+})
+
   let pageSize = 5;
   let pagesCount = applicantRatingState.length > 0 && Math.ceil(applicantRatingState.length / pageSize);
   const [name, setName] = useState('');
@@ -119,7 +125,7 @@ async function employerRating(er_id, application_id, rating, comments) {
   const [toggleComments, setToggleComments] = useState(false);
   const [toggleApplicantReviews, setToggleApplicantReviews] = useState(false);
   const [rate, setRate] = useState('');
-  const [comments, setComment] = useState('');
+  const [comments, setComment] = useState(commentData);
 
   useEffect(() => {
     loadEEProfileThunkAction();
@@ -163,8 +169,10 @@ async function employerRating(er_id, application_id, rating, comments) {
     applicantGetRatingThunkAction();
     applicantCreatedRatingThunkAction();
 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
 
   const updateToast = () => toast("Profile Updated");
 
@@ -501,7 +509,7 @@ async function employerRating(er_id, application_id, rating, comments) {
                           currentPage * pageSize,
                           (currentPage + 1) * pageSize
                         )
-                        .map((eachCreatedData) =>
+                        .map((eachCreatedData, index) =>
                           <FormGroup key={eachCreatedData.id} >
                             {/* <div className="col-md-6">
                               <Label for="comment"> Review: </Label>
@@ -511,12 +519,20 @@ async function employerRating(er_id, application_id, rating, comments) {
                             </div> */}
                             <Card className={classes.root} style={{width:"600px", marginBottom:"30px"}}>
                 <CardActionArea>
-                  
+                  {/* {setComment((prevValue) => ({...prevValue, "index-${index}": eachCreatedData.comment}))} */}
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                       Review: {eachCreatedData.er_name} {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate}/>
                     </Typography>
-                   <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)}/>
+                    {commentData !== undefined && console.log("COMMENT", commentData)}
+                   <Input type="textarea" value={comments[index]} 
+                  //  onChange={(e) => 
+                  //  {
+                  //   let copy = [...comments]; 
+                  //   copy[index] = e.target.value
+                  //   setComment(copy)}
+                    //  }
+                     />
                     
                    
                     <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
@@ -588,8 +604,8 @@ async function employerRating(er_id, application_id, rating, comments) {
                             currentPage * pageSize,
                             (currentPage + 1) * pageSize
                           )
-                          .map((eachData, index) =>
-                            <FormGroup key={index} >
+                          .map((eachData) =>
+                            <FormGroup key={eachData.rating_id} >
                               {/* <div className="col-md-6">
                                 <Label for="comment"> Review: </Label>
                               </div>
@@ -601,10 +617,11 @@ async function employerRating(er_id, application_id, rating, comments) {
                     
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
-                        Review:
+                        Review: <DisabledRating rating={eachData.rate}/>
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
-                      {eachData.comment}
+                      <h1>{eachData.comment}</h1><br/>
+                      {eachData.update}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
