@@ -47,6 +47,7 @@ listWhatCompanyWrote(userId) {
     return this.knex('rating')
         .join('application', 'application_id', '=', 'rating.rating_application_id')
         .join('job', 'application.job_id', '=', 'job.job_id')
+        .join('employee','application.employee_id'='employee.ee_id.')
               .where('job.employer_id', userId)
              .whereNull('rating.rating_employer_id')
             // .orderBy('application.created_at', 'desc')
