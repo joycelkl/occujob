@@ -53,7 +53,7 @@ const ApplicantSignUp = (props) => {
       <Navbar />
       <div className="LoginHeader">
         <div className="container-fluid d-flex">
-          <div className="container" style={{ border: "1px solid black", padding: "80px", backgroundColor: "rgb(59, 105, 121)", marginTop: "150px", marginLeft: "100px", marginRight: "100px", borderRadius: "25px", color: "white" }}>
+          <div className="container" style={{ border: "3px solid black", padding: "80px", background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))", marginTop: "150px", marginLeft: "100px", marginRight: "100px", borderRadius: "25px", color: "white" }}>
             <h1>Applicant Sign Up Page</h1>
             <Signup onEmailChange={(v) => setEmail(v)} onPasswordChange={(v) => setPassword(v)} handleRegister={(e) => handleRegister(e)} email={email} password={password} onNameChange={(v) => setName(v)} name={name} type="Applicant" />
             {error && alert(error)}

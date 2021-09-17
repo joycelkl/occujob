@@ -74,7 +74,7 @@ const ApplicantLogin = () => {
             <Navbar />
             <div className="LoginHeader">
                 <div className="container-fluid d-flex">
-                    <div className="container" style={{ border: "1px solid black", padding: "80px", backgroundColor: "rgb(59, 105, 121)", marginTop: "150px", marginLeft: "100px", marginRight: "100px", borderRadius: "25px", color: "white" }}>
+                    <div className="container" style={{ border: "3px solid black", padding: "80px", background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))", marginTop: "150px", marginLeft: "100px", marginRight: "100px", borderRadius: "25px", color: "white" }}>
                         <h1>Applicant Login Page</h1>
                         <Login link="/applicantSignup" onEmailChange={(v) => setEmail(v)} onPasswordChange={(v) => setPassword(v)} handleLogin={(e) => handleLogin(e)} email={email} password={password} />
                         {error && invalidToast()} 
