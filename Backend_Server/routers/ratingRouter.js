@@ -21,7 +21,18 @@ class RatingRouter {
         })
 })
 
-
+// start with /employer check what company wrote
+router.get('/companyCreatedRating', (req, res) => {
+    return this.ratingServices
+        .listWhatCompanyWrote(req.user.id)
+        .then((rating) => {
+           return res.json(rating)
+        })
+        .catch((err) => {
+            console.error(err)
+            res.status(500).json(err)
+        })
+})
 
         // start with /employee since it need user id from employee router
         router.get('/applicantRatingView', (req, res) => {
@@ -35,7 +46,7 @@ class RatingRouter {
                     res.status(500).json(err)
                 })
         })
-        // start with /employer since it need user id from employee router
+        // start with /employer since it need user id from employer router
         router.get('/companyRatingView', (req, res) => {
             return this.ratingServices
                 .listCompanyOwnRating(req.user.id)

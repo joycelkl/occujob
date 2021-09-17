@@ -169,8 +169,10 @@ const ApplicantProfile = () => {
     applicantGetRatingThunkAction();
     applicantCreatedRatingThunkAction();
 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
 
   const updateToast = () => toast("Profile Updated");
 
@@ -618,8 +620,8 @@ const ApplicantProfile = () => {
                             currentPage * pageSize,
                             (currentPage + 1) * pageSize
                           )
-                          .map((eachData, index) =>
-                            <FormGroup key={index} >
+                          .map((eachData) =>
+                            <FormGroup key={eachData.rating_id} >
                               {/* <div className="col-md-6">
                                 <Label for="comment"> Review: </Label>
                               </div>
@@ -631,10 +633,12 @@ const ApplicantProfile = () => {
 
                                   <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                      Review:
+                                    Review: <DisabledRating rating={eachData.rate}/>
                                     </Typography>
-                                    <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
-                                      {eachData.comment}
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
+                                    <h1>{eachData.comment}</h1><br/>
+                                    {eachData.updated_at}
+
                                     </Typography>
                                   </CardContent>
                                 </CardActionArea>
