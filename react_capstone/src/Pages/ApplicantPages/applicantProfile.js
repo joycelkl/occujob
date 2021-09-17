@@ -14,7 +14,7 @@ import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 import ApplicantPortfolioTable from "../../Components/PortfolioTable";
 import DisabledRating from "../../Components/Rating/DisabledRating";
 import { applicantGetRatingThunkAction } from "../../Redux/action-creators";
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -27,6 +27,12 @@ import logo from '../../Images/logoBackground.png'
 import authAxios from '../../Redux/authAxios';
 
 const ApplicantProfile = () => {
+
+
+  //edit comment modal
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
 
   //comment card
   const useStyles = makeStyles({
@@ -82,24 +88,24 @@ const ApplicantProfile = () => {
   // Rating
   const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
   console.log("Average", averageRating)
-//update
-async function employerRating(er_id, application_id, rating, comments) {
-  console.log("???",er_id, application_id, rating, comments)
-  const authAxiosConfig = await authAxios();
-  return await authAxiosConfig.post('/employee/applicantsGiveRating', {
+  //update
+  async function employerRating(er_id, application_id, rating, comments) {
+    console.log("???", er_id, application_id, rating, comments)
+    const authAxiosConfig = await authAxios();
+    return await authAxiosConfig.post('/employee/applicantsGiveRating', {
       er_id: er_id,
       application_id: application_id,
       rate: rating,
       comment: comments,
 
-  }).then(res => {
+    }).then(res => {
       console.log("POST SUCCESS", res)
-  }).catch(err => {
+    }).catch(err => {
       console.log("job posting err res", err.response)
-  })
-}
+    })
+  }
 
-  let pageSize = 5;
+  let pageSize = 3;
   let pagesCount = applicantRatingState.length > 0 && Math.ceil(applicantRatingState.length / pageSize);
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
@@ -373,6 +379,16 @@ async function employerRating(er_id, application_id, rating, comments) {
     updateToast()
   }
 
+
+  //******for input box****** */
+  const [inputBoxID, setInputBoxID] = useState('')
+
+  function changeInputID(id) {
+
+    console.log('changing id', id)
+    setInputBoxID(id)
+  }
+
   return (
     <div>
       <ApplicantNavbar />
@@ -394,7 +410,7 @@ async function employerRating(er_id, application_id, rating, comments) {
                 <DisabledRating
                   rating={averageRating}
                 />
-                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} commentsHandler={commentsHandler} applicantReviewsHandler={applicantReviewsHandler}/>
+                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} commentsHandler={commentsHandler} applicantReviewsHandler={applicantReviewsHandler} />
 
               </div>
             </div>
@@ -402,7 +418,7 @@ async function employerRating(er_id, application_id, rating, comments) {
           <div className="row">
             <div className="col-md-4">
               <div className="profile-work">
-                
+
                 {/* <p>WORK LINK</p>
                 <a href="*">Website Links</a><br />
                 <a href="*">Bootsnipp Profile</a><br />
@@ -495,89 +511,102 @@ async function employerRating(er_id, application_id, rating, comments) {
                   }
                   {toggleApplicantReviews &&
                     <div>
-                    <div className="row">
-                      {applicantCreatedRatingState.length > 0 && applicantCreatedRatingState
-                        .slice(
-                          currentPage * pageSize,
-                          (currentPage + 1) * pageSize
-                        )
-                        .map((eachCreatedData) =>
-                          <FormGroup key={eachCreatedData.id} >
-                            {/* <div className="col-md-6">
+                      <div className="row">
+                        {applicantCreatedRatingState.length > 0 && applicantCreatedRatingState
+                          .slice(
+                            currentPage * pageSize,
+                            (currentPage + 1) * pageSize
+                          )
+                          .map((eachCreatedData) => {
+
+                            console.log('each', eachCreatedData)
+
+                            return (<FormGroup key={eachCreatedData.rating_id} >
+                              {/* <div className="col-md-6">
                               <Label for="comment"> Review: </Label>
                             </div>
                             <div className="col-md-6">
                               <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
                             </div> */}
-                            <Card className={classes.root} style={{width:"600px", marginBottom:"30px"}}>
-                <CardActionArea>
-                  
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Review: {eachCreatedData.er_name} {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate}/>
-                    </Typography>
-                   <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)}/>
-                    
-                   
-                    <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
-                    {eachCreatedData.updated_at}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button size="small" color="primary" onClick={()=>employerRating(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments)}>
-                    Update Post
-                  </Button>
-                </CardActions>
-              </Card>
-                          </FormGroup>
-                          
+                              <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                <CardActionArea>
 
-                        )}
-                      <div style={{ overflowX: "auto", justifyContent: "center", display: "flex", }}>
-                        <Pagination>
+                                  <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                     Company Name: {eachCreatedData.er_name} <br></br>
+                                     Job Title: {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate} />
+                                    </Typography>
+                                    <p>{eachCreatedData.comment}</p>
+                                    {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
+                                    {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
 
-                          <PaginationItem disabled={currentPage <= 0}>
 
-                            <PaginationLink
-                              onClick={e => handleClick(e, currentPage - 1)}
-                              previous
-                              href="#"
-                            />
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
+                                      {eachCreatedData.updated_at}
+                                    </Typography>
+                                  </CardContent>
+                                </CardActionArea>
+                                <CardActions>
 
-                          </PaginationItem>
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerRating(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments)}>
+                                    Update Post
+                                  </Button> : null}
+                                  <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>
+                                    Edit Post
+                                  </Button>
 
-                          {/* 
+
+                                </CardActions>
+                              </Card>
+                            </FormGroup>)
+
+
+                          })}
+
+                        <div style={{ overflowX: "auto", justifyContent: "center", display: "flex" }}>
+                          <Pagination>
+
+                            <PaginationItem disabled={currentPage <= 0}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage - 1)}
+                                previous
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                            {/* 
           {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
                   <ApplicantHomeCard
                       key={index}
                       applicantJob={applicantJob}
                   />
               )) : "loading..."} */}
-                          {[...Array(pagesCount)].map((page, i) =>
-                            <PaginationItem active={i === currentPage} key={i}>
-                              <PaginationLink onClick={e => handleClick(e, i)} href="#">
-                                {i + 1}
-                              </PaginationLink>
+                            {[...Array(pagesCount)].map((page, i) =>
+                              <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                  {i + 1}
+                                </PaginationLink>
+                              </PaginationItem>
+                            )}
+
+                            <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage + 1)}
+                                next
+                                href="#"
+                              />
+
                             </PaginationItem>
-                          )}
 
-                          <PaginationItem disabled={currentPage >= pagesCount - 1}>
+                          </Pagination>
+                        </div>
 
-                            <PaginationLink
-                              onClick={e => handleClick(e, currentPage + 1)}
-                              next
-                              href="#"
-                            />
-
-                          </PaginationItem>
-
-                        </Pagination>
                       </div>
 
                     </div>
-
-                  </div>
                   }
 
                   {toggleComments &&
@@ -596,19 +625,19 @@ async function employerRating(er_id, application_id, rating, comments) {
                               <div className="col-md-6">
                                 <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
                               </div> */}
-                              <Card className={classes.root} style={{width:"600px", marginBottom:"30px"}}>
-                  <CardActionArea>
-                    
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        Review:
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
-                      {eachData.comment}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  {/* <CardActions>
+                              <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                <CardActionArea>
+
+                                  <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                      Review:
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
+                                      {eachData.comment}
+                                    </Typography>
+                                  </CardContent>
+                                </CardActionArea>
+                                {/* <CardActions>
                     <Button size="small" color="primary">
                       Share
                     </Button>
@@ -616,9 +645,9 @@ async function employerRating(er_id, application_id, rating, comments) {
                       Learn More
                     </Button>
                   </CardActions> */}
-                </Card>
+                              </Card>
                             </FormGroup>
-                            
+
 
                           )}
                         <div style={{ overflowX: "auto", justifyContent: "center", display: "flex", }}>
