@@ -93,7 +93,7 @@ function handleClick(e, index) {
   async function employerCreatedRating(ee_id, application_id, rating, comments) {
     console.log("???", ee_id, application_id, rating, comments)
     const authAxiosConfig = await authAxios();
-    return await authAxiosConfig.post('/employer/CompanyGiveRating', {
+    return await authAxiosConfig.post('/employer/companyGiveRating', {
       ee_id: ee_id,
       application_id: application_id,
       rate: rating,

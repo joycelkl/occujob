@@ -105,7 +105,7 @@ router.get('/companyCreatedRating', (req, res) => {
         })
 
 //post Rating testing out in employer router
-router.post('/CompanyGiveRating', (req, res) => {
+router.post('/companyGiveRating', (req, res) => {
     //posting job with jobServices 
     const {
         ee_id,
