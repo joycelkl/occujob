@@ -49,11 +49,11 @@ const EmployerSearchApplicantProfile = () => {
     console.log("individual job", profile)
     const dispatch = useDispatch()
     const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
-    const { applicantGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { erViewEeRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     const { ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
 
-    const applicantRatingState = useSelector((state) => state.applicantRating)
+    const applicantRatingState = useSelector((state) => state.erViewEeRating)
     console.log('applicantRating', applicantRatingState)
     const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
     console.log("Average", averageRating)
@@ -61,7 +61,7 @@ const EmployerSearchApplicantProfile = () => {
     useEffect(() => {
         let ee_id = localStorage.getItem('applicant')
         loadApplicantSearchProfileThunkAction(ee_id)
-        applicantGetRatingThunkAction(ee_id)
+        erViewEeRatingThunkAction(ee_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     let pageSize = 3;
@@ -266,7 +266,7 @@ const EmployerSearchApplicantProfile = () => {
                         applicantJob={applicantJob}
                     />
                 )) : "loading..."} */}
-                                                    {[...Array(pagesCount)].map((page, i) =>
+                                                     {[...Array(pagesCount)].map((page, i) =>
                                                         <PaginationItem active={i === currentPage} key={i}>
                                                             <PaginationLink onClick={e => handleClick(e, i)} href="#">
                                                                 {i + 1}

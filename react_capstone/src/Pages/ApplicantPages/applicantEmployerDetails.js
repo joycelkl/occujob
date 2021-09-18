@@ -12,20 +12,23 @@ import DisabledRating from "../../Components/Rating/DisabledRating";
 const ApplicantEmployerDetails = () => {
     const erProfile = useSelector((state) => state.erProfile)
     const {comp_description, er_img_data, er_industry, er_location, er_name} = erProfile
-    const employerRatingState = useSelector((state) => state.employerRating)
+    const erRating = useSelector((state) => state.eeViewErRating)
+   // const {rate,comment} = erRatingState
+
     const dispatch = useDispatch();
     const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
-    const { employerGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
-    const averageRating = employerRatingState.length > 0 && employerRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / employerRatingState.length;
-    console.log("Average", averageRating,employerRatingState)
+    const { eeViewErRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+    
 
     useEffect(()=>{
         const er_id = localStorage.getItem('company')
         loadErProfileforAppThunkAction(er_id)
-        employerGetRatingThunkAction(er_id)
+        eeViewErRatingThunkAction(er_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
-
+    //Get Avg star
+    const averageRating = erRating.length > 0 && erRating.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / erRating.length
+console.log("check",erRating)
     return (
         <div>
             <ApplicantNavbar />
