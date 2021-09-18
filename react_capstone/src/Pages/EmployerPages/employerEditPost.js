@@ -14,9 +14,12 @@ import background from '../../Images/forms.jpg'
 
 
 const EmployerEditPost = () => {
-
+//toasts
     const offerToast = () => toast("An Offer Has Been Made")
     const fillInfoToast = () => toast("Please Fill In All Information")
+    const rateToast= () => toast("Your Rating Has Been Submitted")
+
+
     const indJobState = useSelector((state) => state.individualJob)
 
     console.log("individual job", indJobState)
@@ -298,7 +301,8 @@ const EmployerEditPost = () => {
                                     <ModalFooter>
                                         <Button color="primary" onClick={toggle}>Message</Button>{' '}
                                         <Button color="secondary" onClick={() => giveOffer(application_id)}>Offer</Button>
-                                        <Button color="success" onClick={toggleNested}>Rate Company</Button>
+                                        <Button color="success" onClick={toggleNested}>Rate Applicant</Button>
+                                        <Button color="primary" onClick={toggle}>Close</Button>{' '}
                                         <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false}>
                                             <ModalHeader>Ratings</ModalHeader>
                                             <ModalBody>
@@ -309,7 +313,7 @@ const EmployerEditPost = () => {
                                                 <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </ModalBody>
                                             <ModalFooter>
-                                                <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment)}>Rate</Button>{' '}
+                                                <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast())}>Rate</Button>{' '}
                                                 <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                             </ModalFooter>
                                         </Modal>

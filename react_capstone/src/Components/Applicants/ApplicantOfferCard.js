@@ -20,7 +20,8 @@ const ApplicantOfferCard = (props) => {
     //toast
     const acceptToast = () => toast("You Have Accepted This Offer")
     const declineToast = () => toast("You Have Declined This Offer")
-    const rateToast = () => alert("You Have Rated this Company")
+    const rateToast= () => toast("Your Rating Has Been Submitted")
+
     const dispatch = useDispatch();
     const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
     const { offerDeclineAction } = bindActionCreators(actionCreators, dispatch)
@@ -199,7 +200,7 @@ const ApplicantOfferCard = (props) => {
                                     <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Please Give Your Comment Here " value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment)}>Rate</Button>{' '}
+                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment).then(rateToast())}>Rate</Button>{' '}
                                     <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                 </ModalFooter>
                             </Modal>

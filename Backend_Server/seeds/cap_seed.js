@@ -198,18 +198,18 @@ exports.seed = async function (knex) {
 
                 .then(() => {
                     return knex('rating').insert([
-                        { rating_employee_id: 1, rating_application_id: 1, rate: 5, comment: 'testing' },
-                        { rating_employee_id: 1, rating_application_id: 2, rate: 5, comment: 'testing' },
-                        { rating_employee_id: 1, rating_application_id: 3, rate: 5, comment: 'testing' },
-                        { rating_employee_id: 1, rating_application_id: 4, rate: 5, comment: 'testing' },
-                        { rating_employee_id: 2, rating_application_id: 5, rate: 1, comment: 'testing' },
-                        { rating_employee_id: 2, rating_application_id: 5, rate: 2, comment: 'testing' },
-                        { rating_employee_id: 2, rating_application_id: 5, rate: 3, comment: 'testing' },
-                        { rating_employer_id: 1, rating_application_id: 1, rate: 5, comment: 'new test' },
-                        { rating_employer_id: 1, rating_application_id: 2, rate: 5, comment: 'new test' },
-                        { rating_employer_id: 1, rating_application_id: 3, rate: 5, comment: 'new test' },
-                        { rating_employer_id: 1, rating_application_id: 4, rate: 5, comment: 'new test' },
-                        { rating_employer_id: 1, rating_application_id: 5, rate: 5, comment: 'new test' },
+                        { rating_employee_id: 1, rating_application_id: 1, rate: 1, comment: 'testing' },
+                        { rating_employee_id: 1, rating_application_id: 2, rate: 2, comment: 'okay la' },
+                        { rating_employee_id: 1, rating_application_id: 3, rate: 3, comment: 'hes good' },
+                        { rating_employee_id: 1, rating_application_id: 4, rate: 4, comment: 'seen better' },
+                        { rating_employee_id: 2, rating_application_id: 5, rate: 5, comment: 'thanks for a good time' },
+                        { rating_employee_id: 2, rating_application_id: 5, rate: 2, comment: 'okay experience' },
+                        { rating_employee_id: 2, rating_application_id: 5, rate: 3, comment: 'ITs alright dude' },
+                        { rating_employer_id: 1, rating_application_id: 1, rate: 2, comment: 'Ive seen better' },
+                        { rating_employer_id: 1, rating_application_id: 2, rate: 3, comment: 'nice guy' },
+                        { rating_employer_id: 1, rating_application_id: 3, rate: 4, comment: 'pretty cool' },
+                        { rating_employer_id: 1, rating_application_id: 4, rate: 5, comment: 'good stuff' },
+                        { rating_employer_id: 1, rating_application_id: 5, rate: 1, comment: 'new test' },
                     ])
                 })
         });

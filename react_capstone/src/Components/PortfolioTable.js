@@ -8,7 +8,6 @@ const ApplicantPortfolioTable = (props) => {
         <div>
             <ul className="nav nav-tabs" id="myTab" role="tablist" style={{width:"700px"}}>
                   <li className="nav-item">
-                    {/* {show ? <h1>Hello World </h1> : null} */}
                     <p className="nav-link active" id="home-tab" onClick={props.aboutHandler} style={{cursor:"pointer"}}>About</p>
                   </li>
                   <li className="nav-item">
