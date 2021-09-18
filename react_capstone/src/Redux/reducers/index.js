@@ -19,6 +19,8 @@ import applicantRatingReducer from './applicantRatingReducer'
 import employerRatingReducer from './employerRatingReducer'
 import applicantCreatedRatingReducer from './applicantCreatedRatingReducer'
 import employerCreatedRatingReducer from './employerCreatedRatingReducer'
+import eeViewErRatingReducer from './applicantViewCompanyRatingReducer'
+import erViewEeRatingReducer from './companyViewApplicantRatingReducer'
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -41,6 +43,9 @@ const reducers = combineReducers({
     employerRating: employerRatingReducer,
     applicantCreatedRating: applicantCreatedRatingReducer,
     employerCreatedRating: employerCreatedRatingReducer,
+    eeViewErRating:eeViewErRatingReducer,
+    erViewEeRating:erViewEeRatingReducer,
+
 })
 
 export default reducers
