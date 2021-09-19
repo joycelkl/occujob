@@ -14,7 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import DisabledRating from '../../Components/Rating/DisabledRating';
-import { employerGetRatingThunkAction } from '../../Redux/action-creators';
 import { Pagination, PaginationItem, PaginationLink, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -48,7 +47,13 @@ function handleClick(e, index) {
 
 }
 
+const dispatch = useDispatch();
 
+  const { loadErProfileThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { updateErProfileAction } = bindActionCreators(actionCreators, dispatch)
+  const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { employerGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { employerCreatedRatingThunkAction} = bindActionCreators(actionCreators, dispatch)
   //toast
   const updateToast = () => toast("Profile Updated");
   const updateReviewToast = () => toast("Review Has Been Updated");
@@ -58,29 +63,23 @@ function handleClick(e, index) {
     return state.erProfile
   });
   console.log("Profile", erProfileState)
+  const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfileState
 
   const locationState = useSelector((state) => {
     console.log("location", state.location);
     return state.location
   });
-  console.log("location", locationState)
+  console.log("location?twice", locationState)
 
-  const employerRatingState = useSelector((state) => state.employerRating)
+  const employerRatingState = useSelector((state) => {
+  return state.employerRating})
   console.log('employer rating', employerRatingState)
 
-  const employerCreatedRatingState = useSelector((state) => state.employerCreatedRating)
-  console.log('employerCreatedRating', employerCreatedRatingState)
+  const employerCreatedRatingState = useSelector((state) => 
+  {return state.employerCreatedRating})
+  console.log('employerCreatedRating???', employerCreatedRatingState)
 
-  const dispatch = useDispatch();
-
-
-
-  const { loadErProfileThunkAction } = bindActionCreators(actionCreators, dispatch)
-  const { updateErProfileAction } = bindActionCreators(actionCreators, dispatch)
-  const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
-  const { employerGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
-  const { employerCreatedRatingThunkAction} = bindActionCreators(actionCreators, dispatch)
-  const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfileState
+  
 
 
 
@@ -90,7 +89,7 @@ function handleClick(e, index) {
 
 
   //update
-  async function employerCreatedRating(ee_id, application_id, rating, comments) {
+  async function employerUpdateRating(ee_id, application_id, rating, comments) {
     console.log("???", ee_id, application_id, rating, comments)
     const authAxiosConfig = await authAxios();
     return await authAxiosConfig.post('/employer/companyGiveRating', {
@@ -125,8 +124,7 @@ function handleClick(e, index) {
 
   useEffect(() => {
     loadErProfileThunkAction();
-    employerGetRatingThunkAction();
-    employerCreatedRatingThunkAction();
+  
     er_industry !== null && setIndustry(er_industry)
     er_location !== null && setLocation(er_location)
     er_phone !== null && setPhone(er_phone)
@@ -140,6 +138,8 @@ function handleClick(e, index) {
   console.log('image', image)
   useEffect(() => {
     loadLocationThunkAction();
+    employerGetRatingThunkAction();
+    employerCreatedRatingThunkAction();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -148,12 +148,15 @@ function handleClick(e, index) {
   const aboutHandler = () => {
     setToggleAbout(true);
     setToggleContact(false);
-
+    setToggleComments(false);
+    setToggleEmployerReviews(false);
 
   };
   const contactHandler = () => {
     setToggleContact(true);
     setToggleAbout(false);
+    setToggleComments(false);
+    setToggleEmployerReviews(false);
 
   };
   const commentsHandler = () => {
@@ -359,7 +362,7 @@ function handleClick(e, index) {
                                 </CardActionArea>
                                 <CardActions>
 
-                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerCreatedRating(eachCreatedData.ee_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast)}>
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerUpdateRating(eachCreatedData.ee_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast)}>
                                     Update Post
                                   </Button> : null}
                                   <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>
