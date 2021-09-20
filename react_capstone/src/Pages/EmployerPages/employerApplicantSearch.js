@@ -36,6 +36,7 @@ const EmployerApplicantSearch = () => {
   const [locationArr, setLocationArr] = useState('')
   const [availableArr, setAvailableArr] = useState('');
   const [skillsArr, setSkillsArr] = useState('')
+  const [expArr, setExpArr] = useState('')
 
   useEffect(() => {
     if (salaryType === 'Please select') {
