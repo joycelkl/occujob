@@ -36,7 +36,7 @@ exports.seed = async function (knex) {
         .then(function () {
             // Inserts seed entries
             return knex('employer').insert([
-                { er_name: 'ER_user1', er_email: 'eruser1@mail.com', er_password: erPW1, er_type: "er" },
+                { er_name: 'User1DesignCompanyLtd', er_email: 'eruser1@mail.com', er_password: erPW1, er_type: "er",er_phone:'11223344',er_industry:'Design,Marketing',er_location:'Central and Western',comp_description:'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta quae neque quia maxime quos delectus, eveniet asperiores in possimus nisi eius non. Illo quod enim hic fuga quas iure eius?' },
                 { er_name: 'ER_user2', er_email: 'eruser2@mail.com', er_password: erPW1, er_type: "er" },
                 { er_name: 'ER_user3', er_email: 'eruser3@mail.com', er_password: erPW1, er_type: "er" },
                 { er_name: 'Google', er_email: 'Google@mail.com', er_password: erPW1, er_type: "er" },
@@ -47,12 +47,12 @@ exports.seed = async function (knex) {
 
             ]).then(() => {
                 return knex('employee').insert([
-                    { ee_name: 'ee1', ee_email: 'ee1@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000, ee_salary_type: 'Per Job', availability: '{monday,sunday}' },
-                    { ee_name: 'ee2', ee_email: 'ee2@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 10000, ee_salary_type: 'Per Job', availability: '{tuesday,friday}' },
-                    { ee_name: 'ee3', ee_email: 'ee3@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 15000, ee_salary_type: 'Per Job', availability: '{tuesday,friday}' },
-                    { ee_name: 'ee4', ee_email: 'ee4@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000, ee_salary_type: 'Per Job', availability: '{monday,sunday}' },
-                    { ee_name: 'ee5', ee_email: 'ee5@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 70, ee_salary_type: 'Per Hour', availability: '{tuesday,friday}' },
-                    { ee_name: 'ee6', ee_email: 'ee6@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 150, ee_salary_type: 'Per Hour', availability: '{tuesday,friday}' }
+                    { ee_name: 'Zach', ee_email: 'ee1@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT,Marketing,Media,Sourcing,Administration}', self_intro:'seeking New Challenge everyday', ee_phone:98765432,expected_salary: 17000, availability:'{tuesday,friday}',ee_salary_type: 'Per Job',ee_location:'Kowloon City', availability: '{monday,sunday}',ee_skill:'{Blogging,CSS,Javascript,React,Coding}' },
+                    { ee_name: 'Joyce', ee_email: 'ee2@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 10000, ee_salary_type: 'Per Job', availability: '{tuesday,friday}' },
+                    { ee_name: 'Arthur', ee_email: 'ee3@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 15000, ee_salary_type: 'Per Job', availability: '{tuesday,friday}' },
+                    { ee_name: 'Sam', ee_email: 'ee4@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{IT, Marketing, Media, Sourcing}', expected_salary: 17000, ee_salary_type: 'Per Job', availability: '{monday,sunday}' },
+                    { ee_name: 'Bibek', ee_email: 'ee5@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{Media, Sourcing}', expected_salary: 70, ee_salary_type: 'Per Hour', availability: '{tuesday,friday}' },
+                    { ee_name: 'Cap', ee_email: 'ee6@ee.com', ee_password: erPW1, ee_type: 'ee', ee_industry: '{HR & Admin}', expected_salary: 150, ee_salary_type: 'Per Hour', availability: '{tuesday,friday}' }
 
                 ])
             }).then(() => {

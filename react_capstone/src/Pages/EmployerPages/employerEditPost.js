@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./modalFullPage.css";
 import ControlledRating from "../../Components/Rating/ControlledRating";
 import background from '../../Images/forms.jpg'
-
+import './employerProfilePage.css'
 
 const EmployerEditPost = () => {
 //toasts
@@ -287,16 +287,117 @@ const EmployerEditPost = () => {
 
                                 )) : "Waiting for Applicant Apply"}
                                 <Modal isOpen={modal} toggle={toggle} fade={false} className='modal-sandbox'>
-
-                                    <ModalHeader>{modalJob.ee_name} {console.log('nametest', modalJob.ee_name)}
+                                <ModalBody className='modal-content'>    
+                                    <div className="row">
+                                    <div className="col-md-4">
+                                    <div className="profile-img">
                                         <img src={modalJob.ee_img_data} width="200px" height="200x" alt='' />
-                                    </ModalHeader>
-                                    <ModalBody className='modal-content'>
-                                        Self Introduction: {modalJob.self_intro} <br />
-                                        Expected Salary: {modalJob.expected_salary} <br />
-                                        Skills: {modalJob.ee_industry} <br />
-                                        Location Preference: {modalJob.ee_location} <br />
-                                        availability: {modalJob.availability}
+                                        </div>
+                                        </div>
+                                        <div className=" col-md-6">
+                            <div className="profile-head">
+                                <FormGroup>
+                                    <Label for="Name"><h1>Applicant's Name</h1></Label>
+                                    <h4>{modalJob.ee_name}</h4>
+                                </FormGroup>
+                                </div>
+                                {/* <DisabledRating rating={averageRating} /> */}
+                                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                                    <li className="nav-item">
+                                        {/* <p className="nav-link active" id="home-tab">About</p> */}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    <div className="row">
+                        <div className="col-md-4">
+
+                        </div>
+
+                        <div className="col-md-8">
+                            <div className="tab-content profile-tab" id="myTabContent">
+
+
+                                    <div>
+                                        <div className="row">
+                                            <FormGroup>
+                                                <div className="col-md-6">
+                                                    <Label for="Text">Self-Introduction</Label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.self_intro}</h6>
+                                                </div>
+                                            </FormGroup>
+                                        </div>
+                                        <div className="row" style={{ marginTop: "20px" }}>
+                                            <FormGroup>
+                                                <div className="col-md-6">
+                                                    <Label for="Skill">Skills</Label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_skill}</h6>
+                                                </div>
+                                            </FormGroup>
+                                        </div>
+                                        <div className="row" style={{ marginTop: "20px" }}>
+                                            <FormGroup>
+                                                <div className="col-md-6">
+                                                    <Label for="Skill">No. of Year of Working Experience</Label>
+                                                </div>
+                                                <div className="col-md-6">
+
+                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_exp}</h6>
+                                                </div>
+                                            </FormGroup>
+                                        </div>
+                                        <div className="row" style={{ marginTop: "20px" }}>
+                                            <FormGroup>
+                                                <div className="col-md-6">
+                                                    <Label for="Text">Job Function</Label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_industry}</h6>
+                                                </div>
+                                            </FormGroup>
+                                        </div>
+                                        <div className="row" style={{ marginTop: "20px" }}>
+                                            <FormGroup>
+                                                <div className="col-md-6">
+                                                    <Label for="Text">Perferred Location</Label>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_location}</h6>
+                                                </div>
+                                            </FormGroup>
+                                        </div>
+                                        <div className="row" style={{ marginTop: "20px" }}>
+                                            <FormGroup>
+
+                                                <div className="col-md-6">
+                                                    <Label for="Availabilty">Availabilty</Label>
+                                                </div>
+                                                <div className="col-md-6">
+
+                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.availability}</h6>
+                                                </div>
+                                            </FormGroup>
+                                        </div>
+                                        <div className="row" style={{ marginTop: "20px" }}>
+                                            <FormGroup>
+
+                                                <div className="col-md-6">
+                                                    <Label for="Availabilty">Expected Salary</Label>
+                                                </div>
+                                                <div className="col-md-6">
+
+                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.expected_salary}</h6>
+                                                </div>
+                                            </FormGroup>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                </div>
                                     </ModalBody>
                                     <ModalFooter>
                                         <Button color="primary" onClick={toggle}>Message</Button>{' '}
@@ -313,7 +414,7 @@ const EmployerEditPost = () => {
                                                 <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </ModalBody>
                                             <ModalFooter>
-                                                <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast())}>Rate</Button>{' '}
+                                                <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}
                                                 <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                             </ModalFooter>
                                         </Modal>
