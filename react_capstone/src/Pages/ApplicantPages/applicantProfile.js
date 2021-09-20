@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 import ApplicantPortfolioTable from "../../Components/PortfolioTable";
 import DisabledRating from "../../Components/Rating/DisabledRating";
-import { Pagination, PaginationItem, PaginationLink} from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -194,6 +194,7 @@ const ApplicantProfile = () => {
       options={skillsTag}
       className="basic-multi-select"
       classNamePrefix="select"
+
     />
   )
 
@@ -403,7 +404,7 @@ const ApplicantProfile = () => {
             <div className="col-md-6">
               <div className="profile-head">
                 <FormGroup>
-                  <Label for="Name"><h1>Applicant's Name</h1></Label>
+                  <Label for="Name"><h1>Applicant's Name:</h1></Label>
                   <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
                 <DisabledRating
@@ -418,16 +419,8 @@ const ApplicantProfile = () => {
             <div className="col-md-4">
               <div className="profile-work">
 
-                {/* <p>WORK LINK</p>
-                <a href="*">Website Links</a><br />
-                <a href="*">Bootsnipp Profile</a><br />
-                <a href="*">Bootply Profile</a>
-                <p>SKILLS</p>
-                <a href="*">Web Designer</a><br />
-                <a href="*">Web Developer</a><br />
-                <a href="*">WordPress</a><br />
-                <a href="*">WooCommerce</a><br />
-                <a href="*">PHP, .Net</a><br /> */}
+        {/* KEEP THIS EMPTY DIV HERE */}
+
               </div>
             </div>
 
@@ -441,45 +434,106 @@ const ApplicantProfile = () => {
                     <div>
                       <div className="row">
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Self-Introduction:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Text">Self-Introduction</Label>
                           </div>
                           <div className="col-md-6">
                             <Input style={{ marginTop: "10px" }} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
-                          </div>
+                          </div> */}
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Skills:
+
+                                </Typography>
+                                <SkillsTag />                                  </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Skill">Skills</Label>
                           </div>
                           <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <SkillsTag />
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Job Function:
+
+                                </Typography>
+                                <IndustryTag />                                  </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="industry">Job Function</Label>
                           </div>
                           <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <IndustryTag />
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
+
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Years Of Work Experience:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Skill">No. of Year of Working Experience</Label>
                           </div>
                           <div className="col-md-6">
                             <Input style={{ marginTop: "10px" }} type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
-                          </div>
+                          </div> */}
                         </FormGroup>
                       </div>
                     </div>
@@ -489,21 +543,60 @@ const ApplicantProfile = () => {
                       <div className="row">
 
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Email:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                  {ee_email}
+
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="email">Email </Label>
                           </div>
                           <div className="col-md-6">
-                            <h6 style={{ color: "black", marginTop: "10px" }}> {ee_email} </h6>                          </div>
+                            <h6 style={{ color: "black", marginTop: "10px" }}> {ee_email} </h6>                         
+                             </div> */}
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Phone Number
+
+                                </Typography>
+
+                                <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
                           <div className="col-md-6">
                             <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                          </div>
+                          </div> */}
                         </FormGroup>
                       </div>
                     </div>
@@ -541,7 +634,7 @@ const ApplicantProfile = () => {
 
 
                                     <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
-                                    {new Date(eachCreatedData.updated_at).toLocaleString()}
+                                      {new Date(eachCreatedData.updated_at).toLocaleString()}
                                     </Typography>
                                   </CardContent>
                                 </CardActionArea>
@@ -701,13 +794,32 @@ const ApplicantProfile = () => {
                     <div>
                       <div className="row">
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Availabilty:
+
+                                </Typography>
+
+                                <AvailabilityTag />
+
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Availabilty">Availabilty</Label>
                           </div>
                           <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <AvailabilityTag />
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
@@ -719,8 +831,31 @@ const ApplicantProfile = () => {
                       </div>
                       <div className="row">
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Salary Type:
+
+                                </Typography>
+
+                                <Input style={{ marginTop: "10px" }} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                                  <option value={null} selected>Please select</option>
+                                  <option value={'perJob'}>Per Job</option>
+                                  <option value={'perHour'}>Per Hour</option>
+                                </Input>
+
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label style={{ marginTop: "20px" }} for="salaryType">Salary Type</Label>
                           </div>
                           <div className="col-md-6">
@@ -729,7 +864,7 @@ const ApplicantProfile = () => {
                               <option value={'perJob'}>Per Job</option>
                               <option value={'perHour'}>Per Hour</option>
                             </Input>
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
@@ -737,26 +872,64 @@ const ApplicantProfile = () => {
                       {ee_salary_type ? (
                         <div className="row" style={{ marginTop: "20px" }}>
                           <FormGroup>
+                            <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                              <CardActionArea>
 
-                            <div className="col-md-6">
+                                <CardContent>
+                                  <Typography gutterBottom variant="h5" component="h2">
+                                    Expected Salary:
+
+                                  </Typography>
+
+                                  <Input style={{ marginTop: "10px" }} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+
+
+                                </CardContent>
+
+                              </CardActionArea>
+                              <CardActions>
+
+
+                              </CardActions>
+                            </Card>
+                            {/* <div className="col-md-6">
                               <Label for="Expected Salary">Expected Salary</Label>
                             </div>
                             <div className="col-md-6">
                               <Input style={{ marginTop: "10px" }} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
-                            </div>
+                            </div> */}
                           </FormGroup>
 
                         </div>
                       ) : (salaryType ? (
                         <div className="row" style={{ marginTop: "20px" }}>
                           <FormGroup>
+                            <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                              <CardActionArea>
 
-                            <div className="col-md-6">
+                                <CardContent>
+                                  <Typography gutterBottom variant="h5" component="h2">
+                                    Expected Salary:
+
+                                  </Typography>
+
+                                  <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+
+
+                                </CardContent>
+
+                              </CardActionArea>
+                              <CardActions>
+
+
+                              </CardActions>
+                            </Card>
+                            {/* <div className="col-md-6">
                               <Label for="Expected Salary">Expected Salary</Label>
                             </div>
                             <div className="col-md-6">
                               <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
-                            </div>
+                            </div> */}
                           </FormGroup>
 
                         </div>
@@ -764,8 +937,32 @@ const ApplicantProfile = () => {
 
                       <div className="row">
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6" style={{ marginTop: "20px" }}>
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Prefered Work Location:
+
+                                </Typography>
+
+                                <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                                  <option value={null} selected>Please select</option>
+                                  {locationState.length > 0 ? locationState.map((location, i) => (
+                                    <option key={i} value={location.location}>{location.location}</option>
+                                  )) : "loading..."}
+                                </Input>
+
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6" style={{ marginTop: "20px" }}>
                             <Label for="preferworklocation">Prefered Work Location</Label>
                           </div>
                           <div className="col-md-6">
@@ -775,7 +972,7 @@ const ApplicantProfile = () => {
                                 <option key={i} value={location.location}>{location.location}</option>
                               )) : "loading..."}
                             </Input>
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>

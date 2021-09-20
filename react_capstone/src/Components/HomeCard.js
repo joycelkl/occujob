@@ -40,7 +40,7 @@ function handleOnClick () {
                             <Badge className="job-list-badge" variant="secondary" style={{height:'20px'}}>{job_type}</Badge>
                             <Badge className="job-list-badge" variant="secondary" style={{marginLeft:"5px", height:'20px'}}>${expect_salary}</Badge>
                             
-                            <Card.Subtitle className="text-muted mb-2" style={{marginTop:'10px'}}> Please Sign In To View More Details</Card.Subtitle>
+                            <Card.Subtitle className="text-muted mb-2" style={{marginTop:'10px', textDecoration:'underline'}}> Please Sign In To View More Details</Card.Subtitle>
                         </div>
                         {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test" /> : <p></p>}
                     </div>

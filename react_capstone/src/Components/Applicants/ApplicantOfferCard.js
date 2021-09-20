@@ -102,13 +102,13 @@ const ApplicantOfferCard = (props) => {
                             <Card.Title>
                                 {job_title} - <span className="text-muted font-weight-light">{er_name}</span>
                             </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
+                            <Card.Subtitle className="text-muted mb-2" style={{marginTop:'5px'}}>
                                 {day + "/" + month + "/" + year}
                             </Card.Subtitle>
                             {offer && reply === null ? <p className="flex" style={{ color: "tomato" }}>Congratulations!! You have an offer!</p> : <p></p>}
                             {offer && reply !== null ? <p className="flex" style={{ color: "tomato" }}>You have {reply ? "accepted" : "declined"} the offer</p> : <p></p>}
-                            <Badge className="job-list-badge" variant="secondary" style={{ marginRight: '5px' }}>{job_type}</Badge>
-                            <Badge className="job-list-badge" variant="secondary">{job_location}</Badge>
+                            <Badge className="job-list-badge" variant="secondary" style={{ marginRight: '5px', height:'20px' }}>{job_type}</Badge>
+                            <Badge className="job-list-badge" variant="secondary" style={{height:'20px'}}>{job_location}</Badge>
                         </div>
                         {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test" /> : <p></p>}
                     </div>
