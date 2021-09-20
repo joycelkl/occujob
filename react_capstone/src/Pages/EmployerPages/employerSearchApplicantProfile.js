@@ -69,17 +69,27 @@ const EmployerSearchApplicantProfile = () => {
 
     const [toggleAbout, setToggleAbout] = useState(true);
     const [toggleComments, setToggleComments] = useState(false);
+    const [togglePortfolio, setTogglePortfolio] = useState(false);
 
     //handle toggles 
     const aboutHandler = () => {
         setToggleAbout(true);
         setToggleComments(false);
-
+        setTogglePortfolio(false);
+ 
 
 
     };
     const commentsHandler = () => {
         setToggleComments(true);
+        setToggleAbout(false);
+        setTogglePortfolio(false);
+
+
+    };
+    const portfolioHandler = () => {
+        setTogglePortfolio(true);
+        setToggleComments(false);
         setToggleAbout(false);
 
 
@@ -107,6 +117,9 @@ const EmployerSearchApplicantProfile = () => {
                                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                                     <li className="nav-item">
                                         <p className="nav-link active" id="home-tab" onClick={aboutHandler} style={{ cursor: "pointer" }}>About</p>
+                                    </li>
+                                    <li className="nav-item">
+                                        <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={portfolioHandler} style={{ cursor: "pointer" }}>Applicant's Portfolio</p>
                                     </li>
                                     <li className="nav-item">
                                         <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={commentsHandler} style={{ cursor: "pointer" }}>Applicant's Reivews</p>

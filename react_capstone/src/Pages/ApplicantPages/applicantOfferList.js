@@ -7,10 +7,11 @@ import ApplicantOfferCard from "../../Components/Applicants/ApplicantOfferCard";
 import 'react-toastify/dist/ReactToastify.css';
 import './applicantOfferList.css';
 import "../EmployerPages/modalFullPage.css";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const ApplicantOfferList = ()=>{
-  //toasts
+ 
+
   const EEOfferState = useSelector((state) => state.EEOffer)
   const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ return(
                     />
                 )) : "loading..."}
             </div>
-            <ToastContainer />
+           
 </div>
   );
  }
