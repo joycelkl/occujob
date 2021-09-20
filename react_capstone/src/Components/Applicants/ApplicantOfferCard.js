@@ -200,7 +200,7 @@ const ApplicantOfferCard = (props) => {
                                     <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Please Give Your Comment Here " value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment).then(rateToast())}>Rate</Button>{' '}
+                                    <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}
                                     <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                 </ModalFooter>
                             </Modal>
