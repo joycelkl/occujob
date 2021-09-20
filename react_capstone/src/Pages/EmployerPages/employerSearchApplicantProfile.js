@@ -11,7 +11,8 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { Pagination, PaginationItem, PaginationLink} from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 
 
 const EmployerSearchApplicantProfile = () => {
@@ -72,7 +73,7 @@ const EmployerSearchApplicantProfile = () => {
         setToggleAbout(true);
         setToggleComments(false);
         setTogglePortfolio(false);
- 
+
 
 
     };
@@ -106,8 +107,8 @@ const EmployerSearchApplicantProfile = () => {
                         <div className="col-md-6">
                             <div className="profile-head">
                                 <FormGroup>
-                                    <Label for="Name"><h1>Applicant's Name</h1></Label>
-                                    <h4>{ee_name}</h4>
+                                    
+                                    <h2>{ee_name}</h2>
                                 </FormGroup>
                                 <DisabledRating rating={averageRating} />
                                 <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -215,7 +216,17 @@ const EmployerSearchApplicantProfile = () => {
                                 }
 
 
+                                {togglePortfolio &&
+                                    <div>
+                                        <div className="row">
+                                            <PortfolioTable />
+                                        </div>
+                                    </div>
 
+
+
+
+                                }
                                 {toggleComments &&
                                     <div>
 
@@ -275,7 +286,7 @@ const EmployerSearchApplicantProfile = () => {
                         applicantJob={applicantJob}
                     />
                 )) : "loading..."} */}
-                                                     {[...Array(pagesCount)].map((page, i) =>
+                                                    {[...Array(pagesCount)].map((page, i) =>
                                                         <PaginationItem active={i === currentPage} key={i}>
                                                             <PaginationLink onClick={e => handleClick(e, i)} href="#">
                                                                 {i + 1}

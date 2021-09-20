@@ -18,7 +18,8 @@ const EmployerEditPost = () => {
     const offerToast = () => toast("An Offer Has Been Made")
     const fillInfoToast = () => toast("Please Fill In All Information")
     const rateToast= () => toast("Your Rating Has Been Submitted")
-
+    const saveChangesToast= () => toast("Your Changes Have Been Saved")
+    
 
     const indJobState = useSelector((state) => state.individualJob)
 
@@ -136,8 +137,9 @@ const EmployerEditPost = () => {
             return;
         }
         erJobUpdate(job_id, jobTitle, jobFunction, reqExp, salary, jobDes, workPeriod, jobStatus, jobLocation, empType, salaryType).then(() => {
-            alert("updated")
             history.push('/employerJobRecordsList')
+            saveChangesToast();
+            
         })
     }
 
@@ -250,7 +252,7 @@ const EmployerEditPost = () => {
                                 <div className='row' style={{marginTop:"20px", float:"right", marginBottom:"20px"}}>
                                     {status ? <Button type='submit' style={{width:"140px"}}>Save Changes</Button> : null}
                                     <Button onClick={(e) => handleRepost(e)} style={{width:"140px", marginLeft:"10px"}}>Repost</Button>
-                                    <ToastContainer />
+                                    
                                 </div>
                             </Form>
                         </div>
@@ -417,6 +419,7 @@ const EmployerEditPost = () => {
                                 </Modal>
                             </tbody>
                         </Table>
+                    <ToastContainer />
                     </div>
                 </div>
             </div>

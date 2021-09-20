@@ -404,8 +404,8 @@ const ApplicantProfile = () => {
             <div className="col-md-6">
               <div className="profile-head">
                 <FormGroup>
-                  <Label for="Name"><h1>Applicant's Name:</h1></Label>
-                  <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                  <h3 style={{marginBottom:'10px'}}>Applicant's Name:</h3>
+                  <Input style={{marginBottom:'10px'}} type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
                 <DisabledRating
                   rating={averageRating}
@@ -997,46 +997,7 @@ const ApplicantProfile = () => {
         </Form>
 
 
-        {/* <div className="row">
-
-                      <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>
-                      <FormGroup>
-                        <div className="col-md-6">
-                          <Label for="uploadCV">Upload CV </Label>
-                        </div>
-                        <div className="col-md-6">
-                          <Input type="file" name="uploadCV" />
-                        <button type="submit">Upload</button>
-                        </div>
-                      </FormGroup>
-                      </Form>
-                    </div> */}
-        {/* <div className="row">
-                      <FormGroup>
-                        <div className="col-md-6">
-                          <Label for="uploadCV">Upload CV </Label>
-                        </div>
-                        <div className="col-md-6">
-                          <Input type="file" name="uploadCV" />
-                        <button>Upload</button>
-                        </div>
-                      </FormGroup>
-                    </div>
-                    <div className="row">
-                      <FormGroup>
-                        <div className="col-md-6">
-                          <Label for="uploadCV">Upload CV </Label>
-                        </div>
-                        <div className="col-md-6">
-                          <Input type="file" name="uploadCV" />
-                        <button>Upload</button>
-                        </div>
-                      </FormGroup>
-                    </div> */}
-
-        {/* <div classNameName="col-">
-          <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
-        </div> */}
+      
       </div>
     </div>
 
