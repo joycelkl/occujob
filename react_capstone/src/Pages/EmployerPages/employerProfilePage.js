@@ -11,15 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./employerProfilePage.css";
 import EmployerPortfolioTable from '../../Components/EmployerPortfolioTable';
 import { makeStyles } from '@material-ui/core/styles';
-import Rating from '@material-ui/lab/Rating';
-import Box from '@material-ui/core/Box';
 import DisabledRating from '../../Components/Rating/DisabledRating';
-import { Pagination, PaginationItem, PaginationLink, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink} from 'reactstrap';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import authAxios from '../../Redux/authAxios';
@@ -119,7 +116,6 @@ const dispatch = useDispatch();
   const [toggleContact, setToggleContact] = useState(false);
   const [toggleComments, setToggleComments] = useState(false);
   const [toggleEmployerReviews, setToggleEmployerReviews] = useState(false);
-  const [rate, setRate] = useState('');
   const [comments, setComment] = useState('');
 
   useEffect(() => {
@@ -174,24 +170,6 @@ const dispatch = useDispatch();
 
   };
 
-  //rating
-  const labels = {
-    0.5: 'Useless',
-    1: 'Useless+',
-    1.5: 'Poor',
-    2: 'Poor+',
-    2.5: 'Ok',
-    3: 'Ok+',
-    3.5: 'Good',
-    4: 'Good+',
-    4.5: 'Excellent',
-    5: 'Excellent+',
-  };
-
-  
-
-  const [value, setValue] = React.useState(2);
-  const [hover, setHover] = React.useState(-1);
   const classes = useStyles();
 
   //****************DONOT CHANGE THE SETTING HERE*****************************/

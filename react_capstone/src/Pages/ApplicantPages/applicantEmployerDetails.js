@@ -7,16 +7,12 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import DisabledRating from "../../Components/Rating/DisabledRating";
-import { Pagination, PaginationItem, PaginationLink, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import authAxios from '../../Redux/authAxios';
+import { Pagination, PaginationItem, PaginationLink} from 'reactstrap';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
 
 const ApplicantEmployerDetails = () => {
     //comment card

@@ -7,12 +7,10 @@ import ApplicantOfferCard from "../../Components/Applicants/ApplicantOfferCard";
 import 'react-toastify/dist/ReactToastify.css';
 import './applicantOfferList.css';
 import "../EmployerPages/modalFullPage.css";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const ApplicantOfferList = ()=>{
   //toasts
-  const rateToast= () => toast("Your Rating Has Been Submitted")
-
   const EEOfferState = useSelector((state) => state.EEOffer)
   const dispatch = useDispatch();
 

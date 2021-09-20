@@ -13,7 +13,7 @@ const JobDetail = (props) => {
     const applyToast = () => toast("You Have Applied this Job")
     
     const { indJob } = props;
-    const { er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
+    const { job_salary_type,er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
  
     const dispatch = useDispatch();
     const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
@@ -51,7 +51,7 @@ const JobDetail = (props) => {
                         {/* <div className="employerDetails" onClick={handleOnClick} style={{ cursor: "pointer" }}> */}
                         <div className="col-md-4">
                             <div className="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
-                                <img src={er_img_data} width="200px" height="200x" alt='logo' />
+                                <img src={er_img_data} width="200px" height="200x" alt='' />
                                 <br />
                             </div>
                         </div>
@@ -78,7 +78,7 @@ const JobDetail = (props) => {
 
                     <FormGroup>
                         <Label for="Expected Salary" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Salary</Label>
-                        <h5>{expect_salary}</h5>
+                        <h5>{expect_salary} {job_salary_type}</h5>
                     </FormGroup>
                     <FormGroup>
                         <Label for="employmentType" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Employment Type</Label>

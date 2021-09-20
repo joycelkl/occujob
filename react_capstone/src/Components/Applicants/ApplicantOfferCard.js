@@ -29,7 +29,7 @@ const ApplicantOfferCard = (props) => {
 
 
     const { offerCard } = props;
-    const { job_function, reply, job_title, job_id, er_id, er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id } = offerCard;
+    const { job_salary_type,job_function, reply, job_title, job_id, er_id, er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id } = offerCard;
 
     console.log("testoffer", offer)
     console.log('data', job_title, job_id, er_id,er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id)
@@ -45,10 +45,7 @@ const ApplicantOfferCard = (props) => {
         setNestedModal(!nestedModal);
         setCloseAll(false);
     }
-    const toggleAll = () => {
-        setNestedModal(!nestedModal);
-        setCloseAll(true);
-    }
+    
     //to employer profile page
     const history = useHistory();
     function handleOnClick() {
@@ -80,22 +77,6 @@ const ApplicantOfferCard = (props) => {
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
 
-
-    // async function employerRating(er_id, application_id, rating, comment) {
-    //     const authAxiosConfig = await authAxios();
-    //     return await authAxiosConfig.post('/employee/applicantsGiveRating', {
-    //         er_id: er_id,
-    //         application_id: application_id,
-    //         rate: rating,
-    //         comment: comment,
-
-    //     }).then(res => {
-    //         console.log("POST SUCCESS", res)
-    //     }).catch(err => {
-    //         console.log("rate post err res", err.response)
-    //     })
-    // }
-
     async function employerRating(er_id, application_id, rating, comment) {
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post('/employee/applicantsGiveRating', {
@@ -111,11 +92,10 @@ const ApplicantOfferCard = (props) => {
         })
     }
 
-
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
 
-            <Card className='my-4' style={{ width: "70%" }}>
+            <Card className='my-4' style={{ width: "70%",cursor: "pointer" }}>
                 <Card.Body onClick={() => setModal(!modal)}>
                     <div className="d-flex justify-content-between" >
                         <div>
@@ -168,7 +148,7 @@ const ApplicantOfferCard = (props) => {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="Expected Salary" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Salary</Label>
-                                <Input type="number" name="number" id="Salary" placeholder="Salary" value={expect_salary} disabled style={{ marginBottom: "20px" }} />
+                                <Input type="text" name="number" id="Salary" placeholder="Salary" value={`${expect_salary} ${job_salary_type}`} disabled style={{ marginBottom: "20px" }} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employmentType" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Employment Type</Label>

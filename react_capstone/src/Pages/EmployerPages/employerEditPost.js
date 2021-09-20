@@ -72,11 +72,6 @@ const EmployerEditPost = () => {
         setCloseAll(false);
     }
 
-    const toggleAll = () => {
-        setNestedModal(!nestedModal);
-        setCloseAll(true);
-    }
-
     // function toggle(name) {
     //     console.log('toggle name', name)
 
