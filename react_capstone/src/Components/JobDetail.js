@@ -31,6 +31,13 @@ const JobDetail = (props) => {
     }
 
     const history = useHistory();
+    
+        const goBack = () => {
+            // the history object of the `this.props` here can do goBack(), push()
+            //   or replace() to change the route programmatically
+            history.goBack();
+        };
+    
 
     function handleOnClick() {
         localStorage.setItem('company', er_id)
@@ -100,6 +107,7 @@ const JobDetail = (props) => {
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>
                         <Button>Message</Button>
+                        <Button onClick={goBack} style={{ marginLeft: "10px" }}>Go Back</Button>
                     </div>
                 </Form>
             </div>

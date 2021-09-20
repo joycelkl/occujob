@@ -12,6 +12,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Pagination, PaginationItem, PaginationLink} from 'reactstrap';
+import { useHistory } from 'react-router';
 
 
 const EmployerSearchApplicantProfile = () => {
@@ -36,8 +37,11 @@ const EmployerSearchApplicantProfile = () => {
         setCurrentPage(index)
 
     }
-
-
+    const history = useHistory();
+    
+    const goBack = () => {
+        history.goBack();
+    };
 
 
 
@@ -293,6 +297,7 @@ const EmployerSearchApplicantProfile = () => {
                     </div>
                     <div className="col-md-2">
                         <Button>Message</Button>
+                        <Button onClick={goBack} style={{ marginLeft: "10px" }}>Go Back</Button>
                     </div>
 
 
