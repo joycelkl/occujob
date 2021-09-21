@@ -9,6 +9,8 @@ const PortfolioTable = props => {
 
     const {eeId} = props 
 
+    const userType = localStorage.getItem('type')
+
     const dispatch = useDispatch();
 
     const { loadAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)

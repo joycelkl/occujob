@@ -12,6 +12,7 @@ import "./modalFullPage.css";
 import ControlledRating from "../../Components/Rating/ControlledRating";
 import background from '../../Images/forms.jpg'
 import './employerProfilePage.css'
+import Chatroom from "../../Components/Chatroom/Chatroom";
 
 const EmployerEditPost = () => {
 //toasts
@@ -30,11 +31,14 @@ const EmployerEditPost = () => {
         (actionCreators, dispatch)
     const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { loadIndJobThunkAction } = bindActionCreators(actionCreators, dispatch);
 
     useEffect(() => {
         loadLocationThunkAction();
-        loadIndustryThunkAction();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+      loadIndustryThunkAction();
+      const jobID = localStorage.getItem('job')
+      loadIndJobThunkAction(jobID)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const locationState = useSelector((state) => state.location);
@@ -175,6 +179,17 @@ const EmployerEditPost = () => {
     let createDay = createDate.getDate();
     let createMonth = createDate.getMonth() + 1;
     let createYear = createDate.getFullYear();
+
+
+    //****************For the Chatroom********************//
+    const [modalChatroom, setModalChatroom] = useState(false);
+
+    const toggleChatroom = () => setModalChatroom(!modalChatroom);
+
+    const userID = localStorage.getItem('userID')
+    console.log('UserID', userID)
+   
+
     return (
         <div>
             <EmployerNavbar />
@@ -268,7 +283,7 @@ const EmployerEditPost = () => {
                             </thead>
 
                             <tbody>
-                                {indJobState[0].ee_name ? indJobState.map((job) => (
+                                {indJobState.length ? indJobState.map((job) => (
                                     <tr onClick={() => {
                                         setModalJob(job)
                                         toggle(job.ee_name)
@@ -397,7 +412,7 @@ const EmployerEditPost = () => {
                                 </div>
                                     </ModalBody>
                                     <ModalFooter>
-                                        <Button color="primary" onClick={toggle}>Message</Button>{' '}
+                                    <Button color="primary" onClick={toggleChatroom}>Message</Button>{' '}
                                         <Button color="secondary" onClick={() => giveOffer(application_id)}>Offer</Button>
                                         <Button color="success" onClick={toggleNested}>Rate Applicant</Button>
                                         <Button color="primary" onClick={toggle}>Close</Button>{' '}
@@ -417,6 +432,17 @@ const EmployerEditPost = () => {
                                         </Modal>
                                     </ModalFooter>
                                 </Modal>
+                                <>
+                        <Modal isOpen={modalChatroom} toggle={toggleChatroom} fade={false}>
+                            <ModalHeader toggle={toggleChatroom}>Chatroom</ModalHeader>
+                            <ModalBody>
+                            <Chatroom chatterID={modalJob.ee_id} userID={userID}/>
+                            </ModalBody>
+                            <ModalFooter>
+                            <Button color="secondary" onClick={toggleChatroom}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+                        </>
                             </tbody>
                         </Table>
                     <ToastContainer />

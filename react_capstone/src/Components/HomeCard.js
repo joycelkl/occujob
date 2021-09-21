@@ -27,7 +27,7 @@ function handleOnClick () {
     let year = date.getFullYear();
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <Card className='my-4' style={{ width: "70%" }} onClick={handleOnClick}>
+            <Card className='my-4' style={{ width: "70%", cursor:'pointer'}} onClick={handleOnClick}>
                 <Card.Body>
                     <div className="d-flex justify-content-between">
                         <div>

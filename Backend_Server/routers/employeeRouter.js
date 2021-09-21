@@ -124,10 +124,10 @@ class EmployeeRouter {
         })
 
         router.get('/home', (req, res) => {
-            console.log('home run')
-                //list job details via application id 
 
-            return this.employeeService
+            console.log('home run', req.user)
+            //list job details via application id 
+                return this.employeeService
                 .homeJobList()
                 .then((jobDetail) => {
                     return res.json(jobDetail)
@@ -138,8 +138,9 @@ class EmployeeRouter {
         })
 
         //tested
-        router.get('/search/result/:job_id', (req, res) => {
-            //list job:id details
+        router.get('/search/results/:job_id', (req, res) => {
+            console.log('checking individual job', req.params.job_id)
+                //list job:id details
             return this.jobServices
                 .viewindividualjob(req.params.job_id)
                 .then((job) => {

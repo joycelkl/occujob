@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Form, FormGroup, Label} from 'reactstrap';
+import React, { useState, useEffect } from "react";
+import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import authAxios from '../Redux/authAxios';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,13 +8,17 @@ import { useHistory } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Pages/EmployerPages/employerProfilePage.css"
+import Chatroom from "./Chatroom/Chatroom";
 
 const JobDetail = (props) => {
     const applyToast = () => toast("You Have Applied this Job")
-    
+
+    const [employerId, setEmployerId] = useState('')
+    const [userId, setUserId] = useState('')
+
     const { indJob } = props;
-    const { job_salary_type,er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
- 
+    const { job_salary_type, er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
+
     const dispatch = useDispatch();
     const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
 
@@ -31,13 +35,13 @@ const JobDetail = (props) => {
     }
 
     const history = useHistory();
-    
-        const goBack = () => {
-            // the history object of the `this.props` here can do goBack(), push()
-            //   or replace() to change the route programmatically
-            history.goBack();
-        };
-    
+
+    const goBack = () => {
+        // the history object of the `this.props` here can do goBack(), push()
+        //   or replace() to change the route programmatically
+        history.goBack();
+    };
+
 
     function handleOnClick() {
         localStorage.setItem('company', er_id)
@@ -46,7 +50,18 @@ const JobDetail = (props) => {
         })
     }
 
+    useEffect(() => {
+        const userID = localStorage.getItem('userID')
+        console.log('UserID', userID)
+        setUserId(userID)
+        setEmployerId(er_id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [er_id])
 
+    //****************For the Chatroom********************//
+    const [modal, setModal] = useState(false);
+
+    const toggle = () => setModal(!modal);
 
 
     return (
@@ -97,17 +112,28 @@ const JobDetail = (props) => {
                         <h5>{job_function}</h5>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px", fontSize: "20px" }}>Work Period</Label>
+                        <Label for="preferworklocation" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Work Period</Label>
                         <h5>{work_period}</h5>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="preferworklocation" style={{fontWeight:"bold", textDecoration:"underline", marginBottom:"5px", fontSize: "20px" }}>Work Location</Label>
+                        <Label for="preferworklocation" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Work Location</Label>
                         <h5>{job_location}</h5>
                     </FormGroup>
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>
-                        <Button>Message</Button>
+                        <Button onClick={toggle}>Message</Button>
                         <Button onClick={goBack} style={{ marginLeft: "10px" }}>Go Back</Button>
+                        <>
+                            <Modal isOpen={modal} toggle={toggle} fade={false}>
+                                <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
+                                <ModalBody>
+                                    <Chatroom chatterID={employerId} userID={userId} />
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                                </ModalFooter>
+                            </Modal>
+                        </>
                     </div>
                 </Form>
             </div>

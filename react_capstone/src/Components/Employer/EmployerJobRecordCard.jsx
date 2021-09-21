@@ -19,6 +19,7 @@ const EmployerJobRecordCard = (props) => {
 
   function handleOnclick () {
     console.log('clicked', job_id)
+    localStorage.setItem('job',job_id)
     loadIndJobThunkAction(job_id).then(()=>{
         history.push('/employerEditPost')
     })
@@ -37,7 +38,7 @@ let expDate = new Date(expiry_date)
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card className="my-4" onClick={handleOnclick} style={{ width: "70%" }}>
+        <Card className="my-4" onClick={handleOnclick} style={{ width: "70%", cursor:'pointer' }}>
           <Card.Body>
             <div className="d-flex justify-content-between">
               <div>
@@ -52,6 +53,7 @@ let expDate = new Date(expiry_date)
                 <Badge className="job-list-badge" variant="secondary">
                   {status ? "Active" : "Inactive"}
                 </Badge>
+                <Card.Subtitle className="text-muted mb-2" style={{marginTop:'10px', textDecoration:'underline'}}> Click To View Job Details </Card.Subtitle>
               </div>
               {er_img_data ? (
                 <img

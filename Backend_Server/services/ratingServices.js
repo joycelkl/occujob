@@ -161,10 +161,7 @@ jobUpdating(rating_id,comment) {
 
     }
 
-
-
 }
-
 
 
 module.exports = RatingServices
