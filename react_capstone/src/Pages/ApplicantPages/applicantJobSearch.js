@@ -182,7 +182,7 @@ const ApplicantJobSearch = () => {
                   <FormGroup>
                     <Label for="JobTitle" style={{ color: 'white' }}>Job Title</Label>
                     <ReactTagInput
-                      className="jobTitle"
+                      classNames={{tagInput: 'tagInputClass'}}
                       tags={jobTitleTag}
                       onChange={(newTags) => setJobTitleTag(newTags)}
                     />

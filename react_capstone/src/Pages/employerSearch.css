@@ -79,12 +79,7 @@
     color: white;
 }
 
-.ReactTags__tagInput{
+.react-tag-input__input{
     height: 65px;
 }
-.react-tag-input {
-    height: 65px;
-}
-.jobTitle {
-    height: 65px;
-}
+
