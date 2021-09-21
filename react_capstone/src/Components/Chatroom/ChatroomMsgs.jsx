@@ -3,7 +3,9 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import './css/ChatroomMsgs.scss'
 
 
-const ChatroomMsgs = ({messages, userType}) => {
+const ChatroomMsgs = ({messages, userType, chatterImg, userImg}) => {
+
+    console.log('imgData in msgbox', chatterImg, userImg)
 
     console.log('messages in chatroomMsgs', messages)
     
@@ -17,18 +19,15 @@ const ChatroomMsgs = ({messages, userType}) => {
                 {
                   message.sender_type !== userType ?
   
-                    <div
-                      className="msgs-chatter-wrapper"
-                    >
-                      {/* <div className="msgs-chatter-portrait"> */}
-                        <img className="msgs-chatter-portrait" src='https://capstoneuserimg.s3-ap-southeast-1.amazonaws.com/eeUsersImg/1.jpg' alt=''/>
-                      {/* </div> */}
+                    <div className="msgs-chatter-wrapper">
+                      {chatterImg !== null ?  <img className="msgs-chatter-portrait" src={chatterImg} alt=''/> : <img className="msgs-chatter-portrait" src='https://capstoneuserimg.s3-ap-southeast-1.amazonaws.com/eeUsersImg/1.jpg' alt='default'/>}
+
                       <div
                         className="msgs-chatter-namecontent-wrapper"
                       >
                         <div className="msgs-chatter-name">
                           <p>
-                            {userType === 'er' ? message.er_name : message.ee_name}
+                            {userType === 'er' ? message.ee_name : message.er_name}
                           </p>
                         </div>
                         <div className="msgs-chatter-content">
@@ -48,9 +47,9 @@ const ChatroomMsgs = ({messages, userType}) => {
                           {message.content}
                         </div>
                       </div>
-                      {/* <div className="msgs-own-portrait"> */}
-                          <img className="msgs-own-portrait" src='https://capstoneuserimg.s3-ap-southeast-1.amazonaws.com/eeUsersImg/1.jpg' alt=''/>
-                      {/* </div> */}
+                      {userImg !== null ?  <img className="msgs-own-portrait" src={userImg} alt=''/> : <img className="msgs-own-portrait" src='https://capstoneuserimg.s3-ap-southeast-1.amazonaws.com/eeUsersImg/1.jpg' alt='default'/>}
+                          
+                  
                     </div>
                 }
               </div>

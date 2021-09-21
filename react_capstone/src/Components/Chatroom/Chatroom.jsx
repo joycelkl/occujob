@@ -10,9 +10,6 @@ import io from 'socket.io-client';
 
 let socket
 
-// import queryString from 'query-string';
-  // const {erId, eeId} = queryString.parse(location.search)
-
 const Chatroom = (props) => {
 
     const ENDPOINT = process.env.REACT_APP_BASE_URL
@@ -20,25 +17,30 @@ const Chatroom = (props) => {
     
     const chatroomID = useSelector((state)=> state.chatroomID)
     const chatHistory = useSelector((state)=> state.chatHistory)
+    const erProfileState = useSelector((state) => state.erProfile);
+    console.log('erProfile in chatroom', erProfileState)
+    const eeProfileState = useSelector((state) => state.EEProfile);
+    console.log('AppProfile in chatroom', eeProfileState)
 
     const dispatch = useDispatch();
     const { loadChatroomIDThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { loadChatroomHistoryThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { addChatroomHistorySuccessAction } = bindActionCreators(actionCreators, dispatch)
     const { resetUnreadMsgThunkAction } = bindActionCreators (actionCreators, dispatch)
+    //for collecting the img
+    const { loadErProfileThunkAction } = bindActionCreators (actionCreators, dispatch)
+    const { loadEEProfileThunkAction } = bindActionCreators (actionCreators, dispatch)
 
     const [messages, setMessages] = useState('');
     const [chatter, setChatter] = useState('');
     const [chatroomNum, setChatroomNum] = useState('');
+    const [chatterImg, setChatterImg] = useState('');
+    const [userImg, setUserImg] = useState('')
     const type = localStorage.getItem('type')
     // const userID = localStorage.getItem('userID')
 
     useEffect(()=>{
         socket = io(ENDPOINT,  { transports : ['websocket'] })
-
-        //testdata
-        // const testmsg = [{username: 'Joyce', sentby:'er', msgcontent:'hello'},{username: 'ee_1', sentby:'ee', msgcontent:'what?'}]
-        // setMessages(testmsg)
 
         console.log('IDS', chatterID, userID)
 
@@ -52,6 +54,15 @@ const Chatroom = (props) => {
             addChatroomHistorySuccessAction(message)
         })
         
+        if(type === 'er') {
+            loadErProfileThunkAction(userID)
+            loadEEProfileThunkAction(chatterID)
+        } else {
+            loadErProfileThunkAction(chatterID)
+            loadEEProfileThunkAction(userID)
+        }
+
+
         return ()=>{
             socket.disconnect()
         }
@@ -72,11 +83,11 @@ const Chatroom = (props) => {
             })
 
             loadChatroomHistoryThunkAction(id)
+            resetUnreadMsgThunkAction(id)
 
             socket.on('sendMsg', () =>{
                 resetUnreadMsgThunkAction(id)
             })
-      
 
         if (type === 'er' && chatroomID[0]){
             setChatter([{username:chatroomID[0].ee_name, id:chatroomID[0].chat_employee_id }])
@@ -85,9 +96,23 @@ const Chatroom = (props) => {
         }
         }
 
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[chatroomID])
+        if(erProfileState && eeProfileState){ 
+            const { ee_img_data } = eeProfileState
+            const { er_img_data } = erProfileState
+            console.log('inside useEffect', ee_img_data, er_img_data)
+            if(type === 'er') {
+                setUserImg(er_img_data)
+                setChatterImg(ee_img_data)
+            } else {
+                setUserImg(ee_img_data)
+                setChatterImg(er_img_data)
+            }
+        }
 
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[chatroomID, erProfileState, eeProfileState])
+
+    console.log('imgdata in chatroom', chatterImg, userImg)
 
     useEffect(()=>{
         
@@ -99,12 +124,12 @@ const Chatroom = (props) => {
 
     console.log('chatroomId', chatroomID)
     console.log('chatter', chatter)
-    console.log('`chat History', chatHistory)
+    console.log('chat History', chatHistory)
 
     return (
         <div className="ChatRoom">
             <ChatroomTop chatter={chatter} />
-            <ChatroomMsgs messages={messages} userType={type}/>
+            <ChatroomMsgs messages={messages} userType={type} chatterImg={chatterImg} userImg={userImg}/>
             <ChatroomInput chatroomID={chatroomNum} senderType={type} user_id={userID} />
         </div>
     )

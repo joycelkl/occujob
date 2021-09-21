@@ -40,14 +40,6 @@ const SmallMessage = ({chatID, chatterName, chatterID, msgContent, sentTime, use
             setlastMsg(message[0].content)
             setLastSent(message[0].created_at)
             setUnreadMsg(prevUnreadMsg => (Number(prevUnreadMsg) +1))
-            // if(modal) {
-            //     console.log('Im in chatroom now')
-            //     return
-            // } else {
-            //     if(userType !== message[0].sender_type){
-                    
-            //     }
-            // }
         })
 
         setlastMsg(msgContent)
