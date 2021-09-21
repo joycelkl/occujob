@@ -241,7 +241,7 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                                 {togglePortfolio &&
                                     <div>
                                         <div className="row">
-                                            <PortfolioTable />
+                                            <PortfolioTable eeId={ee_id}/>
                                         </div>
                                     </div>
 
