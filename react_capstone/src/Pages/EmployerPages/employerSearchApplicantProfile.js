@@ -319,9 +319,9 @@ const EmployerSearchApplicantProfile = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-md-2" style={{float:'right'}}>
                         <Button>Message</Button>
-                        <Button onClick={goBack} style={{ marginLeft: "10px" }}>Go Back</Button>
+                        <Button onClick={goBack} style={{ marginLeft: "10px" }}>Search List</Button>
                     </div>
 
 

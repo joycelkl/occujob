@@ -23,7 +23,7 @@ const EmployerHomeCard = (props) => {
                             <Card.Subtitle className="text-muted mb-2" style={{marginTop:'5px'}}>
                             {day + "/" + month + "/" + year}
                             </Card.Subtitle>
-                            <Badge className="job-list-badge" variant="secondary" style={{marginLeft:"5px", height:'20px'}}>{job_type}</Badge>
+                            <Badge className="job-list-badge" variant="secondary" style={{height:'20px'}}>{job_type}</Badge>
                             <Card.Subtitle className="text-muted mb-2" style={{marginTop:'10px', textDecoration:'underline'}}> Only Applicants Can View Job Details </Card.Subtitle>
 
                         </div>
