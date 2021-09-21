@@ -12,7 +12,7 @@ let hashedpassword = (password) => {
 
 
 
-exports.seed = async function (knex) {
+exports.seed = async function(knex) {
     // Deletes ALL existing entries
     const erPW1 = await hashedpassword('1234');
 
@@ -33,9 +33,9 @@ exports.seed = async function (knex) {
     })
 
 
-        .then(function () {
-            // Inserts seed entries
-            return knex('employer').insert([
+    .then(function() {
+        // Inserts seed entries
+        return knex('employer').insert([
                 { er_name: 'ER_user1', er_email: 'eruser1@mail.com', er_password: erPW1, er_type: "er" },
                 { er_name: 'ER_user2', er_email: 'eruser2@mail.com', er_password: erPW1, er_type: "er" },
                 { er_name: 'ER_user3', er_email: 'eruser3@mail.com', er_password: erPW1, er_type: "er" },
@@ -86,121 +86,121 @@ exports.seed = async function (knex) {
 
                 ])
             })
-                .then(() => {
-                    return knex('application').insert([
-                        { job_id: 1, employee_id: 1, offer: true },
-                        { job_id: 2, employee_id: 1, offer: true },
-                        { job_id: 3, employee_id: 3 },
-                        { job_id: 2, employee_id: 2, offer: true, reply: true },
-                        { job_id: 3, employee_id: 1 },
-                    ])
-                })
-                .then(() => {
-                    return knex('location').insert([
-                        { location: 'Islands' },
-                        { location: 'Kwai Tsing' },
-                        { location: 'North' },
-                        { location: 'Sai Kung' },
-                        { location: 'Sha Tin' },
-                        { location: 'Tai Po' },
-                        { location: 'Tsuen Wan' },
-                        { location: 'Tuen Mun' },
-                        { location: 'Yuen Long' },
-                        { location: 'Kowloon City' },
-                        { location: 'Kwun Tong' },
-                        { location: 'Sham Shui Po' },
-                        { location: 'Wong Tai Sin' },
-                        { location: 'Yau Tsim Mong' },
-                        { location: 'Central and Western' },
-                        { location: 'Eastern' },
-                        { location: 'Southern' },
-                        { location: 'Wan Chai' },
-                    ])
-                })
-                .then(() => {
-                    return knex('industry').insert([
-                        { industry: 'Educational Services' },
-                        { industry: 'Real Estate' },
-                        { industry: 'Administration' },
-                        { industry: 'Management Services' },
-                        { industry: 'Scientific Services' },
-                        { industry: 'Construction' },
-                        { industry: 'Healthcare' },
-                        { industry: 'Arts' },
-                        { industry: 'Entertainment' },
-                        { industry: 'Wholesale Trade' },
-                        { industry: 'Transportation' },
-                        { industry: 'Finance' },
-                        { industry: 'Insurance' },
-                        { industry: 'Agriculture' },
-                        { industry: 'Food Services' },
-                        { industry: 'Hospitality' },
-                        { industry: 'Retail' },
-                        { industry: 'Manufacturing' },
-                        { industry: 'Technology' },
-                        { industry: 'IT' },
-                        { industry: 'Engineering' },
-                        { industry: 'Business' },
-                        { industry: 'Advisory' },
-                        { industry: 'Photography' },
-                        { industry: 'Media' },
-                        { industry: 'Recreation' },
-                        { industry: 'Publishing' },
-                        { industry: 'Consumer Goods' },
+            .then(() => {
+                return knex('application').insert([
+                    { job_id: 1, employee_id: 1, offer: true },
+                    { job_id: 2, employee_id: 1, offer: true },
+                    { job_id: 3, employee_id: 3 },
+                    { job_id: 2, employee_id: 2, offer: true, reply: true },
+                    { job_id: 3, employee_id: 1 },
+                ])
+            })
+            .then(() => {
+                return knex('location').insert([
+                    { location: 'Islands' },
+                    { location: 'Kwai Tsing' },
+                    { location: 'North' },
+                    { location: 'Sai Kung' },
+                    { location: 'Sha Tin' },
+                    { location: 'Tai Po' },
+                    { location: 'Tsuen Wan' },
+                    { location: 'Tuen Mun' },
+                    { location: 'Yuen Long' },
+                    { location: 'Kowloon City' },
+                    { location: 'Kwun Tong' },
+                    { location: 'Sham Shui Po' },
+                    { location: 'Wong Tai Sin' },
+                    { location: 'Yau Tsim Mong' },
+                    { location: 'Central and Western' },
+                    { location: 'Eastern' },
+                    { location: 'Southern' },
+                    { location: 'Wan Chai' },
+                ])
+            })
+            .then(() => {
+                return knex('industry').insert([
+                    { industry: 'Educational Services' },
+                    { industry: 'Real Estate' },
+                    { industry: 'Administration' },
+                    { industry: 'Management Services' },
+                    { industry: 'Scientific Services' },
+                    { industry: 'Construction' },
+                    { industry: 'Healthcare' },
+                    { industry: 'Arts' },
+                    { industry: 'Entertainment' },
+                    { industry: 'Wholesale Trade' },
+                    { industry: 'Transportation' },
+                    { industry: 'Finance' },
+                    { industry: 'Insurance' },
+                    { industry: 'Agriculture' },
+                    { industry: 'Food Services' },
+                    { industry: 'Hospitality' },
+                    { industry: 'Retail' },
+                    { industry: 'Manufacturing' },
+                    { industry: 'Technology' },
+                    { industry: 'IT' },
+                    { industry: 'Engineering' },
+                    { industry: 'Business' },
+                    { industry: 'Advisory' },
+                    { industry: 'Photography' },
+                    { industry: 'Media' },
+                    { industry: 'Recreation' },
+                    { industry: 'Publishing' },
+                    { industry: 'Consumer Goods' },
 
-                    ])
-                })
-                .then(() => {
-                    return knex('skills').insert([
-                        { skills: 'Budget Planning' },
-                        { skills: 'Engineering' },
-                        { skills: 'Operations' },
-                        { skills: 'Project Planning' },
-                        { skills: 'Quality Control' },
-                        { skills: 'Scheduling' },
-                        { skills: 'Task Management' },
-                        { skills: 'Coding' },
-                        { skills: 'Javascript' },
-                        { skills: 'React' },
-                        { skills: 'Node JS' },
-                        { skills: 'HTML' },
-                        { skills: 'CSS' },
-                        { skills: 'Customer Support' },
-                        { skills: 'Debugging' },
-                        { skills: 'Design' },
-                        { skills: 'Development' },
-                        { skills: 'Implementation' },
-                        { skills: 'Languages' },
-                        { skills: 'Security' },
-                        { skills: 'Photography' },
-                        { skills: 'Marketing' },
-                        { skills: 'Technology' },
-                        { skills: 'Troubleshooting' },
-                        { skills: 'Blogging' },
-                        { skills: 'Digital Media' },
-                        { skills: 'Networking' },
-                        { skills: 'Web Analytics' },
-                        { skills: 'Social Media' },
-                        { skills: 'Client Relations' },
-                        { skills: 'AI' },
-                        { skills: 'Video Creation' },
-                        { skills: 'Presenting' },
-                        { skills: 'Spreadsheets' },
-                        { skills: 'Writing' },
-                        { skills: 'Math' },
-                        { skills: 'Science' },
-                        { skills: 'Productivity' },
+                ])
+            })
+            .then(() => {
+                return knex('skills').insert([
+                    { skills: 'Budget Planning' },
+                    { skills: 'Engineering' },
+                    { skills: 'Operations' },
+                    { skills: 'Project Planning' },
+                    { skills: 'Quality Control' },
+                    { skills: 'Scheduling' },
+                    { skills: 'Task Management' },
+                    { skills: 'Coding' },
+                    { skills: 'Javascript' },
+                    { skills: 'React' },
+                    { skills: 'Node JS' },
+                    { skills: 'HTML' },
+                    { skills: 'CSS' },
+                    { skills: 'Customer Support' },
+                    { skills: 'Debugging' },
+                    { skills: 'Design' },
+                    { skills: 'Development' },
+                    { skills: 'Implementation' },
+                    { skills: 'Languages' },
+                    { skills: 'Security' },
+                    { skills: 'Photography' },
+                    { skills: 'Marketing' },
+                    { skills: 'Technology' },
+                    { skills: 'Troubleshooting' },
+                    { skills: 'Blogging' },
+                    { skills: 'Digital Media' },
+                    { skills: 'Networking' },
+                    { skills: 'Web Analytics' },
+                    { skills: 'Social Media' },
+                    { skills: 'Client Relations' },
+                    { skills: 'AI' },
+                    { skills: 'Video Creation' },
+                    { skills: 'Presenting' },
+                    { skills: 'Spreadsheets' },
+                    { skills: 'Writing' },
+                    { skills: 'Math' },
+                    { skills: 'Science' },
+                    { skills: 'Productivity' },
 
 
 
-                    ])
-                })
+                ])
+            })
 
-                .then(() => {
-                    return knex('rating').insert([
-                        { rating_employee_id: 1, rating_application_id: 1, rate: 5, comment: 'testing' },
-                        { rating_employer_id: 1, rating_application_id: 1, rate: 3, comment: 'new test' },
-                    ])
-                })
-        });
+        .then(() => {
+            return knex('rating').insert([
+                { rating_employee_id: 1, rating_application_id: 1, rate: 5, comment: 'testing' },
+                { rating_employer_id: 1, rating_application_id: 1, rate: 3, comment: 'new test' },
+            ])
+        })
+    });
 };

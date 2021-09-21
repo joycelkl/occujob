@@ -15,10 +15,7 @@ class RatingServices {
 
     }
 
-
-
 }
-
 
 
 module.exports = RatingServices
