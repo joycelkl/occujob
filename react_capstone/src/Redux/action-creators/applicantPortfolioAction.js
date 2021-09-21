@@ -38,6 +38,17 @@ export const loadAppPortfolioThunkAction = () => async(dispatch) => {
     }
 }
 
+export const ADD_APP_PORTFOLIO_SUCCESS_ACTION = 'ADD_APP_PORTFOLIO_SUCCESS';
+
+export const addAppPortfolioSuccessAction = (portfolio) => {
+    return (dispatch) => {
+        dispatch({
+            type: ADD_APP_PORTFOLIO_SUCCESS_ACTION,
+            payload: portfolio
+        })
+    }
+}
+
 //add portfolio
 export const addAppPortfolioThunkAction = (pName, pDes, purl) => async(dispatch) => {
     console.log("ER Profile Load", pName, pDes, purl)
@@ -49,7 +60,7 @@ export const addAppPortfolioThunkAction = (pName, pDes, purl) => async(dispatch)
             purl: purl
         }).then(res => {
             console.log('res in adding p', res)
-            dispatch(loadAppPortfolioSuccessAction(res.data))
+            dispatch(addAppPortfolioSuccessAction(res.data))
         }).catch(err => {
             console.log("applicant portfolio add err res", err.response)
             dispatch(loadAppPortfolioFailAction())
