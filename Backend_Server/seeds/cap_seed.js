@@ -12,7 +12,7 @@ let hashedpassword = (password) => {
 
 
 
-exports.seed = async function (knex) {
+exports.seed = async function(knex) {
     // Deletes ALL existing entries
     const erPW1 = await hashedpassword('1234');
 

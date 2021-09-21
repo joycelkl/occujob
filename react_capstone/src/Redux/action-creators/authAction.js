@@ -33,6 +33,8 @@ export const logoutNowAction = () => {
         localStorage.clear('job');
         localStorage.clear('company');
         localStorage.clear('UserName');
+        localStorage.clear('userID')
+
         dispatch({
             type: LOGOUT_NOW_ACTION
         })
@@ -59,9 +61,10 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
                 email: email,
                 password: password
             }).then(res => {
-                console.log("ER User login success")
+                console.log("EE User login success", res.data)
                 localStorage.setItem('type', 'er')
                 localStorage.setItem('UserName', res.data.username)
+                localStorage.setItem('userID', res.data.userID)
                 localStorage.setItem("token", res.data.token);
             })
             .then(() => {
@@ -87,7 +90,8 @@ export const loginEEuserThunkAction = (email, password) => async(dispatch) => {
         }).then(res => {
             console.log("EE User login success", res.data)
             localStorage.setItem('type', 'ee')
-            localStorage.setItem('UserName', res.data.username)
+            localStorage.setItem('UserName', res.data.username);
+            localStorage.setItem('userID', res.data.userID);
             localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
@@ -108,9 +112,10 @@ export const registerERuserThunkAction = (name, email, password) => async(dispat
             email: email,
             password: password
         }).then(res => {
-            console.log("ER User login success")
+            console.log("EE User login success", res.data)
             localStorage.setItem('type', 'er');
-            localStorage.setItem('UserName', res.data.username)
+            localStorage.setItem('UserName', res.data.username);
+            localStorage.setItem('userID', res.data.userID);
             localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
@@ -131,9 +136,10 @@ export const registerEEuserThunkAction = (name, email, password) => async(dispat
             email: email,
             password: password
         }).then(res => {
-            console.log("EE User login success")
+            console.log("EE User login success", res.data)
             localStorage.setItem('type', 'ee')
-            localStorage.setItem('UserName', res.data.username)
+            localStorage.setItem('UserName', res.data.username);
+            localStorage.setItem('userID', res.data.userID);
             localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {

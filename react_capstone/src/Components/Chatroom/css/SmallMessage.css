@@ -1,0 +1,22 @@
+.SmallMessage {
+    background-size: cover;
+    position: relative;
+}
+
+.SmallMessage-inboxes:hover {
+    background-color: rgba(245, 220, 244, 0.349);
+}
+
+.SmallMessage-inboxes {
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.664);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.664);
+}
+
+.SmallMessage-inboxes .SmallMessage-inboxes-middle .SmallMessage-inboxes-msgContent span {
+    color: #4e4d4d;
+}
+
+.SmallMessage-inboxes .SmallMessage-inboxes-sentTime span {
+    color: #5f5e5e;
+    font-size: 12px;
+}

@@ -2,13 +2,23 @@
 const express = require('express');
 const app = express();
 
+//set up cors
+const cors = require('cors');
+app.use(cors());
+
+//set up socketio
+const server = require('http').createServer(app)
+const io = require('socket.io')(server, {
+    cors: {
+        origin: 'http//localhost:3000',
+        methods: ['GET', 'POST']
+    }
+})
+
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-//set up cors
-const cors = require('cors');
-app.use(cors());
 
 //fileupload setup
 const fileupload = require('express-fileupload');
@@ -57,12 +67,18 @@ const ratingServices = new RatingServices(knex);
 const RatingRouter = require('./routers/ratingRouter')
 const ratingRouter = new RatingRouter(ratingServices).router();
 
+const ChatroomServices = require('./services/chatroomServices');
+const chatroomServices = new ChatroomServices(knex);
+const ChatroomRouter = require('./routers/chatroomRouter')
+const chatroomRouter = new ChatroomRouter(chatroomServices, io).router();
+
 const auth = require('./Auth/auth')(knex);
 app.use(auth.initialize());
 
 app.use('/employer', auth.authenticate(), employerRouter, ratingRouter)
 app.use('/employee', auth.authenticate(), employeeRouter, ratingRouter)
+app.use('/chat', auth.authenticate(), chatroomRouter)
 
-app.listen(8080, () => {
+server.listen(8080, () => {
     console.log('port is listening to 8080')
 })

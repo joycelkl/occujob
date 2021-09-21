@@ -278,6 +278,10 @@ class EmployeeService {
                     return "Cannot apply the same job twice"
                 }
             })
+            .catch((err) => {
+                console.log(err)
+                throw new Error(err);
+            })
 
     }
 

@@ -5,6 +5,7 @@ import { FaBars } from 'react-icons/fa'
 import { ApplicantMenuList } from './applicantMenuList';
 import Logout from './Logout'
 import logo from '../../Images/logo.png';
+import Message from './Message'
 
 const ApplicantNavbar = () => {
     const [clicked, setClicked] = useState(false);
@@ -20,6 +21,7 @@ const ApplicantNavbar = () => {
     const handleClick = () => {
         setClicked(!clicked);
     }
+    const userType = localStorage.getItem('type')
 
     return (
         <nav className="mainNav">
@@ -31,7 +33,7 @@ const ApplicantNavbar = () => {
             <div className="navMenuIcon" onClick={handleClick}>
                 <FaBars />
             </div>
-            <ul className={clicked ? "navMenuList" : "navMenuList close"}>{menuList}<Logout /></ul>
+            <ul className={clicked ? "navMenuList" : "navMenuList close"}><Message userType={userType}/>{menuList}<Logout /></ul>
         </nav>
     );
 };

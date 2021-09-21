@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,9 +14,13 @@ import Typography from '@material-ui/core/Typography';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 import { useHistory } from 'react-router';
+import Chatroom from "../../Components/Chatroom/Chatroom";
 
 
 const EmployerSearchApplicantProfile = () => {
+
+    const [employeeId, setEmployeeId] = useState('')
+    const [userId, setUserId] = useState('')
 
     //comment card
     const useStyles = makeStyles({
@@ -52,12 +56,21 @@ const EmployerSearchApplicantProfile = () => {
     const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
     const { erViewEeRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
-    const { ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
+const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
 
     const applicantRatingState = useSelector((state) => state.erViewEeRating)
     console.log('applicantRating', applicantRatingState)
     const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
     console.log("Average", averageRating)
+
+
+    useEffect(()=>{
+        const userID = localStorage.getItem('userID')
+        console.log('UserID', userID)
+        setUserId(userID)
+        setEmployeeId(ee_id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[ee_id])
 
     useEffect(() => {
         let ee_id = localStorage.getItem('applicant')
@@ -96,6 +109,11 @@ const EmployerSearchApplicantProfile = () => {
 
 
     };
+    //****************For the Chatroom********************//
+    const [modal, setModal] = useState(false);
+
+     const toggle = () => setModal(!modal);
+
     return (
         <div>
             <EmployerNavbar />
@@ -320,14 +338,22 @@ const EmployerSearchApplicantProfile = () => {
                         </div>
                     </div>
                     <div className="col-md-2" style={{float:'right'}}>
-                        <Button>Message</Button>
+                        <Button onClick={toggle}>Message</Button>
                         <Button onClick={goBack} style={{ marginLeft: "10px" }}>Search List</Button>
                     </div>
-
-
-
                 </Form>
 
+                <>
+                        <Modal isOpen={modal} toggle={toggle} fade={false}>
+                            <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
+                            <ModalBody>
+                            <Chatroom chatterID={employeeId} userID={userId}/>
+                            </ModalBody>
+                            <ModalFooter>
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+                        </>
 
 
 

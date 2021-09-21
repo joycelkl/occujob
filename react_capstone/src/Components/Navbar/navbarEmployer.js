@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 import "./navbar.css";
 import { FaBars } from 'react-icons/fa'
 import { EmployerMenuList } from './employerMenuList';
-import Logout from './Logout'
+import Logout from './Logout';
 import logo from '../../Images/logo.png';
+import Message from './Message';
 
 const EmployerNavbar = () => {
     const [clicked, setClicked] = useState(false);
@@ -21,6 +22,8 @@ const EmployerNavbar = () => {
         setClicked(!clicked);
     }
 
+    const userType = localStorage.getItem('type')
+
     return (
         <nav className="mainNav">
             <div className="logo">
@@ -31,7 +34,7 @@ const EmployerNavbar = () => {
             <div className="navMenuIcon" onClick={handleClick}>
                 <FaBars />
             </div>
-            <ul className={clicked ? "navMenuList" : "navMenuList close"}>{menuList}<Logout /></ul>
+            <ul className={clicked ? "navMenuList" : "navMenuList close"}><Message userType={userType}/>{menuList}<Logout /></ul>
         </nav>
     );
 };

@@ -16,7 +16,8 @@ const ApplicantHomeCard = (props) => {
     function handleOnClick () {
  
         console.log('clicked', job_id)
-      loadSearchIndJobThunkAction(job_id).then(()=>{
+        localStorage.setItem('job',job_id)
+        loadSearchIndJobThunkAction(job_id).then(()=>{
         history.push('/applicantJobDetail')
       })
     }
