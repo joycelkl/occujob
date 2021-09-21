@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 
 
 const ControlledRating = (props) => {
-    const [ratingValue, setRatingValue] = useState(2);
+    const [ratingValue, setRatingValue] = useState(5);
     props.ratingValue(ratingValue)
     return (
         <div>

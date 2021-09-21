@@ -244,7 +244,7 @@ const dispatch = useDispatch();
                 {/* <h6>
                   Web Developer and Designer
                 </h6> */}
-                <p className="proile-rating">Ratings : </p>
+                
 
 
 
@@ -259,16 +259,7 @@ const dispatch = useDispatch();
           <div className="row">
             <div className="col-md-4">
               <div className="profile-work">
-                {/* <p>WORK LINK</p>
-                <a href="*">Website Link</a><br />
-                <a href="*">Bootsnipp Profile</a><br />
-                <a href="*">Bootply Profile</a>
-                <p>SKILLS</p>
-                <a href="*">Web Designer</a><br />
-                <a href="*">Web Developer</a><br />
-                <a href="*">WordPress</a><br />
-                <a href="*">WooCommerce</a><br />
-                <a href="*">PHP, .Net</a><br /> */}
+               {/* KEEP THIS EMPTY DIV HERE */}
               </div>
             </div>
             <div className="col-md-8">
@@ -276,27 +267,64 @@ const dispatch = useDispatch();
                 {/* fade cause problem */}
                 {/* <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
                 <div className="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                 
                   {toggleContact &&
                     <div>
                       <div className="row">
                         <FormGroup>
-                          <div className="col-md-6">
+                        <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Email:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {email}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="email">Email</Label>
                           </div>
                           <div className="col-md-6">
-                            {/* <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled /> */}
+                            <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
                             <h6 style={{ color: "black", marginTop: "10px" }}> {email} </h6>
-                          </div>
+                          </div> */}
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
-                          <div className="col-md-6">
+                        <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Phone Number:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
                           <div className="col-md-6">
                             <Input style={{ marginTop: "10px" }} type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
-                          </div>
+                          </div> */}
                         </FormGroup>
                       </div>
                     </div>
@@ -327,12 +355,15 @@ const dispatch = useDispatch();
                                   <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
                                      Applicant Name: {eachCreatedData.ee_name} <br></br>
-                                     Job Title: {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate} />
+                                     Job Title: {eachCreatedData.job_title} 
+                                     <br></br>
+                                     <DisabledRating rating={eachCreatedData.rate} />
                                     </Typography>
-                                    <p>{eachCreatedData.comment}</p>
+                                    
+                                    <h5>{eachCreatedData.comment}</h5>
                                     {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
                                     {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
-
+                                    <br></br>
 
                                     <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
                                     {new Date(eachCreatedData.updated_at).toLocaleString()}                                    </Typography>
@@ -425,7 +456,7 @@ const dispatch = useDispatch();
                                     Review: <DisabledRating rating={eachData.rate}/>
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary" component="p" style={{color:"black"}}>
-                                    <h1>{eachData.comment}</h1><br/>
+                                    <h5>{eachData.comment}</h5><br/>
                                     {new Date(eachData.updated_at).toLocaleString()}
                                     </Typography>
                                   </CardContent>
@@ -492,31 +523,83 @@ const dispatch = useDispatch();
                   {toggleAbout &&
                     <div>
                       <div className="row" >
-                        <FormGroup>
 
-                          <div className="col-md-6">
+                        <FormGroup>
+                        <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Company Description:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="compDes">Company Description</Label><br></br>
                           </div>
                           <div className="col-md-6">
                             <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
-                          </div>
+                          </div> */}
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
-                          <div className="col-md-6">
+                        <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Industry:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="industry">Industry</Label>
                           </div>
                           <div className="col-md-6">
                             <Input style={{ marginTop: "10px" }} type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
+                        <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Location:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                              <option defaultValue={null}>Please select</option>
+                              {locationState.length > 0 ? locationState.map((location, i) => (
+                                <option key={i} value={location.location}>{location.location}</option>
+                              )) : "loading..."}
+                            </Input>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="location">Location</Label>
                           </div>
                           <div className="col-md-6">
@@ -526,7 +609,7 @@ const dispatch = useDispatch();
                                 <option key={i} value={location.location}>{location.location}</option>
                               )) : "loading..."}
                             </Input>
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
