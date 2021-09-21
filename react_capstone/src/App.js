@@ -25,8 +25,8 @@ import EmployerSearchApplicantProfile from './Pages/EmployerPages/employerSearch
 import ApplicantSignUp from './Pages/ApplicantPages/applicantSignup';
 import EmployerSignUp from './Pages/EmployerPages/employerSignup';
 import ApplicantEmployerDetails from './Pages/ApplicantPages/applicantEmployerDetails';
-import Chatroom from './Components/Chatroom/Chatroom';
-
+import ApplicantChatMessages from './Pages/ApplicantPages/applicantChatMessages';
+import EmployerChatMessages from './Pages/EmployerPages/employerChatMessages'
 
 const PublicRoute = ({component, ...rest}) => {
 
@@ -102,6 +102,7 @@ function App() {
         <PrivateRoute path = "/employerApplicantSearch" component = { EmployerApplicantSearch } /> 
         <PrivateRoute path = "/employerApplicantSearchList" component = { EmployerApplicantSearchList }/> 
         <PrivateRoute path = "/employerSearchApplicantProfile" component = { EmployerSearchApplicantProfile }/> 
+        <PrivateRoute path = "/employerChatMessage" component={EmployerChatMessages} />
         <PrivateRoute path = "/applicantProfile" component = { ApplicantProfile }/> 
         <PrivateRoute path = "/applicantJobSearch" component = { ApplicantJobSearch }/> 
         <PrivateRoute path = "/applicantJobSearchResult" component = { ApplicantJobSearchResult }/> 
@@ -110,7 +111,7 @@ function App() {
         <PrivateRoute path = "/applicantOfferDetail" component = { ApplicantOfferDetail }/> 
         <PrivateRoute path = "/applicantHomePage" component = { ApplicantHomePage } />
         <PrivateRoute path = "/applicantEmployerDetails" component = { ApplicantEmployerDetails } />
-        <PrivateRoute path = "/chat" component={Chatroom} />
+        <PrivateRoute path = "/applicantChatMessage" component={ApplicantChatMessages} />
         </Switch>
         </ Router>
 

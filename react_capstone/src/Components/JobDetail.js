@@ -120,7 +120,7 @@ const JobDetail = (props) => {
                         <Modal isOpen={modal} toggle={toggle} fade={false}>
                             <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
                             <ModalBody>
-                            <Chatroom erId={employerId} eeId={userId}/>
+                            <Chatroom chatterID={employerId} userID={userId}/>
                             </ModalBody>
                             <ModalFooter>
                             <Button color="secondary" onClick={toggle}>Cancel</Button>

@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import "./css/ChatroomTop.css";
 
 const ChatroomTop = (props) => {
 
-    const [chatter, setChatter] = useState('');
+    const {chatter} = props
+    // const [chatter, setChatter] = useState('');
 
-    useEffect(() => {
-       //testing data
-       setChatter([{id: 1, username: 'Joyce'}])
+    // useEffect(() => {
+    //    //testing data
+    //    setChatter([{id: 1, username: 'Joyce'}])
         
-    }, [props])
+    // }, [props])
 
 
 

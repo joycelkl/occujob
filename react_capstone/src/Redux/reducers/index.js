@@ -15,6 +15,11 @@ import companyNameReducer from './companyNameReducer'
 import employerApplicantSearchProfileReducer from './employerApplicantSearchProfileReducer'
 import applicantJobSearchReducer from './applicantJobSearchReducer'
 import applicantPortfolioReducer from './applicantPortfolioReducer'
+import chatroomIdReducer from './chatroomIdReducer'
+import chatroomHistoryReducer from './chatroomHistoryReducer'
+import chatroomAllChatsReducer from './chatroomAllChatsReducer'
+import chatroomUnreadMsgReducer from './chatroomUnreadMsgReducer'
+import navbarUnreadMsgReducer from './narbarUnreadMsgReducer'
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -33,6 +38,11 @@ const reducers = combineReducers({
     profile: employerApplicantSearchProfileReducer,
     appJobSearch: applicantJobSearchReducer,
     appPortfolio: applicantPortfolioReducer,
+    chatroomID: chatroomIdReducer,
+    chatHistory: chatroomHistoryReducer,
+    allChats: chatroomAllChatsReducer,
+    unreadMsgCount: chatroomUnreadMsgReducer,
+    navUnreadMsgCount: navbarUnreadMsgReducer,
 })
 
 export default reducers

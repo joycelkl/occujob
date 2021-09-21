@@ -39,10 +39,10 @@ export const loadIndJobThunkAction = (jobId) => async(dispatch) => {
 
 //Load Indvidual Job Detail in Job Search 
 export const loadSearchIndJobThunkAction = (jobId) => async(dispatch) => {
-    console.log("Indvidual Job Load")
+    console.log("Indvidual Job for applicant home Load", jobId)
     try {
         const authAxiosConfig = await authAxios();
-        await authAxiosConfig.get(`/employee/search/result/${jobId}`).then(res => {
+        await authAxiosConfig.get(`/employee/search/results/${jobId}`).then(res => {
             dispatch(loadIndJobSuccessAction(res.data))
         }).catch(err => {
             console.log("search ind job detail load err res", err.response)

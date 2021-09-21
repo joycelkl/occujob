@@ -2,8 +2,11 @@ import React from 'react'
 import ScrollToBottom from "react-scroll-to-bottom";
 import './css/ChatroomMsgs.scss'
 
+
 const ChatroomMsgs = ({messages, userType}) => {
 
+    console.log('messages in chatroomMsgs', messages)
+    
     return (
         <>
         <ScrollToBottom className="ChatRoomMsgs">
@@ -12,7 +15,7 @@ const ChatroomMsgs = ({messages, userType}) => {
             messages.map((message, index) =>
               <div key={index}>
                 {
-                  message.sentby !== userType ?
+                  message.sender_type !== userType ?
   
                     <div
                       className="msgs-chatter-wrapper"
@@ -25,11 +28,11 @@ const ChatroomMsgs = ({messages, userType}) => {
                       >
                         <div className="msgs-chatter-name">
                           <p>
-                            {message.username}
+                            {userType === 'er' ? message.er_name : message.ee_name}
                           </p>
                         </div>
                         <div className="msgs-chatter-content">
-                          {message.msgcontent}
+                          {message.content}
                         </div>
                       </div>
                     </div> :
@@ -42,7 +45,7 @@ const ChatroomMsgs = ({messages, userType}) => {
                         className="msgs-own-namecontent-wrapper"
                       >
                         <div className="msgs-own-content">
-                          {message.msgcontent}
+                          {message.content}
                         </div>
                       </div>
                       {/* <div className="msgs-own-portrait"> */}
