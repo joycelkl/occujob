@@ -170,16 +170,16 @@ const ApplicantOfferCard = (props) => {
                             {reply === null && offer ? <Button color="primary" onClick={() => handleAccept()}>accept</Button> : null}
                             {reply === null && offer ? <Button color="primary" onClick={() => handleDecline()}>decline</Button> : null}
                             <Button color="success" onClick={toggleNested}>Rate Company</Button>
-                            <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false}>
+                            <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false} className='smallModal'>
                                 <ModalHeader>Ratings</ModalHeader>
-                                <ModalBody>
+                                <ModalBody className='smallModal'>
                                     <ControlledRating ratingValue={(value) => setRating(value)} />
                                 </ModalBody>
-                                <ModalBody>
+                                <ModalBody className='smallModal'>
                                     <h1>Comments:</h1>
                                     <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Please Give Your Comment Here " value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
-                                <ModalFooter>
+                                <ModalFooter className='smallModal'>
                                     <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}
                                     <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                 </ModalFooter>
