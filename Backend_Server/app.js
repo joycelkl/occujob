@@ -1,6 +1,5 @@
 //set up express services
 const express = require('express');
-const router = express.Router()
 const app = express();
 
 //set up cors
