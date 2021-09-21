@@ -199,7 +199,7 @@ const dispatch = useDispatch();
     ReactSaveImg
       .uploadFile(e.target.files[0], newFileName)
       .then((data) => {
-        console.log(data)
+        console.log('datas3',data)
         setImage("")
         setImage(data.location)
       })
@@ -258,9 +258,7 @@ const dispatch = useDispatch();
           </div>
           <div className="row">
             <div className="col-md-4">
-              <div className="profile-work">
-               {/* KEEP THIS EMPTY DIV HERE */}
-              </div>
+             
             </div>
             <div className="col-md-8">
               <div className="tab-content profile-tab" id="myTabContent">
