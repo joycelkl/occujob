@@ -192,8 +192,8 @@ const dispatch = useDispatch();
   //upload image setup ***DONT MODIFY THIS PART***
   function upload(e) {
     console.log("data", e.target.files[0])
-    if (e.target.files[0].size > 1024 * 1024) {
-      alert('Please upload image 1MB or below')
+    if (e.target.files[0].size > 1024 * 1024 * 2) {
+      alert('Please upload image 2MB or below')
       return
     }
     ReactSaveImg
