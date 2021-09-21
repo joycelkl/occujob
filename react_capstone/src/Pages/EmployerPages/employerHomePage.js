@@ -98,12 +98,7 @@ const EmployerHomePage = () => {
 
                     </Pagination>
                 </div>
-                {/* {employerJobState.length > 0 ? employerJobState.map((employerJob, index) => (
-                    <EmployerHomeCard
-                        key={index}
-                        employerJob={employerJob}
-                    />
-                )) : "loading..."} */}
+                
             </div>
         </div>
     )

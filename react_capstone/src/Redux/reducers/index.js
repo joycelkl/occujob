@@ -15,6 +15,12 @@ import companyNameReducer from './companyNameReducer'
 import employerApplicantSearchProfileReducer from './employerApplicantSearchProfileReducer'
 import applicantJobSearchReducer from './applicantJobSearchReducer'
 import applicantPortfolioReducer from './applicantPortfolioReducer'
+import applicantRatingReducer from './applicantRatingReducer'
+import employerRatingReducer from './employerRatingReducer'
+import applicantCreatedRatingReducer from './applicantCreatedRatingReducer'
+import employerCreatedRatingReducer from './employerCreatedRatingReducer'
+import eeViewErRatingReducer from './applicantViewCompanyRatingReducer'
+import erViewEeRatingReducer from './companyViewApplicantRatingReducer'
 import chatroomIdReducer from './chatroomIdReducer'
 import chatroomHistoryReducer from './chatroomHistoryReducer'
 import chatroomAllChatsReducer from './chatroomAllChatsReducer'
@@ -38,6 +44,12 @@ const reducers = combineReducers({
     profile: employerApplicantSearchProfileReducer,
     appJobSearch: applicantJobSearchReducer,
     appPortfolio: applicantPortfolioReducer,
+    applicantRating: applicantRatingReducer,
+    employerRating: employerRatingReducer,
+    applicantCreatedRating: applicantCreatedRatingReducer,
+    employerCreatedRating: employerCreatedRatingReducer,
+    eeViewErRating:eeViewErRatingReducer,
+    erViewEeRating:erViewEeRatingReducer,
     chatroomID: chatroomIdReducer,
     chatHistory: chatroomHistoryReducer,
     allChats: chatroomAllChatsReducer,

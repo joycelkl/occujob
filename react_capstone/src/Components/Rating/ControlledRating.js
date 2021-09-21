@@ -3,17 +3,20 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-const ControlledRating = () => {
-    const [ratingValue, setRatingValue] = useState(2);
+
+const ControlledRating = (props) => {
+    const [ratingValue, setRatingValue] = useState(5);
+    props.ratingValue(ratingValue)
     return (
         <div>
             <Box component="fieldset" mb={3} borderColor="transparent">
         <Typography component="legend">Ratings:</Typography>
         <Rating
           name="simple-controlled"
-          ratingValue={ratingValue}
-          onChange={(event, newRatingValue) => {
-            setRatingValue(newRatingValue);
+          value={ratingValue}
+          onChange={(event) => {
+            let rating = event.target.value
+            setRatingValue(rating);
           }}
         />
       </Box>

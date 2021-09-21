@@ -9,6 +9,8 @@ const PortfolioTable = props => {
 
     const {eeId} = props 
 
+    const userType = localStorage.getItem('type')
+
     const dispatch = useDispatch();
 
     const { loadAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
@@ -111,7 +113,7 @@ const PortfolioTable = props => {
                 <td>
                 <Input type="file" name="uploadCV" onChange={(e)=>uploadCV(e)} />
                 </td> 
-                <td><p onClick={()=>handleOnSave()}>SAVE</p></td>
+                <td><p style={{ cursor: "pointer" }} onClick={()=>handleOnSave()}>SAVE</p></td>
             </tr>
             </tbody>
             </Table>
@@ -136,7 +138,7 @@ const PortfolioTable = props => {
                 <td><Input type="text" value={portfolio.portfolio_name} disabled /></td>
                 <td><Input type="text" value={portfolio.portfolio_description} disabled/></td>
                 <td><a href={portfolio.portfolio_url}>Download</a></td>
-                <td><p onClick={()=>handleDelete(portfolio.portfolio_id)}>Delete</p></td>
+                <td><p style={{ cursor: "pointer" }} onClick={()=>handleDelete(portfolio.portfolio_id)}>Delete</p></td>
                 </tr>)
             })  
              : <p>Waiting for upload</p>}

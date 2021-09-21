@@ -32,7 +32,7 @@ const Job= (props)=>{
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     return(
-    <Card className='my-4'>
+    <Card className='my-4' style={{ cursor: "pointer" }}>
     <Card.Body onClick={handleOnClick}>
         <div className="d-flex justify-content-between">
             <div>

@@ -29,19 +29,20 @@ const ApplicantHomeCard = (props) => {
     let year = date.getFullYear();
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <Card className='my-4' style={{ width: "70%" }} onClick={handleOnClick}>
+            <Card className='my-4' style={{ width: "70%",cursor: "pointer" }} onClick={handleOnClick}>
                 <Card.Body>
                     <div className="d-flex justify-content-between">
                         <div>
                             <Card.Title>
                                 {job_title} - <span className="text-muted font-weight-light">{er_name}</span>
                             </Card.Title>
-                            <Card.Subtitle className="text-muted mb-2">
+                            <Card.Subtitle className="text-muted mb-2" style={{marginTop:'5px'}}>
                             {day + "/" + month + "/" + year}
                             </Card.Subtitle>
-                            <Badge className="job-list-badge" variant="secondary">{job_type}</Badge>
-                            <Badge className="job-list-badge" variant="secondary" style={{marginLeft:"5px"}}>{job_location}</Badge>
-                                
+                            <Badge className="job-list-badge" variant="secondary" style={{height:'20px'}}>{job_type}</Badge>
+                            <Badge className="job-list-badge" variant="secondary" style={{marginLeft:"5px", height:'20px'}}>{job_location}</Badge>
+                            <Card.Subtitle className="text-muted mb-2" style={{marginTop:'10px', textDecoration:"underline"}}> Click To View More Information</Card.Subtitle>
+
                         </div>
                         {er_img_data ? <img className="d-none d-md-block" height="100" src={er_img_data} alt="test" /> : <p></p>}
                     </div>

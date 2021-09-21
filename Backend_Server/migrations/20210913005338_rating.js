@@ -5,7 +5,7 @@ exports.up = function(knex) {
         rating.foreign("rating_employee_id").references("employee.ee_id");
         rating.integer("rating_employer_id").unsigned();
         rating.foreign("rating_employer_id").references("employer.er_id");
-        rating.integer("rating_application_id").unsigned().notNullable();
+        rating.integer("rating_application_id").unsigned();
         rating.foreign("rating_application_id").references("application.application_id");
         rating.integer('rate').notNullable();
         rating.text('comment');

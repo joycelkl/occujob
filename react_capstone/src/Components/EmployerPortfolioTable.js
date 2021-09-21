@@ -14,6 +14,12 @@ const EmployerPortfolioTable = (props) => {
                   <li className="nav-item">
                     <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={props.contactHandler} style={{cursor:"pointer"}}>Contact</p>
                   </li>
+                  <li className="nav-item">
+                    <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={props.commentsHandler} style={{cursor:"pointer"}}>Your Reviews</p>
+                  </li>
+                  <li className="nav-item">
+                    <p className="nav-link active" id="home-tab" data-toggle="tab" onClick={props.employerReviewsHandler} style={{cursor:"pointer"}}>Your Posts</p>
+                  </li>
                   
 
                 </ul>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, FormGroup, Label, Input} from 'reactstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -12,11 +12,44 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 import ApplicantPortfolioTable from "../../Components/PortfolioTable";
+import DisabledRating from "../../Components/Rating/DisabledRating";
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import authAxios from '../../Redux/authAxios';
 
 const ApplicantProfile = () => {
 
-  //toggler
 
+
+  //edit comment modal
+  const [modal, setModal] = useState(false);
+
+  //comment card
+  const useStyles = makeStyles({
+    root: {
+      maxWidth: 1000,
+    },
+    media: {
+      height: 170,
+    },
+  });
+
+  const classes = useStyles();
+
+
+  const [currentPage, setCurrentPage] = useState(0);
+  function handleClick(e, index) {
+
+    e.preventDefault();
+    setCurrentPage(index)
+
+  }
 
   const dispatch = useDispatch();
   const { loadEEProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
@@ -24,7 +57,15 @@ const ApplicantProfile = () => {
   const { loadSkillsThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { applicantGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+  const { applicantCreatedRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
+
+  const applicantCreatedRatingState = useSelector((state) => state.applicantCreatedRating)
+  console.log('applicantCreatedRating', applicantCreatedRatingState)
+
+  const applicantRatingState = useSelector((state) => state.applicantRating)
+  console.log('applicantRating', applicantRatingState)
 
   const EEProfileState = useSelector((state) => state.EEProfile);
   console.log('EEprofile', EEProfileState)
@@ -40,6 +81,28 @@ const ApplicantProfile = () => {
 
   const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
 
+  // Rating
+  const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
+  console.log("Average", averageRating)
+  //update
+  async function employerRating(er_id, application_id, rating, comments) {
+    console.log("???", er_id, application_id, rating, comments)
+    const authAxiosConfig = await authAxios();
+    return await authAxiosConfig.post('/employee/applicantsGiveRating', {
+      er_id: er_id,
+      application_id: application_id,
+      rate: rating,
+      comment: comments,
+
+    }).then(res => {
+      console.log("POST SUCCESS", res)
+    }).catch(err => {
+      console.log("job posting err res", err.response)
+    })
+  }
+
+  let pageSize = 3;
+  let pagesCount = applicantRatingState.length > 0 && Math.ceil(applicantRatingState.length / pageSize);
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [phone, setPhone] = useState('');
@@ -55,14 +118,17 @@ const ApplicantProfile = () => {
   const [toggleContact, setToggleContact] = useState(false);
   const [toggleJobPreference, setToggleJobPreference] = useState(false);
   const [togglePortfolio, setTogglePortfolio] = useState(false);
+  const [toggleComments, setToggleComments] = useState(false);
+  const [toggleApplicantReviews, setToggleApplicantReviews] = useState(false);
+  const [comments, setComment] = useState('');
 
   useEffect(() => {
     loadEEProfileThunkAction();
     setName(ee_name);
-    
+
     ee_phone !== null && setPhone(ee_phone);
-    ee_location !== null &&setLocation(ee_location);
-    ee_img_data !== null &&setImage(ee_img_data)
+    ee_location !== null && setLocation(ee_location);
+    ee_img_data !== null && setImage(ee_img_data)
     self_intro !== null && setIntro(self_intro);
     ee_salary_type !== null && setSalaryType(ee_salary_type)
     expected_salary !== null && setExpectedSalary(expected_salary);
@@ -95,10 +161,16 @@ const ApplicantProfile = () => {
     loadSkillsThunkAction();
     loadLocationThunkAction();
     loadIndustryThunkAction();
+    applicantGetRatingThunkAction();
+    applicantCreatedRatingThunkAction();
+
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+
   const updateToast = () => toast("Profile Updated");
+  const updateReviewToast = () => toast("Review Has Been Updated");
 
   //setup skillsTag
   let skillsTag = []
@@ -122,6 +194,7 @@ const ApplicantProfile = () => {
       options={skillsTag}
       className="basic-multi-select"
       classNamePrefix="select"
+
     />
   )
 
@@ -186,6 +259,9 @@ const ApplicantProfile = () => {
     setTogglePortfolio(false);
     setToggleContact(false);
     setToggleJobPreference(false);
+    setToggleComments(false);
+    setToggleApplicantReviews(false);
+
 
   };
   const contactHandler = () => {
@@ -193,18 +269,46 @@ const ApplicantProfile = () => {
     setTogglePortfolio(false);
     setToggleAbout(false);
     setToggleJobPreference(false);
+    setToggleComments(false);
+    setToggleApplicantReviews(false);
+
   };
   const jobPreferenceHandler = () => {
     setToggleJobPreference(true);
     setTogglePortfolio(false);
     setToggleContact(false);
     setToggleAbout(false);
+    setToggleComments(false);
+    setToggleApplicantReviews(false);
+
   };
   const portfolioHandler = () => {
     setTogglePortfolio(true);
     setToggleContact(false);
     setToggleAbout(false);
     setToggleJobPreference(false);
+    setToggleComments(false);
+    setToggleApplicantReviews(false);
+
+
+  };
+  const commentsHandler = () => {
+    setToggleComments(true);
+    setToggleContact(false);
+    setToggleAbout(false);
+    setToggleJobPreference(false);
+    setTogglePortfolio(false);
+    setToggleApplicantReviews(false);
+
+
+  };
+  const applicantReviewsHandler = () => {
+    setToggleApplicantReviews(true);
+    setToggleComments(false);
+    setToggleContact(false);
+    setToggleAbout(false);
+    setToggleJobPreference(false);
+    setTogglePortfolio(false);
 
   };
 
@@ -228,7 +332,7 @@ const ApplicantProfile = () => {
   //upload image setup ***DONT MODIFY THIS PART***
   function upload(e) {
     console.log("data", e.target.files[0])
-    if (e.target.files[0].size>1024*1024) {
+    if (e.target.files[0].size > 1024 * 1024) {
       alert('Please upload image 1MB or below')
       return
     }
@@ -274,6 +378,17 @@ const ApplicantProfile = () => {
     updateToast()
   }
 
+
+  //******for input box****** */
+  const [inputBoxID, setInputBoxID] = useState('')
+
+  function changeInputID(id) {
+
+    console.log('changing id', id)
+    setInputBoxID(id)
+  }
+
+
   return (
     <div>
       <ApplicantNavbar />
@@ -289,28 +404,23 @@ const ApplicantProfile = () => {
             <div className="col-md-6">
               <div className="profile-head">
                 <FormGroup>
-                  <Label for="Name"><h1>Applicant's Name</h1></Label>
-                  <Input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                  <h3 style={{marginBottom:'10px'}}>Applicant's Name:</h3>
+                  <Input style={{marginBottom:'10px'}} type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
-                <p className="proile-rating">Ratings : <span>8/10</span></p>
-                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} />  
-                
+                <DisabledRating
+                  rating={averageRating}
+                />
+                <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} jobPreferenceHandler={jobPreferenceHandler} portfolioHandler={portfolioHandler} commentsHandler={commentsHandler} applicantReviewsHandler={applicantReviewsHandler} />
+
               </div>
             </div>
           </div>
           <div className="row">
             <div className="col-md-4">
               <div className="profile-work">
-                {/* <p>WORK LINK</p>
-                <a href="*">Website Links</a><br />
-                <a href="*">Bootsnipp Profile</a><br />
-                <a href="*">Bootply Profile</a>
-                <p>SKILLS</p>
-                <a href="*">Web Designer</a><br />
-                <a href="*">Web Developer</a><br />
-                <a href="*">WordPress</a><br />
-                <a href="*">WooCommerce</a><br />
-                <a href="*">PHP, .Net</a><br /> */}
+
+        {/* KEEP THIS EMPTY DIV HERE */}
+
               </div>
             </div>
 
@@ -324,45 +434,106 @@ const ApplicantProfile = () => {
                     <div>
                       <div className="row">
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Self-Introduction:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Text">Self-Introduction</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input style={{marginTop:"10px"}} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
-                          </div>
+                            <Input style={{ marginTop: "10px" }} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
+                          </div> */}
                         </FormGroup>
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Skills:
+
+                                </Typography>
+                                <SkillsTag />                                  </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Skill">Skills</Label>
                           </div>
-                          <div className="col-md-6" style={{marginTop:"10px"}}>
+                          <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <SkillsTag />
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Job Function:
+
+                                </Typography>
+                                <IndustryTag />                                  </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="industry">Job Function</Label>
                           </div>
-                          <div className="col-md-6" style={{marginTop:"10px"}}>
+                          <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <IndustryTag />
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
+
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Years Of Work Experience:
+
+                                </Typography>
+                                <Input style={{ marginTop: "10px" }} type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Skill">No. of Year of Working Experience</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input  style={{marginTop:"10px"}}type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
-                          </div>
+                            <Input style={{ marginTop: "10px" }} type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
+                          </div> */}
                         </FormGroup>
                       </div>
                     </div>
@@ -372,23 +543,250 @@ const ApplicantProfile = () => {
                       <div className="row">
 
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Email:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                  {ee_email}
+
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="email">Email </Label>
                           </div>
                           <div className="col-md-6">
-                          <h6 style={{color:"black", marginTop:"10px"}}> {ee_email} </h6>                          </div>
+                            <h6 style={{ color: "black", marginTop: "10px" }}> {ee_email} </h6>                         
+                             </div> */}
                         </FormGroup>
                       </div>
-                      <div className="row" style={{marginTop:"20px"}}>
+                      <div className="row" style={{ marginTop: "20px" }}>
                         <FormGroup>
-                          <div className="col-md-6">
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Phone Number
+
+                                </Typography>
+
+                                <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="phone">Phone Number</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input  style={{marginTop:"10px"}} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                          </div>
+                            <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                          </div> */}
                         </FormGroup>
                       </div>
+                    </div>
+                  }
+                  {toggleApplicantReviews &&
+                    <div>
+                      <div className="row">
+                        {applicantCreatedRatingState.length > 0 && applicantCreatedRatingState
+                          .slice(
+                            currentPage * pageSize,
+                            (currentPage + 1) * pageSize
+                          )
+                          .map((eachCreatedData) => {
+
+                            console.log('each', eachCreatedData)
+
+                            return (<FormGroup key={eachCreatedData.rating_id} >
+                              {/* <div className="col-md-6">
+                              <Label for="comment"> Review: </Label>
+                            </div>
+                            <div className="col-md-6">
+                              <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
+                            </div> */}
+                              <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                <CardActionArea>
+
+                                  <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                      Company Name: {eachCreatedData.er_name} <br></br>
+                                      Job Title: {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate} />
+                                    </Typography>
+                                    <p>{eachCreatedData.comment}</p>
+                                    {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
+                                    {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
+
+
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
+                                      {new Date(eachCreatedData.updated_at).toLocaleString()}
+                                    </Typography>
+                                  </CardContent>
+                                </CardActionArea>
+                                <CardActions>
+
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerRating(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast)}>
+                                    Update Post
+                                  </Button> : null}
+                                  <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>
+                                    Edit Post
+                                  </Button>
+
+
+                                </CardActions>
+                              </Card>
+                            </FormGroup>)
+
+
+                          })}
+
+                        <div style={{ overflowX: "auto", justifyContent: "center", display: "flex" }}>
+                          <Pagination>
+
+                            <PaginationItem disabled={currentPage <= 0}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage - 1)}
+                                previous
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                            {/* 
+          {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
+                  <ApplicantHomeCard
+                      key={index}
+                      applicantJob={applicantJob}
+                  />
+              )) : "loading..."} */}
+                            {[...Array(pagesCount)].map((page, i) =>
+                              <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                  {i + 1}
+                                </PaginationLink>
+                              </PaginationItem>
+                            )}
+
+                            <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage + 1)}
+                                next
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                          </Pagination>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  }
+
+                  {toggleComments &&
+                    <div>
+                      <div className="row">
+                        {applicantRatingState.length > 0 && applicantRatingState
+                          .slice(
+                            currentPage * pageSize,
+                            (currentPage + 1) * pageSize
+                          )
+                          .map((eachData) =>
+                            <FormGroup key={eachData.rating_id} >
+                              {/* <div className="col-md-6">
+                                <Label for="comment"> Review: </Label>
+                              </div>
+                              <div className="col-md-6">
+                                <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
+                              </div> */}
+                              <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                <CardActionArea>
+
+                                  <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                      Review: <DisabledRating rating={eachData.rate} />
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
+                                      <h5>{eachData.comment}</h5><br />
+                                      {new Date(eachData.updated_at).toLocaleString()}
+
+                                    </Typography>
+                                  </CardContent>
+                                </CardActionArea>
+                                {/* <CardActions>
+                    <Button size="small" color="primary">
+                      Share
+                    </Button>
+                    <Button size="small" color="primary">
+                      Learn More
+                    </Button>
+                  </CardActions> */}
+                              </Card>
+                            </FormGroup>
+
+
+                          )}
+                        <div style={{ overflowX: "auto", justifyContent: "center", display: "flex", }}>
+                          <Pagination>
+
+                            <PaginationItem disabled={currentPage <= 0}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage - 1)}
+                                previous
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                            {/* 
+            {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
+                    <ApplicantHomeCard
+                        key={index}
+                        applicantJob={applicantJob}
+                    />
+                )) : "loading..."} */}
+                            {[...Array(pagesCount)].map((page, i) =>
+                              <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                  {i + 1}
+                                </PaginationLink>
+                              </PaginationItem>
+                            )}
+
+                            <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                              <PaginationLink
+                                onClick={e => handleClick(e, currentPage + 1)}
+                                next
+                                href="#"
+                              />
+
+                            </PaginationItem>
+
+                          </Pagination>
+                        </div>
+
+                      </div>
+
                     </div>
                   }
 
@@ -396,13 +794,32 @@ const ApplicantProfile = () => {
                     <div>
                       <div className="row">
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Availabilty:
+
+                                </Typography>
+
+                                <AvailabilityTag />
+
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
                             <Label for="Availabilty">Availabilty</Label>
                           </div>
-                          <div className="col-md-6" style={{marginTop:"10px"}}>
+                          <div className="col-md-6" style={{ marginTop: "10px" }}>
                             <AvailabilityTag />
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
@@ -414,44 +831,105 @@ const ApplicantProfile = () => {
                       </div>
                       <div className="row">
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6">
-                            <Label style={{marginTop:"20px"}} for="salaryType">Salary Type</Label>
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Salary Type:
+
+                                </Typography>
+
+                                <Input style={{ marginTop: "10px" }} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                                  <option value={null} selected>Please select</option>
+                                  <option value={'perJob'}>Per Job</option>
+                                  <option value={'perHour'}>Per Hour</option>
+                                </Input>
+
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
+                            <Label style={{ marginTop: "20px" }} for="salaryType">Salary Type</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input style={{marginTop:"10px"}} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                            <Input style={{ marginTop: "10px" }} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               <option value={'perJob'}>Per Job</option>
                               <option value={'perHour'}>Per Hour</option>
                             </Input>
-                          </div>
+                          </div> */}
                         </FormGroup>
 
                       </div>
 
                       {ee_salary_type ? (
-                        <div className="row"  style={{marginTop:"20px"}}>
+                        <div className="row" style={{ marginTop: "20px" }}>
                           <FormGroup>
+                            <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                              <CardActionArea>
 
-                            <div className="col-md-6">
+                                <CardContent>
+                                  <Typography gutterBottom variant="h5" component="h2">
+                                    Expected Salary:
+
+                                  </Typography>
+
+                                  <Input style={{ marginTop: "10px" }} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+
+
+                                </CardContent>
+
+                              </CardActionArea>
+                              <CardActions>
+
+
+                              </CardActions>
+                            </Card>
+                            {/* <div className="col-md-6">
                               <Label for="Expected Salary">Expected Salary</Label>
                             </div>
                             <div className="col-md-6">
-                              <Input style={{marginTop:"10px"}} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
-                            </div>
+                              <Input style={{ marginTop: "10px" }} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+                            </div> */}
                           </FormGroup>
 
                         </div>
                       ) : (salaryType ? (
-                        <div className="row" style={{marginTop:"20px"}}>
+                        <div className="row" style={{ marginTop: "20px" }}>
                           <FormGroup>
+                            <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                              <CardActionArea>
 
-                            <div className="col-md-6">
+                                <CardContent>
+                                  <Typography gutterBottom variant="h5" component="h2">
+                                    Expected Salary:
+
+                                  </Typography>
+
+                                  <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
+
+
+                                </CardContent>
+
+                              </CardActionArea>
+                              <CardActions>
+
+
+                              </CardActions>
+                            </Card>
+                            {/* <div className="col-md-6">
                               <Label for="Expected Salary">Expected Salary</Label>
                             </div>
                             <div className="col-md-6">
                               <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
-                            </div>
+                            </div> */}
                           </FormGroup>
 
                         </div>
@@ -459,20 +937,44 @@ const ApplicantProfile = () => {
 
                       <div className="row">
                         <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
 
-                          <div className="col-md-6" style={{marginTop:"20px"}}>
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Prefered Work Location:
+
+                                </Typography>
+
+                                <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                                  <option value={null} selected>Please select</option>
+                                  {locationState.length > 0 ? locationState.map((location, i) => (
+                                    <option key={i} value={location.location}>{location.location}</option>
+                                  )) : "loading..."}
+                                </Input>
+
+
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6" style={{ marginTop: "20px" }}>
                             <Label for="preferworklocation">Prefered Work Location</Label>
                           </div>
                           <div className="col-md-6">
-                            <Input  style={{marginTop:"10px"}} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+                            <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
                               <option value={null} selected>Please select</option>
                               {locationState.length > 0 ? locationState.map((location, i) => (
                                 <option key={i} value={location.location}>{location.location}</option>
                               )) : "loading..."}
                             </Input>
-                          </div>
+                          </div> */}
                         </FormGroup>
-                       
+
                       </div>
 
                     </div>
@@ -489,52 +991,13 @@ const ApplicantProfile = () => {
             </div>
           </div>
           <div className="col-md-2">
-            <input type="submit" className="profile-edit-btn" name="btnAddMore" style={{float:"right"}}/>
+            <input type="submit" className="profile-edit-btn" name="btnAddMore" style={{ float: "right" }} />
           </div>
           <ToastContainer />
         </Form>
 
 
-        {/* <div className="row">
-
-                      <Form className="form-group" onSubmit={(e)=>uploadCV(e)}>
-                      <FormGroup>
-                        <div className="col-md-6">
-                          <Label for="uploadCV">Upload CV </Label>
-                        </div>
-                        <div className="col-md-6">
-                          <Input type="file" name="uploadCV" />
-                        <button type="submit">Upload</button>
-                        </div>
-                      </FormGroup>
-                      </Form>
-                    </div> */}
-        {/* <div className="row">
-                      <FormGroup>
-                        <div className="col-md-6">
-                          <Label for="uploadCV">Upload CV </Label>
-                        </div>
-                        <div className="col-md-6">
-                          <Input type="file" name="uploadCV" />
-                        <button>Upload</button>
-                        </div>
-                      </FormGroup>
-                    </div>
-                    <div className="row">
-                      <FormGroup>
-                        <div className="col-md-6">
-                          <Label for="uploadCV">Upload CV </Label>
-                        </div>
-                        <div className="col-md-6">
-                          <Input type="file" name="uploadCV" />
-                        <button>Upload</button>
-                        </div>
-                      </FormGroup>
-                    </div> */}
-
-        {/* <div classNameName="col-">
-          <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
-        </div> */}
+      
       </div>
     </div>
 
