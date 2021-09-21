@@ -290,7 +290,6 @@ const EmployerEditPost = () => {
                                     }
                                     }
                                         key={job.ee_id} style={{ cursor: "pointer" }}>
-
                                         <td>{job.ee_name}</td>
                                         <td>{job.created_at}</td>
                                         {offering ? <td> Offer Sent</td> : <td> No Offer</td>}
