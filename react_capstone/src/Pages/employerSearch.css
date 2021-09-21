@@ -78,3 +78,13 @@
     text-decoration: none;
     color: white;
 }
+
+.ReactTags__tagInput{
+    height: 65px;
+}
+.react-tag-input {
+    height: 65px;
+}
+.jobTitle {
+    height: 65px;
+}

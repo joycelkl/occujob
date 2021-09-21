@@ -182,6 +182,7 @@ const ApplicantJobSearch = () => {
                   <FormGroup>
                     <Label for="JobTitle" style={{ color: 'white' }}>Job Title</Label>
                     <ReactTagInput
+                      className="jobTitle"
                       tags={jobTitleTag}
                       onChange={(newTags) => setJobTitleTag(newTags)}
                     />
@@ -192,7 +193,7 @@ const ApplicantJobSearch = () => {
                   </FormGroup>
                   <FormGroup>
                     <Label for="JobType" style={{ color: 'white' }}>Job Type</Label>
-                    <Input size="1" type="select" name="JobType" id="JobType" value={jobType} onChange={(e) => setJobType(e.target.value)}>
+                    <Input type="select" name="JobType" id="JobType" value={jobType} style={{height:"65px"}} onChange={(e) => setJobType(e.target.value)}>
                       <option defaultValue={null}>Please select</option>
                       <option value={'PartTime'}>Part Time</option>
                       <option value={'Freelance'}>Freelance</option>
@@ -204,7 +205,7 @@ const ApplicantJobSearch = () => {
                   <FormGroup>
                     <FormGroup>
                       <Label for="salaryType" style={{ color: 'white' }}>Expected Salary Type</Label>
-                      <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
+                      <Input type="select" name="salaryType" id="salaryType" value={salaryType} style={{height:"65px"}} onChange={(e) => setSalaryType(e.target.value)}>
                         <option defaultValue={null}>Please select</option>
                         <option value={'perJob'}>Per Job</option>
                         <option value={'perHour'}>Per Hour</option>
@@ -212,7 +213,7 @@ const ApplicantJobSearch = () => {
                     </FormGroup>
                     {salaryType ? (salaryType === 'perJob' ?
                       (<FormGroup>
-                        <Input className='mt-2' type="select" name="perJobExpectedSalary" id="perJobExpectedSalary" value={expSalary} onChange={(e) => setExpSalary(e.target.value)}>
+                        <Input className='mt-2' type="select" name="perJobExpectedSalary" id="perJobExpectedSalary" value={expSalary} style={{height:"65px"}} onChange={(e) => setExpSalary(e.target.value)}>
                         <option defaultValue={null}>Please select</option>
                           <option value={1000} >$1000 or above</option>
                           <option value={2500}>$2500 or above</option>
@@ -221,7 +222,7 @@ const ApplicantJobSearch = () => {
                         </Input>
                       </FormGroup>)
                       : (<FormGroup>
-                        <Input className='mt-2' type="select" name="perHourExpectedSalary" id="perHourExpectedSalary" value={expSalary} onChange={(e) => setExpSalary(e.target.value)}>
+                        <Input className='mt-2' type="select" name="perHourExpectedSalary" id="perHourExpectedSalary" style={{height:"65px"}} value={expSalary} onChange={(e) => setExpSalary(e.target.value)}>
                         <option defaultValue={null}>Please select</option>
                           <option value={50} >$50 or above</option>
                           <option value={100}>$100 or above</option>
