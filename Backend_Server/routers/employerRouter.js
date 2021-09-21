@@ -233,6 +233,7 @@ class EmployerRouter {
                     res.status(500).json(err)
                 })
         })
+        
         return router;
     }
 

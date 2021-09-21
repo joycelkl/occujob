@@ -126,10 +126,7 @@ class EmployeeRouter {
         router.get('/home', (req, res) => {
 
             console.log('home run', req.user)
-
-            if (req.user.type == "ee")
             //list job details via application id 
-
                 return this.employeeService
                 .homeJobList()
                 .then((jobDetail) => {

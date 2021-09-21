@@ -34,6 +34,7 @@ export const logoutNowAction = () => {
         localStorage.clear('company');
         localStorage.clear('UserName');
         localStorage.clear('userID')
+
         dispatch({
             type: LOGOUT_NOW_ACTION
         })
