@@ -1,5 +1,5 @@
 .modal {
-    padding: 0 !important;
+    padding: 0;
   }
   .modal .modal-dialog {
     width: 100%;
@@ -16,8 +16,33 @@
     overflow-y: auto;
   }
   .ModalHeader{
-    width: 100%;
+    width: 50%;
     max-width: none;
-    height: 100%;
+    height: 50%;
     margin: 0;
   }
+
+.test .modal-dialog{
+ 
+  width: 50%;
+    max-width: none;
+    height: 50%;
+    margin: 0;
+  }
+  .test .modal-content {
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    height: 50%;
+    width:50%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .smallFooter {
+    background-color: azure;
+  width: 50%;
+    max-width: none;
+    margin: 0;
+    }

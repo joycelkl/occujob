@@ -401,16 +401,16 @@ const EmployerEditPost = () => {
                                         <Button color="secondary" onClick={() => giveOffer(application_id)}>Offer</Button>
                                         <Button color="success" onClick={toggleNested}>Rate Applicant</Button>
                                         <Button color="primary" onClick={toggle}>Close</Button>{' '}
-                                        <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false}>
-                                            <ModalHeader>Ratings</ModalHeader>
-                                            <ModalBody>
+                                        <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false} className="test">
+                                            <ModalHeader className="test">Ratings</ModalHeader>
+                                            <ModalBody className='test'>
                                                 <ControlledRating ratingValue={(value) => setRating(value)} />
                                             </ModalBody>
-                                            <ModalBody>
+                                            <ModalBody className='test'>
                                                 <h1>Comments:</h1>
                                                 <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </ModalBody>
-                                            <ModalFooter>
+                                            <ModalFooter className='test'>
                                                 <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}
                                                 <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                             </ModalFooter>
