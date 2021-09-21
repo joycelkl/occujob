@@ -96,7 +96,9 @@ const PortfolioTable = props => {
 
     return (
         <>
-        {portfolioState.length === 3 ? <p>Maximum Portfolio File is 3</p> : (
+        {userType === 'er' ? 
+        null : [(userType === 'ee' && portfolioState.length === 3 ? <p>Maximum Portfolio File is 3</p> : 
+        (
             <Table striped>
             <thead>
             <tr>
@@ -117,7 +119,7 @@ const PortfolioTable = props => {
             </tr>
             </tbody>
             </Table>
-        )}
+        ))]}
         
         
         <h3>Uploaded Portfolio</h3>
