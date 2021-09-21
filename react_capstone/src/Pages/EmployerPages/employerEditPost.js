@@ -290,7 +290,6 @@ const EmployerEditPost = () => {
                                     }
                                     }
                                         key={job.ee_id} style={{ cursor: "pointer" }}>
-
                                         <td>{job.ee_name}</td>
                                         <td>{job.created_at}</td>
                                         {offering ? <td> Offer Sent</td> : <td> No Offer</td>}
@@ -417,15 +416,15 @@ const EmployerEditPost = () => {
                                         <Button color="success" onClick={toggleNested}>Rate Applicant</Button>
                                         <Button color="primary" onClick={toggle}>Close</Button>{' '}
                                         <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false} className="test">
-                                            <ModalHeader className="test">Ratings</ModalHeader>
-                                            <ModalBody className='test'>
+                                            <ModalHeader className='smallModal'>Ratings</ModalHeader>
+                                            <ModalBody className='smallModal'>
                                                 <ControlledRating ratingValue={(value) => setRating(value)} />
                                             </ModalBody>
-                                            <ModalBody className='test'>
+                                            <ModalBody className='smallModal'>
                                                 <h1>Comments:</h1>
                                                 <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </ModalBody>
-                                            <ModalFooter className='test'>
+                                            <ModalFooter className='smallModal'>
                                                 <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}
                                                 <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                             </ModalFooter>

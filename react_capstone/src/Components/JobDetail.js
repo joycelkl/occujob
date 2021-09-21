@@ -80,7 +80,7 @@ const JobDetail = (props) => {
                         <div className="col-md-6">
                             <div className="profile-head" style={{ marginTop: "25px" }}>
                                 <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Company Name</Label>
-                                <h4>{er_name} ID{er_id}</h4>
+                                <h4>{er_name}</h4>
                                 <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Job Title</Label>
                                 <h4>{job_title}</h4>
                             </div>

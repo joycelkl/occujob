@@ -78,3 +78,8 @@
     text-decoration: none;
     color: white;
 }
+
+.react-tag-input__input{
+    height: 65px;
+}
+
