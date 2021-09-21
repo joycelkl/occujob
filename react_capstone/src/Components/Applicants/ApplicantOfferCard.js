@@ -12,6 +12,7 @@ import "../../Pages/EmployerPages/employerProfilePage.css"
 import 'react-toastify/dist/ReactToastify.css';
 import authAxios from '../../Redux/authAxios';
 import ControlledRating from '../Rating/ControlledRating';
+import Chatroom from '../Chatroom/Chatroom'
 
 
 
@@ -91,6 +92,13 @@ const ApplicantOfferCard = (props) => {
             console.log("job posting err res", err.response)
         })
     }
+
+    //****************For the Chatroom********************//
+    const userID = localStorage.getItem('userID')
+
+    const [modalChatroom, setModalChatroom] = useState(false);
+
+    const toggleChatroom = () => setModalChatroom(!modalChatroom);
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -184,6 +192,18 @@ const ApplicantOfferCard = (props) => {
                                     <Button color="primary" onClick={toggleNested}>Close</Button>{' '}
                                 </ModalFooter>
                             </Modal>
+                            <Button onClick={toggleChatroom}>Message</Button>
+                            <>
+                            <Modal isOpen={modalChatroom} toggle={toggleChatroom} fade={false}>
+                                <ModalHeader toggle={toggleChatroom}>Chatroom</ModalHeader>
+                                <ModalBody>
+                                    <Chatroom chatterID={er_id} userID={userID} />
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="secondary" onClick={toggleChatroom}>Cancel</Button>
+                                </ModalFooter>
+                            </Modal>
+                        </>
                             <Button color="secondary" onClick={toggle}>Cancel</Button>
                         </ModalFooter>
                         <ToastContainer />
