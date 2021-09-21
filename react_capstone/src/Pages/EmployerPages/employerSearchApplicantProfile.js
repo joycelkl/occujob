@@ -1,13 +1,18 @@
-import React, { useEffect } from "react";
-import { Button, Form, FormGroup, Label } from 'reactstrap';
+import React, { useEffect, useState } from "react";
+import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
+import Chatroom from "../../Components/Chatroom/Chatroom";
 
 
 const EmployerSearchApplicantProfile = () => {
+
+    const [employeeId, setEmployeeId] = useState('')
+    const [userId, setUserId] = useState('')
+
     const profile = useSelector((state) => state.profile)
 
     console.log("individual job", profile)
@@ -15,15 +20,26 @@ const EmployerSearchApplicantProfile = () => {
     const dispatch = useDispatch()
     const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
 
-    const { ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
+    const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
 
-
+    useEffect(()=>{
+        const userID = localStorage.getItem('userID')
+        console.log('UserID', userID)
+        setUserId(userID)
+        setEmployeeId(ee_id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[ee_id])
 
     useEffect(() => {
         let ee_id = localStorage.getItem('applicant')
         loadApplicantSearchProfileThunkAction(ee_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    //****************For the Chatroom********************//
+    const [modal, setModal] = useState(false);
+
+     const toggle = () => setModal(!modal);
 
     return (
         <div>
@@ -153,13 +169,21 @@ const EmployerSearchApplicantProfile = () => {
                         </div>
                     </div>
                     <div className="col-md-2">
-                        <Button>Message</Button>
+                    <Button onClick={toggle}>Message</Button>
                     </div>
-
-
-
                 </Form>
 
+                <>
+                        <Modal isOpen={modal} toggle={toggle} fade={false}>
+                            <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
+                            <ModalBody>
+                            <Chatroom chatterID={employeeId} userID={userId}/>
+                            </ModalBody>
+                            <ModalFooter>
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+                        </>
 
             </div>
         </div>

@@ -25,6 +25,7 @@ const Chatroom = (props) => {
     const { loadChatroomIDThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { loadChatroomHistoryThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { addChatroomHistorySuccessAction } = bindActionCreators(actionCreators, dispatch)
+    const { resetUnreadMsgThunkAction } = bindActionCreators (actionCreators, dispatch)
 
     const [messages, setMessages] = useState('');
     const [chatter, setChatter] = useState('');
@@ -71,6 +72,10 @@ const Chatroom = (props) => {
             })
 
             loadChatroomHistoryThunkAction(id)
+
+            socket.on('sendMsg', () =>{
+                resetUnreadMsgThunkAction(id)
+            })
       
 
         if (type === 'er' && chatroomID[0]){
