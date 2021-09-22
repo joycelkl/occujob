@@ -175,7 +175,13 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                                                     <Label for="Skill">Skills</Label>
                                                 </div>
                                                 <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_skill}</h6>
+                                                    <h6 style={{ marginTop: "10px" }}>{ee_skill.map((skill, index)=>{
+                if (index === ee_skill.length-1) {
+                    return skill
+                } else {
+                    return `${skill} / `
+                }
+            })}</h6>
                                                 </div>
                                             </FormGroup>
                                         </div>
@@ -196,7 +202,13 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                                                     <Label for="Text">Job Function</Label>
                                                 </div>
                                                 <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_industry}</h6>
+                                                    <h6 style={{ marginTop: "10px" }}>{ee_industry.map((industry, index)=>{
+                if (index === ee_industry.length-1) {
+                    return industry
+                } else {
+                    return `${industry} / `
+                }
+            })}</h6>
                                                 </div>
                                             </FormGroup>
                                         </div>
@@ -218,7 +230,14 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                                                 </div>
                                                 <div className="col-md-6">
 
-                                                    <h6 style={{ marginTop: "10px" }}>{availability}</h6>
+                                                    <h6 style={{ marginTop: "10px" }}>{availability.map((available, index) => {
+                if (index === availability.length-1) {
+                    return available.charAt(0).toUpperCase() + available.slice(1)
+                } else {
+                    return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
+                }
+
+            })}</h6>
                                                 </div>
                                             </FormGroup>
                                         </div>
