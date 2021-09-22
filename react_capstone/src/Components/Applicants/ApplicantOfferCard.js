@@ -53,8 +53,13 @@ const ApplicantOfferCard = (props) => {
     const applicantCreatedRatingState = useSelector((state) => state.applicantCreatedRating)
 
     function returnComment(application_id) {
-        let object = applicantCreatedRatingState > 0 ? applicantCreatedRatingState.filter(data => data.application_id === application_id)[0].comment : "Please Fill in Your Comment"
-        return object  
+        if(applicantCreatedRatingState.length > 0 && applicantCreatedRatingState.filter(data => data.application_id === application_id)[0] !== undefined){
+            let object = applicantCreatedRatingState.filter(data => data.application_id === application_id)[0].comment
+            return object}
+            else {
+                let object = "Please Give Your Comment Here"
+                return object
+            }  
     }
 
     //to employer profile page

@@ -191,11 +191,9 @@ const EmployerEditPost = () => {
     const toggleChatroom = () => setModalChatroom(!modalChatroom);
 
     const userID = localStorage.getItem('userID')
-    console.log('UserID', userID)
    
     function returnComment(application_id) {
-        console.log("running")
-        if(employerCreatedRatingState.length > 0){
+        if(employerCreatedRatingState.length > 0 && employerCreatedRatingState.filter(data => data.application_id === application_id)[0] !== undefined){
         let object = employerCreatedRatingState.filter(data => data.application_id === application_id)[0].comment
         return object}
         else {
