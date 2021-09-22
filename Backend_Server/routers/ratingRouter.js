@@ -98,7 +98,11 @@ class RatingRouter {
 
             return this.ratingServices.applicantsGiveRating(er_id, application_id, rate, comment)
                 .then(() => {
-                    return res.json('Rating Created')
+                    return this.ratingServices
+                        .listWhatAplicantWrote(req.user.id)
+                        .then((rating) => {
+                            return res.json(rating)
+                        })
                 })
                 .catch((err) => {
                     res.status(500).json(err)

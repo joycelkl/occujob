@@ -351,7 +351,7 @@ const dispatch = useDispatch();
                                 </CardActionArea>
                                 <CardActions>
 
-                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerUpdateRating(eachCreatedData.ee_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast).then(setInputBoxID(''))}>
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerUpdateRating(eachCreatedData.ee_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast).then(setInputBoxID('')).then(setComment(''))}>
                                     Update Post
                                   </Button> : null}
                                   <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>
