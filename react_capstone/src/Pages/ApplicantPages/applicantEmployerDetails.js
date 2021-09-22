@@ -65,17 +65,13 @@ const ApplicantEmployerDetails = () => {
     const aboutHandler = () => {
         setToggleAbout(true);
         setToggleComments(false);
-
-
-
     };
+
     const commentsHandler = () => {
         setToggleComments(true);
         setToggleAbout(false);
-
-
-
     };
+
     return (
         <div>
             <ApplicantNavbar />
