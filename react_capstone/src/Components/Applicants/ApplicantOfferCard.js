@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState,useEffect }from "react";
 import { Card, Badge } from 'react-bootstrap';
-import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button, FormGroup, Label, Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
@@ -27,6 +26,7 @@ const ApplicantOfferCard = (props) => {
     const { offerAcceptAction } = bindActionCreators(actionCreators, dispatch)
     const { offerDeclineAction } = bindActionCreators(actionCreators, dispatch)
     const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { applicantCreatedRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
 
     const { offerCard } = props;
@@ -46,7 +46,17 @@ const ApplicantOfferCard = (props) => {
         setNestedModal(!nestedModal);
         setCloseAll(false);
     }
-    
+    useEffect(() => {
+    applicantCreatedRatingThunkAction();
+    },[])
+    //load comment if there was comment
+    const applicantCreatedRatingState = useSelector((state) => state.applicantCreatedRating)
+
+    function returnComment(application_id) {
+        let object = applicantCreatedRatingState > 0 ? applicantCreatedRatingState.filter(data => data.application_id === application_id)[0].comment : "Please Fill in Your Comment"
+        console.log("??????????",object)   
+    }
+
     //to employer profile page
     const history = useHistory();
     function handleOnClick() {
@@ -70,7 +80,6 @@ const ApplicantOfferCard = (props) => {
         offerDeclineAction(application_id)
         setModal(false)
     }
-
 
     //date format
     let date = new Date(created_at)
@@ -185,7 +194,7 @@ const ApplicantOfferCard = (props) => {
                                 </ModalBody>
                                 <ModalBody className='smallModal'>
                                     <h1>Comments:</h1>
-                                    <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Please Give Your Comment Here " value={comment} onChange={(e) => setComment(e.target.value)} />
+                                    <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder={ applicantCreatedRatingState.length > 0 ? returnComment(application_id): " Please Give Your Comment Here "} value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
                                 <ModalFooter className='smallModal'>
                                     <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}

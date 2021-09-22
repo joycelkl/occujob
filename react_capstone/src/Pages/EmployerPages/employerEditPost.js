@@ -32,12 +32,16 @@ const EmployerEditPost = () => {
     const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { loadIndJobThunkAction } = bindActionCreators(actionCreators, dispatch);
-
+    const { employerCreatedRatingThunkAction} = bindActionCreators(actionCreators, dispatch)
+    const employerCreatedRatingState = useSelector((state) => 
+    {return state.employerCreatedRating})
+    console.log('employerCreatedRating???', employerCreatedRatingState)
     useEffect(() => {
         loadLocationThunkAction();
       loadIndustryThunkAction();
       const jobID = localStorage.getItem('job')
       loadIndJobThunkAction(jobID)
+      employerCreatedRatingThunkAction();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -189,7 +193,11 @@ const EmployerEditPost = () => {
     const userID = localStorage.getItem('userID')
     console.log('UserID', userID)
    
-
+    function returnComment(application_id) {
+        console.log("running")
+        let object = employerCreatedRatingState.length > 0 ? employerCreatedRatingState.filter(data => data.application_id === application_id)[0].comment : ""
+        return object   
+    }
     return (
         <div>
             <EmployerNavbar />
@@ -415,14 +423,15 @@ const EmployerEditPost = () => {
                                         <Button color="secondary" onClick={() => giveOffer(application_id)}>Offer</Button>
                                         <Button color="success" onClick={toggleNested}>Rate Applicant</Button>
                                         <Button color="primary" onClick={toggle}>Close</Button>{' '}
-                                        <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false} className="test">
+                                        <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false} className='smallModal'>
                                             <ModalHeader className='smallModal'>Ratings</ModalHeader>
                                             <ModalBody className='smallModal'>
                                                 <ControlledRating ratingValue={(value) => setRating(value)} />
                                             </ModalBody>
                                             <ModalBody className='smallModal'>
-                                                <h1>Comments:</h1>
-                                                <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
+                                                <h1>Comments: </h1>
+                                                
+                                                <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder={ employerCreatedRatingState.length > 0 ? returnComment(application_id): ""} value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </ModalBody>
                                             <ModalFooter className='smallModal'>
                                                 <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}
