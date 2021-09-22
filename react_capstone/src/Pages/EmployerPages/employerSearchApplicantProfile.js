@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
+import { CardActions } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import PortfolioTable from "../../Components/Applicants/PortfolioTable";
@@ -43,7 +44,7 @@ const EmployerSearchApplicantProfile = () => {
 
     }
     const history = useHistory();
-    
+
     const goBack = () => {
         history.goBack();
     };
@@ -56,7 +57,7 @@ const EmployerSearchApplicantProfile = () => {
     const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
     const { erViewEeRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
-const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
+    const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
 
     console.log('data of applicant', ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill )
 
@@ -66,13 +67,13 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
     console.log("Average", averageRating)
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const userID = localStorage.getItem('userID')
         console.log('UserID', userID)
         setUserId(userID)
         setEmployeeId(ee_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[ee_id])
+    }, [ee_id])
 
     useEffect(() => {
         let ee_id = localStorage.getItem('applicant')
@@ -114,7 +115,7 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
     //****************For the Chatroom********************//
     const [modal, setModal] = useState(false);
 
-     const toggle = () => setModal(!modal);
+    const toggle = () => setModal(!modal);
 
     return (
         <div>
@@ -131,7 +132,7 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                         <div className="col-md-6">
                             <div className="profile-head">
                                 <FormGroup>
-                                    
+
                                     <h2>{ee_name}</h2>
                                 </FormGroup>
                                 <DisabledRating rating={averageRating} />
@@ -163,96 +164,235 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                                     <div>
                                         <div className="row">
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Self-Introduction:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+
+                                                                {self_intro}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Text">Self-Introduction</Label>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{self_intro}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Skills:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {ee_skill ? ee_skill.map((skill, index) => {
+                                                                    if (index === ee_skill.length - 1) {
+                                                                        return skill
+                                                                    } else {
+                                                                        return `${skill} / `
+                                                                    }
+                                                                }) : null}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Skill">Skills</Label>
                                                 </div>
                                                 <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_skill ? ee_skill.map((skill, index)=>{
-                                                        if (index === ee_skill.length-1) {
-                                                            return skill
-                                                        } else {
-                                                            return `${skill} / `
-                                                        }
-                                                    }): null}</h6>
-                                                </div>
+                                                    <h6 style={{ marginTop: "10px" }}>{ee_skill}</h6>
+                                                // </div> */}
+                                                {/* {modalJob.ee_name} */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Years of Working Experience:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {ee_exp}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Skill">No. of Year of Working Experience</Label>
                                                 </div>
                                                 <div className="col-md-6">
 
                                                     <h6 style={{ marginTop: "10px" }}>{ee_exp}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Job Function:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {ee_industry ? ee_industry.map((industry, index) => {
+                                                                    if (index === ee_industry.length - 1) {
+                                                                        return industry
+                                                                    } else {
+                                                                        return `${industry} / `
+                                                                    }
+                                                                }) : null}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Text">Job Function</Label>
                                                 </div>
                                                 <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_industry ? ee_industry.map((industry, index)=>{
-                                                        if (index === ee_industry.length-1) {
-                                                            return industry
-                                                        } else {
-                                                            return `${industry} / `
-                                                        }
-                                                    }): null}</h6>
-                                                </div>
+                                                    <h6 style={{ marginTop: "10px" }}>{ee_industry}</h6>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Perferred Location:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {ee_location}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Text">Perferred Location</Label>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{ee_location}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
 
-                                                <div className="col-md-6">
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Availabilty:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {availability ? availability.map((available, index) => {
+                                                                    if (index === availability.length - 1) {
+                                                                        return available.charAt(0).toUpperCase() + available.slice(1)
+                                                                    } else {
+                                                                        return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
+                                                                    }
+                                                                }) : null}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Availabilty">Availabilty</Label>
                                                 </div>
                                                 <div className="col-md-6">
 
-                                                    <h6 style={{ marginTop: "10px" }}>{availability ? availability.map((available, index) => {
-                                                        if (index === availability.length-1) {
-                                                            return available.charAt(0).toUpperCase() + available.slice(1)
-                                                        } else {
-                                                            return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
-                                                        }
-
-                                                    }): null}</h6>
-                                                </div>
+                                                    <h6 style={{ marginTop: "10px" }}>{availability}</h6>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
 
-                                                <div className="col-md-6">
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Expected Salary:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {expected_salary}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Availabilty">Expected Salary</Label>
                                                 </div>
                                                 <div className="col-md-6">
 
                                                     <h6 style={{ marginTop: "10px" }}>{expected_salary}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                     </div>
@@ -262,7 +402,7 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                                 {togglePortfolio &&
                                     <div>
                                         <div className="row">
-                                            <PortfolioTable eeId={ee_id}/>
+                                            <PortfolioTable eeId={ee_id} />
                                         </div>
                                     </div>
 
@@ -296,14 +436,7 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                                                                     </Typography>
                                                                 </CardContent>
                                                             </CardActionArea>
-                                                            {/* <CardActions>
-                    <Button size="small" color="primary">
-                      Share
-                    </Button>
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
-                  </CardActions> */}
+
                                                         </Card>
                                                     </FormGroup>
 
@@ -358,23 +491,23 @@ const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expec
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-2" style={{float:'right'}}>
+                    <div className="col-md-2" style={{ float: 'right' }}>
                         <Button onClick={toggle}>Message</Button>
                         <Button onClick={goBack} style={{ marginLeft: "10px" }}>Search List</Button>
                     </div>
                 </Form>
 
                 <>
-                        <Modal isOpen={modal} toggle={toggle} fade={false}>
-                            <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
-                            <ModalBody>
-                            <Chatroom chatterID={employeeId} userID={userId}/>
-                            </ModalBody>
-                            <ModalFooter>
+                    <Modal isOpen={modal} toggle={toggle} fade={false}>
+                        <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
+                        <ModalBody>
+                            <Chatroom chatterID={employeeId} userID={userId} />
+                        </ModalBody>
+                        <ModalFooter>
                             <Button color="secondary" onClick={toggle}>Cancel</Button>
-                            </ModalFooter>
-                        </Modal>
-                        </>
+                        </ModalFooter>
+                    </Modal>
+                </>
 
 
 

@@ -11,6 +11,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./modalFullPage.css";
 import ControlledRating from "../../Components/Rating/ControlledRating";
 import background from '../../Images/forms.jpg'
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import './employerProfilePage.css'
 import Chatroom from "../../Components/Chatroom/Chatroom";
 
@@ -32,12 +37,16 @@ const EmployerEditPost = () => {
     const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { loadIndJobThunkAction } = bindActionCreators(actionCreators, dispatch);
-
+    const { employerCreatedRatingThunkAction} = bindActionCreators(actionCreators, dispatch)
+    const employerCreatedRatingState = useSelector((state) => 
+    {return state.employerCreatedRating})
+    console.log('employerCreatedRating???', employerCreatedRatingState)
     useEffect(() => {
         loadLocationThunkAction();
       loadIndustryThunkAction();
       const jobID = localStorage.getItem('job')
       loadIndJobThunkAction(jobID)
+      employerCreatedRatingThunkAction();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -187,9 +196,16 @@ const EmployerEditPost = () => {
     const toggleChatroom = () => setModalChatroom(!modalChatroom);
 
     const userID = localStorage.getItem('userID')
-    console.log('UserID', userID)
    
-
+    function returnComment(application_id) {
+        if(employerCreatedRatingState.length > 0 && employerCreatedRatingState.filter(data => data.application_id === application_id)[0] !== undefined){
+        let object = employerCreatedRatingState.filter(data => data.application_id === application_id)[0].comment
+        return object}
+        else {
+            let object = "Please Give Your Comment Here"
+            return object
+        }
+    }
     return (
         <div>
             <EmployerNavbar />
@@ -308,8 +324,8 @@ const EmployerEditPost = () => {
                                         <div className=" col-md-6">
                             <div className="profile-head">
                                 <FormGroup>
-                                    <Label for="Name"><h1>Applicant's Name</h1></Label>
-                                    <h4>{modalJob.ee_name}</h4>
+                                    <Label for="Name"><h1>{modalJob.ee_name}</h1></Label>
+                                    
                                 </FormGroup>
                                 </div>
                                 {/* <DisabledRating rating={averageRating} /> */}
@@ -332,77 +348,214 @@ const EmployerEditPost = () => {
                                     <div>
                                         <div className="row">
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                            <Card  style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Self-Introduction:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {modalJob.self_intro}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Text">Self-Introduction</Label>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.self_intro}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                            <Card  style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Skills:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {modalJob.ee_skill}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Skill">Skills</Label>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.ee_skill}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                            <Card  style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Years of Working Experience:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {modalJob.ee_exp}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Skill">No. of Year of Working Experience</Label>
                                                 </div>
                                                 <div className="col-md-6">
-
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.ee_exp}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                            <Card  style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Job Function:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {modalJob.ee_industry}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Text">Job Function</Label>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.ee_industry}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div className="col-md-6">
+                                            <Card  style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Perferred Location:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {modalJob.ee_location}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Text">Perferred Location</Label>
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.ee_location}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
+                                            <Card  style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
 
-                                                <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Availabilty:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {modalJob.availability}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Availabilty">Availabilty</Label>
                                                 </div>
                                                 <div className="col-md-6">
 
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.availability}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
+                                            <Card  style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
 
-                                                <div className="col-md-6">
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Expected Salary:
+
+                                </Typography>
+                                <Typography gutterBottom variant="h6" component="h3">
+                                {modalJob.expected_salary}
+
+                                </Typography>
+                                
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                                                {/* <div className="col-md-6">
                                                     <Label for="Availabilty">Expected Salary</Label>
                                                 </div>
                                                 <div className="col-md-6">
 
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.expected_salary}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                     </div>
@@ -415,14 +568,15 @@ const EmployerEditPost = () => {
                                         <Button color="secondary" onClick={() => giveOffer(application_id)}>Offer</Button>
                                         <Button color="success" onClick={toggleNested}>Rate Applicant</Button>
                                         <Button color="primary" onClick={toggle}>Close</Button>{' '}
-                                        <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false} className="test">
+                                        <Modal isOpen={nestedModal} toggle={toggleNested} onClosed={closeAll ? toggle : undefined} fade={false} className='smallModal'>
                                             <ModalHeader className='smallModal'>Ratings</ModalHeader>
                                             <ModalBody className='smallModal'>
                                                 <ControlledRating ratingValue={(value) => setRating(value)} />
                                             </ModalBody>
                                             <ModalBody className='smallModal'>
-                                                <h1>Comments:</h1>
-                                                <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={comment} onChange={(e) => setComment(e.target.value)} />
+                                                <h1>Comments: </h1>
+                                                
+                                                <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder={ employerCreatedRatingState.length > 0 ? returnComment(application_id): "Please Give Your Comment Here"} value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </ModalBody>
                                             <ModalFooter className='smallModal'>
                                                 <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}

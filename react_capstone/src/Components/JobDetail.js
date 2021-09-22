@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter,Input } from 'reactstrap';
 import authAxios from '../Redux/authAxios';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,12 +9,35 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../Pages/EmployerPages/employerProfilePage.css"
 import Chatroom from "./Chatroom/Chatroom";
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import JobDetailPortfolioTable from "../Components/PortfolioTablejobDetail";
+import "../Pages/EmployerPages/employerProfilePage.css"
+
+
 
 const JobDetail = (props) => {
     const applyToast = () => toast("You Have Applied this Job")
 
     const [employerId, setEmployerId] = useState('')
     const [userId, setUserId] = useState('')
+    const [toggleAbout, setToggleAbout] = useState(true);
+    const [toggleContact, setToggleContact] = useState(false);
+  
+     //comment card
+  const useStyles = makeStyles({
+    root: {
+      maxWidth: 1000,
+    },
+    media: {
+      height: 170,
+    },
+  });
+  const classes = useStyles();
 
     const { indJob } = props;
     const { job_salary_type, er_id, job_title, job_id, er_name, job_function, job_type, job_location, er_img_data, job_description, work_period, expect_salary, req_exp } = indJob[0];
@@ -63,6 +86,19 @@ const JobDetail = (props) => {
 
     const toggle = () => setModal(!modal);
 
+      //handle toggles 
+    const aboutHandler = () => {
+        setToggleAbout(true);
+        setToggleContact(false);
+        
+    
+      };
+      const contactHandler = () => {
+        setToggleContact(true);
+        setToggleAbout(false);
+        
+      };
+
 
     return (
 
@@ -70,7 +106,6 @@ const JobDetail = (props) => {
             <div className="container emp-profile">
                 <Form className="form-group" >
                     <div className="row">
-                        {/* <div className="employerDetails" onClick={handleOnClick} style={{ cursor: "pointer" }}> */}
                         <div className="col-md-4">
                             <div className="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
                                 <img src={er_img_data} width="200px" height="200x" alt='' />
@@ -86,39 +121,182 @@ const JobDetail = (props) => {
                             </div>
                         </div>
                         {/* </div> */}
-                        <div className="nav nav-tabs" style={{ marginTop: "10px", marginBottom: "30px" }}></div>
                     </div>
-                    <FormGroup>
-                        <Label for="Text" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Job Description</Label>
-                        <h5>{job_description}</h5>
-                    </FormGroup>
+                    <JobDetailPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler}/>
 
-                    <FormGroup>
-                        <Label for="Years of Experience" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Years of Experience</Label>
-                        <h5>{req_exp}</h5>
-                    </FormGroup>
+                    {toggleAbout &&
+                    <div>
+                      <div className="row">
+                        <FormGroup>
+                          <Card style={{ width: "600px", marginBottom: "30px" }}>
+                            <CardActionArea>
 
-                    <FormGroup>
-                        <Label for="Expected Salary" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Salary</Label>
-                        <h5>{expect_salary} {job_salary_type}</h5>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="employmentType" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Employment Type</Label>
-                        <h5>{job_type}</h5>
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Job Description:
+                                 <br/> {job_description}
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
 
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="JobFunction" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>JobFunction</Label>
-                        <h5>{job_function}</h5>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="preferworklocation" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Work Period</Label>
-                        <h5>{work_period}</h5>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="preferworklocation" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "20px" }}>Work Location</Label>
-                        <h5>{job_location}</h5>
-                    </FormGroup>
+
+                            </CardActions>
+                          </Card>
+                        </FormGroup>
+                      </div>
+                      <div className="row" style={{ marginTop: "20px" }}>
+                        <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Required Experience
+                                <br/> {req_exp} Years
+                                </Typography>
+                            </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                        </FormGroup>
+
+                      </div>
+                      <div className="row" style={{ marginTop: "20px" }}>
+                        <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Job Function:
+                                  <br/> {job_function}
+                                </Typography>
+                            </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
+                            <Label for="industry">Job Function</Label>
+                          </div>
+                          <div className="col-md-6" style={{ marginTop: "10px" }}>
+                            <IndustryTag />
+                          </div> */}
+                        </FormGroup>
+
+                      </div>
+                      <div className="row" style={{ marginTop: "20px" }}>
+
+                        <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Job Type:
+                               <br/>{job_type}
+                                </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                        </FormGroup>
+                      </div>
+                    </div>
+                  }
+                   {toggleContact &&
+                    <div>
+                      <div className="row">
+
+                        <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Expected Salary
+                                <br/> {expect_salary} {job_salary_type}
+
+                                </Typography>
+                              </CardContent>
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
+                            <Label for="email">Email </Label>
+                          </div>
+                          <div className="col-md-6">
+                            <h6 style={{ color: "black", marginTop: "10px" }}> {ee_email} </h6>                         
+                             </div> */}
+                        </FormGroup>
+                      </div>
+                      <div className="row" style={{ marginTop: "20px" }}>
+                        <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Work Period
+                                <br/> {work_period}
+                                </Typography>
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
+                            <Label for="phone">Phone Number</Label>
+                          </div>
+                          <div className="col-md-6">
+                            <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                          </div> */}
+                        </FormGroup>
+                      </div>
+                      <div className="row" style={{ marginTop: "20px" }}>
+                        <FormGroup>
+                          <Card className={classes.root} style={{ width: "600px", marginBottom: "30px", overflow: 'visible' }}>
+                            <CardActionArea>
+
+                              <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Working Location:
+                                <br/>{job_location}
+                                </Typography>
+                              </CardContent>
+
+                            </CardActionArea>
+                            <CardActions>
+
+
+                            </CardActions>
+                          </Card>
+                          {/* <div className="col-md-6">
+                            <Label for="phone">Phone Number</Label>
+                          </div>
+                          <div className="col-md-6">
+                            <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                          </div> */}
+                        </FormGroup>
+                      </div>
+                    </div>
+                  }
+
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>
                         <Button onClick={toggle}>Message</Button>
