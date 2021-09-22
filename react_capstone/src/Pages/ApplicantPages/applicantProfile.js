@@ -401,11 +401,9 @@ const ApplicantProfile = () => {
           </div>
           <div className="row">
             <div className="col-md-4">
-              <div className="profile-work">
+              
 
-        {/* KEEP THIS EMPTY DIV HERE */}
-
-              </div>
+      
             </div>
 
             <div className="col-md-8">

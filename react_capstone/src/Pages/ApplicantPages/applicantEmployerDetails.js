@@ -7,10 +7,11 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import DisabledRating from "../../Components/Rating/DisabledRating";
-import { Pagination, PaginationItem, PaginationLink} from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
+import { CardActions } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -91,7 +92,7 @@ const ApplicantEmployerDetails = () => {
                         <div class="col-md-6">
                             <div class="profile-head">
                                 <FormGroup>
-                                   
+
                                     <h2>{er_name}</h2>
                                     <DisabledRating rating={averageRating} />
                                 </FormGroup>
@@ -109,7 +110,7 @@ const ApplicantEmployerDetails = () => {
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                           {/* KEEP THIS DIV EMPTY */}
+                            {/* KEEP THIS DIV EMPTY */}
                         </div>
 
                         <div class="col-md-8">
@@ -118,33 +119,93 @@ const ApplicantEmployerDetails = () => {
                                     <div>
                                         <div class="row">
                                             <FormGroup>
-                                                <div class="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Company Description:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {comp_description}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div class="col-md-6">
                                                     <Label for="Text">Company Description</Label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{comp_description}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
                                         <div class="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div class="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Industry:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {er_industry}s
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div class="col-md-6">
                                                     <Label for="Industry">Industry</Label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{er_industry}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
 
                                         </div>
                                         <div class="row" style={{ marginTop: "20px" }}>
                                             <FormGroup>
-                                                <div class="col-md-6">
+                                                <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
+                                                    <CardActionArea>
+
+                                                        <CardContent>
+                                                            <Typography gutterBottom variant="h5" component="h2">
+                                                                Location:
+
+                                                            </Typography>
+                                                            <Typography gutterBottom variant="h6" component="h3">
+                                                                {er_location}
+
+                                                            </Typography>
+
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                    <CardActions>
+
+
+                                                    </CardActions>
+                                                </Card>
+                                                {/* <div class="col-md-6">
                                                     <Label for="Location">Location</Label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{er_location}</h6>
-                                                </div>
+                                                </div> */}
                                             </FormGroup>
                                         </div>
 
