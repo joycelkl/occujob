@@ -25,8 +25,6 @@ import authAxios from '../../Redux/authAxios';
 
 const ApplicantProfile = () => {
 
-
-
   //edit comment modal
   const [modal, setModal] = useState(false);
 
@@ -59,7 +57,8 @@ const ApplicantProfile = () => {
   const { loadIndustryThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { applicantGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { applicantCreatedRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
-
+  const { updateApplicantCreatedRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
+  
 
   const applicantCreatedRatingState = useSelector((state) => state.applicantCreatedRating)
   console.log('applicantCreatedRating', applicantCreatedRatingState)
@@ -84,22 +83,7 @@ const ApplicantProfile = () => {
   // Rating
   const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
   console.log("Average", averageRating)
-  //update
-  async function employerRating(er_id, application_id, rating, comments) {
-    console.log("???", er_id, application_id, rating, comments)
-    const authAxiosConfig = await authAxios();
-    return await authAxiosConfig.post('/employee/applicantsGiveRating', {
-      er_id: er_id,
-      application_id: application_id,
-      rate: rating,
-      comment: comments,
 
-    }).then(res => {
-      console.log("POST SUCCESS", res)
-    }).catch(err => {
-      console.log("job posting err res", err.response)
-    })
-  }
 
   let pageSize = 3;
   let pagesCount = applicantRatingState.length > 0 && Math.ceil(applicantRatingState.length / pageSize);
@@ -638,7 +622,7 @@ const ApplicantProfile = () => {
                                 </CardActionArea>
                                 <CardActions>
 
-                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerRating(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast)}>
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => updateApplicantCreatedRatingThunkAction(eachCreatedData.er_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast).then(setInputBoxID('')).then(setComment(''))}>
                                     Update Post
                                   </Button> : null}
                                   <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>

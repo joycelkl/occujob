@@ -202,7 +202,13 @@ const EmployerSearchApplicantProfile = () => {
 
                                                             </Typography>
                                                             <Typography gutterBottom variant="h6" component="h3">
-                                                                {ee_skill}
+                                                                {ee_skill.map((skill, index) => {
+                                                                    if (index === ee_skill.length - 1) {
+                                                                        return skill
+                                                                    } else {
+                                                                        return `${skill} / `
+                                                                    }
+                                                                })}
 
                                                             </Typography>
 
@@ -218,7 +224,7 @@ const EmployerSearchApplicantProfile = () => {
                                                 </div>
                                                 <div className="col-md-6">
                                                     <h6 style={{ marginTop: "10px" }}>{ee_skill}</h6>
-                                                </div> */}
+                                                </div> */}{modalJob.ee_name}
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -263,7 +269,13 @@ const EmployerSearchApplicantProfile = () => {
 
                                                             </Typography>
                                                             <Typography gutterBottom variant="h6" component="h3">
-                                                                {ee_industry}
+                                                                {ee_industry.map((industry, index) => {
+                                                                    if (index === ee_industry.length - 1) {
+                                                                        return industry
+                                                                    } else {
+                                                                        return `${industry} / `
+                                                                    }
+                                                                })}
 
                                                             </Typography>
 
@@ -323,7 +335,14 @@ const EmployerSearchApplicantProfile = () => {
 
                                                             </Typography>
                                                             <Typography gutterBottom variant="h6" component="h3">
-                                                                {availability}
+                                                                {availability.map((available, index) => {
+                                                                    if (index === availability.length - 1) {
+                                                                        return available.charAt(0).toUpperCase() + available.slice(1)
+                                                                    } else {
+                                                                        return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
+                                                                    }
+
+                                                                })}
 
                                                             </Typography>
 
@@ -415,7 +434,7 @@ const EmployerSearchApplicantProfile = () => {
                                                                     </Typography>
                                                                 </CardContent>
                                                             </CardActionArea>
-                                                            
+
                                                         </Card>
                                                     </FormGroup>
 

@@ -35,5 +35,3 @@ export const employerGetRatingThunkAction = () => async(dispatch) => {
         console.error(err)
     }
 }
-
-
