@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FormGroup, Label, Input, Form } from 'reactstrap';
+import { FormGroup, Input, Form } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -19,7 +19,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import authAxios from '../../Redux/authAxios';
 
 
 const EmployerProfilePage = () => {
@@ -34,14 +33,11 @@ const EmployerProfilePage = () => {
   },
 });
 
-
-
 const [currentPage, setCurrentPage] = useState(0);
-function handleClick(e, index) {
 
+function handleClick(e, index) {
   e.preventDefault();
   setCurrentPage(index)
-
 }
 
 const dispatch = useDispatch();
@@ -51,6 +47,9 @@ const dispatch = useDispatch();
   const { loadLocationThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { employerGetRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
   const { employerCreatedRatingThunkAction} = bindActionCreators(actionCreators, dispatch)
+  const { employerUpdateRating} = bindActionCreators(actionCreators, dispatch)
+  
+
   //toast
   const updateToast = () => toast("Profile Updated");
   const updateReviewToast = () => toast("Review Has Been Updated");
@@ -78,29 +77,10 @@ const dispatch = useDispatch();
 
   
 
-
-
   //rating
   const averageRating = employerRatingState.length > 0 && employerRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / employerRatingState.length;
   console.log("Average", averageRating)
 
-
-  //update
-  async function employerUpdateRating(ee_id, application_id, rating, comments) {
-    console.log("???", ee_id, application_id, rating, comments)
-    const authAxiosConfig = await authAxios();
-    return await authAxiosConfig.post('/employer/companyGiveRating', {
-      ee_id: ee_id,
-      application_id: application_id,
-      rate: rating,
-      comment: comments,
-
-    }).then(res => {
-      console.log("POST SUCCESS", res)
-    }).catch(err => {
-      console.log("job posting err res", err.response)
-    })
-  }
 
   let pageSize = 3;
   let pagesCount = employerRatingState.length > 0 && Math.ceil(employerRatingState.length / pageSize);
@@ -338,7 +318,7 @@ const dispatch = useDispatch();
                             currentPage * pageSize,
                             (currentPage + 1) * pageSize
                           )
-                          .map((eachCreatedData) => {
+                          .map((eachCreatedData, index) => {
 
                             console.log('each', eachCreatedData)
 
@@ -362,7 +342,7 @@ const dispatch = useDispatch();
                                     
                                     <h5>{eachCreatedData.comment}</h5>
                                     {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
-                                    {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
+                                    {inputBoxID &&  inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
                                     <br></br>
 
                                     <Typography variant="body2" color="textSecondary" component="p" style={{ color: "black" }}>
@@ -371,7 +351,7 @@ const dispatch = useDispatch();
                                 </CardActionArea>
                                 <CardActions>
 
-                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerUpdateRating(eachCreatedData.ee_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast)}>
+                                  {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Button size="small" color="primary" onClick={() => employerUpdateRating(eachCreatedData.ee_id, eachCreatedData.application_id, eachCreatedData.rate, comments).then(updateReviewToast).then(setInputBoxID(''))}>
                                     Update Post
                                   </Button> : null}
                                   <Button size="small" color="primary" onClick={() => changeInputID(eachCreatedData.rating_id)}>

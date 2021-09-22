@@ -7,8 +7,8 @@ const initialState = {
 const reducer = (state = initialState.employerCreatedRating, action) => {
     switch (action.type) {
         case LOAD_EMPLOYER_CREATED_RATING_SUCCESS_ACTION:
-            console.log('action in port', action)
-            return state.concat(action.payload)
+            console.log('action in rateing port', action.payload)
+            return action.payload
         case LOAD_EMPLOYER_CREATED_RATING_FAIL_ACTION:
             return state;
         default:

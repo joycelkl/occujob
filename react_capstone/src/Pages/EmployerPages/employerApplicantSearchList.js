@@ -67,9 +67,22 @@ const EmployerApplicantSearchList = () => {
                     <tbody>{appSearchState.length > 0 && appSearchState.map((result) => (
                             <tr onClick={() => handleOnclick(result.ee_id)} key={result.ee_id} value={result.ee_id} style={{ cursor: "pointer" }} >
                                 <td>{result.ee_name}</td>
-                                <td>{result.ee_industry}</td>
+                                <td>{result.ee_industry.map((industry, index)=>{
+                                    if (index === result.ee_industry.length-1) {
+                                        return industry
+                                    } else {
+                                        return `${industry} / `
+                                    }
+                                })}</td>
                                 <td>{result.expected_salary} {result.ee_salary_type}</td>
-                                <td>{result.availability}</td>
+                                <td>{result.availability.map((available, index) => {
+                                    if (index === result.availability.length-1) {
+                                        return available.charAt(0).toUpperCase() + available.slice(1)
+                                    } else {
+                                        return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
+                                    }
+
+                                })}</td>
                             </tr>
 
                         ))}
