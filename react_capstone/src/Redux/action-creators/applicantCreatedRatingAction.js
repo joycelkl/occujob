@@ -36,4 +36,22 @@ export const applicantCreatedRatingThunkAction = () => async(dispatch) => {
     }
 }
 
-
+export const updateApplicantCreatedRatingThunkAction = (er_id, application_id, rating, comments) => async(dispatch) => {
+    console.log("Update Applicant's giving Rates")
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.post('/employee/applicantsGiveRating', {
+            er_id: er_id,
+            application_id: application_id,
+            rate: rating,
+            comment: comments,
+        }).then(res => {
+            dispatch(loadApplicantCreatedRatingSuccessAction(res.data))
+        }).catch(err => {
+            console.log("Applicant Rating load err res", err.response)
+            dispatch(loadApplicantCreatedRatingFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
