@@ -15,7 +15,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import ApplicantPortfolioTable from "../Components/PortfolioTable";
+import JobDetailPortfolioTable from "../Components/PortfolioTablejobDetail";
 import "../Pages/EmployerPages/employerProfilePage.css"
 
 
@@ -121,9 +121,8 @@ const JobDetail = (props) => {
                             </div>
                         </div>
                         {/* </div> */}
-                        <div className="nav nav-tabs" style={{ marginTop: "10px", marginBottom: "30px" }}></div>
                     </div>
-                    <ApplicantPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler}/>
+                    <JobDetailPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler}/>
 
                     {toggleAbout &&
                     <div>

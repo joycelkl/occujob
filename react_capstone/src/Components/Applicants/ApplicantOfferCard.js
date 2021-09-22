@@ -54,7 +54,7 @@ const ApplicantOfferCard = (props) => {
 
     function returnComment(application_id) {
         let object = applicantCreatedRatingState > 0 ? applicantCreatedRatingState.filter(data => data.application_id === application_id)[0].comment : "Please Fill in Your Comment"
-        console.log("??????????",object)   
+        return object  
     }
 
     //to employer profile page
@@ -191,10 +191,8 @@ const ApplicantOfferCard = (props) => {
                                 <ModalHeader>Ratings</ModalHeader>
                                 <ModalBody className='smallModal'>
                                     <ControlledRating ratingValue={(value) => setRating(value)} />
-                                </ModalBody>
-                                <ModalBody className='smallModal'>
-                                    <h1>Comments:</h1>
-                                    <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder={ applicantCreatedRatingState.length > 0 ? returnComment(application_id): " Please Give Your Comment Here "} value={comment} onChange={(e) => setComment(e.target.value)} />
+                                    <h6>Comments:</h6>
+                                    <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder={ applicantCreatedRatingState.length > 0 ? returnComment(application_id): "Please Give Your Comment Here"} value={comment} onChange={(e) => setComment(e.target.value)} />
                                 </ModalBody>
                                 <ModalFooter className='smallModal'>
                                     <Button color="primary" onClick={() => employerRating(er_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}

@@ -195,8 +195,13 @@ const EmployerEditPost = () => {
    
     function returnComment(application_id) {
         console.log("running")
-        let object = employerCreatedRatingState.length > 0 ? employerCreatedRatingState.filter(data => data.application_id === application_id)[0].comment : ""
-        return object   
+        if(employerCreatedRatingState.length > 0){
+        let object = employerCreatedRatingState.filter(data => data.application_id === application_id)[0].comment
+        return object}
+        else {
+            let object = "Please Give Your Comment Here"
+            return object
+        }
     }
     return (
         <div>
@@ -364,7 +369,6 @@ const EmployerEditPost = () => {
                                                     <Label for="Skill">No. of Year of Working Experience</Label>
                                                 </div>
                                                 <div className="col-md-6">
-
                                                     <h6 style={{ marginTop: "10px" }}>{modalJob.ee_exp}</h6>
                                                 </div>
                                             </FormGroup>
@@ -431,7 +435,7 @@ const EmployerEditPost = () => {
                                             <ModalBody className='smallModal'>
                                                 <h1>Comments: </h1>
                                                 
-                                                <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder={ employerCreatedRatingState.length > 0 ? returnComment(application_id): ""} value={comment} onChange={(e) => setComment(e.target.value)} />
+                                                <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder={ employerCreatedRatingState.length > 0 ? returnComment(application_id): "Please Give Your Comment Here"} value={comment} onChange={(e) => setComment(e.target.value)} />
                                             </ModalBody>
                                             <ModalFooter className='smallModal'>
                                                 <Button color="primary" onClick={() => applicantRating(ee_id, application_id, rating, comment).then(rateToast()).then(toggleNested)}>Rate</Button>{' '}
