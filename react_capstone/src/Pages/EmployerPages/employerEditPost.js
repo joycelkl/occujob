@@ -365,7 +365,13 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.ee_skill}
+                                {modalJob.ee_skill ? modalJob.ee_skill.map((skill, index) => {
+                                                                    if (index === modalJob.ee_skill.length - 1) {
+                                                                        return skill
+                                                                    } else {
+                                                                        return `${skill} / `
+                                                                    }
+                                                                }) : null}
 
                                 </Typography>
                                 
@@ -415,7 +421,13 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.ee_industry}
+                                {modalJob.ee_industry ? modalJob.ee_industry.map((industry, index) => {
+                                                                    if (index === modalJob.ee_industry.length - 1) {
+                                                                        return industry
+                                                                    } else {
+                                                                        return `${industry} / `
+                                                                    }
+                                                                }) : null}
 
                                 </Typography>
                                 
@@ -465,7 +477,13 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.availability}
+                                {modalJob.availability ? modalJob.availability.map((available, index)=>{
+                                    if (index === modalJob.availability.length-1) {
+                                        return available.charAt(0).toUpperCase() + available.slice(1)
+                                    } else {
+                                        return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
+                                    }
+                                }): null}
 
                                 </Typography>
                                 
