@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Form, FormGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import EmployerNavbar from "../../Components/Navbar/navbarEmployer";
 import './employerProfilePage.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -58,6 +58,8 @@ const EmployerSearchApplicantProfile = () => {
     const { erViewEeRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
+
+    console.log('data of applicant', ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill )
 
     const applicantRatingState = useSelector((state) => state.erViewEeRating)
     console.log('applicantRating', applicantRatingState)

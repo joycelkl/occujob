@@ -823,7 +823,7 @@ const ApplicantProfile = () => {
                                 </Typography>
 
                                 <Input style={{ marginTop: "10px" }} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
-                                  <option value={null} selected>Please select</option>
+                                  <option defaultValue={null}>Please select</option>
                                   <option value={'perJob'}>Per Job</option>
                                   <option value={'perHour'}>Per Hour</option>
                                 </Input>
@@ -929,7 +929,7 @@ const ApplicantProfile = () => {
                                 </Typography>
 
                                 <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                                  <option value={null} selected>Please select</option>
+                                  <option defaultValue={null}>Please select</option>
                                   {locationState.length > 0 ? locationState.map((location, i) => (
                                     <option key={i} value={location.location}>{location.location}</option>
                                   )) : "loading..."}

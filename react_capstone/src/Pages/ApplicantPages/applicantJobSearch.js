@@ -155,14 +155,15 @@ const ApplicantJobSearch = () => {
     }
     console.log('worklocation', worklocation)
     
-    console.log('submitted', jobTitleTag, companyNameArr, jobFunctionArr,jobType,worklocationArr, salaryType,expSalary )
+    console.log('submitted', 'jobtitle :',jobTitleTag, 'companyName :', companyName, 'jobFunction',jobFunction,'jobType',jobType,'worklocation',worklocation, 'salaryType:',salaryType, 'expSalary:',expSalary )
 
-    const searchObject = {jobTitleTag, companyNameArr, jobFunctionArr,jobType,worklocationArr, salaryType,expSalary}
+    const searchObject = {jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary}
     
     localStorage.setItem('jobSearch', JSON.stringify(searchObject))
 
     appJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
       .then(() => {
+        console.log('search result')
         history.push('/ApplicantJobSearchResult')
       })
    }

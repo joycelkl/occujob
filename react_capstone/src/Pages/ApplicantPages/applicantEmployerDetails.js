@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, FormGroup, Label } from 'reactstrap';
+import { Form, FormGroup} from 'reactstrap';
 import ApplicantNavbar from '../../Components/Navbar/navbarApplicant';
 import '../EmployerPages/employerProfilePage.css'
 import { useSelector } from 'react-redux';
@@ -66,17 +66,13 @@ const ApplicantEmployerDetails = () => {
     const aboutHandler = () => {
         setToggleAbout(true);
         setToggleComments(false);
-
-
-
     };
+
     const commentsHandler = () => {
         setToggleComments(true);
         setToggleAbout(false);
-
-
-
     };
+
     return (
         <div>
             <ApplicantNavbar />
