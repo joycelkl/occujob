@@ -217,7 +217,9 @@ const JobDetail = (props) => {
                     </div>
                   }
                    {toggleContact &&
-                    <div>
+                    <div className="row">
+                      <div className="col-md-3"></div>
+                    <div className="col-md-8">
                       <div className="row">
 
                         <FormGroup>
@@ -296,6 +298,7 @@ const JobDetail = (props) => {
                             <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                           </div> */}
                         </FormGroup>
+                      </div>
                       </div>
                     </div>
                   }
