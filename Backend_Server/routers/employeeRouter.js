@@ -45,7 +45,6 @@ class EmployeeRouter {
             //list all job match search param
             console.log('posting to searchresult', req.body)
 
-            // res.end()
             return this.employeeService
                 .searchJob(req.body)
                 .then((job) => {

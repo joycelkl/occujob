@@ -144,7 +144,6 @@ class RatingServices {
             })
             .returning('*')
             .then((updatedJob) => {
-                // id = encryptFunction.encryptString(id)
                 console.log('upatedjob', updatedJob)
                 return updatedJob;
             })
@@ -152,8 +151,6 @@ class RatingServices {
                 throw new Error(err)
             });
     }
-
-
 
 
     //please do not amend this
