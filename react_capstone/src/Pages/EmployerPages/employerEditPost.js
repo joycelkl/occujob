@@ -301,7 +301,7 @@ const EmployerEditPost = () => {
                             </thead>
 
                             <tbody>
-                                {indJobState.length ? indJobState.map((job) => (
+                                {indJobState.length>0 && indJobState[0].ee_name !== undefined? indJobState.map((job) => (
                                     <tr onClick={() => {
                                         setModalJob(job)
                                         toggle(job.ee_name)
@@ -314,7 +314,7 @@ const EmployerEditPost = () => {
                                         {job.reply === true ? <td>Accepted </td> : (job.reply === false ? <td>Declined</td> : <td> No Reply</td>)}
                                     </tr>
 
-                                )) : "Waiting for Applicant Apply"}
+                                )) : <tr><td style={{textAlign: "center"}} colSpan="4">Waiting for Applicant Apply</td></tr>}
                                 <Modal isOpen={modal} toggle={toggle} fade={false} className='modal-sandbox'>
                                 <ModalBody className='modal-content'>    
                                     <div className="row">

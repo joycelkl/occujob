@@ -218,20 +218,14 @@ const dispatch = useDispatch();
             <div className="col-md-6">
               <div className="profile-head">
                 <FormGroup>
-
-                  <h2>{name}</h2>
+                <h3 style={{marginBottom:'10px'}}>Company's Name:</h3>
+                  <h3 style={{marginBottom:'10px'}}>{name}</h3>
                 </FormGroup>
-                {/* <h6>
-                  Web Developer and Designer
-                </h6> */}
-                
-
-
-
                 <DisabledRating
                   rating={averageRating}
                 />
-                <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} commentsHandler={commentsHandler} employerReviewsHandler={employerReviewsHandler} />
+               <EmployerPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} commentsHandler={commentsHandler} employerReviewsHandler={employerReviewsHandler} className="display:flex; align-items:flexend"/>
+
               </div>
             </div>
 
