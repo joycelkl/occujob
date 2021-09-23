@@ -38,19 +38,6 @@ class EmployerRouter {
 
         });
 
-        //no tested yet will need to change the img save to cloud
-        //url should be text
-        // router.post('/profile/img', (req, res) => {
-        //     console.log("uploading img")
-        //     return this.employerServices.updateImg(req.user.id, req.files.img.data)
-        //         .then((updated) => {
-        //             return res.json(updated)
-        //         })
-        //         .catch((err) => {
-        //             res.status(500).json(err)
-        //         });
-        // });
-
         //tested ok
         router.get('/job/list', (req, res) => {
             //load all posted jobs
@@ -62,12 +49,6 @@ class EmployerRouter {
                     res.status(500).json(err)
                 });
         });
-
-        // Provided by React
-        // router.get('/job/posting', (req, res) => {
-        //     //load job posting page
-        //     return res.render('jobPostFrom', { layout: 'Employer' })
-        // })
 
         //tested ok
         router.post('/job/posting', (req, res) => {
@@ -100,13 +81,6 @@ class EmployerRouter {
             //load applied candidate table
             return this.employerServices.jobDetail(req.params.job_id)
                 .then((jobInfo_applydetail) => {
-                    // return res.json(jobInfo_applydetail)
-
-                    // let eeid = jobInfo_applydetail[0].employee_id;
-                    // let eeExist = true;
-                    // if (eeid == undefined) {
-                    //     eeExist = false;
-                    // }
 
                     return res.json(jobInfo_applydetail)
                 })
@@ -186,13 +160,8 @@ class EmployerRouter {
                 });
         })
 
-        //Optional function *** Candidate search
-        //Frontend will handle this page
-        // router.get('/candidateSearch', (req, res) => {
-        //     return res.render('erCandidateSearch', { layout: 'Employer' })
-        // })
 
-        //to be rewrited?????
+        //rewrote
         router.post('/candidateSearch', (req, res) => {
             //req.body = expectedSalary, jobFunction
 
@@ -233,7 +202,7 @@ class EmployerRouter {
                     res.status(500).json(err)
                 })
         })
-        
+
         return router;
     }
 

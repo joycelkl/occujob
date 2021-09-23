@@ -42,7 +42,7 @@ const EmployerApplicantSearchList = () => {
             </section>
             <div className="row" style={{ display: "flex", justifyContent: "center" }}>
 
-            {appSearchState.length > 0 && appSearchState.map(applicant=> <ApplicantCard applicant={applicant}/>)}
+            {appSearchState.length > 0 && appSearchState.map((applicant, index)=> <ApplicantCard key={index} applicant={applicant}/>)}
 
             </div>
 

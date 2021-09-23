@@ -150,8 +150,8 @@ const EmployerCreateJobPage = () => {
                             <FormGroup>
                                 <Label style={{marginTop:"10px", fontWeight:"bold", fontSize:"20px", marginBottom:"10px", color:"white"}} for="salaryType">Expected Salary Type </Label>
                                 <Input type="select" name="salaryType" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
-                                    <option value={null} selected>Please select</option>
-                                    <option value={'perJob'} selected> Per Job </option>
+                                    <option defaultValue={null}>Please select</option>
+                                    <option value={'perJob'} > Per Job </option>
                                     <option value={'perHour'}> Per Hour</option>
                                 </Input>
                             </FormGroup>
@@ -162,9 +162,9 @@ const EmployerCreateJobPage = () => {
                             <FormGroup>
                                 <Label style={{marginTop:"10px", fontWeight:"bold", fontSize:"20px", marginBottom:"10px", color:"white"}} for="employmentType">Employment Type</Label>
                                 <Input type="select" name="employmentType" id="employmentType" value={empType} onChange={(e) => setEmpType(e.target.value)}>
-                                    <option value={null} selected>Please select</option>
-                                    <option selected>Freelance</option>
-                                    <option>Part-Time</option>
+                                    <option defaultValue={null} >Please select</option>
+                                    <option value={'Freelance'}>Freelance</option>
+                                    <option value={'PartTime'}>Part-Time</option>
                                 </Input>
                             </FormGroup>
                             <FormGroup>
@@ -178,9 +178,9 @@ const EmployerCreateJobPage = () => {
                             <FormGroup>
                                 <Label style={{marginTop:"10px", fontWeight:"bold", fontSize:"20px", marginBottom:"10px", color:"white"}} for="preferworklocation">Work Location</Label>
                                 <Input type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                                    <option value={null} selected>Please select</option>
+                                    <option defaultValue={null} >Please select</option>
                                     {locationState.length > 0 ? locationState.map((location, i) => (
-                                        <option key={i} value={location.location} selected>{location.location}</option>
+                                        <option key={i} value={location.location}>{location.location}</option>
                                     )) : "loading..."}
                                 </Input>
                             </FormGroup>

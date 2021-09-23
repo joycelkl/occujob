@@ -163,67 +163,81 @@ class EmployeeService {
         }
         console.log('locationArr', locationArr)
 
-        if (jobTitle.length === 0 && company === null && jobType === '' && salaryType === '' && salary === '' && jobFunction === null && location === null) {
-            return this.knex('job')
-                .join('employer', 'job.employer_id', '=', 'employer.er_id')
-                .where('job.status', true)
-                .select('job.*', 'employer.er_name', 'employer.er_img_data')
-                .orderBy('job.updated_at', 'desc')
-                .then((jobList) => {
-                    console.log('all null', jobList)
-                    return jobList
-                }).catch(err => console.log(err))
+        let salaryCri
+        if (salary == '') {
+            salaryCri = 0;
+        } else {
+            salaryCri = Number(salary)
         }
 
-        if (salaryType == '') {
+        if (jobType == '' && salaryType == '') {
             return this.knex('job')
                 .join('employer', 'job.employer_id', '=', 'employer.er_id')
                 .select('job.*', 'employer.er_name', 'employer.er_img_data')
-                .andWhere('job.status', true)
-                .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
-                .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
-                .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
-                .andWhere('employer.er_name', companyArr[0])
-                .andWhere('employer.er_name', companyArr[1])
-                .andWhere('employer.er_name', companyArr[2])
-                .orWhere('job.job_function', jobFunctionArr[0])
-                .orWhere('job.job_function', jobFunctionArr[1])
-                .orWhere('job.job_function', jobFunctionArr[2])
-                .orWhere('job.job_location', locationArr[0])
-                .orWhere('job.job_location', locationArr[1])
-                .orWhere('job.job_location', locationArr[2])
-                .andWhere('job.job_type', jobType)
-                .orderBy('job.updated_at', 'desc')
-                .then((jobList) => {
-                    console.log('no salaryType', jobList)
-                    return jobList
-                }).catch(err => console.log(err))
-        } else {
-            return this.knex('job')
-                .join('employer', 'job.employer_id', '=', 'employer.er_id')
-                .select('job.*', 'employer.er_name', 'employer.er_img_data')
-                .andWhere('job.status', true)
-                .orWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`)
-                .orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`)
-                .orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`)
-                .orWhere('employer.er_name', companyArr[0])
-                .orWhere('employer.er_name', companyArr[1])
-                .orWhere('employer.er_name', companyArr[2])
-                .orWhere('job.job_function', jobFunctionArr[0])
-                .orWhere('job.job_function', jobFunctionArr[1])
-                .orWhere('job.job_function', jobFunctionArr[2])
-                .orWhere('job.job_location', locationArr[0])
-                .orWhere('job.job_location', locationArr[1])
-                .orWhere('job.job_location', locationArr[2])
-                .andWhere('job.job_type', jobType)
-                .andWhere('job.job_salary_type', salaryType)
-                .andWhere('job.expect_salary', '>=', salary)
+                .where('job.status', true)
+                .andWhere(function() { this.andWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`) })
+                .andWhere(function() { this.andWhere('employer.er_name', 'like', `%${companyArr[0]}%`).orWhere('employer.er_name', 'like', `%${companyArr[1]}%`).orWhere('employer.er_name', 'like', `%${companyArr[2]}%`) })
+                .andWhere(function() { this.andWhere('job.job_function', 'like', `%${jobFunctionArr[0]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[1]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[2]}%`) })
+                .andWhere(function() { this.andWhere('job.job_location', 'like', `%${locationArr[0]}%`).orWhere('job.job_location', 'like', `%${locationArr[1]}%`).orWhere('job.job_location', 'like', `%${locationArr[2]}%`) })
+                .andWhere('job.expect_salary', '>=', salaryCri)
                 .orderBy('job.updated_at', 'desc')
                 .then((jobList) => {
                     console.log('with SalaryType', jobList)
                     return jobList
                 }).catch(err => console.log(err))
+        } else {
+            if (jobType == '') {
+                return this.knex('job')
+                    .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                    .select('job.*', 'employer.er_name', 'employer.er_img_data')
+                    .where('job.status', true)
+                    .andWhere(function() { this.andWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('employer.er_name', 'like', `%${companyArr[0]}%`).orWhere('employer.er_name', 'like', `%${companyArr[1]}%`).orWhere('employer.er_name', 'like', `%${companyArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('job.job_function', 'like', `%${jobFunctionArr[0]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[1]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('job.job_location', 'like', `%${locationArr[0]}%`).orWhere('job.job_location', 'like', `%${locationArr[1]}%`).orWhere('job.job_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('job.job_salary_type', salaryType)
+                    .andWhere('job.expect_salary', '>=', salaryCri)
+                    .orderBy('job.updated_at', 'desc')
+                    .then((jobList) => {
+                        console.log('with SalaryType', jobList)
+                        return jobList
+                    }).catch(err => console.log(err))
+            } else if (salaryType == '') {
+                return this.knex('job')
+                    .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                    .select('job.*', 'employer.er_name', 'employer.er_img_data')
+                    .where('job.status', true)
+                    .andWhere(function() { this.andWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('employer.er_name', 'like', `%${companyArr[0]}%`).orWhere('employer.er_name', 'like', `%${companyArr[1]}%`).orWhere('employer.er_name', 'like', `%${companyArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('job.job_function', 'like', `%${jobFunctionArr[0]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[1]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('job.job_location', 'like', `%${locationArr[0]}%`).orWhere('job.job_location', 'like', `%${locationArr[1]}%`).orWhere('job.job_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('job.job_type', jobType)
+                    .andWhere('job.expect_salary', '>=', salaryCri)
+                    .orderBy('job.updated_at', 'desc')
+                    .then((jobList) => {
+                        console.log('with SalaryType', jobList)
+                        return jobList
+                    }).catch(err => console.log(err))
+            } else {
+                return this.knex('job')
+                    .join('employer', 'job.employer_id', '=', 'employer.er_id')
+                    .select('job.*', 'employer.er_name', 'employer.er_img_data')
+                    .where('job.status', true)
+                    .andWhere(function() { this.andWhere('job.job_title', 'like', `%${jobTitleArr[0]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[1]}%`).orWhere('job.job_title', 'like', `%${jobTitleArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('employer.er_name', 'like', `%${companyArr[0]}%`).orWhere('employer.er_name', 'like', `%${companyArr[1]}%`).orWhere('employer.er_name', 'like', `%${companyArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('job.job_function', 'like', `%${jobFunctionArr[0]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[1]}%`).orWhere('job.job_function', 'like', `%${jobFunctionArr[2]}%`) })
+                    .andWhere(function() { this.andWhere('job.job_location', 'like', `%${locationArr[0]}%`).orWhere('job.job_location', 'like', `%${locationArr[1]}%`).orWhere('job.job_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('job.job_type', jobType)
+                    .andWhere('job.job_salary_type', salaryType)
+                    .andWhere('job.expect_salary', '>=', salaryCri)
+                    .orderBy('job.updated_at', 'desc')
+                    .then((jobList) => {
+                        console.log('with SalaryType', jobList)
+                        return jobList
+                    }).catch(err => console.log(err))
+            }
         }
+
 
     }
 

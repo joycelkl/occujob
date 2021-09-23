@@ -44,6 +44,7 @@ class EmployeeRouter {
         router.post('/search/result', (req, res) => {
             //list all job match search param
             console.log('posting to searchresult', req.body)
+
             return this.employeeService
                 .searchJob(req.body)
                 .then((job) => {
@@ -126,8 +127,8 @@ class EmployeeRouter {
         router.get('/home', (req, res) => {
 
             console.log('home run', req.user)
-            //list job details via application id 
-                return this.employeeService
+                //list job details via application id 
+            return this.employeeService
                 .homeJobList()
                 .then((jobDetail) => {
                     return res.json(jobDetail)
