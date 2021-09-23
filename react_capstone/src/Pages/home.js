@@ -43,8 +43,8 @@ const Home = () => {
 
 
                 <div className="text-box" id="home">
-                    <h1>HKFreelancer</h1>
-                    <p>Welcome to FreeLancer</p>
+                    <h1>OccuJob</h1>
+                    <p>Welcome to OccuJob</p>
                     <a href="/applicantSignup" className="Homebtn">Applicant Sign Up</a>
                     <a href="/employerSignup" className="Homebtn2">Employer Sign Up</a>
 

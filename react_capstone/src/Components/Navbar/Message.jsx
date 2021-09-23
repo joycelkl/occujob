@@ -27,8 +27,8 @@ const Message = (props) => {
 
     return (
         <>
-        {userType === 'er' ? (<NavLink exact to="/employerChatMessage" activeClassName="active" style={{textDecoration:"none", color:"#fff",  padding:"5px 10px", marginLeft:"20px", fontSize:"20px", fontWeight:"500", listStyleType:"none", display:"flex", justifyContent:"space-between", alignItems:"center", cursor:"pointer", marginBottom:"3px"}} key='message' >{navUnreadCount > 0 ? `New Message ${navUnreadCount}` : 'Message' }</ NavLink>) :
-        (<NavLink exact to='/applicantChatMessage'  activeClassName="active" style={{textDecoration:"none", color:"#fff",  padding:"5px 10px", marginLeft:"20px", fontSize:"20px", fontWeight:"500", listStyleType:"none", display:"flex", justifyContent:"space-between", alignItems:"center", cursor:"pointer", marginBottom:"3px"}} key='message' >{navUnreadCount > 0 ? `New Message ${navUnreadCount}` : 'Message' }</ NavLink>)}
+        {userType === 'er' ? (<NavLink exact to="/employerChatMessage" activeClassName="active" style={{marginTop:'3px',textDecoration:"none", color:"#fff",  padding:"5px 10px", marginLeft:"20px", fontSize:"20px", fontWeight:"500", listStyleType:"none", display:"flex", justifyContent:"space-between", alignItems:"center", cursor:"pointer", marginBottom:"3px"}} key='message' >{navUnreadCount > 0 ? `New Messages ${navUnreadCount}` : 'Messages' }</ NavLink>) :
+        (<NavLink exact to='/applicantChatMessage'  activeClassName="active" style={{marginTop:'3px', textDecoration:"none", color:"#fff",  padding:"5px 10px", marginLeft:"20px", fontSize:"20px", fontWeight:"500", listStyleType:"none", display:"flex", justifyContent:"space-between", alignItems:"center", cursor:"pointer", marginBottom:"3px"}} key='message' >{navUnreadCount > 0 ? `New Messages ${navUnreadCount}` : 'Messages' }</ NavLink>)}
         </>
     )
 }
