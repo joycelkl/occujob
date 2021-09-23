@@ -23,14 +23,14 @@ export const loadAppPortfolioFailAction = () => {
 
 //Load Applicant Portfolio
 export const loadAppPortfolioThunkAction = () => async(dispatch) => {
-    console.log("Applicant Profile Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employee/portfolio').then(res => {
-            console.log('res in getting port', res)
+
             dispatch(loadAppPortfolioSuccessAction(res.data))
-        }).catch(err => {
-            console.log("applicant portfolio load err res", err.response)
+        }).catch(() => {
+
             dispatch(loadAppPortfolioFailAction())
         })
     } catch (err) {
@@ -51,7 +51,7 @@ export const addAppPortfolioSuccessAction = (portfolio) => {
 
 //add portfolio
 export const addAppPortfolioThunkAction = (pName, pDes, purl) => async(dispatch) => {
-    console.log("ER Profile Load", pName, pDes, purl)
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employee/portfolio/add', {
@@ -59,10 +59,10 @@ export const addAppPortfolioThunkAction = (pName, pDes, purl) => async(dispatch)
             pDes: pDes,
             purl: purl
         }).then(res => {
-            console.log('res in adding p', res)
+
             dispatch(addAppPortfolioSuccessAction(res.data))
-        }).catch(err => {
-            console.log("applicant portfolio add err res", err.response)
+        }).catch(() => {
+
             dispatch(loadAppPortfolioFailAction())
         })
     } catch (err) {
@@ -73,7 +73,7 @@ export const addAppPortfolioThunkAction = (pName, pDes, purl) => async(dispatch)
 
 //update portfolio
 export const updateAppPortfolioThunkAction = (p_id, pName, pDes, purl) => async(dispatch) => {
-    console.log("ER Profile Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employee/portfolio/update', {
@@ -83,8 +83,8 @@ export const updateAppPortfolioThunkAction = (p_id, pName, pDes, purl) => async(
             purl: purl
         }).then(res => {
             dispatch(loadAppPortfolioSuccessAction(res.data))
-        }).catch(err => {
-            console.log("applicant portfolio update err res", err.response)
+        }).catch(() => {
+
             dispatch(loadAppPortfolioFailAction())
         })
     } catch (err) {
@@ -105,15 +105,14 @@ export const deleteAppPortfolioSuccessAction = (portfolio) => {
 
 //delete portfolio
 export const deleteAppPortfolioThunkAction = (p_id) => async(dispatch) => {
-    console.log("ER Profile Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employee/portfolio/delete', {
             p_id: p_id
         }).then(res => {
             dispatch(deleteAppPortfolioSuccessAction(res.data))
-        }).catch(err => {
-            console.log("applicant portfolio delete err res", err.response)
+        }).catch(() => {
             dispatch(loadAppPortfolioFailAction())
         })
     } catch (err) {

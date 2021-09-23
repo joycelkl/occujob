@@ -30,10 +30,9 @@ const ApplicantOfferCard = (props) => {
 
 
     const { offerCard } = props;
-    const { job_salary_type,job_function, reply, job_title, job_id, er_id, er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id } = offerCard;
+    const { job_salary_type,job_function, reply, job_title, er_id, er_name, created_at, job_type, job_location, er_img_data, offer, job_description,  expect_salary, req_exp, application_id } = offerCard;
 
-    console.log("testoffer", offer)
-    console.log('data', job_title, job_id, er_id,er_name, created_at, job_type, job_location, er_img_data, offer, job_description, work_period, expect_salary, req_exp, application_id)
+   
     const [modal, setModal] = useState(false);
     const [nestedModal, setNestedModal] = useState(false);
     const [closeAll, setCloseAll] = useState(false);
@@ -41,13 +40,14 @@ const ApplicantOfferCard = (props) => {
     const toggle = () => setModal(!modal);
     const [comment, setComment] = useState('')
 
-    console.log("RATING PASSED FROM CHILD", rating)
+   
     const toggleNested = () => {
         setNestedModal(!nestedModal);
         setCloseAll(false);
     }
     useEffect(() => {
     applicantCreatedRatingThunkAction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     //load comment if there was comment
     const applicantCreatedRatingState = useSelector((state) => state.applicantCreatedRating)
@@ -65,7 +65,6 @@ const ApplicantOfferCard = (props) => {
     //to employer profile page
     const history = useHistory();
     function handleOnClick() {
-        console.log('this is for applicant')
         loadErProfileforAppThunkAction(er_id).then(() => {
             history.push('/applicantEmployerDetails')
         })
@@ -73,14 +72,12 @@ const ApplicantOfferCard = (props) => {
 
 
     function handleAccept() {
-        console.log('application id', application_id)
         acceptToast()
         offerAcceptAction(application_id)
         setModal(false)
     }
 
     function handleDecline() {
-        console.log('application id', application_id)
         declineToast()
         offerDeclineAction(application_id)
         setModal(false)
@@ -99,11 +96,6 @@ const ApplicantOfferCard = (props) => {
             application_id: application_id,
             rate: rating,
             comment: comment,
-
-        }).then(res => {
-            console.log("POST SUCCESS", res)
-        }).catch(err => {
-            console.log("job posting err res", err.response)
         })
     }
 

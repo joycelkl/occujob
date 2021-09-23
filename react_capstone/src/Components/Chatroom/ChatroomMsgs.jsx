@@ -4,10 +4,6 @@ import './css/ChatroomMsgs.scss'
 
 
 const ChatroomMsgs = ({messages, userType, chatterImg, userImg}) => {
-
-    console.log('imgData in msgbox', chatterImg, userImg)
-
-    console.log('messages in chatroomMsgs', messages)
     
     return (
         <>

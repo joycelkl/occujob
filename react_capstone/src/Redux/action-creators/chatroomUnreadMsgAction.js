@@ -3,7 +3,7 @@ import authAxios from '../authAxios'
 export const LOAD_UNREAD_MSG_SUCCESS_ACTION = 'LOAD_UNREAD_MSG_SUCCESS';
 
 export const loadUnreadMsgSuccessAction = (unreadMsg) => {
-    console.log("CHECKING UNREAD MESSAGE COUNT", unreadMsg)
+
     return (dispatch) => {
         dispatch({
             type: LOAD_UNREAD_MSG_SUCCESS_ACTION,
@@ -24,14 +24,12 @@ export const loadUnreadMsgFailAction = () => {
 
 //Load unread Messages
 export const loadUnreadMsgThunkAction = (chatroomID) => async(dispatch) => {
-    console.log("UnreadMsg count Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get(`chat/getUnreadMsg/${chatroomID}`).then(res => {
-            console.log('unreadMsgs res.data', res.data[0].count)
             dispatch(loadUnreadMsgSuccessAction(res.data[0].count))
-        }).catch(err => {
-            console.log("chatroom history load err res", err.response)
+        }).catch(() => {
             dispatch(loadUnreadMsgFailAction())
         })
     } catch (err) {
@@ -43,7 +41,7 @@ export const loadUnreadMsgThunkAction = (chatroomID) => async(dispatch) => {
 export const RESET_UNREAD_MSG_SUCCESS_ACTION = 'RESET_UNREAD_MSG_SUCCESS';
 
 export const resetUnreadMsgSuccessAction = (unreadMsg) => {
-    console.log("RESET UNREAD MSG COUNT", unreadMsg)
+
     return (dispatch) => {
         dispatch({
             type: RESET_UNREAD_MSG_SUCCESS_ACTION,
@@ -54,14 +52,14 @@ export const resetUnreadMsgSuccessAction = (unreadMsg) => {
 
 //update unread Messages
 export const resetUnreadMsgThunkAction = (chatroomID) => async(dispatch) => {
-    console.log("UnreadMsg count Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.put(`chat/resetUnreadMsg/${chatroomID}`).then(res => {
-            console.log('unreadMsgs res.data', res.data)
+
             dispatch(resetUnreadMsgSuccessAction(res.data))
-        }).catch(err => {
-            console.log("chatroom history load err res", err.response)
+        }).catch(() => {
+
             dispatch(loadUnreadMsgFailAction())
         })
     } catch (err) {

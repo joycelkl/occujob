@@ -14,6 +14,8 @@ const Home = () => {
     const dispatch = useDispatch();
 
     const { loadPublicJobThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { loadPublicJobSuccessAction } = bindActionCreators(actionCreators, dispatch)
+    
     let pageSize = 6;
     let pagesCount = publicJobState.length > 0 && Math.ceil(publicJobState.length / pageSize);
 
@@ -29,11 +31,12 @@ const Home = () => {
     }
     useEffect(() => {
         loadPublicJobThunkAction();
+        return()=>{
+            loadPublicJobSuccessAction([])
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // tested work, Zach please map the data to display in home page
-    console.log('public Job', publicJobState)
 
 
     return (
@@ -98,12 +101,6 @@ const Home = () => {
                     </Pagination>
                 </div>
 
-                {/* {publicJobState.length > 0 ? publicJobState.map((publicJob, index) => (
-                    <HomeCard
-                        key={index}
-                        publicJob={publicJob}
-                    />
-                )): "loading..." } */}
             </div>
         </div>
     )

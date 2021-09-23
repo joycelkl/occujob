@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter,Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import authAxios from '../Redux/authAxios';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -46,15 +46,10 @@ const JobDetail = (props) => {
     const { loadErProfileforAppThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     async function applyJob(job_id) {
-        console.log("offer app ID", job_id)
+
         applyToast()
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employee/search/result/${job_id}`)
-            .then(res => {
-                console.log(res)
-            }).catch(err => {
-                console.log("pubulic job load err res", err.response)
-            })
     }
 
     const history = useHistory();
@@ -75,7 +70,6 @@ const JobDetail = (props) => {
 
     useEffect(() => {
         const userID = localStorage.getItem('userID')
-        console.log('UserID', userID)
         setUserId(userID)
         setEmployerId(er_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,12 +178,7 @@ const JobDetail = (props) => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="industry">Job Function</Label>
-                          </div>
-                          <div className="col-md-6" style={{ marginTop: "10px" }}>
-                            <IndustryTag />
-                          </div> */}
+                        
                         </FormGroup>
 
                       </div>
@@ -239,12 +228,7 @@ const JobDetail = (props) => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="email">Email </Label>
-                          </div>
-                          <div className="col-md-6">
-                            <h6 style={{ color: "black", marginTop: "10px" }}> {ee_email} </h6>                         
-                             </div> */}
+                 
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
@@ -265,12 +249,7 @@ const JobDetail = (props) => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="phone">Phone Number</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                          </div> */}
+
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
@@ -291,12 +270,7 @@ const JobDetail = (props) => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="phone">Phone Number</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                          </div> */}
+
                         </FormGroup>
                       </div>
                       </div>

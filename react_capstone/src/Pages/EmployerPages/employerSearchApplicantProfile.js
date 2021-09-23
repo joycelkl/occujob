@@ -35,7 +35,6 @@ const EmployerSearchApplicantProfile = () => {
 
     const classes = useStyles();
 
-
     const [currentPage, setCurrentPage] = useState(0);
     function handleClick(e, index) {
 
@@ -49,27 +48,19 @@ const EmployerSearchApplicantProfile = () => {
         history.goBack();
     };
 
-
-
     const profile = useSelector((state) => state.profile)
-    console.log("individual job", profile)
     const dispatch = useDispatch()
     const { loadApplicantSearchProfileThunkAction } = bindActionCreators(actionCreators, dispatch);
     const { erViewEeRatingThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     const { ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill } = profile
 
-    console.log('data of applicant', ee_id, ee_name, ee_industry, ee_img_data, ee_location, self_intro, expected_salary, availability, ee_exp, ee_skill )
-
     const applicantRatingState = useSelector((state) => state.erViewEeRating)
-    console.log('applicantRating', applicantRatingState)
-    const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
-    console.log("Average", averageRating)
 
+    const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
 
     useEffect(() => {
         const userID = localStorage.getItem('userID')
-        console.log('UserID', userID)
         setUserId(userID)
         setEmployeeId(ee_id)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,25 +84,20 @@ const EmployerSearchApplicantProfile = () => {
         setToggleAbout(true);
         setToggleComments(false);
         setTogglePortfolio(false);
-
-
-
     };
+
     const commentsHandler = () => {
         setToggleComments(true);
         setToggleAbout(false);
         setTogglePortfolio(false);
-
-
     };
+
     const portfolioHandler = () => {
         setTogglePortfolio(true);
         setToggleComments(false);
         setToggleAbout(false);
-
-
-
     };
+
     //****************For the Chatroom********************//
     const [modal, setModal] = useState(false);
 
@@ -184,13 +170,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                                                     </CardActions>
-                                                </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Text">Self-Introduction</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{self_intro}</h6>
-                                                </div> */}
+                                                </Card>                                            
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -220,14 +200,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                                                     </CardActions>
-                                                </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Skill">Skills</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_skill}</h6>
-                                                // </div> */}
-                                                {/* {modalJob.ee_name} */}
+                                                </Card>                                              
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -251,14 +224,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                                                     </CardActions>
-                                                </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Skill">No. of Year of Working Experience</Label>
-                                                </div>
-                                                <div className="col-md-6">
-
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_exp}</h6>
-                                                </div> */}
+                                                </Card>                                     
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -288,13 +254,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                                                     </CardActions>
-                                                </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Text">Job Function</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_industry}</h6>
-                                                </div> */}
+                                                </Card>                                       
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -318,13 +278,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                                                     </CardActions>
-                                                </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Text">Perferred Location</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{ee_location}</h6>
-                                                </div> */}
+                                                </Card>                                            
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -354,14 +308,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                                                     </CardActions>
-                                                </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Availabilty">Availabilty</Label>
-                                                </div>
-                                                <div className="col-md-6">
-
-                                                    <h6 style={{ marginTop: "10px" }}>{availability}</h6>
-                                                </div> */}
+                                                </Card>                                             
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -385,14 +332,7 @@ const EmployerSearchApplicantProfile = () => {
 
 
                                                     </CardActions>
-                                                </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Availabilty">Expected Salary</Label>
-                                                </div>
-                                                <div className="col-md-6">
-
-                                                    <h6 style={{ marginTop: "10px" }}>{expected_salary}</h6>
-                                                </div> */}
+                                                </Card>                                         
                                             </FormGroup>
                                         </div>
                                     </div>
@@ -455,13 +395,7 @@ const EmployerSearchApplicantProfile = () => {
 
                                                     </PaginationItem>
 
-                                                    {/* 
-            {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
-                    <ApplicantHomeCard
-                        key={index}
-                        applicantJob={applicantJob}
-                    />
-                )) : "loading..."} */}
+                                                
                                                     {[...Array(pagesCount)].map((page, i) =>
                                                         <PaginationItem active={i === currentPage} key={i}>
                                                             <PaginationLink onClick={e => handleClick(e, i)} href="#">

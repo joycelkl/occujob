@@ -22,13 +22,13 @@ export const loadEmployerCreatedRatingFailAction = () => {
 }
 
 export const employerCreatedRatingThunkAction = () => async(dispatch) => {
-    console.log("Applicant Rating")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employer/companyCreatedRating').then(res => {
             dispatch(loadEmployerCreatedRatingSuccessAction(res.data))
         }).catch(err => {
-            console.log("Company Rating load err res", err.response)
+
             dispatch(loadEmployerCreatedRatingFailAction())
         })
     } catch (err) {
@@ -37,7 +37,7 @@ export const employerCreatedRatingThunkAction = () => async(dispatch) => {
 }
 
 export const employerUpdateRating = (ee_id, application_id, rating, comments) => async(dispatch) => {
-    console.log("employer Rating")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employer/companyGiveRating', {
@@ -48,7 +48,7 @@ export const employerUpdateRating = (ee_id, application_id, rating, comments) =>
         }).then(res => {
             dispatch(loadEmployerCreatedRatingSuccessAction(res.data))
         }).catch(err => {
-            console.log("Employer Rating load err res", err.response)
+
             dispatch(loadEmployerCreatedRatingFailAction())
         })
     } catch (err) {

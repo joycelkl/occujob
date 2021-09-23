@@ -3,7 +3,7 @@ import authAxios from '../authAxios'
 export const LOAD_CHATROOM_HISTORY_SUCCESS_ACTION = 'LOAD_CHATROOM_HISTORY_SUCCESS';
 
 export const loadChatroomHistorySuccessAction = (chatHistory) => {
-    console.log("CHECKING CHAT HISTORY", chatHistory)
+
     return (dispatch) => {
         dispatch({
             type: LOAD_CHATROOM_HISTORY_SUCCESS_ACTION,
@@ -24,14 +24,14 @@ export const loadChatroomHistoryFailAction = () => {
 
 //Load Chatroom History
 export const loadChatroomHistoryThunkAction = (chatroomID) => async(dispatch) => {
-    console.log("Chatroom History Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get(`chat/retrieve/chatroomHistory/${chatroomID}`).then(res => {
-            console.log('moving ninto dis')
+
             dispatch(loadChatroomHistorySuccessAction(res.data))
-        }).catch(err => {
-            console.log("chatroom history load err res", err.response)
+        }).catch(() => {
+
             dispatch(loadChatroomHistoryFailAction())
         })
     } catch (err) {
@@ -51,7 +51,7 @@ export const addChatroomHistorySuccessAction = (chatMsg) => {
 }
 
 export const sendChatroomMessageThunkAction = (chatroomID, senderType, user_id, message) => async(dispatch) => {
-    console.log("sending Message", chatroomID, senderType, user_id, message)
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post(`chat/sendMessage`, {
@@ -59,11 +59,7 @@ export const sendChatroomMessageThunkAction = (chatroomID, senderType, user_id, 
             senderType: senderType,
             user_id: user_id,
             message: message
-        }).then(res => {
-            console.log('res in send msg load', res.data)
-                // dispatch(addChatroomHistorySuccessAction(res.data))
-        }).catch(err => {
-            console.log("send msg load err res", err.response)
+        }).then(() => { return }).catch(() => {
             dispatch(loadChatroomHistoryFailAction())
         })
     } catch (err) {

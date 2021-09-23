@@ -54,33 +54,21 @@ const dispatch = useDispatch();
   const updateToast = () => toast("Profile Updated");
   const updateReviewToast = () => toast("Review Has Been Updated");
 
-  const erProfileState = useSelector((state) => {
-    console.log("ER", state.erProfile);
-    return state.erProfile
-  });
-  console.log("Profile", erProfileState)
+  const erProfileState = useSelector((state) =>  state.erProfile);
+
   const { er_id, er_email, comp_description, er_img_data, er_industry, er_location, er_name, er_phone } = erProfileState
 
-  const locationState = useSelector((state) => {
-    console.log("location", state.location);
-    return state.location
-  });
-  console.log("location?twice", locationState)
+  const locationState = useSelector((state) => state.location);
+  
+  const employerRatingState = useSelector((state) => state.employerRating)
 
-  const employerRatingState = useSelector((state) => {
-  return state.employerRating})
-  console.log('employer rating', employerRatingState)
-
-  const employerCreatedRatingState = useSelector((state) => 
-  {return state.employerCreatedRating})
-  console.log('employerCreatedRating???', employerCreatedRatingState)
+  const employerCreatedRatingState = useSelector((state) =>state.employerCreatedRating)
+ 
 
   
 
   //rating
   const averageRating = employerRatingState.length > 0 && employerRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / employerRatingState.length;
-  console.log("Average", averageRating)
-
 
   let pageSize = 3;
   let pagesCount = employerRatingState.length > 0 && Math.ceil(employerRatingState.length / pageSize);
@@ -111,7 +99,6 @@ const dispatch = useDispatch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [er_name, er_phone])
 
-  console.log('image', image)
   useEffect(() => {
     loadLocationThunkAction();
     employerGetRatingThunkAction();
@@ -171,7 +158,6 @@ const dispatch = useDispatch();
 
   //upload image setup ***DONT MODIFY THIS PART***
   function upload(e) {
-    console.log("data", e.target.files[0])
     if (e.target.files[0].size > 1024 * 1024 * 2) {
       alert('Please upload image 2MB or below')
       return
@@ -179,7 +165,6 @@ const dispatch = useDispatch();
     ReactSaveImg
       .uploadFile(e.target.files[0], newFileName)
       .then((data) => {
-        console.log('datas3',data)
         setImage("")
         setImage(data.location)
       })
@@ -188,8 +173,7 @@ const dispatch = useDispatch();
 
   function handleOnSubmit(e) {
     e.preventDefault();
-    console.log('update')
-
+ 
     updateErProfileAction(industry, compDescription, phone, location, image)
     updateToast()
   }
@@ -198,8 +182,6 @@ const dispatch = useDispatch();
    const [inputBoxID, setInputBoxID] = useState('')
 
    function changeInputID(id) {
- 
-     console.log('changing id', id)
      setInputBoxID(id)
    }
  
@@ -236,8 +218,7 @@ const dispatch = useDispatch();
             </div>
             <div className="col-md-8">
               <div className="tab-content profile-tab" id="myTabContent">
-                {/* fade cause problem */}
-                {/* <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
+              
                 <div className="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                  
                   {toggleContact &&
@@ -264,13 +245,7 @@ const dispatch = useDispatch();
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="email">Email</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input type="email" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
-                            <h6 style={{ color: "black", marginTop: "10px" }}> {email} </h6>
-                          </div> */}
+                     
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
@@ -291,12 +266,7 @@ const dispatch = useDispatch();
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="phone">Phone Number</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" />
-                          </div> */}
+                         
                         </FormGroup>
                       </div>
                     </div>
@@ -310,17 +280,9 @@ const dispatch = useDispatch();
                             currentPage * pageSize,
                             (currentPage + 1) * pageSize
                           )
-                          .map((eachCreatedData, index) => {
-
-                            console.log('each', eachCreatedData)
+                          .map((eachCreatedData) => {
 
                             return (<FormGroup key={eachCreatedData.rating_id} >
-                              {/* <div className="col-md-6">
-                              <Label for="comment"> Review: </Label>
-                            </div>
-                            <div className="col-md-6">
-                              <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
-                            </div> */}
                               <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
                                 <CardActionArea>
 
@@ -333,7 +295,7 @@ const dispatch = useDispatch();
                                     </Typography>
                                     
                                     <h5>{eachCreatedData.comment}</h5>
-                                    {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
+                                 
                                     {inputBoxID &&  inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
                                     <br></br>
 
@@ -371,13 +333,6 @@ const dispatch = useDispatch();
 
                             </PaginationItem>
 
-                            {/* 
-          {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
-                  <ApplicantHomeCard
-                      key={index}
-                      applicantJob={applicantJob}
-                  />
-              )) : "loading..."} */}
                             {[...Array(pagesCount)].map((page, i) =>
                               <PaginationItem active={i === currentPage} key={i}>
                                 <PaginationLink onClick={e => handleClick(e, i)} href="#">
@@ -414,12 +369,6 @@ const dispatch = useDispatch();
                           )
                           .map((eachData) =>
                             <FormGroup key={eachData.rating_id} >
-                              {/* <div className="col-md-6">
-                                <Label for="comment"> Review: </Label>
-                              </div>
-                              <div className="col-md-6">
-                                <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
-                              </div> */}
                               <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
                                 <CardActionArea>
 
@@ -433,14 +382,6 @@ const dispatch = useDispatch();
                                     </Typography>
                                   </CardContent>
                                 </CardActionArea>
-                                {/* <CardActions>
-                    <Button size="small" color="primary">
-                      Share
-                    </Button>
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
-                  </CardActions> */}
                               </Card>
                             </FormGroup>
 
@@ -459,13 +400,6 @@ const dispatch = useDispatch();
 
                             </PaginationItem>
 
-                            {/* 
-            {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
-                    <ApplicantHomeCard
-                        key={index}
-                        applicantJob={applicantJob}
-                    />
-                )) : "loading..."} */}
                             {[...Array(pagesCount)].map((page, i) =>
                               <PaginationItem active={i === currentPage} key={i}>
                                 <PaginationLink onClick={e => handleClick(e, i)} href="#">
@@ -513,12 +447,6 @@ const dispatch = useDispatch();
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="compDes">Company Description</Label><br></br>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="textarea" name="compDes" id="intro" spellCheck='true' placeholder="Company Description" value={compDescription} onChange={(e) => setCompDescription(e.target.value)} />
-                          </div> */}
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
@@ -539,12 +467,6 @@ const dispatch = useDispatch();
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="industry">Industry</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="text" name="industry" id="companyIndustry" value={industry} onChange={(e) => setIndustry(e.target.value)} />
-                          </div> */}
                         </FormGroup>
 
                       </div>
@@ -571,17 +493,6 @@ const dispatch = useDispatch();
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="location">Location</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                              <option defaultValue={null}>Please select</option>
-                              {locationState.length > 0 ? locationState.map((location, i) => (
-                                <option key={i} value={location.location}>{location.location}</option>
-                              )) : "loading..."}
-                            </Input>
-                          </div> */}
                         </FormGroup>
 
                       </div>

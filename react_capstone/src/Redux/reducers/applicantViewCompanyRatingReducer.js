@@ -7,7 +7,6 @@ const initialState = {
 const reducer = (state = initialState.erRating, action) => {
     switch (action.type) {
         case EE_VIEW_ER_RATING_SUCCESS_ACTION:
-            console.log('action in port', action)
             return state.concat(action.payload)
         case EE_VIEW_ER_RATING_FAIL_ACTION:
             return state;

@@ -18,9 +18,6 @@ const EmployerJobRecordsList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log('employer Job', employerJobState)
-
-
     return (
 
         <div>

@@ -21,14 +21,14 @@ export const loadLocationFailAction = () => {
     }
 }
 export const loadLocationThunkAction = () => async(dispatch) => {
-    console.log("Location Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/public/location').then(res => {
-            console.log("RES DATA", res.data)
+
             dispatch(loadLocationSuccessAction(res.data))
         }).catch(err => {
-            console.log("Location load err res", err.response)
+
             dispatch(loadLocationFailAction())
         })
     } catch (err) {

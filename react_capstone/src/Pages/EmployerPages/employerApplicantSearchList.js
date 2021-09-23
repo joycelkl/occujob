@@ -13,13 +13,11 @@ const EmployerApplicantSearchList = () => {
     const {erAppSearch } = bindActionCreators(actionCreators, dispatch)
 
     const appSearchState = useSelector((state) => state.applicantSearch);
-    console.log('applicant search result', appSearchState)
 
     useEffect(()=>{
  
         const retrievedObject = localStorage.getItem('appSearch');
         const parsed = JSON.parse(retrievedObject)
-        console.log('parsed',parsed)
         const {available, jobFunction, expSalary, location, skills, salaryType, workExp} = parsed
         erAppSearch(available, jobFunction, expSalary, location, skills, salaryType, workExp)
      

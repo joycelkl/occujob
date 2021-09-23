@@ -13,13 +13,11 @@ const ApplicantJobSearchResult = ()=>{
   const { appJobSearch } = bindActionCreators(actionCreators, dispatch)
 
   const jobSearchState = useSelector((state) => state.appJobSearch);
-  console.log('job search result',jobSearchState)
 
   useEffect(()=>{
  
       const retrievedObject = localStorage.getItem('jobSearch');
       const parsed = JSON.parse(retrievedObject)
-      console.log('parsed',parsed)
       const {jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary} = parsed
       appJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
    

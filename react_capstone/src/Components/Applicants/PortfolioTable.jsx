@@ -18,7 +18,6 @@ const PortfolioTable = props => {
     const { deleteAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     const portfolioState = useSelector((state) => state.appPortfolio);
-    console.log("portfolio", portfolioState)
 
     useEffect(() => {
         loadAppPortfolioThunkAction()
@@ -37,7 +36,6 @@ const PortfolioTable = props => {
     const [portDes, setPortDes] = useState(null);
     const [fileData, setFileData] = useState(null);
     const [fileName, setFileName] = useState(null)
-    console.log('fileName', fileName)
     
      //****************DONOT CHANGE THE SETTING HERE*****************************/
   // S3 setup
@@ -56,7 +54,6 @@ const PortfolioTable = props => {
 
   //***************************************************** */
     function uploadCV(e) {
-        console.log("cv data", e.target.files[0])
         if (e.target.files[0].size > 1024*1024*5) {
           alert('Upload File should be 5MB or below')
           return
@@ -71,13 +68,11 @@ const PortfolioTable = props => {
           return;
         }
 
-        console.log('dataFile', fileData)
         ReactCV
         .uploadFile(fileData, newFileCVName)
         .then((data) => {
-        console.log(data)
         addAppPortfolioThunkAction(portName, portDes, data.location) 
-        }).catch(err => console.error(err))
+        })
         reset()
     }
 
