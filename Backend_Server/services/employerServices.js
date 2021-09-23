@@ -1,6 +1,3 @@
-//for url encrypt
-const encryptFunction = require('./urlEncrypt');
-
 class EmployerServices {
     constructor(knex) {
         this.knex = knex
