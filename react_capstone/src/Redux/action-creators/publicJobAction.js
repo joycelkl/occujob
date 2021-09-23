@@ -23,12 +23,12 @@ export const loadPublicJobFailAction = () => {
 
 //Load Job for public page
 export const loadPublicJobThunkAction = () => async(dispatch) => {
-    console.log("public Job Load")
+
     try {
         await axios.get(`${process.env.REACT_APP_BASE_URL}/public/job`).then(res => {
             dispatch(loadPublicJobSuccessAction(res.data))
         }).catch(err => {
-            console.log("pubulic job load err res", err.response)
+
             dispatch(loadPublicJobFailAction())
         })
     } catch (err) {

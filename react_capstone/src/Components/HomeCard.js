@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Badge} from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from 'react-router';
 

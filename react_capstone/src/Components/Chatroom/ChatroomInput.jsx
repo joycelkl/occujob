@@ -13,12 +13,6 @@ const ChatroomInput = ({chatroomID, senderType, user_id }) => {
 
     function sendMsg(event) {
     event.preventDefault();
-    console.log('msgInput', msgInput)
-    //call axios to send message
-    // MessagesAPI.chatroomMessage(this.props.ownId, this.props.chatroomId, this.state.msgInput, this)
-    
-    //checked okay
-    console.log('sending data in input', chatroomID, senderType, user_id, msgInput)
 
     sendChatroomMessageThunkAction(chatroomID, senderType, user_id, msgInput)
 

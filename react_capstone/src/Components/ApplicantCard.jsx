@@ -28,7 +28,7 @@ const ApplicantCard = ({applicant}) => {
             <div>
                 <Card.Title>
                     {ee_name} 
-                    {/* - <span className="text-muted font-weight-light">{ee_salary_type} - {expected_salary}</span> */}
+                
                 </Card.Title>
                 <Card.Subtitle className="text-muted mb-2">
                     Expected Salary :  {ee_salary_type} - {expected_salary}
@@ -40,7 +40,7 @@ const ApplicantCard = ({applicant}) => {
                     return `${industry} / `
                 }
             }) : null}</Badge>
-                {/* <br/> */}
+              
                 <Badge className="job-list-badge2" variant="secondary">Availability : {availability ? availability.map((available, index) => {
                 if (index === availability.length-1) {
                     return available.charAt(0).toUpperCase() + available.slice(1)

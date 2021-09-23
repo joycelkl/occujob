@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 const ApplicantJobDetail = () => {
 
   const jobDetailState = useSelector((state) => state.individualJob);
-  console.log('individual Job result',jobDetailState)
+ 
 
   const dispatch = useDispatch();
   

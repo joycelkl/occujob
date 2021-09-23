@@ -32,8 +32,6 @@ const PublicRoute = ({component, ...rest}) => {
 
   const {isAuthenticated, user} = useSelector((state) => state.auth)
   const Component = component;
-  console.log('user', user)
-  console.log('isAuth',isAuthenticated)
   if (Component != null) {
     return (
       <Route

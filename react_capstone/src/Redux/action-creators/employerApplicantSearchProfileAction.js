@@ -23,13 +23,13 @@ export const loadApplicantSearchProfileFailAction = () => {
 
 //Load Indvidual Profile in ER
 export const loadApplicantSearchProfileThunkAction = (ee_id) => async(dispatch) => {
-    console.log("Applicant Profile Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get(`/employer/candidateSearch/${ee_id}`).then(res => {
             dispatch(loadApplicantSearchProfileSuccessAction(res.data[0]))
         }).catch(err => {
-            console.log("pubulic job load err res", err.response)
+
             dispatch(loadApplicantSearchProfileFailAction())
         })
     } catch (err) {

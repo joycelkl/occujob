@@ -6,13 +6,6 @@ import Select from 'react-select'
 import "@pathofdev/react-tag-input/build/index.css";
 
 const SelectTag= (props)=>{
-        
-    // I modified this into a component, when insert this component please use the below in the parent 
-    // const [location, setLocation] = useState(null);
-    // const handleLocationChange = obj => {
-    //     setLocation(obj);
-    // }
-    //<SelectTag value={location} handleTagOnChange={handleLocationChange} />
 
     const {value, handleTagOnChange} = props
 

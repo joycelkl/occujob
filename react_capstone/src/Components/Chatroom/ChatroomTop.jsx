@@ -4,15 +4,6 @@ import "./css/ChatroomTop.css";
 const ChatroomTop = (props) => {
 
     const {chatter} = props
-    // const [chatter, setChatter] = useState('');
-
-    // useEffect(() => {
-    //    //testing data
-    //    setChatter([{id: 1, username: 'Joyce'}])
-        
-    // }, [props])
-
-
 
     return (
         <div className="ChatRoomTop">

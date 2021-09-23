@@ -22,18 +22,16 @@ export const erViewEeRatingFailAction = () => {
 }
 
 export const erViewEeRatingThunkAction = (ee_id) => async(dispatch) => {
-    console.log("erViewEeRating")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get(`/employer/companyViewApplicant/${ee_id}`).then(res => {
             dispatch(erViewEeRatingSuccessAction(res.data))
-        }).catch(err => {
-            console.log("Check Company Rating load err res", err.response)
+        }).catch(() => {
+
             dispatch(erViewEeRatingFailAction())
         })
     } catch (err) {
         console.error(err)
     }
 }
-
-
