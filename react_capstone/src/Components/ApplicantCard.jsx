@@ -33,22 +33,22 @@ const ApplicantCard = ({applicant}) => {
                 <Card.Subtitle className="text-muted mb-2">
                     Expected Salary :  {ee_salary_type} - {expected_salary}
                 </Card.Subtitle>
-                <Badge className="job-list-badge" variant="secondary">Job Function : {ee_industry.map((industry, index)=>{
+                <Badge className="job-list-badge" variant="secondary">Job Function : {ee_industry ? ee_industry.map((industry, index)=>{
                 if (index === ee_industry.length-1) {
                     return industry
                 } else {
                     return `${industry} / `
                 }
-            })}</Badge>
+            }) : null}</Badge>
                 {/* <br/> */}
-                <Badge className="job-list-badge2" variant="secondary">Availability : {availability.map((available, index) => {
+                <Badge className="job-list-badge2" variant="secondary">Availability : {availability ? availability.map((available, index) => {
                 if (index === availability.length-1) {
                     return available.charAt(0).toUpperCase() + available.slice(1)
                 } else {
                     return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
                 }
 
-            })}</Badge>
+            }): null}</Badge>
                 
             </div>
         </div>

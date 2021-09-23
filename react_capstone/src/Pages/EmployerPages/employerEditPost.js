@@ -261,9 +261,9 @@ const EmployerEditPost = () => {
                                 <FormGroup>
                                     <Label style={{marginTop:"15px"}}  for="JobFunction">Job Function</Label>
                                     <Input style={{marginTop:"15px"}}  type="select" name="JobFunction" id="JobFunction" value={jobFunction} onChange={(e) => setJobFunction(e.target.value)}>
-                                        <option value={null} selected>Please select</option>
+                                        <option defaultValue={null} >Please select</option>
                                         {industryState.length > 0 ? industryState.map((industry, i) => (
-                                            <option key={i} value={industry.industry} selected>{industry.industry}</option>
+                                            <option key={i} value={industry.industry}>{industry.industry}</option>
                                         )) : "loading..."}
                                     </Input>
                                 </FormGroup>
@@ -274,9 +274,9 @@ const EmployerEditPost = () => {
                                 <FormGroup>
                                     <Label style={{marginTop:"15px"}}  for="preferworklocation">Work Location</Label>
                                     <Input style={{marginTop:"15px"}}  type="select" name="location" id="location" placeholder="location" value={jobLocation} onChange={(e) => setJobLocation(e.target.value)}>
-                                        <option value={null} selected>Please select</option>
+                                        <option defaultValue={null} >Please select</option>
                                         {locationState.length > 0 ? locationState.map((location, i) => (
-                                            <option key={i} value={location.location} selected>{location.location}</option>
+                                            <option key={i} value={location.location} >{location.location}</option>
                                         )) : "loading..."}
                                     </Input>
                                 </FormGroup>

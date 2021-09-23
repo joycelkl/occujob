@@ -10,9 +10,9 @@ const EmployerChatMessages = () => {
       <section className="chatListHeader">
         <div className="chatListText-box" id="home">
           <h1>Messages</h1>
-          <p>Chat With Your Future Employer!</p>
+          <p>Chat With Your Future Employee!</p>
           <a href="/applicantJobSearch" className="Homebtn">
-            Search Jobs
+            Search Applicant
           </a>
         </div>
       </section>

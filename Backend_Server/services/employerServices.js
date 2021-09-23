@@ -43,26 +43,6 @@ class EmployerServices {
             });
     }
 
-    // //url should be text
-    // updateImg(userId, er_imgData) {
-    //     return this.knex('employer')
-    //         .where({
-    //             er_id: userId
-    //         })
-    //         .update({
-    //             er_img_data: imgData
-    //         })
-    //         .returning('*')
-    //         .then((updated) => {
-    //             console.log('img uploaded')
-    //             return updated;
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //             throw new Error(err)
-    //         });
-    // }
-
     listJobHistory(userId) {
         return this.knex('job')
             .join('employer', 'employer.er_id', '=', 'job.employer_id')
@@ -70,10 +50,6 @@ class EmployerServices {
             .select("job.*", 'employer.er_img_data')
             .orderBy('job.created_at', 'dsec')
             .then((jobList) => {
-                // jobList.map(jobObj => {
-                //     console.log("id in obj", jobObj.id)
-                //     jobObj.id = encryptFunction.encryptString(jobObj.id)
-                // })
                 return jobList;
             })
             .catch((err) => {
@@ -113,8 +89,6 @@ class EmployerServices {
 
     jobDetail(jobId) {
         console.log('jobId', jobId)
-            //calling individual job detail and application list of the job
-            // jobId = encryptFunction.decryptString(jobId);
         return this.knex('application')
             .where('job_id', jobId)
             .then((result) => {
@@ -137,11 +111,6 @@ class EmployerServices {
                         .where('job.job_id', jobId)
                         .then((jobList_applyDetail) => {
                             console.log('jobList_applyDetail', jobList_applyDetail)
-
-                            // jobList_applyDetail.map(jobAppObj => {
-                            //     console.log("id in obj", jobAppObj.appId)
-                            //     jobAppObj.appId = encryptFunction.encryptString(jobAppObj.appId)
-                            // })
 
                             return jobList_applyDetail;
                         })
@@ -183,21 +152,13 @@ class EmployerServices {
     }
 
     candidateDetail(applicationId) {
-        // applicationId = encryptFunction.decryptString(applicationId)
-        // console.log('application id', applicationId)
+
         return this.knex('application')
             // .select({ appId: 'application.id' }, 'application.*', 'employee.*')
             .join('employee', 'employee.ee_id', '=', 'application.employee_id')
             .where('application.application_id', applicationId)
             .then((canDetail_appId) => {
                 console.log('canDetail_appId', canDetail_appId)
-                    // if (canDetail_appId[0].img_data) {
-                    //     let base = Buffer.from(canDetail_appId[0].img_data);
-                    //     let conversion = base.toString('base64');
-                    //     canDetail_appId[0].image = conversion;
-                    // }
-                    // canDetail_appId[0].job_id = encryptFunction.encryptString(canDetail_appId[0].job_id)
-
                 return canDetail_appId;
             })
             .catch((err) => {
@@ -226,7 +187,7 @@ class EmployerServices {
     //to be rewrited
     candidateFilter(value) {
 
-        console.log('search value', value)
+        // console.log('search value', value)
         const { available, salaryType, expSalary, workExp, jobFunction, skills, location } = value
 
         console.log('data', available, salaryType, expSalary, workExp, jobFunction, skills, location)
@@ -244,7 +205,7 @@ class EmployerServices {
         let avanum = availableArr.length;
         if (avanum != 3) {
             for (var i = 0; i < (3 - avanum); i++) {
-                availableArr.push('')
+                availableArr.push(availableArr[0])
             }
         }
 
@@ -263,7 +224,7 @@ class EmployerServices {
         let jobfnum = jobFunctionArr.length;
         if (jobfnum != 3) {
             for (var i = 0; i < (3 - jobfnum); i++) {
-                jobFunctionArr.push('')
+                jobFunctionArr.push(jobFunctionArr[0])
             }
         }
 
@@ -282,7 +243,7 @@ class EmployerServices {
         let skillsnum = skillsArr.length;
         if (skillsnum != 3) {
             for (var i = 0; i < (3 - skillsnum); i++) {
-                skillsArr.push('')
+                skillsArr.push(skillsArr[0])
             }
         }
 
@@ -307,358 +268,1477 @@ class EmployerServices {
         }
         console.log('locationArr', locationArr)
 
-        if (available == null && jobFunction == null && skills == null && location == null && salaryType == '' && workExp == '') {
+        const test = this.knex
+
+        if (jobFunction == null && location == null && workExp == '' && available == null && skills == null && expSalary == '') {
             return this.knex('employee')
                 .orderBy('updated_at', 'desc')
+                .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
                 .then((candidateList) => {
                     console.log('all null', candidateList)
                     return candidateList
                 }).catch(err => console.log(err))
         }
 
-        if (salaryType == '') {
-            if (workExp == '') {
+
+        if (expSalary == '' && workExp == '') {
+            if (jobFunction == null && available !== null && location !== null && skills !== null) {
                 return this.knex('employee')
-                    .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                    .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                    .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                    .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                    .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                    .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                    .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                    .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                    .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                    .orWhere('ee_location', locationArr[0])
-                    .orWhere('ee_location', locationArr[1])
-                    .orWhere('ee_location', locationArr[2])
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
                     .orderBy('updated_at', 'desc')
                     .then((candidateList) => {
-                        console.log('no salaryType & workExp', candidateList)
+                        console.log('no salary & workexp && only availability, skills, location', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only availability & skills & jobFunction', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only availability & location & jobFunction', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only skills, location, jobfunction', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only skills & availability', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only availability & location', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only skill & location', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only availability & jobFunction', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only skills & jobFunction', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only location & jobFunction', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only availability', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only skills', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only location', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && only jobFunction', candidateList)
                         return candidateList
                     }).catch(err => console.log(err))
             } else {
-                if (workExp < 6) {
+                return this.knex('employee')
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                    .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                    .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                    .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                    .orderBy('updated_at', 'desc')
+                    .then((candidateList) => {
+                        console.log('no salary & workexp && with all others', candidateList)
+                        return candidateList
+                    }).catch(err => console.log(err))
+            }
+        }
+
+        if (expSalary !== '' && workExp == '') {
+            if (expSalary == '7501' || expSalary == '201') {
+                if (jobFunction == null && available == null && location == null && skills == null) {
                     return this.knex('employee')
-                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                        .orWhere('ee_location', locationArr[0])
-                        .orWhere('ee_location', locationArr[1])
-                        .orWhere('ee_location', locationArr[2])
-                        .andWhere('expected_salary', '<=', workExp)
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
                         .orderBy('updated_at', 'desc')
                         .then((candidateList) => {
-                            console.log('no salaryType || workExp < 6', candidateList)
+                            console.log('no workexp & salary = 7501 /201 && all null', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available !== null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only availability, skills, location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only availability & skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only availability & location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only skills, location, jobfunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only skills & availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only availability & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only skill & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only availability & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only skills', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary = 7501 /201 && only jobFunction', candidateList)
                             return candidateList
                         }).catch(err => console.log(err))
                 } else {
                     return this.knex('employee')
-                        .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                        .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                        .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                        .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                        .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                        .orWhere('ee_location', locationArr[0])
-                        .orWhere('ee_location', locationArr[1])
-                        .orWhere('ee_location', locationArr[2])
-                        .andWhere('expected_salary', '>=', workExp)
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
                         .orderBy('updated_at', 'desc')
                         .then((candidateList) => {
-                            console.log('no salaryType || workExp > 6', candidateList)
+                            console.log('no workexp & salary = 7501 /201 && with all others', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                }
+            } else {
+                if (jobFunction == null && available == null && location == null && skills == null) {
+                    return this.knex('employee')
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && all null', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available !== null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only availability, skills, location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only availability & skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only availability & location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only skills, location, jobfunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only skills & availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only availability & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only skill & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only availability & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only skills', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && only jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no workexp & salary < 7501 /201 && with all others', candidateList)
                             return candidateList
                         }).catch(err => console.log(err))
                 }
             }
-        } else {
-            if (salaryType == 'perJob') {
-                if (expSalary < 7501) {
-                    if (workExp == '') {
-                        return this.knex('employee')
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                            .orWhere('ee_location', locationArr[0])
-                            .orWhere('ee_location', locationArr[1])
-                            .orWhere('ee_location', locationArr[2])
-                            .andWhere('ee_salary_type', salaryType)
-                            .andWhere('expected_salary', '<=', expSalary)
-                            .orderBy('updated_at', 'desc')
-                            .then((candidateList) => {
-                                console.log('salaryType perJon < 7501 || no workExp', candidateList)
-                                return candidateList
-                            }).catch(err => console.log(err))
-                    } else {
-                        if (workExp < 6) {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '<=', expSalary)
-                                .andWhere('ee_exp', '<=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perJon < 7501 || workExp < 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        } else {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '<=', expSalary)
-                                .andWhere('ee_exp', '>=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perJon < 7501 || workExp > 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        }
-                    }
+        }
+
+        if (expSalary == '' && workExp !== '') {
+            if (workExp == 6) {
+                if (jobFunction == null && available == null && location == null && skills == null) {
+                    return this.knex('employee')
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && all null', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available !== null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only availability, skills, location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only availability & skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only availability & location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only skills, location, jobfunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only skills & availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only availability & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only skill & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only availability & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only skills', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && only jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
                 } else {
-                    if (workExp == '') {
-                        return this.knex('employee')
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                            .orWhere('ee_location', locationArr[0])
-                            .orWhere('ee_location', locationArr[1])
-                            .orWhere('ee_location', locationArr[2])
-                            .andWhere('ee_salary_type', salaryType)
-                            .andWhere('expected_salary', '>=', expSalary)
-                            .orderBy('updated_at', 'desc')
-                            .then((candidateList) => {
-                                console.log('salaryType perJon > 7501 || no workExp', candidateList)
-                                return candidateList
-                            }).catch(err => console.log(err))
-                    } else {
-                        if (workExp < 6) {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '>=', expSalary)
-                                .andWhere('ee_exp', '<=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perJon > 7501 || workExp < 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        } else {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '>=', expSalary)
-                                .andWhere('ee_exp', '>=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perJon > 7501 || workExp > 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        }
-                    }
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp = 6 && with all others', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
                 }
             } else {
-                if (expSalary < 201) {
-                    if (workExp == '') {
-                        return this.knex('employee')
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                            .orWhere('ee_location', locationArr[0])
-                            .orWhere('ee_location', locationArr[1])
-                            .orWhere('ee_location', locationArr[2])
-                            .andWhere('ee_salary_type', salaryType)
-                            .andWhere('expected_salary', '<=', expSalary)
-                            .orderBy('updated_at', 'desc')
-                            .then((candidateList) => {
-                                console.log('salaryType perHour < 201 || workExp nil', candidateList)
-                                return candidateList
-                            }).catch(err => console.log(err))
-                    } else {
-                        if (workExp < 6) {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '<=', expSalary)
-                                .andWhere('ee_exp', '<=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perHour < 201 || workExp < 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        } else {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '<=', expSalary)
-                                .andWhere('ee_exp', '>=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perHour < 201 || workExp > 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        }
-                    }
+                if (jobFunction == null && available == null && location == null && skills == null) {
+                    return this.knex('employee')
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && all null', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available !== null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only availability, skills, location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only availability & skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only availability & location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only skills, location, jobfunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only skills & availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only availability & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only skill & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only availability & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only skills', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && only jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
                 } else {
-                    if (workExp == '') {
-                        return this.knex('employee')
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                            .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                            .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                            .orWhere('ee_location', locationArr[0])
-                            .orWhere('ee_location', locationArr[1])
-                            .orWhere('ee_location', locationArr[2])
-                            .andWhere('ee_salary_type', salaryType)
-                            .andWhere('expected_salary', '>=', expSalary)
-                            .orderBy('updated_at', 'desc')
-                            .then((candidateList) => {
-                                console.log('salaryType perHour > 201 || workExp nil', candidateList)
-                                return candidateList
-                            }).catch(err => console.log(err))
-                    } else {
-                        if (workExp < 6) {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '>=', expSalary)
-                                .andWhere('ee_exp', '<=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perHour > 201 || workExp < 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        } else {
-                            return this.knex('employee')
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[0])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[1])))
-                                .orWhere((this.knex.raw('? = any (availability)', availableArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_industry)', jobFunctionArr[2])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[0])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[1])))
-                                .orWhere((this.knex.raw('? = any (ee_skill)', skillsArr[2])))
-                                .orWhere('ee_location', locationArr[0])
-                                .orWhere('ee_location', locationArr[1])
-                                .orWhere('ee_location', locationArr[2])
-                                .andWhere('ee_salary_type', salaryType)
-                                .andWhere('expected_salary', '>=', expSalary)
-                                .andWhere('ee_exp', '>=', workExp)
-                                .orderBy('updated_at', 'desc')
-                                .then((candidateList) => {
-                                    console.log('salaryType perHour > 201 || workExp > 6', candidateList)
-                                    return candidateList
-                                }).catch(err => console.log(err))
-                        }
-                    }
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('no salary with workExp < 6 && with all others', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                }
+            }
+        }
+
+        if (expSalary !== '' && workExp !== '') {
+            if ((expSalary == 7501 || expSalary == 201) && workExp == 6) {
+                if (jobFunction == null && available == null && location == null && skills == null) {
+                    return this.knex('employee')
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && all null', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available !== null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only availability, skills, location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only availability & skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only availability & location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only skills, location, jobfunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only skills & availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only availability & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only skill & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only availability & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only skills', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && only jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '>=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary = 7501 /201 & workExp = 6 && with all others', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                }
+            } else if ((expSalary !== 7501 || expSalary !== 201) && workExp == 6) {
+                if (jobFunction == null && available == null && location == null && skills == null) {
+                    return this.knex('employee')
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && all null', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available !== null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only availability, skills, location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only availability & skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only availability & location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only skills, location, jobfunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only skills & availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only availability & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only skill & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only availability & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only skills', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && only jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '>=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp = 6 && with all others', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                }
+            } else if ((expSalary !== 7501 || expSalary !== 201) && workExp !== 6) {
+                if (jobFunction == null && available == null && location == null && skills == null) {
+                    return this.knex('employee')
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && all null', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available !== null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only availability, skills, location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && jobFunction !== null && available !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only availability & skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && jobFunction !== null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only availability & location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (available == null && jobFunction !== null && skills !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only skills, location, jobfunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills !== null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only skills & availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only availability & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && available == null && location !== null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only skill & location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only availability & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && available == null && skills !== null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only skills & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (skills == null && available == null && jobFunction !== null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only location & jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && skills == null && available !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only availability', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && location == null && available == null && skills !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only skills', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (jobFunction == null && skills == null && available == null && location !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only location', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else if (location == null && skills == null && available == null && jobFunction !== null) {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && only jobFunction', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
+                } else {
+                    return this.knex('employee')
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_industry) or ? = any (ee_industry) or ? = any (ee_industry)', [jobFunctionArr[0], jobFunctionArr[1], jobFunctionArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (availability) or ? = any (availability) or ? = any (availability)', [availableArr[0], availableArr[1], availableArr[2]])) })
+                        .andWhere(function() { this.andWhere(test.raw('? = any (ee_skill) or ? = any (ee_skill) or ? = any (ee_skill)', [skillsArr[0], skillsArr[1], skillsArr[2]])) })
+                        .andWhere(function() { this.andWhere('ee_location', 'like', `%${locationArr[0]}%`).orWhere('ee_location', 'like', `%${locationArr[1]}%`).orWhere('ee_location', 'like', `%${locationArr[2]}%`) })
+                        .andWhere('ee_salary_type', 'like', `%${salaryType}%`)
+                        .andWhere('expected_salary', '<=', expSalary)
+                        .andWhere('ee_exp', '<=', workExp)
+                        .orderBy('updated_at', 'desc')
+                        .then((candidateList) => {
+                            console.log('with salary < 7501 /201 & workExp < 6 && with all others', candidateList)
+                            return candidateList
+                        }).catch(err => console.log(err))
                 }
             }
         }

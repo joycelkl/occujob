@@ -34,6 +34,7 @@ export const appJobSearch = (jobTitleTag, companyName, jobFunction, jobType, wor
             jobFunction: jobFunction,
             location: worklocation
         }).then(res => {
+            console.log('search result in action', res.data)
             dispatch(loadSearchJobSuccessAction(res.data))
         }).catch(err => {
             console.log("Applicant Search load err res", err.response)
