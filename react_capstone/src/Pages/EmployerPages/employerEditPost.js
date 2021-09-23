@@ -18,6 +18,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import './employerProfilePage.css'
 import Chatroom from "../../Components/Chatroom/Chatroom";
+import PortfolioTable from "../../Components/Applicants/PortfolioTable";
+
 
 const EmployerEditPost = () => {
 //toasts
@@ -189,6 +191,14 @@ const EmployerEditPost = () => {
     let createMonth = createDate.getMonth() + 1;
     let createYear = createDate.getFullYear();
 
+    function changeDateFormat(date) {
+        let newDate = new Date(date)
+        let newDay = newDate.getDate();
+        let newMonth = newDate.getMonth() + 1;
+        let newYear = newDate.getFullYear();
+        return newDay + "/" + newMonth + "/" + newYear
+    }
+
 
     //****************For the Chatroom********************//
     const [modalChatroom, setModalChatroom] = useState(false);
@@ -299,7 +309,7 @@ const EmployerEditPost = () => {
                             </thead>
 
                             <tbody>
-                                {indJobState.length ? indJobState.map((job) => (
+                                {indJobState.length>0 && indJobState[0].ee_name !== undefined? indJobState.map((job) => (
                                     <tr onClick={() => {
                                         setModalJob(job)
                                         toggle(job.ee_name)
@@ -307,12 +317,12 @@ const EmployerEditPost = () => {
                                     }
                                         key={job.ee_id} style={{ cursor: "pointer" }}>
                                         <td>{job.ee_name}</td>
-                                        <td>{job.created_at}</td>
+                                        <td>{changeDateFormat(job.created_at)}</td>
                                         {offering ? <td> Offer Sent</td> : <td> No Offer</td>}
                                         {job.reply === true ? <td>Accepted </td> : (job.reply === false ? <td>Declined</td> : <td> No Reply</td>)}
                                     </tr>
 
-                                )) : "Waiting for Applicant Apply"}
+                                )) : <tr><td style={{textAlign: "center"}} colSpan="4">Waiting for Applicant Apply</td></tr>}
                                 <Modal isOpen={modal} toggle={toggle} fade={false} className='modal-sandbox'>
                                 <ModalBody className='modal-content'>    
                                     <div className="row">
@@ -348,6 +358,7 @@ const EmployerEditPost = () => {
                                     <div>
                                         <div className="row">
                                             <FormGroup>
+                                            <PortfolioTable eeId={ee_id} />
                                             <Card  style={{ width: "600px", marginBottom: "30px" }}>
                             <CardActionArea>
 
@@ -538,7 +549,7 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.expected_salary}
+                                {modalJob.expected_salary} {modalJob.ee_salary_type}
 
                                 </Typography>
                                 
@@ -562,6 +573,7 @@ const EmployerEditPost = () => {
                                 </div>
                                 </div>
                                 </div>
+                                
                                     </ModalBody>
                                     <ModalFooter>
                                     <Button color="primary" onClick={toggleChatroom}>Message</Button>{' '}

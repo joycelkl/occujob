@@ -384,7 +384,6 @@ const ApplicantProfile = () => {
                 <ProfileImage url={image} handleOnChange={(e) => upload(e)} />
               </div>
             </div>
-
             <div className="col-md-6">
               <div className="profile-head">
                 <FormGroup>

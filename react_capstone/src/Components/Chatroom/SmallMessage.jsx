@@ -97,6 +97,11 @@ const SmallMessage = ({
   }
   console.log("below cancel after", modal);
 
+  function changeDateFormat(date) {
+    return new Date(date).toLocaleString()
+}
+
+
   return (
     <div
       className="SmallMessage"
@@ -108,8 +113,9 @@ const SmallMessage = ({
           <CardContent>
             
             <Typography gutterBottom variant="h5" component="h2">
-              <span>Applicant Name: {chatterName}</span>{" "}
-              {unreadMsg > 0 ? <span>{unreadMsg} Message Arrived</span> : null}
+              {unreadMsg > 0 ? <span style={{color:'red'}}>{unreadMsg} New Message</span> : null}
+              <br></br>
+              <span>{chatterName}</span>{" "}
             </Typography>
             <Typography>
               Last Message: <br></br> 
@@ -126,7 +132,7 @@ const SmallMessage = ({
             </Typography>
 
             <Typography>
-              {lastSent ? <span> {lastSent}</span> : <span>Start a conversation</span>}
+              {lastSent ? <span> {changeDateFormat(lastSent)}</span> : <span>Start a conversation</span>}
             </Typography>
             <Typography style={{marginTop:'5px', textDecoration:'underline'}}>
              <span>Click To Open Chat Room</span> 
@@ -157,7 +163,7 @@ const SmallMessage = ({
 
       <>
         <Modal isOpen={modal} toggle={toggle} fade={false}>
-          <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
+          <ModalHeader toggle={toggle} className='smallHead'>Chatroom</ModalHeader>
           <ModalBody>
             <Chatroom chatterID={chatterID} userID={userID} />
           </ModalBody>

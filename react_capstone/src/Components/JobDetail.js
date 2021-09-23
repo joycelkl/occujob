@@ -106,26 +106,28 @@ const JobDetail = (props) => {
             <div className="container emp-profile">
                 <Form className="form-group" >
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                             <div className="profile-img" onClick={handleOnClick} style={{ cursor: "pointer" }}>
                                 <img src={er_img_data} width="200px" height="200x" alt='' />
                                 <br />
                             </div>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-9">
                             <div className="profile-head" style={{ marginTop: "25px" }}>
                                 <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Company Name</Label>
                                 <h4>{er_name}</h4>
                                 <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize: "25px" }}>Job Title</Label>
                                 <h4>{job_title}</h4>
+                                <JobDetailPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler} />
                             </div>
                         </div>
                         {/* </div> */}
-                    </div>
-                    <JobDetailPortfolioTable aboutHandler={aboutHandler} contactHandler={contactHandler}/>
+                  
 
                     {toggleAbout &&
-                    <div>
+                    <div className="row">
+                      <div className="col-md-3"></div>
+                    <div className="col-md-8">
                       <div className="row">
                         <FormGroup>
                           <Card style={{ width: "600px", marginBottom: "30px" }}>
@@ -212,9 +214,12 @@ const JobDetail = (props) => {
                         </FormGroup>
                       </div>
                     </div>
+                    </div>
                   }
                    {toggleContact &&
-                    <div>
+                    <div className="row">
+                      <div className="col-md-3"></div>
+                    <div className="col-md-8">
                       <div className="row">
 
                         <FormGroup>
@@ -294,9 +299,10 @@ const JobDetail = (props) => {
                           </div> */}
                         </FormGroup>
                       </div>
+                      </div>
                     </div>
                   }
-
+</div>
                     <div style={{ marginTop: "20px", float: "right" }}>
                         <Button onClick={() => applyJob(job_id)} style={{ marginRight: "10px" }}>Apply</Button>
                         <Button onClick={toggle}>Message</Button>

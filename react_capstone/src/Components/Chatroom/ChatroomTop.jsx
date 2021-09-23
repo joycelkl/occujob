@@ -22,7 +22,7 @@ const ChatroomTop = (props) => {
                 <div
                     key={chatter.id}
                 >
-                {chatter.username}
+                <h5>{chatter.username}</h5>
                 </div>
                 )}
             </div> :
