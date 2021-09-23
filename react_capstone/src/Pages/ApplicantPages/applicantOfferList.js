@@ -41,7 +41,7 @@ return(
                         key={index}
                         offerCard={EEOffer}
                     />
-                )) : "loading..."}
+                )) : "You have no applied Job in your Job Record"}
             </div>
            
 </div>

@@ -157,7 +157,7 @@ const SmallMessage = ({
 
       <>
         <Modal isOpen={modal} toggle={toggle} fade={false}>
-          <ModalHeader toggle={toggle}>Chatroom</ModalHeader>
+          <ModalHeader toggle={toggle} className='smallHead'>Chatroom</ModalHeader>
           <ModalBody>
             <Chatroom chatterID={chatterID} userID={userID} />
           </ModalBody>

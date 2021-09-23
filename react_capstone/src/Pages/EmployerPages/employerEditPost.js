@@ -18,6 +18,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import './employerProfilePage.css'
 import Chatroom from "../../Components/Chatroom/Chatroom";
+import PortfolioTable from "../../Components/Applicants/PortfolioTable";
+
 
 const EmployerEditPost = () => {
 //toasts
@@ -348,6 +350,7 @@ const EmployerEditPost = () => {
                                     <div>
                                         <div className="row">
                                             <FormGroup>
+                                            <PortfolioTable eeId={ee_id} />
                                             <Card  style={{ width: "600px", marginBottom: "30px" }}>
                             <CardActionArea>
 
@@ -538,7 +541,7 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.expected_salary}
+                                {modalJob.expected_salary} {modalJob.ee_salary_type}
 
                                 </Typography>
                                 
@@ -562,6 +565,7 @@ const EmployerEditPost = () => {
                                 </div>
                                 </div>
                                 </div>
+                                
                                     </ModalBody>
                                     <ModalFooter>
                                     <Button color="primary" onClick={toggleChatroom}>Message</Button>{' '}
