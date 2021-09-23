@@ -1,4 +1,3 @@
-
 class EmployerServices {
     constructor(knex) {
         this.knex = knex

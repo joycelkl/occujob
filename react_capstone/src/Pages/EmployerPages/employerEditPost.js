@@ -191,6 +191,14 @@ const EmployerEditPost = () => {
     let createMonth = createDate.getMonth() + 1;
     let createYear = createDate.getFullYear();
 
+    function changeDateFormat(date) {
+        let newDate = new Date(date)
+        let newDay = newDate.getDate();
+        let newMonth = newDate.getMonth() + 1;
+        let newYear = newDate.getFullYear();
+        return newDay + "/" + newMonth + "/" + newYear
+    }
+
 
     //****************For the Chatroom********************//
     const [modalChatroom, setModalChatroom] = useState(false);
@@ -309,7 +317,7 @@ const EmployerEditPost = () => {
                                     }
                                         key={job.ee_id} style={{ cursor: "pointer" }}>
                                         <td>{job.ee_name}</td>
-                                        <td>{job.created_at}</td>
+                                        <td>{changeDateFormat(job.created_at)}</td>
                                         {offering ? <td> Offer Sent</td> : <td> No Offer</td>}
                                         {job.reply === true ? <td>Accepted </td> : (job.reply === false ? <td>Declined</td> : <td> No Reply</td>)}
                                     </tr>

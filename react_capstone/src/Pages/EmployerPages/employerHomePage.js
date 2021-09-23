@@ -49,7 +49,7 @@ const EmployerHomePage = () => {
 
 
                 <div className="text-box" id="home">
-                    <h1>HKFreelancer</h1>
+                    <h1>OccuJob</h1>
                     <p>Welcome {userName}</p>
                     <a href="/employerCreateJobPage" className="Homebtn">Post A Job</a>
                 </div>

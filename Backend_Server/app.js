@@ -17,7 +17,6 @@ const io = require('socket.io')(server, {
 
 //middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
 
 
 //fileupload setup
