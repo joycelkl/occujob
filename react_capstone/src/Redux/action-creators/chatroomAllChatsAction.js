@@ -3,7 +3,7 @@ import authAxios from '../authAxios'
 export const LOAD_ALL_CHATROOMS_SUCCESS_ACTION = 'LOAD_ALL_CHATROOMS_SUCCESS';
 
 export const loadAllChatroomsSuccessAction = (allChats) => {
-    console.log("CHECKING CHAT HISTORY", allChats)
+
     return (dispatch) => {
         dispatch({
             type: LOAD_ALL_CHATROOMS_SUCCESS_ACTION,
@@ -24,14 +24,14 @@ export const loadAllChatroomsFailAction = () => {
 
 //Load All Chatrooms
 export const loadAllChatroomsThunkAction = () => async(dispatch) => {
-    console.log("All chatrooms Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get(`chat/getAllChats`).then(res => {
-            console.log('allChats res.data', res.data)
+
             dispatch(loadAllChatroomsSuccessAction(res.data))
-        }).catch(err => {
-            console.log("chatroom history load err res", err.response)
+        }).catch(() => {
+
             dispatch(loadAllChatroomsFailAction())
         })
     } catch (err) {

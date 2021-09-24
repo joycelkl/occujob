@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from 'redux';
@@ -21,12 +21,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import authAxios from '../../Redux/authAxios';
 
 const ApplicantProfile = () => {
-
-  //edit comment modal
-  const [modal, setModal] = useState(false);
 
   //comment card
   const useStyles = makeStyles({
@@ -61,28 +57,21 @@ const ApplicantProfile = () => {
   
 
   const applicantCreatedRatingState = useSelector((state) => state.applicantCreatedRating)
-  console.log('applicantCreatedRating', applicantCreatedRatingState)
 
   const applicantRatingState = useSelector((state) => state.applicantRating)
-  console.log('applicantRating', applicantRatingState)
 
   const EEProfileState = useSelector((state) => state.EEProfile);
-  console.log('EEprofile', EEProfileState)
 
   const skillsState = useSelector((state) => state.skills);
-  console.log("skills", skillsState)
 
   const locationState = useSelector((state) => state.location);
-  console.log("location", locationState)
 
   const industryState = useSelector((state) => state.industry);
-  console.log("industry", industryState)
 
   const { ee_id, ee_name, ee_email, ee_industry, ee_img_data, ee_location, self_intro, ee_phone, expected_salary, availability, ee_exp, ee_skill, ee_salary_type } = EEProfileState
 
   // Rating
   const averageRating = applicantRatingState.length > 0 && applicantRatingState.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / applicantRatingState.length;
-  console.log("Average", averageRating)
 
 
   let pageSize = 3;
@@ -161,10 +150,10 @@ const ApplicantProfile = () => {
   if (skillsState.length > 0) {
     skillsState.map((ski) => (skillsTag.push({ "label": ski.skills, "value": ski.skills })))
   }
-  console.log('skillsTag', skillsTag)
+  
 
   const handleOnChangeSkills = obj => {
-    console.log('setSkill', obj)
+    
     setSkillArr(obj)
   }
 
@@ -187,10 +176,9 @@ const ApplicantProfile = () => {
   if (industryState.length > 0) {
     industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
   }
-  console.log('industryTag', industryTag)
+
 
   const handleOnChangeIndustry = obj => {
-    console.log('setIndustry', obj)
     setIndustryArr(obj)
   }
 
@@ -219,7 +207,6 @@ const ApplicantProfile = () => {
   ]
 
   const handleOnChangeAvailable = obj => {
-    console.log('setIndustry', obj)
     setAvailableArr(obj)
   }
 
@@ -315,7 +302,6 @@ const ApplicantProfile = () => {
 
   //upload image setup ***DONT MODIFY THIS PART***
   function upload(e) {
-    console.log("data", e.target.files[0])
     if (e.target.files[0].size > 1024 * 1024 * 2) {
       alert('Please upload image 2MB or below')
       return
@@ -323,7 +309,6 @@ const ApplicantProfile = () => {
     ReactSaveImg
       .uploadFile(e.target.files[0], newFileName)
       .then((data) => {
-        console.log(data)
         setImage("")
         setImage(data.location)
       })
@@ -332,16 +317,14 @@ const ApplicantProfile = () => {
 
   function handleOnSubmit(e) {
     e.preventDefault();
-    console.log('update')
-
-
+   
     let available = null
     if (availableArr && availableArr.length > 0) {
       available = availableArr.map((arr) => {
         return arr.value
       })
     }
-    console.log('available', available)
+   
 
     let skill = null
     if (skillArr && skillArr.length > 0) {
@@ -349,7 +332,7 @@ const ApplicantProfile = () => {
         return arr.value
       })
     }
-    console.log('skill', skill)
+    
 
     let industry = null
     if (industryArr && industryArr.length > 0) {
@@ -368,7 +351,6 @@ const ApplicantProfile = () => {
 
   function changeInputID(id) {
 
-    console.log('changing id', id)
     setInputBoxID(id)
   }
 
@@ -407,8 +389,7 @@ const ApplicantProfile = () => {
 
             <div className="col-md-8">
               <div className="tab-content profile-tab" id="myTabContent">
-                {/* original fade cause all things disapear */}
-                {/* <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> */}
+               
                 <div className="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                   {toggleAbout &&
@@ -431,12 +412,7 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="Text">Self-Introduction</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="textarea" name="text" id="intro" value={intro} onChange={(e) => setIntro(e.target.value)} />
-                          </div> */}
+                         
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
@@ -456,12 +432,7 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="Skill">Skills</Label>
-                          </div>
-                          <div className="col-md-6" style={{ marginTop: "10px" }}>
-                            <SkillsTag />
-                          </div> */}
+                
                         </FormGroup>
 
                       </div>
@@ -482,12 +453,6 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="industry">Job Function</Label>
-                          </div>
-                          <div className="col-md-6" style={{ marginTop: "10px" }}>
-                            <IndustryTag />
-                          </div> */}
                         </FormGroup>
 
                       </div>
@@ -509,12 +474,6 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="Skill">No. of Year of Working Experience</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="text" name="skill" id="Skill" placeholder="Tags" value={expYr} onChange={(e) => setExpYr(e.target.value)} />
-                          </div> */}
                         </FormGroup>
                       </div>
                     </div>
@@ -543,12 +502,6 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="email">Email </Label>
-                          </div>
-                          <div className="col-md-6">
-                            <h6 style={{ color: "black", marginTop: "10px" }}> {ee_email} </h6>                         
-                             </div> */}
                         </FormGroup>
                       </div>
                       <div className="row" style={{ marginTop: "20px" }}>
@@ -572,12 +525,7 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="phone">Phone Number</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="number" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                          </div> */}
+                       
                         </FormGroup>
                       </div>
                     </div>
@@ -592,15 +540,8 @@ const ApplicantProfile = () => {
                           )
                           .map((eachCreatedData) => {
 
-                            console.log('each', eachCreatedData)
-
                             return (<FormGroup key={eachCreatedData.rating_id} >
-                              {/* <div className="col-md-6">
-                              <Label for="comment"> Review: </Label>
-                            </div>
-                            <div className="col-md-6">
-                              <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
-                            </div> */}
+                         
                               <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
                                 <CardActionArea>
 
@@ -610,7 +551,7 @@ const ApplicantProfile = () => {
                                       Job Title: {eachCreatedData.job_title} <DisabledRating rating={eachCreatedData.rate} />
                                     </Typography>
                                     <p>{eachCreatedData.comment}</p>
-                                    {/* <Input type="textarea" placeholder={eachCreatedData.comment} value={comments} onChange={(e) => setComment(e.target.value)} /> */}
+                          
                                     {inputBoxID && inputBoxID === eachCreatedData.rating_id ? <Input type="textarea" value={comments} onChange={(e) => setComment(e.target.value)} /> : null}
 
 
@@ -649,13 +590,6 @@ const ApplicantProfile = () => {
 
                             </PaginationItem>
 
-                            {/* 
-          {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
-                  <ApplicantHomeCard
-                      key={index}
-                      applicantJob={applicantJob}
-                  />
-              )) : "loading..."} */}
                             {[...Array(pagesCount)].map((page, i) =>
                               <PaginationItem active={i === currentPage} key={i}>
                                 <PaginationLink onClick={e => handleClick(e, i)} href="#">
@@ -692,12 +626,6 @@ const ApplicantProfile = () => {
                           )
                           .map((eachData) =>
                             <FormGroup key={eachData.rating_id} >
-                              {/* <div className="col-md-6">
-                                <Label for="comment"> Review: </Label>
-                              </div>
-                              <div className="col-md-6">
-                                <Input style={{ marginTop: "10px" }} type="textarea" name="comment" id="comment" value={eachData.comment} disabled />
-                              </div> */}
                               <Card className={classes.root} style={{ width: "600px", marginBottom: "30px" }}>
                                 <CardActionArea>
 
@@ -712,14 +640,6 @@ const ApplicantProfile = () => {
                                     </Typography>
                                   </CardContent>
                                 </CardActionArea>
-                                {/* <CardActions>
-                    <Button size="small" color="primary">
-                      Share
-                    </Button>
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
-                  </CardActions> */}
                               </Card>
                             </FormGroup>
 
@@ -738,13 +658,7 @@ const ApplicantProfile = () => {
 
                             </PaginationItem>
 
-                            {/* 
-            {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
-                    <ApplicantHomeCard
-                        key={index}
-                        applicantJob={applicantJob}
-                    />
-                )) : "loading..."} */}
+                           
                             {[...Array(pagesCount)].map((page, i) =>
                               <PaginationItem active={i === currentPage} key={i}>
                                 <PaginationLink onClick={e => handleClick(e, i)} href="#">
@@ -795,12 +709,6 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label for="Availabilty">Availabilty</Label>
-                          </div>
-                          <div className="col-md-6" style={{ marginTop: "10px" }}>
-                            <AvailabilityTag />
-                          </div> */}
                         </FormGroup>
 
                       </div>
@@ -808,7 +716,6 @@ const ApplicantProfile = () => {
 
 
                       <div className="col-md-6">
-                        {/* <Label style={{marginTop:"10px"}} for="preferworklocation">Expected Salary</Label> */}
                       </div>
                       <div className="row">
                         <FormGroup>
@@ -836,17 +743,7 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6">
-                            <Label style={{ marginTop: "20px" }} for="salaryType">Salary Type</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="select" name="select" id="salaryType" value={salaryType} onChange={(e) => setSalaryType(e.target.value)}>
-                              <option value={null} selected>Please select</option>
-                              <option value={'perJob'}>Per Job</option>
-                              <option value={'perHour'}>Per Hour</option>
-                            </Input>
-                          </div> */}
-                        </FormGroup>
+                       </FormGroup>
 
                       </div>
 
@@ -873,12 +770,6 @@ const ApplicantProfile = () => {
 
                               </CardActions>
                             </Card>
-                            {/* <div className="col-md-6">
-                              <Label for="Expected Salary">Expected Salary</Label>
-                            </div>
-                            <div className="col-md-6">
-                              <Input style={{ marginTop: "10px" }} type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
-                            </div> */}
                           </FormGroup>
 
                         </div>
@@ -905,12 +796,6 @@ const ApplicantProfile = () => {
 
                               </CardActions>
                             </Card>
-                            {/* <div className="col-md-6">
-                              <Label for="Expected Salary">Expected Salary</Label>
-                            </div>
-                            <div className="col-md-6">
-                              <Input type="number" name="number" id="Expected Salary" value={expectedSalary} onChange={(e) => setExpectedSalary(e.target.value)} />
-                            </div> */}
                           </FormGroup>
 
                         </div>
@@ -943,17 +828,6 @@ const ApplicantProfile = () => {
 
                             </CardActions>
                           </Card>
-                          {/* <div className="col-md-6" style={{ marginTop: "20px" }}>
-                            <Label for="preferworklocation">Prefered Work Location</Label>
-                          </div>
-                          <div className="col-md-6">
-                            <Input style={{ marginTop: "10px" }} type="select" name="location" id="location" placeholder="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-                              <option value={null} selected>Please select</option>
-                              {locationState.length > 0 ? locationState.map((location, i) => (
-                                <option key={i} value={location.location}>{location.location}</option>
-                              )) : "loading..."}
-                            </Input>
-                          </div> */}
                         </FormGroup>
 
                       </div>
@@ -976,9 +850,6 @@ const ApplicantProfile = () => {
           </div>
           <ToastContainer />
         </Form>
-
-
-      
       </div>
     </div>
 

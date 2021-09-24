@@ -55,13 +55,13 @@ export const errorValueAction = () => {
 
 //ER User Login Thunk
 export const loginERuserThunkAction = (email, password) => async(dispatch) => {
-    console.log("ER login running")
+
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/login/employer`, {
                 email: email,
                 password: password
             }).then(res => {
-                console.log("EE User login success", res.data)
+
                 localStorage.setItem('type', 'er')
                 localStorage.setItem('UserName', res.data.username)
                 localStorage.setItem('userID', res.data.userID)
@@ -71,8 +71,6 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
                 dispatch(regLoginSuccessAction())
             })
             .catch(err => {
-                console.log("err res", err.response)
-
                 dispatch(regLoginFailureAction(err.response.data))
             })
     } catch (err) {
@@ -82,20 +80,20 @@ export const loginERuserThunkAction = (email, password) => async(dispatch) => {
 
 //Applicant User Login Thunk
 export const loginEEuserThunkAction = (email, password) => async(dispatch) => {
-    console.log("Application Login running")
+
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/login/employee`, {
             email: email,
             password: password
         }).then(res => {
-            console.log("EE User login success", res.data)
+
             localStorage.setItem('type', 'ee')
             localStorage.setItem('UserName', res.data.username);
             localStorage.setItem('userID', res.data.userID);
             localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
-            console.log("err res", err.response)
+
             dispatch(regLoginFailureAction(err.response.data))
         })
     } catch (err) {
@@ -105,21 +103,20 @@ export const loginEEuserThunkAction = (email, password) => async(dispatch) => {
 
 //ER User Register Thunk
 export const registerERuserThunkAction = (name, email, password) => async(dispatch) => {
-    console.log('register ER running')
+
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/register/employer`, {
             name: name,
             email: email,
             password: password
         }).then(res => {
-            console.log("EE User login success", res.data)
+
             localStorage.setItem('type', 'er');
             localStorage.setItem('UserName', res.data.username);
             localStorage.setItem('userID', res.data.userID);
             localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
-            console.log("err res", err.response)
             dispatch(regLoginFailureAction(err.response.data))
         })
     } catch (err) {
@@ -129,21 +126,19 @@ export const registerERuserThunkAction = (name, email, password) => async(dispat
 
 //Applicant User Register Thunk
 export const registerEEuserThunkAction = (name, email, password) => async(dispatch) => {
-    console.log('Application register running')
+
     try {
         await axios.post(`${process.env.REACT_APP_BASE_URL}/register/employee`, {
             name: name,
             email: email,
             password: password
         }).then(res => {
-            console.log("EE User login success", res.data)
             localStorage.setItem('type', 'ee')
             localStorage.setItem('UserName', res.data.username);
             localStorage.setItem('userID', res.data.userID);
             localStorage.setItem("token", res.data.token);
             dispatch(regLoginSuccessAction())
         }).catch(err => {
-            console.log("err res", err.response)
             dispatch(regLoginFailureAction(err.response.data))
         })
     } catch (err) {

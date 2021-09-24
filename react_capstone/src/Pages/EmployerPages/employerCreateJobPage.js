@@ -21,9 +21,9 @@ const EmployerCreateJobPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const locationState = useSelector((state) => state.location);
-    console.log("location", locationState)
+
     const industryState = useSelector((state) => state.industry);
-    console.log("industry", industryState)
+
 
 
 
@@ -49,13 +49,10 @@ const EmployerCreateJobPage = () => {
         e.preventDefault();
         if (!jobTitle || !jobDes || !exp || !salary || !empType || !jobFunctionArr || !location || !workPeriod) {
             fillInfoToast();
-            console.log('submitting')
             return;
         }
 
         let jobFunction = jobFunctionArr.value
-
-        console.log('data', jobTitle, jobDes, exp, salary, empType, jobFunction, location, workPeriod, salaryType)
 
         erJobCreate(jobTitle, jobFunction, exp, salary,
             jobDes, workPeriod, location, empType, salaryType).then(() => {
@@ -91,11 +88,7 @@ const EmployerCreateJobPage = () => {
             location: location,
             jobType: jobType,
             salaryType: salaryType
-        }).then(res => {
-            updatedToast()
-        }).catch(err => {
-            console.log("job posting err res", err.response)
-        })
+        }).then(()=>updatedToast())
     }
 
 
@@ -104,10 +97,9 @@ const EmployerCreateJobPage = () => {
     if (industryState.length > 0) {
         industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry })))
     }
-    console.log('industryTag', industryTag)
+    
 
     const handleOnChangeIndustry = obj => {
-        console.log('setJobFunction', obj)
         setJobFunctionArr(obj)
     }
 

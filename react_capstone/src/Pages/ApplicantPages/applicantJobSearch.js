@@ -133,7 +133,7 @@ const ApplicantJobSearch = () => {
     } else {
       companyName = null;
     }
-    console.log('companyName', companyName)
+   
 
     let jobFunction
     if (jobFunctionArr && jobFunctionArr.length > 0) {
@@ -143,7 +143,7 @@ const ApplicantJobSearch = () => {
     } else {
       jobFunction = null;
     }
-    console.log('jobFunction', jobFunction)
+   
 
     let worklocation
     if (worklocationArr && worklocationArr.length > 0) {
@@ -153,9 +153,6 @@ const ApplicantJobSearch = () => {
     } else {
       worklocation = null;
     }
-    console.log('worklocation', worklocation)
-    
-    console.log('submitted', 'jobtitle :',jobTitleTag, 'companyName :', companyName, 'jobFunction',jobFunction,'jobType',jobType,'worklocation',worklocation, 'salaryType:',salaryType, 'expSalary:',expSalary )
 
     const searchObject = {jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary}
     
@@ -163,7 +160,6 @@ const ApplicantJobSearch = () => {
 
     appJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
       .then(() => {
-        console.log('search result')
         history.push('/ApplicantJobSearchResult')
       })
    }

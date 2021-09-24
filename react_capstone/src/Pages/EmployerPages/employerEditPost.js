@@ -30,8 +30,6 @@ const EmployerEditPost = () => {
 
     const indJobState = useSelector((state) => state.individualJob)
 
-    console.log("individual job", indJobState)
-
     const dispatch = useDispatch()
     const { erJobUpdate } = bindActionCreators
         (actionCreators, dispatch)
@@ -41,7 +39,7 @@ const EmployerEditPost = () => {
     const { employerCreatedRatingThunkAction} = bindActionCreators(actionCreators, dispatch)
     const employerCreatedRatingState = useSelector((state) => 
     {return state.employerCreatedRating})
-    console.log('employerCreatedRating???', employerCreatedRatingState)
+ 
     useEffect(() => {
         loadLocationThunkAction();
       loadIndustryThunkAction();
@@ -52,15 +50,12 @@ const EmployerEditPost = () => {
     }, [])
 
     const locationState = useSelector((state) => state.location);
-    console.log("location", locationState)
-    const industryState = useSelector((state) => state.industry);
-    console.log("industry", industryState)
 
-    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type, reply, offer, ee_id } = indJobState[0] || {}
+    const industryState = useSelector((state) => state.industry);
+
+    const { job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, application_id, job_salary_type, offer, ee_id } = indJobState[0] || {}
 
     const history = useHistory();
-
-    console.log('data', job_id, expect_salary, job_title, job_location, job_type, req_exp, job_description, status, expiry_date, jobCreate, job_function, work_period, reply)
 
     const [salary, setSalary] = useState(expect_salary);
     const [jobTitle, setJobTitle] = useState(job_title);
@@ -81,24 +76,17 @@ const EmployerEditPost = () => {
     const toggle = () => setModal(!modal);
     const [comment, setComment] = useState('')
 
-    console.log("RATING PASSED FROM CHILD", rating)
     const toggleNested = () => {
         setNestedModal(!nestedModal);
         setCloseAll(false);
     }
 
-    // function toggle(name) {
-    //     console.log('toggle name', name)
-
-    //     setModal(!modal);
-    // }
 
     function handleRepost(e) {
         e.preventDefault();
-        console.log('repost')
+       
         if (!jobTitle || !jobDes || !reqExp || !salary || !empType || !jobFunction || !jobLocation || !workPeriod) {
             fillInfoToast();
-            console.log('submitting')
             return;
         }
         erJobCreate(jobTitle, jobFunction, reqExp, salary,
@@ -116,11 +104,6 @@ const EmployerEditPost = () => {
             application_id: application_id,
             rate: rating,
             comment: comment,
-
-        }).then(res => {
-            console.log("POST SUCCESS", res)
-        }).catch(err => {
-            console.log("job posting err res", err.response)
         })
     }
 
@@ -137,10 +120,6 @@ const EmployerEditPost = () => {
             location: location,
             jobType: jobType,
             salaryType: salaryType
-        }).then(res => {
-            console.log('job reposted')
-        }).catch(err => {
-            console.log("job posting err res", err.response)
         })
     }
 
@@ -158,24 +137,17 @@ const EmployerEditPost = () => {
     }
 
     async function giveOffer(application_id) {
-        console.log("offer app ID", application_id)
         const authAxiosConfig = await authAxios();
         return await authAxiosConfig.post(`/employer/job/candidate/offer/${application_id}`)
-            .then(res => {
-                offerToast()
-                setoffering(true)
-                console.log(res)
+            .then(() => {
+                offerToast();
+                setoffering(true);
                 setModal(!modal);
-            }).catch(err => {
-                console.log("pubulic job load err res", err.response)
             })
     }
 
     function handleCheckbokChange(e) {
-        console.log("Checked", e.target.checked)
         e.target.checked === true ? setJobStatus(false) : setJobStatus(true);
-        console.log(e.target.value)
-        console.log("status:", jobStatus)
     }
 
 
@@ -337,10 +309,10 @@ const EmployerEditPost = () => {
                                     
                                 </FormGroup>
                                 </div>
-                                {/* <DisabledRating rating={averageRating} /> */}
+                             
                                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                                     <li className="nav-item">
-                                        {/* <p className="nav-link active" id="home-tab">About</p> */}
+                                       
                                     </li>
                                 </ul>
                             </div>
@@ -378,12 +350,7 @@ const EmployerEditPost = () => {
 
                             </CardActions>
                           </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Text">Self-Introduction</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.self_intro}</h6>
-                                                </div> */}
+                                               
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -397,7 +364,13 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.ee_skill}
+                                {modalJob.ee_skill ? modalJob.ee_skill.map((skill, index) => {
+                                                                    if (index === modalJob.ee_skill.length - 1) {
+                                                                        return skill
+                                                                    } else {
+                                                                        return `${skill} / `
+                                                                    }
+                                                                }) : null}
 
                                 </Typography>
                                 
@@ -408,12 +381,7 @@ const EmployerEditPost = () => {
 
                             </CardActions>
                           </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Skill">Skills</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_skill}</h6>
-                                                </div> */}
+                                               
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -438,12 +406,7 @@ const EmployerEditPost = () => {
 
                             </CardActions>
                           </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Skill">No. of Year of Working Experience</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_exp}</h6>
-                                                </div> */}
+                                        
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -457,7 +420,13 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.ee_industry}
+                                {modalJob.ee_industry ? modalJob.ee_industry.map((industry, index) => {
+                                                                    if (index === modalJob.ee_industry.length - 1) {
+                                                                        return industry
+                                                                    } else {
+                                                                        return `${industry} / `
+                                                                    }
+                                                                }) : null}
 
                                 </Typography>
                                 
@@ -468,12 +437,7 @@ const EmployerEditPost = () => {
 
                             </CardActions>
                           </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Text">Job Function</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_industry}</h6>
-                                                </div> */}
+                                                
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -498,12 +462,7 @@ const EmployerEditPost = () => {
 
                             </CardActions>
                           </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Text">Perferred Location</Label>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.ee_location}</h6>
-                                                </div> */}
+                                               
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -517,7 +476,13 @@ const EmployerEditPost = () => {
 
                                 </Typography>
                                 <Typography gutterBottom variant="h6" component="h3">
-                                {modalJob.availability}
+                                {modalJob.availability ? modalJob.availability.map((available, index)=>{
+                                    if (index === modalJob.availability.length-1) {
+                                        return available.charAt(0).toUpperCase() + available.slice(1)
+                                    } else {
+                                        return `${available.charAt(0).toUpperCase() + available.slice(1)} / `
+                                    }
+                                }): null}
 
                                 </Typography>
                                 
@@ -528,13 +493,7 @@ const EmployerEditPost = () => {
 
                             </CardActions>
                           </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Availabilty">Availabilty</Label>
-                                                </div>
-                                                <div className="col-md-6">
-
-                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.availability}</h6>
-                                                </div> */}
+                                                
                                             </FormGroup>
                                         </div>
                                         <div className="row" style={{ marginTop: "20px" }}>
@@ -559,13 +518,7 @@ const EmployerEditPost = () => {
 
                             </CardActions>
                           </Card>
-                                                {/* <div className="col-md-6">
-                                                    <Label for="Availabilty">Expected Salary</Label>
-                                                </div>
-                                                <div className="col-md-6">
-
-                                                    <h6 style={{ marginTop: "10px" }}>{modalJob.expected_salary}</h6>
-                                                </div> */}
+                                              
                                             </FormGroup>
                                         </div>
                                     </div>

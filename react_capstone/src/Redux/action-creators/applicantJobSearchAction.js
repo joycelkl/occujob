@@ -22,7 +22,7 @@ export const loadSearchJobFailAction = () => {
 }
 
 export const appJobSearch = (jobTitleTag, companyName, jobFunction, jobType, worklocation, salaryType, expSalary) => async(dispatch) => {
-    console.log("Applicant Search")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employee/search/result', {
@@ -34,10 +34,8 @@ export const appJobSearch = (jobTitleTag, companyName, jobFunction, jobType, wor
             jobFunction: jobFunction,
             location: worklocation
         }).then(res => {
-            console.log('search result in action', res.data)
             dispatch(loadSearchJobSuccessAction(res.data))
-        }).catch(err => {
-            console.log("Applicant Search load err res", err.response)
+        }).catch(() => {
             dispatch(loadSearchJobFailAction())
         })
     } catch (err) {

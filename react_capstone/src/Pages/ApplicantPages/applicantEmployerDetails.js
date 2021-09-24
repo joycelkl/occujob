@@ -54,7 +54,6 @@ const ApplicantEmployerDetails = () => {
     }, [])
     //Get Avg star
     const averageRating = erRating.length > 0 && erRating.map((data) => data.rate).reduce((prevValue, currValue) => prevValue + currValue) / erRating.length
-    console.log("check", erRating)
 
     let pageSize = 3;
     let pagesCount = erRating.length > 0 && Math.ceil(erRating.length / pageSize);
@@ -135,12 +134,7 @@ const ApplicantEmployerDetails = () => {
 
                                                     </CardActions>
                                                 </Card>
-                                                {/* <div class="col-md-6">
-                                                    <Label for="Text">Company Description</Label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{comp_description}</h6>
-                                                </div> */}
+                                             
                                             </FormGroup>
                                         </div>
                                         <div class="row" style={{ marginTop: "20px" }}>
@@ -165,12 +159,7 @@ const ApplicantEmployerDetails = () => {
 
                                                     </CardActions>
                                                 </Card>
-                                                {/* <div class="col-md-6">
-                                                    <Label for="Industry">Industry</Label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{er_industry}</h6>
-                                                </div> */}
+                                                
                                             </FormGroup>
 
                                         </div>
@@ -196,12 +185,7 @@ const ApplicantEmployerDetails = () => {
 
                                                     </CardActions>
                                                 </Card>
-                                                {/* <div class="col-md-6">
-                                                    <Label for="Location">Location</Label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h6 style={{ marginTop: "10px" }}>{er_location}</h6>
-                                                </div> */}
+                                               
                                             </FormGroup>
                                         </div>
 
@@ -235,14 +219,7 @@ const ApplicantEmployerDetails = () => {
                                                                 </Typography>
                                                             </CardContent>
                                                         </CardActionArea>
-                                                        {/* <CardActions>
-<Button size="small" color="primary">
-Share
-</Button>
-<Button size="small" color="primary">
-Learn More
-</Button>
-</CardActions> */}
+                                                        
                                                     </Card>
                                                 </FormGroup>
 
@@ -261,13 +238,6 @@ Learn More
 
                                                 </PaginationItem>
 
-                                                {/* 
-{applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
-<ApplicantHomeCard
-key={index}
-applicantJob={applicantJob}
-/>
-)) : "loading..."} */}
                                                 {[...Array(pagesCount)].map((page, i) =>
                                                     <PaginationItem active={i === currentPage} key={i}>
                                                         <PaginationLink onClick={e => handleClick(e, i)} href="#">
@@ -299,12 +269,7 @@ applicantJob={applicantJob}
                     <div class="col-md-2">
                         <input type="Message" class="profile-edit-btn" name="btnAddMore" />
                     </div>
-
-
-
                 </Form>
-
-
             </div>
         </div>
     )

@@ -21,14 +21,14 @@ export const loadSkillsFailAction = () => {
     }
 }
 export const loadSkillsThunkAction = () => async(dispatch) => {
-    console.log("Skills Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/public/skill').then(res => {
-            console.log("RES DATA", res.data)
+
             dispatch(loadSkillsSuccessAction(res.data))
         }).catch(err => {
-            console.log("Skills load err res", err.response)
+
             dispatch(loadSkillsFailAction())
         })
     } catch (err) {
