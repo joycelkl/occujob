@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import ApplicantNavbar from "../../Components/Navbar/navbarApplicant";
-import "../employerSearch.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators } from '../../Redux';
 import { bindActionCreators } from 'redux';
@@ -9,6 +8,7 @@ import Select from 'react-select'
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
 import { useHistory } from 'react-router';
+import "../employerSearch.css";
 
 
 const ApplicantJobSearch = () => {
