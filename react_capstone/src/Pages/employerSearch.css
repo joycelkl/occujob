@@ -1,6 +1,6 @@
 
 .searchHeader {
-    height: 93vh;
+    min-height: 93vh;
     width: 100%;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../Images/applicantSearch.jpg);
     background-position: center;
