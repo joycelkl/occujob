@@ -173,7 +173,7 @@ const ApplicantJobSearch = () => {
         <Container>
           <h1 style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline'}}>Job Search</h1>
           <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
-            <div className="mb-3 search-text-box" id="home">
+            <div className="mb-3" id="home">
               <Row>
                 <Col md={6}>
                   <FormGroup>
