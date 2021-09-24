@@ -37,11 +37,6 @@ const EmployerHomePage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log('employer Job', employerJobState)
-
-
-    console.log('poped', userName)
-
     return (
         <div>
             <EmployerNavbar />

@@ -8,7 +8,6 @@ const initialState = {
 const reducer = (state = initialState.navbarUnreadMsgs, action) => {
     switch (action.type) {
         case LOAD_NAVBAR_UNREAD_MSG_SUCCESS_ACTION:
-            console.log('navbarUnreadyMsg payload', action.payload)
             return action.payload
         case LOAD_NAVBAR_UNREAD_MSG_FAIL_ACTION:
             return state;

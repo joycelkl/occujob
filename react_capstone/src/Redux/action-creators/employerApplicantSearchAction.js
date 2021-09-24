@@ -22,7 +22,7 @@ export const loadSearchCandidateFailAction = () => {
 }
 
 export const erAppSearch = (available, jobFunction, expSalary, location, skills, salaryType, workExp) => async(dispatch) => {
-    console.log("Applicant Search")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/employer/candidateSearch', {
@@ -35,8 +35,8 @@ export const erAppSearch = (available, jobFunction, expSalary, location, skills,
             workExp: workExp
         }).then(res => {
             dispatch(loadSearchCandidateSuccessAction(res.data))
-        }).catch(err => {
-            console.log("Applicant Search load err res", err.response)
+        }).catch(() => {
+
             dispatch(loadSearchCandidateFailAction())
         })
     } catch (err) {

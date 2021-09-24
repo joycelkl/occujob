@@ -24,14 +24,14 @@ export const loadEmployerJobFailAction = () => {
 
 //Load Job for employer home page
 export const loadEmployerJobThunkAction = () => async(dispatch) => {
-    console.log("employer Job Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employer/home').then(res => {
-            console.log("RES DATA", res.data)
+
             dispatch(loadEmployerJobSuccessAction(res.data))
         }).catch(err => {
-            console.log("pubulic job load err res", err.response)
+
             dispatch(loadEmployerJobFailAction())
         })
     } catch (err) {
@@ -42,13 +42,13 @@ export const loadEmployerJobThunkAction = () => async(dispatch) => {
 
 // getting job posting history
 export const erJobRecordAction = () => async(dispatch) => {
-    console.log("ER Job Posting")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employer/job/list').then(res => {
             dispatch(loadEmployerJobSuccessAction(res.data))
         }).catch(err => {
-            console.log("pubulic job load err res", err.response)
+
             dispatch(loadEmployerJobFailAction())
         })
     } catch (err) {
@@ -59,7 +59,7 @@ export const erJobRecordAction = () => async(dispatch) => {
 //Update Job for Employer Job Records Page
 
 export const erJobUpdate = (job_id, jobTitle, jobFunction, reqExp, expectSalary, jobDescription, workPeriod, status, location, empType, salaryType) => async(dispatch) => {
-    console.log("ER JOB UPDATE")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post(`/employer/job/${job_id}`, {
@@ -76,7 +76,7 @@ export const erJobUpdate = (job_id, jobTitle, jobFunction, reqExp, expectSalary,
         }).then(res => {
             dispatch(loadEmployerJobSuccessAction(res.data))
         }).catch(err => {
-            console.log('update job err', err.response)
+
             dispatch(loadEmployerJobFailAction)
         })
     } catch (err) {

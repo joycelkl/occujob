@@ -22,13 +22,13 @@ export const loadEmployerRatingFailAction = () => {
 }
 
 export const employerGetRatingThunkAction = () => async(dispatch) => {
-    console.log("employer Rating")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/employer/companyRatingView').then(res => {
             dispatch(loadEmployerRatingSuccessAction(res.data))
         }).catch(err => {
-            console.log("Employer Rating load err res", err.response)
+
             dispatch(loadEmployerRatingFailAction())
         })
     } catch (err) {

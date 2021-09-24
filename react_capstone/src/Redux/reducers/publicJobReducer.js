@@ -2,7 +2,7 @@ import { LOAD_PUBLIC_JOB_SUCCESS_ACTION, LOAD_PUBLIC_JOB_FAIL_ACTION } from '../
 
 
 const initialState = {
-    publicJob: null
+    publicJob: []
 };
 
 const reducer = (state = initialState, action) => {

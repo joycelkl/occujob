@@ -37,9 +37,6 @@ const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispa
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log('ApplicantJob Data', applicantJobState)
-
-    console.log('poped', userName)
 
     return (
         <div>
@@ -79,13 +76,6 @@ const { loadApplicantJobThunkAction } = bindActionCreators(actionCreators, dispa
 
                         </PaginationItem>
 
-                        {/* 
-            {applicantJobState.length > 0 ? applicantJobState.map((applicantJob, index) => (
-                    <ApplicantHomeCard
-                        key={index}
-                        applicantJob={applicantJob}
-                    />
-                )) : "loading..."} */}
                         {[...Array(pagesCount)].map((page, i) =>
                             <PaginationItem active={i === currentPage} key={i}>
                                 <PaginationLink onClick={e => handleClick(e, i)} href="#">

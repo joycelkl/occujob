@@ -18,9 +18,8 @@ const Chatroom = (props) => {
     const chatroomID = useSelector((state)=> state.chatroomID)
     const chatHistory = useSelector((state)=> state.chatHistory)
     const erProfileState = useSelector((state) => state.erProfile);
-    console.log('erProfile in chatroom', erProfileState)
     const eeProfileState = useSelector((state) => state.EEProfile);
-    console.log('AppProfile in chatroom', eeProfileState)
+
 
     const dispatch = useDispatch();
     const { loadChatroomIDThunkAction } = bindActionCreators(actionCreators, dispatch)
@@ -42,15 +41,9 @@ const Chatroom = (props) => {
     useEffect(()=>{
         socket = io(ENDPOINT,  { transports : ['websocket'] })
 
-        console.log('IDS', chatterID, userID)
-
         loadChatroomIDThunkAction(chatterID, userID)
-        .then(()=>{
-            console.log('okay done', chatroomID)
-        })
-        
+                
         socket.on('sendMsg', message=>{
-            console.log('how many time running??')
             addChatroomHistorySuccessAction(message)
         })
         
@@ -71,11 +64,11 @@ const Chatroom = (props) => {
 
 
     useEffect(()=>{
-        console.log('chatroom Id in 2nd useEffect', chatroomID)
+       
 
         if(chatroomID.length >0 ){
             let id = chatroomID[0].chatroom_id
-            console.log('chatroom id in useEffect', id)
+          
             setChatroomNum(id)
 
             socket.on('chatroomIDrequest', ()=>{
@@ -99,7 +92,7 @@ const Chatroom = (props) => {
         if(erProfileState && eeProfileState){ 
             const { ee_img_data } = eeProfileState
             const { er_img_data } = erProfileState
-            console.log('inside useEffect', ee_img_data, er_img_data)
+         
             if(type === 'er') {
                 setUserImg(er_img_data)
                 setChatterImg(ee_img_data)
@@ -112,19 +105,12 @@ const Chatroom = (props) => {
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[chatroomID, erProfileState, eeProfileState])
 
-    console.log('imgdata in chatroom', chatterImg, userImg)
-
     useEffect(()=>{
         
         setMessages(chatHistory)
 
     },[chatHistory])
 
-
-
-    console.log('chatroomId', chatroomID)
-    console.log('chatter', chatter)
-    console.log('chat History', chatHistory)
 
     return (
         <div className="ChatRoom">

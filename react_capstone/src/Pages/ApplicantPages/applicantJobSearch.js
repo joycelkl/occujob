@@ -133,7 +133,7 @@ const ApplicantJobSearch = () => {
     } else {
       companyName = null;
     }
-    console.log('companyName', companyName)
+   
 
     let jobFunction
     if (jobFunctionArr && jobFunctionArr.length > 0) {
@@ -143,7 +143,7 @@ const ApplicantJobSearch = () => {
     } else {
       jobFunction = null;
     }
-    console.log('jobFunction', jobFunction)
+   
 
     let worklocation
     if (worklocationArr && worklocationArr.length > 0) {
@@ -153,9 +153,6 @@ const ApplicantJobSearch = () => {
     } else {
       worklocation = null;
     }
-    console.log('worklocation', worklocation)
-    
-    console.log('submitted', 'jobtitle :',jobTitleTag, 'companyName :', companyName, 'jobFunction',jobFunction,'jobType',jobType,'worklocation',worklocation, 'salaryType:',salaryType, 'expSalary:',expSalary )
 
     const searchObject = {jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary}
     
@@ -163,7 +160,6 @@ const ApplicantJobSearch = () => {
 
     appJobSearch(jobTitleTag, companyName, jobFunction,jobType,worklocation, salaryType,expSalary)
       .then(() => {
-        console.log('search result')
         history.push('/ApplicantJobSearchResult')
       })
    }
@@ -177,7 +173,7 @@ const ApplicantJobSearch = () => {
         <Container>
           <h1 style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline'}}>Job Search</h1>
           <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
-            <div className="mb-3 search-text-box" id="home">
+            <div className="mb-3" id="home">
               <Row>
                 <Col md={6}>
                   <FormGroup>

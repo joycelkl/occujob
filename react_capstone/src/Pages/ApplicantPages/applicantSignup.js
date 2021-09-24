@@ -7,7 +7,7 @@ import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
 import { Row, Col } from "reactstrap";
 
-const ApplicantSignUp = (props) => {
+const ApplicantSignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("")
@@ -21,7 +21,6 @@ const ApplicantSignUp = (props) => {
   const { registerEEuserThunkAction } = bindActionCreators(actionCreators, dispatch)
 
   useEffect(() => {
-    console.log('isAuthenticated')
     if (isAuthenticated) {
       history.push('/applicantHomePage')
     }
@@ -45,7 +44,6 @@ const ApplicantSignUp = (props) => {
     }
 
     registerEEuserThunkAction(name, email, password);
-    console.log('new applicant register')
 
   }
 

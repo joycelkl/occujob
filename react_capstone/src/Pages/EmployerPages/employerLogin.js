@@ -51,7 +51,6 @@ const EmployerLogin = () => {
 
     function handleLogin(e) {
         e.preventDefault();
-        console.log('ER handle Login')
         if (!email || !password) {
             noLoginToast()
             return;

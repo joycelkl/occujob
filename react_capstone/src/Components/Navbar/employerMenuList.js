@@ -18,8 +18,5 @@ export const EmployerMenuList = [{
         title: "Profile",
         url: "/employerProfilePage"
     },
-    //  {
-    //      title: "Logout",
-    //      url: "/",
-    //  },
+
 ];

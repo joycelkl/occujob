@@ -6,19 +6,14 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
-  FormGroup,
-  Input,
 } from "reactstrap";
 import Chatroom from "./Chatroom";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../Redux";
 import io from "socket.io-client";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 let socket;
@@ -61,8 +56,6 @@ const SmallMessage = ({
     });
 
     socket.on("sendMsg", (message) => {
-      console.log("in sendMsg after", modal);
-
       setlastMsg(message[0].content);
       setLastSent(message[0].created_at);
       setUnreadMsg((prevUnreadMsg) => Number(prevUnreadMsg) + 1);
@@ -81,25 +74,21 @@ const SmallMessage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unreadCount]);
 
-  console.log("unreadMsg in smallMessage", unreadMsg);
+
 
   function handleOnClick() {
     resetUnreadMsgThunkAction(chatID);
     toggle();
-    console.log("inchatroom after onClick", modal);
   }
-
-  console.log("below onClick after", modal);
 
   function handleCancel() {
     toggle();
-    console.log("inchatroom after cancel", modal);
   }
-  console.log("below cancel after", modal);
+
 
   function changeDateFormat(date) {
     return new Date(date).toLocaleString()
-}
+  }
 
 
   return (
@@ -143,24 +132,6 @@ const SmallMessage = ({
         </CardActionArea>
         
       </Card>
-      {/* <div className="SmallMessage-inboxes-sentTo">
-        <span>{chatterName}</span>{" "}chat
-        {unreadMsg > 0 ? <span>{unreadMsg} Message Arrived</span> : null}
-      </div>
-
-      <div className="SmallMessage-inboxes-msgContent">
-        {lastMsg ? (
-          <span>
-            {lastMsg.length < 52 ? lastMsg : lastMsg.substring(0, 40) + " ..."}
-          </span>
-        ) : (
-          <span>Please send your first message</span>
-        )}
-      </div>
-      <div className="SmallMessage-inboxes-sentTime">
-        {lastSent ? <span>{lastSent}</span> : <span>Start a conversation</span>}
-      </div> */}
-
       <>
         <Modal isOpen={modal} toggle={toggle} fade={false}>
           <ModalHeader toggle={toggle} className='smallHead'>Chatroom</ModalHeader>

@@ -22,8 +22,7 @@ const Message = (props) => {
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    
-    console.log('navUnreadCount', navUnreadCount)
+
 
     return (
         <>

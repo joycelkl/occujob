@@ -21,14 +21,14 @@ export const loadIndustryFailAction = () => {
     }
 }
 export const loadIndustryThunkAction = () => async(dispatch) => {
-    console.log("Industry Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/public/industry').then(res => {
-            console.log("RES DATA", res.data)
+
             dispatch(loadIndustrySuccessAction(res.data))
         }).catch(err => {
-            console.log("Skills load err res", err.response)
+
             dispatch(loadIndustryFailAction())
         })
     } catch (err) {

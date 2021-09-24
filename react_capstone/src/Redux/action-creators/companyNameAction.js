@@ -22,14 +22,14 @@ export const loadCompanyNameFailAction = () => {
     }
 }
 export const loadCompanyNameThunkAction = () => async(dispatch) => {
-    console.log("Company Name Load")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.get('/public/company').then(res => {
-            console.log("RES DATA", res.data)
+
             dispatch(loadCompanyNameSuccessAction(res.data))
-        }).catch(err => {
-            console.log("Company Name load err res", err.response)
+        }).catch(() => {
+
             dispatch(loadCompanyNameFailAction())
         })
     } catch (err) {

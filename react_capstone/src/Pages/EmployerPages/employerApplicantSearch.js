@@ -48,19 +48,18 @@ const EmployerApplicantSearch = () => {
 
   //setup skills tags
   const skillsState = useSelector((state) => {
-    console.log("ER", state.skills);
     return state.skills
   });
-  console.log("skills", skillsState)
+
 
   let skillsTag = []
   if (skillsState.length > 0) {
     skillsState.map((ski) => (skillsTag.push({ "label": ski.skills, "value": ski.skills})))
   }
-  console.log('skillsTag', skillsTag)
+
 
   const handleOnChangeSkills = obj =>{
-    console.log('setSkill', obj)
+
     setSkillsArr(obj)
   }
 
@@ -79,19 +78,19 @@ const EmployerApplicantSearch = () => {
   
   //setup job function tags
   const industryState = useSelector((state) => {
-    console.log("industry", state.industry);
+
     return state.industry
   });
-  console.log("industry", industryState)
+
 
   let industryTag = []
   if (industryState.length > 0) {
     industryState.map((indus) => (industryTag.push({ "label": indus.industry, "value": indus.industry})))
   }
-  console.log('industryTag', industryTag)
+
 
   const handleOnChangeIndustry = obj =>{
-    console.log('set Job Function', obj)
+
     setJobFunctionArr(obj)
   }
 
@@ -110,11 +109,11 @@ const EmployerApplicantSearch = () => {
   
   //setup location tags
   const locationState = useSelector((state) => {
-    console.log("location", state.location);
+
     return state.location
   });
  
-  console.log("location Tag Data", locationState)
+
 
   let locationTag = []
   if (locationState.length > 0) {
@@ -122,7 +121,7 @@ const EmployerApplicantSearch = () => {
   }
 
   const handleOnChangeLocation = obj =>{
-    console.log('set Location', obj)
+
     setLocationArr(obj)
   }
 
@@ -151,7 +150,7 @@ const EmployerApplicantSearch = () => {
 ] 
 
   const handleOnChangeAvailable = obj =>{
-    console.log('set available', obj)
+
     setAvailableArr(obj)
   }
 
@@ -191,7 +190,7 @@ const EmployerApplicantSearch = () => {
     } else {
       available = null;
     }
-    console.log('available', available)
+
     
     let jobFunction
     if (jobFunctionArr && jobFunctionArr.length > 0) {
@@ -201,7 +200,7 @@ const EmployerApplicantSearch = () => {
     } else {
       jobFunction = null;
     }
-    console.log('jobFunction', jobFunction)
+ 
 
     let skills
     if (skillsArr && skillsArr.length > 0) {
@@ -211,7 +210,7 @@ const EmployerApplicantSearch = () => {
     } else {
       skills = null;
     }
-    console.log('skills', skills)
+
 
     let location
     if (locationArr && locationArr.length > 0) {
@@ -221,10 +220,6 @@ const EmployerApplicantSearch = () => {
     } else {
       location = null;
     }
-    console.log('location', location)
-
-  
-    console.log('submitted', availableArr, jobFunctionArr, expSalary, locationArr, skillsArr, salaryType, workExp)
 
     const searchObject = {available, jobFunction, expSalary, location, skills, salaryType, workExp}
     
@@ -242,9 +237,9 @@ const EmployerApplicantSearch = () => {
       <EmployerNavbar />
       <div className="searchHeader">
         <Container>
-        <h1 className='mt-5' style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline'}}>Applicant Search</h1>
+        <Row><h1 className='mt-5 ' style={{color:'white', textAlign:'center', marginTop:'30px', fontSize:'50px', fontWeight:'Bold', textDecoration:'underline', height:'60px',zIndex:'9999' }}>Applicant Search</h1></Row>
           <Form className='form-group' onSubmit={(e)=>handleOnSubmit(e)}>
-            <div className="mb-3 search-text-box text-start" id="home">
+            <div className="mb-3  text-start" id="home">
               <Row>
                 <Col lg={6}>
                   <FormGroup>

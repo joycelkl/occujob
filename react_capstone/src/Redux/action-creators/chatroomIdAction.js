@@ -24,17 +24,17 @@ export const loadChatroomIDFailAction = () => {
 
 //Load chatroom Id
 export const loadChatroomIDThunkAction = (chatterID, userID) => async(dispatch) => {
-    console.log("Load Chatroom ID")
+
     try {
         const authAxiosConfig = await authAxios();
         await authAxiosConfig.post('/chat/retrieve/chatroomid', {
             chatterID: chatterID,
             userID: userID
         }).then(res => {
-            console.log('res in getting port', res)
+
             dispatch(loadChatroomIDSuccessAction(res.data))
         }).catch(err => {
-            console.log("applicant portfolio load err res", err.response)
+
             dispatch(loadChatroomIDFailAction())
         })
     } catch (err) {

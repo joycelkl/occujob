@@ -15,10 +15,9 @@ const EmployerJobRecordCard = (props) => {
 
   const { job_title, created_at, expiry_date, status, job_id, er_img_data } =
     props.job;
-  console.log("props", props.job);
+
 
   function handleOnclick () {
-    console.log('clicked', job_id)
     localStorage.setItem('job',job_id)
     loadIndJobThunkAction(job_id).then(()=>{
         history.push('/employerEditPost')
