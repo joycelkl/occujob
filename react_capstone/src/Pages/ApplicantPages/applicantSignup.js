@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../Redux';
 import { useHistory } from 'react-router';
-import {Row, Col} from "reactstrap";
+import { Row, Col } from "reactstrap";
 
 const ApplicantSignUp = () => {
   const [email, setEmail] = useState("");
@@ -52,24 +52,25 @@ const ApplicantSignUp = () => {
       <Navbar />
       <div className="LoginHeader">
         <div className="container-fluid">
-        <Row>
+          <Row>
             <Col lg="7">
-          <div className="container" style={{  border: "3px solid black", padding: "80px", background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))", marginTop: "15vh",  borderRadius: "25px", color: "white"  }}>
-            <h1>Applicant Sign Up Page</h1>
-            <Signup onEmailChange={(v) => setEmail(v)} onPasswordChange={(v) => setPassword(v)} handleRegister={(e) => handleRegister(e)} email={email} password={password} onNameChange={(v) => setName(v)} name={name} type="Applicant" />
-            {error && alert(error)}
-          </div>
-          </Col>
-          <Col lg="5">
-          <div className="container">
-            <div style={{ marginTop: "220px" }}>
-              <h1 style={{ fontSize: "55px" }}>Ready To Find Your Next Job?</h1>
-              <p style={{ fontSize: "28px", lineHeight: "40px" }}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta quae neque quia maxime quos
-                delectus, eveniet asperiores in possimus nisi eius non. Illo quod enim hic fuga quas iure eius?
-              </p>
-            </div>
-          </div>
-          </Col>
+              <div className="container" style={{ border: "3px solid black", padding: "80px", background: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))", marginTop: "15vh", borderRadius: "25px", color: "white" }}>
+                <h1>Applicant Sign Up Page</h1>
+                <Signup onEmailChange={(v) => setEmail(v)} onPasswordChange={(v) => setPassword(v)} handleRegister={(e) => handleRegister(e)} email={email} password={password} onNameChange={(v) => setName(v)} name={name} type="Applicant" />
+                {error && alert(error)}
+              </div>
+            </Col>
+            <Col lg="5">
+              <div className="container">
+                <div style={{ marginTop: "220px" }}>
+                  <h1 style={{ fontSize: "55px" }}>Ready To Find Your Next Job?</h1>
+                  <p style={{ fontSize: "28px", lineHeight: "40px" }}>OccuJob responds to user’s needs by creating new communication channels and opportunities to help them find their next job. We help both job seekers and employers to accomplish their employment goals.
+
+
+                  </p>
+                </div>
+              </div>
+            </Col>
           </Row>
         </div>
       </div>

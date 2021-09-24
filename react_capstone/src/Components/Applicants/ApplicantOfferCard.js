@@ -141,44 +141,43 @@ const ApplicantOfferCard = (props) => {
                                         </div>
                                         <div className="col-md-4 offset-md-4">
                                             <div className="profile-head" style={{ marginTop: "25px" }}>
-                                                <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Company Name</Label>
-                                                <Input type="text" name="text" id="CompanyName" placeholder="" value={er_name} disabled style={{ marginBottom: "10px" }} />
-                                                <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Job Title</Label>
-                                                <Input type="text" name="text" id="jobTitle" placeholder="" value={job_title} disabled />
+                                                <Label for="CompanyName" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize:'30px'}}>Company Name</Label>
+                                                <h2>{er_name}</h2>
+                                                <Label for="Job Title" onClick={handleOnClick} style={{ cursor: "pointer", fontWeight: "bold", textDecoration: "underline", marginBottom: "5px",fontSize:'30px' }}>Job Title</Label>
+                                                <h3>{job_title}</h3>
                                             </div>
                                         </div>
-                                        <div className="nav nav-tabs" style={{ marginTop: "10px", marginBottom: "30px" }}></div>
+                                        <div className="nav nav-tabs" style={{ marginTop: "10px"}}></div>
                                     </div>
                                 </div>
                             </div>
-                            <FormGroup>
-                                <Label for="Text" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Job Description</Label>
-                                <Input type="textarea" name="text" id="intro" placeholder="" value={job_description} disabled style={{ marginBottom: "20px" }} />
+                            <div>
+                            <FormGroup style={{marginLeft:'30vh'}}>
+                                <Label for="Text" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize:'20px' }}>Job Description</Label>
+                               <h5>{job_description} </h5>
                             </FormGroup>
 
-                            <FormGroup>
-                                <Label for="Years of Experience" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Years of Experience</Label>
-                                <Input type="number" name="number" id="yearsOfExperience" placeholder="" value={req_exp} disabled style={{ marginBottom: "20px" }} />
+                            <FormGroup style={{marginLeft:'30vh'}}>
+                                <Label for="Years of Experience" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize:'20px' }}>Years of Experience</Label>
+                                <h5>{req_exp}</h5>
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="Expected Salary" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Salary</Label>
-                                <Input type="text" name="number" id="Salary" placeholder="Salary" value={`${expect_salary} ${job_salary_type}`} disabled style={{ marginBottom: "20px" }} />
+                            <FormGroup style={{marginLeft:'30vh'}}>
+                                <Label for="Expected Salary" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize:'20px' }}>Salary</Label>
+                                <h5>{`${expect_salary} ${job_salary_type}`} </h5>
+                            </FormGroup >
+                            <FormGroup style={{marginLeft:'30vh'}}>
+                                <Label for="employmentType" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize:'20px' }}>Employment Type</Label>
+                                <h5> {job_type} </h5>
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="employmentType" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Employment Type</Label>
-                                <Input type="select" name="employmentType" id="employmentType" value={job_type} disabled style={{ marginBottom: "20px" }}>
-                                    <option>Freelance</option>
-                                    <option>Part-Time</option>
-                                </Input>
+                            <FormGroup style={{marginLeft:'30vh'}}>
+                                <Label for="JobFunction" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize:'20px' }}>JobFunction</Label>
+                                <h5>{job_function} </h5>
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="JobFunction" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>JobFunction</Label>
-                                <Input type="textarea" name="text" id="JobFunction" placeholder="" value={job_function} disabled style={{ marginBottom: "20px" }} />
+                            <FormGroup style={{marginLeft:'30vh'}}>
+                                <Label for="preferworklocation" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px", fontSize:'20px' }}>Work Location</Label>
+                                <h5>{job_location} </h5>
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="preferworklocation" style={{ fontWeight: "bold", textDecoration: "underline", marginBottom: "5px" }}>Work Location</Label>
-                                <Input type="text" name="select" id="preferworklocation" value={job_location} disabled />
-                            </FormGroup>
+                            </div>
                         </ModalBody>
                         <ModalFooter>
                             {reply === null && offer ? <Button color="primary" onClick={() => handleAccept()}>accept</Button> : null}

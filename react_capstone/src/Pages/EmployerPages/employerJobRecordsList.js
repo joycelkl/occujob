@@ -33,7 +33,8 @@ const EmployerJobRecordsList = () => {
                 </div>
             </section>
             <div className="jobCard">
-                {employerJobState.length > 0 ? employerJobState.map(job => <EmployerJobRecordCard key={job.job_id} job={job} />) : <p>Loading...</p>}
+                {employerJobState.length > 0 ? employerJobState.map(job => <EmployerJobRecordCard key={job.job_id} job={job} />) : 
+                <p><h1 style={{display:"flex", justifyContent:'center', marginTop:'15vh'}}>Please Create Your First Job</h1></p>}
             </div>
         </div>
     )

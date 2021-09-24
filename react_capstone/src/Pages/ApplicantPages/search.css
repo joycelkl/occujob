@@ -44,7 +44,7 @@
   
   .searchResultsHomebtn:hover {
     border: 1px solid black;
-    background: rgb(59, 105, 121);
+    background: rgb(70,83,89);
     transition: 1s;
     text-decoration: none;
     color: white;
@@ -65,7 +65,7 @@
   
   .searchResultsHomebtn2:hover {
     border: 1px solid black;
-    background: rgb(59, 105, 121);
+    background: rgb(70,83,89);
     transition: 1s;
     text-decoration: none;
     color: white;

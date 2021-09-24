@@ -64,8 +64,7 @@ const EmployerSignUp = () => {
           <div className="container">
             <div style={{ marginTop: "25vh" }}>
               <h1 style={{ fontSize: "55px" }}>Ready To Find Your Next Applicant?</h1>
-              <p style={{ fontSize: "28px", lineHeight: "40px" }}>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta quae neque quia maxime quos
-                delectus, eveniet asperiores in possimus nisi eius non. Illo quod enim hic fuga quas iure eius?
+              <p style={{ fontSize: "28px", lineHeight: "40px" }}>OccuJob responds to user’s needs by creating new communication channels and opportunities to help them find their next job. We help both job seekers and employers to accomplish their employment goals.
               </p>
             </div>
           </div>
