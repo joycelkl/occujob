@@ -260,6 +260,48 @@ class ChatroomServices {
 
     }
 
+    retrieveAllUnreadMsgIndDis(userID, userType) {
+
+        if (userType == 'er') {
+            return this.knex('chatroom')
+                .where('chat_employer_id', userID)
+                .select('chatroom.chatroom_id', 'message.msgread')
+                .join('message', 'message.chatroom_id', '=', 'chatroom.chatroom_id')
+                .whereNot('message.sender_type', userType)
+                .andWhere('msgread', 1)
+                // .count('chatroom.chatroom_id')
+                // .groupBy('chatroom.chatroom_id')
+                .then((navUnread) => {
+                    console.log('nav unread in service', navUnread)
+                    return navUnread
+                })
+                .catch((err) => {
+                    console.error(err)
+                    throw new Error(err)
+                })
+
+        } else {
+            return this.knex('chatroom')
+                .where('chat_employee_id', userID)
+                .select('chatroom.chatroom_id', 'message.msgread')
+                .join('message', 'message.chatroom_id', '=', 'chatroom.chatroom_id')
+                .whereNot('message.sender_type', userType)
+                .andWhere('msgread', 1)
+                // .count('chatroom.chatroom_id')
+                // .groupBy('chatroom.chatroom_id')
+                .then((navUnread) => {
+                    console.log('nav unread in service', navUnread)
+                    return navUnread
+                })
+                .catch((err) => {
+                    console.error(err)
+                    throw new Error(err)
+                })
+        }
+
+    }
+
+
 }
 
 

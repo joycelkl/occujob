@@ -8,7 +8,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 import Chatroom from "./Chatroom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../Redux";
 import io from "socket.io-client";
@@ -26,18 +26,16 @@ const SmallMessage = ({
   sentTime,
   userType,
   userID,
+  unreadMsgCount,
 }) => {
   const ENDPOINT = process.env.REACT_APP_BASE_URL;
+  socket = io(ENDPOINT, { transports: ["websocket"] });
 
   const [lastSent, setLastSent] = useState("");
   const [lastMsg, setlastMsg] = useState("");
   const [unreadMsg, setUnreadMsg] = useState(0);
-  const unreadCount = useSelector((state) => state.unreadMsgCount);
   const dispatch = useDispatch();
-  const { loadUnreadMsgThunkAction } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+
   const { resetUnreadMsgThunkAction } = bindActionCreators(
     actionCreators,
     dispatch
@@ -49,35 +47,47 @@ const SmallMessage = ({
   const toggle = () => setModal(!modal);
 
   useEffect(() => {
-    socket = io(ENDPOINT, { transports: ["websocket"] });
-
-    socket.on("chatroomIDrequest", () => {
-      socket.emit("sendingChatroomID", chatID);
-    });
-
-    socket.on("sendMsg", (message) => {
-      setlastMsg(message[0].content);
-      setLastSent(message[0].created_at);
-      setUnreadMsg((prevUnreadMsg) => Number(prevUnreadMsg) + 1);
-    });
-
+    
+    console.log('unreadCount from backend','chatroomID:',chatID ,'unread:',unreadMsgCount)
+    setUnreadMsg(unreadMsgCount);  
     setlastMsg(msgContent);
     setLastSent(sentTime);
 
-    loadUnreadMsgThunkAction(chatID);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  socket.on("chatroomIDrequest", () => {
+    socket.emit("sendingChatroomID", chatID);
+    console.log('chatroom ID',chatID)
+  });
+
+  socket.on("sendMsg", (message) => {
+    console.log('message arrive')
+    setlastMsg(message[0].content);
+    setLastSent(message[0].created_at);
+    
+  });
+  
+  console.log('unreadMsg', unreadMsg)
+
   useEffect(() => {
-    setUnreadMsg(unreadCount);
+    console.log('I run once')
 
+    socket.on("receivedMsg", (sender, chatroomID) => {
+      console.log('sender', sender)
+      if (sender !== userType && !modal && chatroomID === chatID){
+        setUnreadMsg((prevUnreadMsg) => Number(prevUnreadMsg) + 1);
+      }
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unreadCount]);
-
+  },[userType, modal, lastSent])
+  
 
 
   function handleOnClick() {
     resetUnreadMsgThunkAction(chatID);
+    setUnreadMsg(0)
     toggle();
   }
 
@@ -97,7 +107,7 @@ const SmallMessage = ({
       style={{ cursor: "pointer", display: "flex", justifyContent: "center" }}
       onClick={() => handleOnClick()}
     >
-      <Card style={{ width: "600px", width: "80%", marginBottom: "30px", marginTop:'10px'}}>
+      <Card style={{  width: "80%", marginBottom: "30px", marginTop:'10px'}}>
         <CardActionArea>
           <CardContent>
             
