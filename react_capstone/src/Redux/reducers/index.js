@@ -26,6 +26,7 @@ import chatroomHistoryReducer from './chatroomHistoryReducer'
 import chatroomAllChatsReducer from './chatroomAllChatsReducer'
 import chatroomUnreadMsgReducer from './chatroomUnreadMsgReducer'
 import navbarUnreadMsgReducer from './narbarUnreadMsgReducer'
+import chatroomAllUnreadMsgReducer from './chatroomAllUnreadMsgReducer'
 
 const reducers = combineReducers({
     auth: authReducer,
@@ -48,13 +49,14 @@ const reducers = combineReducers({
     employerRating: employerRatingReducer,
     applicantCreatedRating: applicantCreatedRatingReducer,
     employerCreatedRating: employerCreatedRatingReducer,
-    eeViewErRating:eeViewErRatingReducer,
-    erViewEeRating:erViewEeRatingReducer,
+    eeViewErRating: eeViewErRatingReducer,
+    erViewEeRating: erViewEeRatingReducer,
     chatroomID: chatroomIdReducer,
     chatHistory: chatroomHistoryReducer,
     allChats: chatroomAllChatsReducer,
     unreadMsgCount: chatroomUnreadMsgReducer,
     navUnreadMsgCount: navbarUnreadMsgReducer,
+    allUnreadCount: chatroomAllUnreadMsgReducer,
 })
 
 export default reducers

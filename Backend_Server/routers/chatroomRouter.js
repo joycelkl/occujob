@@ -57,6 +57,7 @@ class ChatroomRouter {
                 .then((chatroomHistory) => {
                     console.log('returned chatroomHistory', chatroomHistory)
                     this.io.to(chatroomID).emit('sendMsg', chatroomHistory)
+                    this.io.to(chatroomID).emit("receivedMsg", senderType, chatroomID)
                     return res.json(chatroomHistory)
                 })
                 .catch((err) => {
@@ -113,6 +114,19 @@ class ChatroomRouter {
 
             return this.chatroomServices.retrieveNavUnreadMsg(req.user.id, req.user.type).then((navUnread) => {
                 console.log('nav unread count', navUnread)
+                return res.json(navUnread)
+            }).catch((err) => {
+                console.log(err)
+                res.status(500).json(err)
+            })
+
+        })
+
+        router.get('/allUnreadMsgCount', (req, res) => {
+            console.log('getting navbar unread msg', req.user.id, req.user.type)
+
+            return this.chatroomServices.retrieveAllUnreadMsgIndDis(req.user.id, req.user.type).then((navUnread) => {
+                console.log('all chatroom unread count', navUnread)
                 return res.json(navUnread)
             }).catch((err) => {
                 console.log(err)
