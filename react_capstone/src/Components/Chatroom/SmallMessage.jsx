@@ -48,7 +48,7 @@ const SmallMessage = ({
 
   useEffect(() => {
     
-    console.log('unreadCount from backend','chatroomID:',chatID ,'unread:',unreadMsgCount)
+   
     setUnreadMsg(unreadMsgCount);  
     setlastMsg(msgContent);
     setLastSent(sentTime);
@@ -59,23 +59,22 @@ const SmallMessage = ({
 
   socket.on("chatroomIDrequest", () => {
     socket.emit("sendingChatroomID", chatID);
-    console.log('chatroom ID',chatID)
+ 
   });
 
   socket.on("sendMsg", (message) => {
-    console.log('message arrive')
+
     setlastMsg(message[0].content);
     setLastSent(message[0].created_at);
     
   });
   
-  console.log('unreadMsg', unreadMsg)
+
 
   useEffect(() => {
-    console.log('I run once')
 
     socket.on("receivedMsg", (sender, chatroomID) => {
-      console.log('sender', sender)
+  
       if (sender !== userType && !modal && chatroomID === chatID){
         setUnreadMsg((prevUnreadMsg) => Number(prevUnreadMsg) + 1);
       }

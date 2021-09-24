@@ -18,9 +18,9 @@ const AllChatrooms = () => {
   const { loadAllUnreadCountThunkAction } = bindActionCreators(actionCreators, dispatch)
 
   const allChatroom = useSelector((state)=> state.allChats)
-  console.log('allChatroom', allChatroom)
+
   const allChatUnread = useSelector((state)=> state.allUnreadCount)
-  console.log('allChatUnread', allChatUnread)
+
 
   useEffect(()=>{
       loadAllChatroomsThunkAction();
@@ -44,7 +44,7 @@ const AllChatrooms = () => {
           return allObject;
       },[])
     }
-    console.log('chatroomUC',chatroomUC)
+
 
     
 
@@ -63,7 +63,7 @@ const AllChatrooms = () => {
       newAllChatroom = allChatroom
     }
 
-    console.log('newAllChatroom', newAllChatroom)
+
     
     setAllChatInfo(newAllChatroom)
 
