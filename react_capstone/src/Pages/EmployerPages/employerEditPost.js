@@ -20,7 +20,6 @@ import './employerProfilePage.css'
 import Chatroom from "../../Components/Chatroom/Chatroom";
 import PortfolioTable from "../../Components/Applicants/PortfolioTable";
 
-
 const EmployerEditPost = () => {
 //toasts
     const offerToast = () => toast("An Offer Has Been Made")
@@ -270,7 +269,7 @@ const EmployerEditPost = () => {
                             </Form>
                         </div>
 
-                        <Table style={{color:"black", backgroundColor:"white", borderRadius:"5px"}} striped>
+                        <Table className="sortable" style={{color:"black", backgroundColor:"white", borderRadius:"5px"}} striped>
                             <thead>
                                 <tr>
                                     <th>Name</th>
