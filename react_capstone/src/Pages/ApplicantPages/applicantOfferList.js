@@ -10,6 +10,7 @@ import "../EmployerPages/modalFullPage.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
 const ApplicantOfferList = ()=>{
  
   const EEOfferState = useSelector((state) => state.EEOffer)
@@ -41,7 +42,7 @@ const ApplicantOfferList = ()=>{
                             key={index}
                             offerCard={EEOffer}
                         />
-                    )) : "You have no applied Job in your Job Record"}
+                    )) : <h1 style={{display:"flex", justifyContent:'center', marginTop:'15vh'}}>Please Apply For Your First Job</h1>}
                 </div>
               
     </div>
