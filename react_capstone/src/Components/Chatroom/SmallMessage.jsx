@@ -47,51 +47,52 @@ const SmallMessage = ({
   const toggle = () => setModal(!modal);
 
   useEffect(() => {
+
+    socket.on("chatroomIDrequest", () => {
+      socket.emit("sendingChatroomID", chatID);
+        
+      return ()=>{
+        socket.disconnect()
+      }
+    });
     
-   
-    setUnreadMsg(unreadMsgCount);  
+    
     setlastMsg(msgContent);
     setLastSent(sentTime);
+    if(unreadMsgCount) {
+      setUnreadMsg(unreadMsgCount);  
+
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [unreadMsgCount]);
 
-
-  socket.on("chatroomIDrequest", () => {
-    socket.emit("sendingChatroomID", chatID);
- 
-  });
 
   socket.on("sendMsg", (message) => {
-
     setlastMsg(message[0].content);
     setLastSent(message[0].created_at);
     
   });
-  
-
-
-  useEffect(() => {
-
-    socket.on("receivedMsg", (sender, chatroomID) => {
-  
-      if (sender !== userType && !modal && chatroomID === chatID){
-        setUnreadMsg((prevUnreadMsg) => Number(prevUnreadMsg) + 1);
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[userType, modal, lastSent])
-  
-
 
   function handleOnClick() {
     resetUnreadMsgThunkAction(chatID);
     setUnreadMsg(0)
     toggle();
+   
   }
+
+ 
+  socket.on("receivedMsg", (sender, chatroomID) => {
+       
+  if (sender !== userType && modal === false && chatroomID === chatID){
+    setUnreadMsg((prevUnreadMsg) => Number(prevUnreadMsg) + 1);
+  }
+  })
+  
 
   function handleCancel() {
     toggle();
+    setUnreadMsg(0);
   }
 
 
@@ -111,7 +112,7 @@ const SmallMessage = ({
           <CardContent>
             
             <Typography gutterBottom variant="h5" component="h2">
-              {unreadMsg > 0 ? <span style={{color:'red'}}>{unreadMsg} New Message</span> : null}
+              {unreadMsg > 0 ? <span style={{color:'red'}}>{unreadMsg} New Message(s)</span> : null}
               <br></br>
               <span>{chatterName}</span>{" "}
             </Typography>

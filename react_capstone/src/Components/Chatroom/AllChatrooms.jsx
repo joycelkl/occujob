@@ -45,9 +45,6 @@ const AllChatrooms = () => {
       },[])
     }
 
-
-    
-
     let newAllChatroom;
     if (allChatroom.length > 0 && chatroomUC){
       newAllChatroom = allChatroom.map(chat => {
@@ -62,14 +59,11 @@ const AllChatrooms = () => {
     } else {
       newAllChatroom = allChatroom
     }
-
-
     
     setAllChatInfo(newAllChatroom)
 
    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[allChatUnread,allChatroom ])
-
 
 
     return (

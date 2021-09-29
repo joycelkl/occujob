@@ -10,18 +10,13 @@ app.use(cors());
 const server = require('http').createServer(app)
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'http//localhost:3000',
+        origin: '*',
         methods: ['GET', 'POST']
     }
 })
 
 //middleware
 app.use(express.json());
-
-
-//fileupload setup
-const fileupload = require('express-fileupload');
-app.use(fileupload());
 
 //knex setup
 // require('dotenv').config();

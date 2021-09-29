@@ -277,8 +277,6 @@ class EmployeeService {
                         .insert({
                             job_id: jobId,
                             employee_id: userId,
-                            enable_rating: formatted_date,
-                            rating: false
                         })
                         .returning('*')
                         .then((apply) => {
@@ -307,11 +305,6 @@ class EmployeeService {
             .where('application.employee_id', userId)
             .then((jobDetail) => {
                 console.log("jobDetail in service", jobDetail)
-                    // let checkreply = false;
-                    // if (jobDetail[0].reply !== null) {
-                    //     checkreply = true;
-                    // }
-                    // jobDetail[0].checkreply = checkreply;
                 return jobDetail;
             })
             .catch((err) => {

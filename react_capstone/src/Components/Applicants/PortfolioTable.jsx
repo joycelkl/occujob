@@ -16,14 +16,22 @@ const PortfolioTable = props => {
     const { loadAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { addAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
     const { deleteAppPortfolioThunkAction } = bindActionCreators(actionCreators, dispatch)
+    const { loadAppPortfolioForEmployerThunkAction } = bindActionCreators(actionCreators, dispatch)
 
     const portfolioState = useSelector((state) => state.appPortfolio);
-
+  
     useEffect(() => {
+      if (userType === 'er') {
+        
+        loadAppPortfolioForEmployerThunkAction(eeId)
+      } else {
+
         loadAppPortfolioThunkAction()
+      }
         setFileName(portfolioState.length+1)
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[eeId])
 
     useEffect(() => {
       setFileName(portfolioState.length+1)

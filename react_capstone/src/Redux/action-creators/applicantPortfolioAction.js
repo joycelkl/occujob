@@ -119,3 +119,21 @@ export const deleteAppPortfolioThunkAction = (p_id) => async(dispatch) => {
         console.error(err)
     }
 }
+
+
+//Load Applicant Portfolio
+export const loadAppPortfolioForEmployerThunkAction = (ee_id) => async(dispatch) => {
+
+    try {
+        const authAxiosConfig = await authAxios();
+        await authAxiosConfig.get(`/employee/portfolio/${ee_id}`).then(res => {
+
+            dispatch(loadAppPortfolioSuccessAction(res.data))
+        }).catch(() => {
+
+            dispatch(loadAppPortfolioFailAction())
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
